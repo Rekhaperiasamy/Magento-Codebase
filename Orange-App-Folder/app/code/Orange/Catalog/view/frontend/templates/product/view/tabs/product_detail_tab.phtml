@@ -1,0 +1,16 @@
+<?php
+$customerGrp = $block->getCustomerTypeName();
+if($customerGrp == 'SOHO'):
+	if ($block->getProduct()->getMarketingDescriptionSoho() != ''):
+		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">'. $block->getProduct()->getMarketingDescriptionSoho() . '</div></div>';
+	else:
+		if ($block->getProduct()->getMarketingDescription() != ''):
+			echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">'. $block->getProduct()->getMarketingDescription() . '</div></div>';
+		endif;
+	endif;
+else:
+	if ($block->getProduct()->getMarketingDescription() != ''):
+		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">'. $block->getProduct()->getMarketingDescription() . '</div></div>';
+	endif;
+endif;
+?>

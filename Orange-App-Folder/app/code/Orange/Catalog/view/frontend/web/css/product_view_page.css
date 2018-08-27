@@ -1,0 +1,444 @@
+	.grey-bordered {
+		border: 2px solid #cccccc;
+		border-top: none;
+	}
+	.grey-bordered ul li {
+		font-size: 20px;
+		font-weight:bold;
+		margin-bottom:10px;
+	}
+	.grey-bordered ul li p {
+		font-weight:normal;
+	}
+	.grey-bordered ul li:before {
+		font-family: "orange-icons";
+		content: "\f1ef";
+			position: absolute;
+			left: 20px;
+		font-size:14px;
+		line-height:2;
+	}
+	.grey-bordered ul {
+		margin-bottom:20px;
+			list-style: none; /* Remove list bullets */
+			padding-left:20px;
+	}
+	.product-bullet {
+			position: relative;
+	}
+	.product-bullet ul li:before {
+		font-family: "orange-icons";
+		content: "\f1ef";
+		position: absolute;
+		left: 0px;
+		font-size:14px;
+		line-height:2;
+	}
+	.product-bullet ul {
+		margin-bottom:20px;
+			list-style: none; /* Remove list bullets */
+			padding-left:20px;
+	}
+	.black-bordered .oi {
+		font-size: 60px;
+		line-height: 60px;
+	}
+	.flex {
+		display:flex;
+	}
+	.price-box {
+		background: black;
+		color: white;
+		padding:20px 17px;
+		height:80px;
+	}
+	.price-box h1 {
+		font-size:60px;
+		margin:0px;
+	}
+	.price-box h2 {
+		font-size:40px;
+		margin:0px;
+	}
+	.price-box small {
+		font-size:24px;
+		margin:0px;
+	}
+	.old-price {
+		text-decoration: line-through;
+		font-size:20px;
+		font-weight:normal;
+	}
+	.full-price {
+		font-size:20px;
+		font-weight:bold;
+	}
+	.new-price {
+		font-size:40px;
+	}
+	.gray {
+		color:#aaa;
+	}
+	.cta-text {
+		font-size:20px;
+	}
+	.offer-phone {
+		background:url(../images/Huawei_Y5.jpg) no-repeat center 10px;
+		background-size:contain;
+		height:330px;
+	}
+	.phone-item {
+		overflow:visible;
+	}
+	.phone-item h3{
+		line-height:1.4;
+	}
+	.content-collapsable h4 {
+		cursor: pointer;
+			padding: 15px 0;
+			border-top: 1px solid #cccccc;
+			margin: 0;
+			position: relative;
+	}
+	
+	.content-collapsable h4.no-collapsable {
+		cursor:auto;
+			padding: 15px 0;
+			border-top:none;
+			margin: 0;
+			position: auto;
+	}
+
+	.content-collapsable:last-child {
+		border-bottom: 1px solid #cccccc;
+	}
+
+	.content-collapsable h4:after {
+		font-family: 'Glyphicons Halflings';
+			content: '\e252';
+			position: absolute;
+			right: 0;
+			top:17px;
+	}
+	
+	.content-collapsable h4.no-collapsable:after {
+		font-family: 'Glyphicons Halflings';
+			content:none ;
+			position: auto;
+			right: 0;
+			top:0px;
+	}
+	.catalog-product-view #collapse-main-tabs .panel-collapse h4:after {
+		font-family: 'Glyphicons Halflings';
+			content: none;
+			position: absolute;
+			right: 0;
+			top:17px;
+	}
+	.content-collapsable h4.open:after {
+			content: '\e253';
+	}
+	.content-collapsable ol li {
+			font-weight: normal;
+	}
+	.content-collapsable ol.closed, .content-collapsable div.closed {
+			display:none;
+	}
+	.dropdown {
+		display:inline-block;
+	}
+	.dropdown a {
+		margin-top:0px;
+	}
+	.aqua {
+		background:#45bf97;
+		color:black;
+		padding:10px;
+		margin-top:10px;
+		margin-bottom:20px;
+	}
+	.black-bgd {
+		background:#000;
+		color:white;
+		padding:10px;
+		margin-top:10px;
+		margin-bottom:20px;
+	}
+	.rating {
+		font-size:20px;
+		vertical-align:-2px;
+	}
+	.ratings {
+		margin-bottom:20px;
+		float:left;	
+	}
+	.green {
+		color:#56c197;
+	}
+	.phone-item .media-left img {
+		margin-top:5px;
+	}
+	.colour-circle {
+		width:25px;
+		height:25px;
+		border-radius:15px;
+		border:solid 1px #d7d7d7;
+		display:inline-block;
+		overflow:hidden;
+	}
+	.colour-circle.black {
+		background:black;
+	}
+	.colour-circle.grey {
+		background:#ccc;
+	}
+	.colour-circle.white {
+		background:white;
+	}
+	.colour-circle.gold {
+		background:#DED362;
+	}
+	ul.phone-thumbs {
+		list-style: none;
+		padding: 0px;
+	}
+	ul.phone-thumbs li {
+		width:60px;
+		height:60px;
+		background: #f5f5f3;
+		display:inline-block;
+		text-align:center;
+	}
+	ul.phone-thumbs li.active {
+		border: solid black 2px;
+		background: white;
+	}
+	ul.phone-thumbs li img  {
+		margin-top:5px;
+	}
+	.prod-promo {
+		background:#000;
+		color:white;
+		padding:5px 17px 0px 0px;
+		margin-top:10px;
+		margin-bottom:10px;
+		position:relative;
+	}
+	.prod-promo .left1, .prod-promo .left1 {
+		float:left;
+	}
+	.prod-promo .left1 {
+		padding-left:15px;
+		padding-right:20px;
+		position:relative;
+	}
+	.prod-promo p {
+		font-size:12px;
+	}
+	.prod-promo a.btn {
+		margin-bottom:20px;
+	}
+	.prod-promo h4, .grey-strip h4 {
+		font-size:30px;
+		margin-top:6px;
+		margin-bottom:6px;
+		margin-right:20px;
+	}
+	.prod-promo .left1:after {
+		content:"+";
+		position:absolute;
+		right:10px;
+		top:15px;
+		font-size:30px;
+		font-weight:bold;
+	}
+	.prod-promo h4 small {
+		font-size:24px;
+	}
+	.prod-promo h5 {
+		margin-bottom:6px;
+	}
+	.prod-promo h5.strike {
+		text-decoration: line-through;
+	}
+	.grey-strip {
+		background:#eeeeee;
+		padding:5px 15px;
+		z-index:9;
+	}
+	.well-grey {
+		padding: 25px;
+		background-color: #eee;
+	}
+	.well-grey-padded {
+		position: relative;
+		padding: 20px;
+	}
+	.well-grey-padded a.bin-icon {
+		cursor: pointer;
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		z-index: 500;
+	}
+	.well-grey-padded a i {
+		font-size: 0.8em;
+	}
+	.well-grey-padded a:hover {
+		text-decoration: none;
+	}
+	.well-grey h3 {
+		margin-top: 0;
+	}
+	.well-grey h4 {
+		font-size: 24px;
+		margin-top: 4px;
+	}
+	.panel-default {
+		border: 0;
+	}
+	.panel-default > .panel-heading {
+	    color: #000;
+	    background-color: #fff;
+	    padding: 0;
+	}
+	.panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group {
+	    border-top: none !important;
+	}
+	.panel-group .panel + .panel {
+		margin-top: -2px;
+	}
+	.panel-body {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 5px;
+	}
+	.font-normal {
+		font-weight: normal !important;
+	}
+	h3.block-title {
+	    color: #ff7900 !important;
+	    line-height: 30px;
+    	padding-top: 20px;
+    	margin-bottom: 20px;
+	}
+	#mob_specs table tr.odd,
+	#mob_specs table tr.even {
+	    background-color: #ffffff;
+	    border-bottom: 1px solid #ccc;
+	}
+	#mob_specs table {
+		width: 100%;
+	}
+	#mob_specs table tbody th {
+		width: 60%;
+		vertical-align: top;
+		padding: 9px 0;
+	}
+	#mob_specs table tbody td {
+		width: 40%;
+		vertical-align: top;
+		padding: 9px 0;
+		font-weight: bold;
+	}
+	.price-box {
+		background: black;
+		color: white;
+		padding:20px 17px;
+		min-height: 116px;
+	}
+	.price-box h1 {
+		font-size:60px;
+		margin:0px;
+	}
+	.price-box h2 {
+		font-size:40px;
+		margin:0px;
+	}
+	.price-box small {
+		font-size:24px;
+		margin:0px;
+	}
+	.old-price {
+		text-decoration: line-through;
+		font-size:20px;
+		font-weight:normal;
+	}
+	.full-price {
+		font-size:20px;
+		font-weight:bold;
+	}
+	.new-price {
+		font-size:40px;
+	}
+	.new-price small {
+		font-size:16px;
+	}
+	.title-price {
+		margin-bottom: 0 !important;
+	}
+	.phone-item {
+		border-bottom: 2px solid #cccccc;
+	}
+	.no-border {
+		border-bottom: 0;
+	}
+	.phone-item h3{
+		line-height:1.4;
+	}
+	.no-final-border:last-child {
+    	border-bottom: 0;
+	}
+	.mobile-width {
+		display: hidden !important;
+	}
+	.font-24 {
+		font-size: 24px !important;
+	}
+
+	@media (min-width: 768px) {
+		.black-bordered {
+			display:flex;
+		}
+		.offer-phone {
+			background-size:cover;
+			height:100%;
+		}
+		.cta-text {
+			font-size:16px;
+		}
+		.price-box.right {
+			text-align:right;
+		}
+		.order-dd {
+			text-align:right;
+		}
+		.panel-title > a {
+			font-size: 20px !important;
+		}		
+		.panel-group {
+		    margin-bottom: 0;
+		}
+	}
+	@media (max-width: 1000px) {
+		.mobile-width {
+			display: inline-block !important;
+		}
+		
+	}
+	@media (max-width: 768px) {
+		.panel-title > a {
+			font-size: 20px !important;
+		}
+		.panel-group {
+		    margin-bottom: 0;
+		}
+		.no-final-border:last-child {
+	    	border-bottom: none;
+		}
+	}
+@media (min-width: 320px) and (max-width:767px){
+.prod-promo2 h4, .grey-strip h4, h4.orange{font-size:26px!important;word-wrap: break-word;}
+.prod-promo .left1{width:60%;word-wrap:break-word;}
+.prod-promo .left2{word-wrap:break-word;}
+}

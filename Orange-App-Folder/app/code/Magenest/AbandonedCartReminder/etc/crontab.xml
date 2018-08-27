@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Cron/etc/crontab.xsd">
+    <group id="default">
+        <job name="followup_email_daily" instance="Magenest\AbandonedCartReminder\Model\Cron" method="hourly">
+            <!--<schedule>1 1 * * *</schedule> -->
+			<schedule>*/15 * * * *</schedule>
+        </job>
+        <job name="followup_email_hourly" instance="Magenest\AbandonedCartReminder\Model\Cron" method="daily">
+            <schedule>*/15 * * * *</schedule>
+        </job>
+        <job name="followup_email_send_mail" instance="Magenest\AbandonedCartReminder\Model\Cron" method="sendScheduledMail">
+            <schedule>*/15 * * * *</schedule>
+        </job>
+       <!-- <job name="followup_email_send_sms" instance="Magenest\AbandonedCartReminder\Model\Cron" method="scheduleSendSMS">
+            <schedule>1 1 * * *</schedule>
+        </job> -->
+		<job name="followup_email_flush_abandon_cart" instance="Magenest\AbandonedCartReminder\Model\Cron" method="flushAbandonCart">
+            <schedule>0 0 * * *</schedule>
+        </job>
+    </group>
+</config>
+

@@ -1,0 +1,195 @@
+<?php 
+$storename = $this->getStoreName();
+$endtext = '';
+if($storename == "Dutch"){
+ $endtext = "Alle producten zijn afgebeeld";
+}
+else if($storename == "French"){
+	$endtext = "Tous les produits sont affichés";
+}
+	$helper = $this->helper('Bss\InfiniteScroll\Helper\Data');
+	if($helper->checkActive()):
+		//$scrollText = $this->getConfigButton("text_btn_loadmore");
+		$scrollText = $helper->getScrollText();
+?>	
+<style>
+.ias-noneleft 
+{
+display:none !important;
+}
+</style>
+
+<script type="text/javascript">
+	require(['jquery','bss/ias','bss/goup','bss/lazyload'],function($){
+		jQuery(window).load(function() {
+			
+    		jQuery("img.lazy").lazyload();
+			jQuery('.ias-noneleft-list').hide();
+			var currentItem = parseInt(jQuery('.item.product.product-item').length);
+			var currentItemCount = parseInt(jQuery('.product-container').length);
+			var listingCount = parseInt(jQuery('#productlist-count').text()); //Full Catalog List count
+			if(currentItemCount == listingCount)
+			{
+				//Avoid triggering IAS if no products in next page
+				//$('.ias-spinner img').hide();
+				jQuery('.ias-noneleft-list').html("<?php echo $endtext; ?>");	
+				jQuery('.ias-noneleft').hide();
+				jQuery('.ias-noneleft-list').show();
+			}
+			else
+			{
+				jQuery('.toolbar-products .toolbar-number').text(currentItem);
+				var ias = jQuery.ias({
+					container : '.column',
+					item: '.product-item',
+					pagination: '.pages .item',
+					next: '.next',
+				});
+				var style = '';
+				<?php if($this->getConfigButton('background_btn_loadmore')):?>
+					style +='background: #<?php echo $this->getConfigButton("background_btn_loadmore")?>;'	;
+				<?php endif;?>
+				<?php if($this->getConfigButton('color_btn_loadmore')):?>
+					style +='color: #<?php echo $this->getConfigButton("color_btn_loadmore")?>;'	;
+				<?php endif;?>
+				ias.extension(new IASPagingExtension());
+				<?php if($this->getConfig('use_previous')):?>
+					ias.extension(new IASHistoryExtension({ prev: '.previous' }));
+				<?php endif;?>
+				<?php if($this->getConfig('triggerpage_threshold')):?>
+					ias.extension(new IASTriggerExtension({
+						offset: '<?php echo $this->getConfig("triggerpage_threshold");?>',
+						html: "<div class='ias-trigger ias-trigger-next' style='text-align: center; cursor: pointer;'><a href='javascript:void(0)' class='btn btn-default margin-xs-b-l'><?php echo $scrollText;?></a></div>", // optionally
+						htmlPrev: '<div class="ias-trigger ias-trigger-prev" style="text-align: center; cursor: pointer;margin-bottom:35px"><button style="'+style+'"><?php echo $this->getConfigButton("text_btn_prev");?></button></div>', 
+					}));
+				<?php endif;?>
+				ias.extension(new IASSpinnerExtension({
+					<?php if($this->loadingIcon()):?>
+						<?php if($this->getConfig('loading_icon_text')):?>
+							html: '<div class="ias-spinner" style="text-align: center;"><img src="<?php echo $this->loadingIcon();?>"/><span style="display:block;"><?php echo $this->getConfig('loading_icon_text');?></span></div>', // optionally
+						<?php else:?>
+							html: '<div class="ias-spinner" style="text-align: center;"><img src="<?php echo $this->loadingIcon();?>"/></div>', // optionally
+						<?php endif;?>
+					<?php endif;?>
+				}));
+				<?php if($this->getConfigButton('text_end_load')):?>
+					ias.extension(new IASNoneLeftExtension({text: "<?php echo __($this->getConfigButton('text_end_load'));?>"}));
+				<?php endif;?>
+				<?php if($helper->checkBssLazy() && $this->helper('Bss\LazyImageLoader\Helper\Data')->isEnabled()):?>
+					ias.on('rendered', function() {
+						jQuery("img").unveil(<?php echo $this->helper('Bss\LazyImageLoader\Helper\Data')->getThreshold() ?>);
+					});
+				<?php endif;?>
+				ias.on('rendered', function() {
+					jQuery("img.lazy").lazyload();
+				});
+				ias.on('render', function(items) {
+					var $items = jQuery(items);	
+					var loadedItem = parseInt($items.length);
+					if(loadedItem < 1)
+					{//If there is no products in current page
+						//$('.ias-spinner img').hide();
+						jQuery('.ias-noneleft-list').html("<?php echo $endtext; ?>");	
+					
+						jQuery('.ias-noneleft-list').show();
+					}
+				});
+				ias.on('loaded', function(data, items) {
+					
+					//After Items Loaded
+					var $items = jQuery(items);
+					var currentItem = parseInt($('.item.product.product-item').length);
+					var loadedItem = parseInt($items.length);
+					var currentItemCount = parseInt($('.product-container').length);
+					var loadedItems = parseInt(currentItemCount + loadedItem);
+					jQuery('.toolbar-products .toolbar-number').text(currentItem + loadedItem);						
+					var listingCount = parseInt($('#productlist-count').text());
+					//Remove Load more button if no items found in listing
+					if(listingCount == loadedItems)
+					{						
+						jQuery('.ias-trigger-next a').hide();
+						jQuery('.ias-trigger-next a').remove();//Remove load more button if no item exists in page
+						jQuery('.ias-noneleft-list').html("<?php echo $endtext; ?>");
+                        jQuery('.ias-noneleft').hide();						
+						jQuery('.ias-noneleft-list').show();
+						jQuery('.ias-spinner img').hide();
+						jQuery.ias().unbind();
+					}
+				});
+				ias.on('scroll', function(event) {
+					
+				//	$('.ias-trigger-next').trigger('click');
+				    var listingCount = parseInt($('#productlist-count').text()); 
+					var currentItemCount = parseInt($('.product-container').length);
+					// Fix for load more buttom Autogeneration on scroll if no elements in listing
+					if(listingCount == currentItemCount)
+					{						
+						jQuery('.ias-trigger-next a').hide();
+						//$('.ias-spinner img').hide();
+						jQuery('.ias-trigger-next a').remove();//Remove load more button if no item exists in page
+						jQuery('.ias-noneleft-list').html("<?php echo $endtext; ?>");	
+						jQuery('.ias-noneleft').hide();
+						
+						jQuery('.ias-noneleft-list').show();
+					}
+				});
+				// ias.on('load', function(event) {
+				//     event.url = event.url.replace('14672','');
+				//     console.log(event.url);
+				// });
+				jQuery.goup({
+					<?php if($this->getConfigGototop('goup_speed')):?>
+						goupSpeed: '<?php echo $this->getConfigGototop("goup_speed");?>',
+					<?php endif;?>
+					<?php if($this->getConfigGototop('location')):?>
+						location: '<?php echo $this->getConfigGototop("location");?>',
+					<?php endif;?>
+					<?php if($this->getConfigGototop('location_offset')):?>
+						locationOffset: parseInt('<?php echo $this->getConfigGototop("location_offset");?>'),
+					<?php endif;?>
+					<?php if($this->getConfigGototop('bottom_offset')):?>
+						bottomOffset: parseInt('<?php echo $this->getConfigGototop("bottom_offset");?>'),
+					<?php endif;?>
+					<?php if($this->getConfigGototop('container_size')):?>
+						containerSize: parseInt('<?php echo $this->getConfigGototop("container_size");?>'),
+					<?php endif;?>
+					<?php if($this->getConfigGototop('container_radius')):?>
+						containerRadius: parseInt('<?php echo $this->getConfigGototop("container_radius");?>'),
+					<?php endif;?>
+					// containerClass: 'goup-container',
+					// arrowClass: 'goup-arrow',
+					<?php if($this->getConfigGototop('always_visible')):?>
+						alwaysVisible: true,
+					<?php endif;?>
+					<?php if($this->getConfigGototop('trigger')):?>
+						trigger: '<?php echo $this->getConfigGototop("trigger");?>',
+					<?php endif;?>
+					// entry: 'slide', // "slide" or "fade"
+					<?php if($this->getConfigGototop('hide_under_width')):?>
+						hideUnderWidth: '<?php echo $this->getConfigGototop("hide_under_width");?>',
+					<?php endif;?>
+					<?php if($this->getConfigGototop('container_color')):?>
+						containerColor: '#<?php echo $this->getConfigGototop("container_color");?>',
+					<?php endif;?>
+					<?php if($this->getConfigGototop('arrow_color')):?>
+						arrowColor: '#<?php echo $this->getConfigGototop("arrow_color");?>',
+					<?php endif;?>
+					<?php if($this->getConfigGototop('text_hover')):?>
+						title: '<?php echo $this->getConfigGototop("text_hover");?>',
+					<?php endif;?>
+					// titleAsText: false,
+					// titleAsTextClass: 'goup-text',
+					<?php if($this->getConfigGototop('zindex')):?>
+						zIndex: '<?php echo $this->getConfigGototop("zindex");?>',
+					<?php endif;?>
+				});
+			}
+		});
+		
+	});
+	
+	/*$('#block-system-main .container .ias-trigger-next').trigger("click");*/
+	
+	
+</script>
+<?php endif;?>

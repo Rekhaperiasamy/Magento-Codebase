@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.top">
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_menu_top" as="csblock_home_menu_top" before="navigation.sections" />
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_menu_bottom" as="csblock_home_menu_bottom" after="navigation.sections" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_content_top" as="csblock_home_content_top" before="-" />
+        </referenceContainer>
+        <referenceContainer name="sidebar.additional">
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_sidebar_top" as="csblock_home_sidebar_top" before="-" />
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_sidebar_bottom" as="csblock_home_sidebar_bottom" after="-" />
+        </referenceContainer>
+        <referenceContainer name="page.bottom">
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_page_bottom" as="csblock_home_content_sidebar_bottom" after="-" />
+        </referenceContainer>
+		<referenceContainer name="page.middle">
+            <block class="Aheadworks\Csblock\Block\Csblock" name="csblock_home_page_middle" as="csblock_home_content_sidebar_middle" after="-" />
+        </referenceContainer>
+    </body>
+</page>

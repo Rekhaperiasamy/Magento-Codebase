@@ -1,0 +1,100 @@
+<?php $_order = $block->getOrder(); ?>
+<?php $items = $_order->getAllItems(); ?>
+<?php $TypeId = ''; 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');	
+$successBlock= $block->getLayout()->createBlock('Orange\Checkout\Block\Onepage\Success');
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy_soho', $storeScope);
+?>
+<br>
+<span>
+    <?php foreach ($items as $item) {
+		$postpaidModelCollections = $postpaidModel->getCollection()
+		->addFieldToFilter('quote_id',$_order->getQuoteId())
+		->addFieldToFilter('item_id',$item->getData('quote_item_id'));
+        if ($item->getProduct()->getTypeId() == 'virtual' && $item->getParentItemId() == '') {
+            echo '<br>'.$item->getName().'<br>';
+			$_product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getProduct()->getId());			
+            echo 'qty ' . round($item->getQtyOrdered()). '<br>';
+			$attr = $_product->getSubscriptionAmount();
+			echo 'pay monthly €';
+			echo number_format($attr,2).'<br>';
+			$webpromo =  strip_tags($_product->getWebPromo());
+			if($webpromo != ''){
+				echo $webpromo.'<br>';
+			}
+			foreach ($postpaidModelCollections as $postpaidModelCollection) {
+			
+			if ($postpaidModelCollection->getDesignTeExistingNumber() != "" ) {
+				if($postpaidModelCollection->getSimcardNumber() == ''){
+					echo  "Jupiter client type M* prepaid > postpaid".'<br>';
+					
+				}else{
+					echo  "Jupiter client type New subscription: from other operator (keep nr) ".'<br>';
+					echo 'Delivery Free Delivery'.'<br>'; 
+				}
+			} else {
+					echo "Jupiter client type New subscription: get new nr ".'<br>';
+					echo 'Delivery Free Delivery'.'<br>';
+			}
+			
+			if($postpaidModelCollection->getDesignTeExistingNumber() ==  "") {
+				echo 'Your SIM card  Multi SIM<br>';
+			}	
+			}	
+			echo '<br>';
+        }
+		if($item->getProduct()->getTypeId() == 'bundle'){
+			$postpaidModelCollections = $postpaidModel->getCollection()
+			->addFieldToFilter('quote_id',$_order->getQuoteId())
+			->addFieldToFilter('item_id',$item->getData('quote_item_id'));
+			$childItems = $item->getChildrenItems();
+			echo '<br>'.$item->getName().'<br>';
+			echo 'qty ' . round($item->getQtyOrdered(),2) . '<br>';
+			foreach ($childItems as $childs){
+				$productChild = $childs->getProduct();
+				$attributeSetChild = $successBlock->getAttributeSetName($productChild->getAttributeSetId());
+				if($productChild->getTypeId() == 'virtual') {
+					if($item->getPrice() < $discountFullTotalPrice && $attributeSetChild != 'IEW') {
+						echo "pay on next bill €".number_format($item->getPrice(),2).'<br>';
+					} else {
+						echo 'pay now €'. number_format($item->getPrice(),2).'<br>';
+					}
+					$attr = $productChild->getSubscriptionAmount();
+					echo 'pay monthly €';
+					echo number_format($attr,2).'<br>';
+					$webpromo =  strip_tags($productChild->getWebPromo());
+					
+					if($webpromo != ''){
+						echo $webpromo.'<br>';
+					} else if ($item->getWebPromo() !='') {
+						echo $item->getWebPromo().'<br>';
+					}
+				}
+			}
+			foreach ($postpaidModelCollections as $postpaidModelCollection) {	
+			if ($postpaidModelCollection->getDesignTeExistingNumber() != "" ) {
+				if($postpaidModelCollection->getSimcardNumber() == ''){
+					echo  "Jupiter client type M* prepaid > postpaid".'<br>';
+					
+				}else{
+					echo  "Jupiter client type New subscription: from other operator (keep nr)  ".'<br>';
+					echo 'Delivery Free Delivery'.'<br>';  
+				}
+			} else {
+					echo "Jupiter client type New subscription: get new nr ".'<br>';
+					echo 'Delivery Free Delivery'.'<br>'; 
+			}
+			if($postpaidModelCollection->getDesignTeExistingNumber() ==  "") {
+				echo 'Your SIM card  Multi SIM<br>';
+			}
+			}
+			echo '<br>';
+			//foreach ($childVirtual as $childs){
+			//	echo ' '.$childs->getData('subsidy_duration').'mois'.'<br>';						
+			//}			 
+		}
+} ?>	 
+</span>

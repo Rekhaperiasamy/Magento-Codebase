@@ -1,0 +1,31 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+
+<div class="items payment-methods">
+    <h4 class="margin-xs-b-m"><!-- ko i18n: 'Methode de paiement pour votre commande'--><!-- /ko --> *</h4>
+    <div class="col-xs-12 col-sm-6 firstleftpaymentitem">
+	   <!-- ko ifnot: getRegion('payment-method-items')().length < 0 -->
+			<h5 class="margin-xs-t-s margin-sm-t-n netbanking-label"><!-- ko i18n: 'Banque en ligne'--><!-- /ko --></h5>
+		<!-- /ko -->
+		<!-- ko foreach: { data: getRegion('payment-method-items'), as: 'element'}  -->
+			<!-- ko if: getCode() != 'ogonecw_mastercard' && getCode() != 'ogonecw_visa' &&  getCode() != 'ogonecw_americanexpress' && getCode() != 'ogonecw_paypal'  -->
+			<!-- ko template: element.getTemplate() --><!-- /ko -->
+			<!-- /ko -->
+		<!-- /ko -->
+	</div>
+	<div class='col-xs-12 col-sm-6 secondleftpaymentitem'>
+	    <!-- ko ifnot: getRegion('payment-method-items')().length < 0 -->
+			<h5 class="margin-xs-t-s margin-sm-t-n creditcard-label"><!-- ko i18n: 'Carte de credit'--><!-- /ko --></h5>
+		<!-- /ko -->
+		<!-- ko foreach: { data: getRegion('payment-method-items'), as: 'element'}  -->
+		    <!-- ko if: getCode() == 'ogonecw_mastercard' || getCode() == 'ogonecw_visa' ||  getCode() == 'ogonecw_americanexpress' || getCode() == 'ogonecw_paypal'  -->
+			<!-- ko template: element.getTemplate() --><!-- /ko -->
+			<!-- /ko -->
+		<!-- /ko -->
+	</div>
+</div>
+<!-- ko ifnot: getRegion('payment-method-items')().length > 0 --><div class="no-payments-block"><!-- ko i18n: 'No Payment Methods'--><!-- /ko --></div><!-- /ko -->

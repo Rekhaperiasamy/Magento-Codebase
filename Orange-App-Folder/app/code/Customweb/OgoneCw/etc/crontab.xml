@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="ogonecw_process_cron" instance="Customweb\OgoneCw\Model\Cron\Processor" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="ogonecw_transaction_cleanup_cron" instance="Customweb\OgoneCw\Model\Cron\TransactionCleanup" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Customweb\OgoneCw\Api\TransactionRepositoryInterface" type="Customweb\OgoneCw\Model\Service\TransactionRepository" />
+	<preference for="Customweb\OgoneCw\Api\TransactionManagementInterface" type="Customweb\OgoneCw\Model\Service\TransactionManagement" />
+	<preference for="Customweb\OgoneCw\Api\Data\TransactionInterface" type="Customweb\OgoneCw\Model\Service\Transaction" />
+	<preference for="Customweb\OgoneCw\Api\Data\TransactionDataInterface" type="Customweb\OgoneCw\Model\Service\TransactionData" />
+	<preference for="Customweb\OgoneCw\Api\Data\TransactionSearchResultInterface" type="Magento\Framework\Api\SearchResults" />
+	
+	<type name="Magento\Framework\App\Http">
+    	<plugin name="ogonecw_bootstrap" type="\Customweb\OgoneCw\Plugin\Framework\App\Http"/>
+    </type>
+	
+	<type name="Customweb\OgoneCw\Controller\Customer\Aliases">
+        <plugin name="authentication" type="\Customweb\OgoneCw\Controller\Customer\Plugin\Authentication"/>
+    </type>
+    <type name="Customweb\OgoneCw\Controller\Customer\DeleteAlias">
+        <plugin name="authentication" type="\Customweb\OgoneCw\Controller\Customer\Plugin\Authentication"/>
+    </type>
+	
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="transaction_update_flag" type="Customweb\OgoneCw\Plugin\Sales\Model\Order"/>
+    </type>
+    <virtualType name="CustomwebOgoneCwIndexGridSyncRemove" type="Customweb\OgoneCw\Observer\GridSyncRemoveObserver">
+        <arguments>
+            <argument name="entityGrid" xsi:type="object">Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CustomwebOgoneCwIndexGridSyncInsert" type="Customweb\OgoneCw\Observer\GridSyncInsertObserver">
+        <arguments>
+            <argument name="entityGrid" xsi:type="object">Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CustomwebOgoneCwIndexGridAsyncInsert" type="Magento\Sales\Model\GridAsyncInsert">
+        <arguments>
+            <argument name="entityGrid" xsi:type="object">Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CustomwebOgoneCwIndexGridAsyncInsertObserver" type="Magento\Sales\Observer\GridAsyncInsertObserver">
+        <arguments>
+            <argument name="asyncInsert" xsi:type="object">CustomwebOgoneCwIndexGridAsyncInsert</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CustomwebOgoneCwIndexGridAsyncInsertCron" type="Magento\Sales\Cron\GridAsyncInsert">
+        <arguments>
+            <argument name="asyncInsert" xsi:type="object">CustomwebOgoneCwIndexGridAsyncInsert</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="mainTableName" xsi:type="string">customweb_ogonecw_transaction</argument>
+            <argument name="gridTableName" xsi:type="string">customweb_ogonecw_transaction_grid</argument>
+            <argument name="orderIdField" xsi:type="string">customweb_ogonecw_transaction.order_id</argument>
+            <argument name="joins" xsi:type="array">
+            	<item name="sales_order" xsi:type="array">
+                    <item name="table" xsi:type="string">sales_order</item>
+                    <item name="origin_column" xsi:type="string">order_id</item>
+                    <item name="target_column" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <argument name="columns" xsi:type="array">
+                <item name="entity_id" xsi:type="string">customweb_ogonecw_transaction.entity_id</item>
+                <item name="store_id" xsi:type="string">customweb_ogonecw_transaction.store_id</item>
+                <item name="order_id" xsi:type="string">customweb_ogonecw_transaction.order_id</item>
+                <item name="order_increment_id" xsi:type="string">sales_order.increment_id</item>
+                <item name="customer_name" xsi:type="object">CustomerNameAggregator</item>
+                <item name="payment_method" xsi:type="string">customweb_ogonecw_transaction.payment_method</item>
+                <item name="authorization_type" xsi:type="string">customweb_ogonecw_transaction.authorization_type</item>
+                <item name="increment_id" xsi:type="string">customweb_ogonecw_transaction.increment_id</item>
+                <item name="created_at" xsi:type="string">customweb_ogonecw_transaction.created_at</item>
+                <item name="updated_at" xsi:type="string">customweb_ogonecw_transaction.updated_at</item>
+                <item name="payment_id" xsi:type="string">customweb_ogonecw_transaction.payment_id</item>
+                <item name="authorization_amount" xsi:type="string">customweb_ogonecw_transaction.authorization_amount</item>
+                <item name="authorization_status" xsi:type="string">customweb_ogonecw_transaction.authorization_status</item>
+                <item name="currency" xsi:type="string">customweb_ogonecw_transaction.currency</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">customweb_ogonecw_transaction_grid</argument>
+            <argument name="resourceModel" xsi:type="string">Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ogonecw_transaction_grid_data_source" xsi:type="string">Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Model\ResourceModel\GridPool">
+        <arguments>
+            <argument name="grids" xsi:type="array">
+                <item name="customweb_ogonecw_transaction_grid" xsi:type="object">Customweb\OgoneCw\Model\ResourceModel\Authorization\Transaction\Grid</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\SalesSequence\Model\EntityPool">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="ogonecw_transaction" xsi:type="string">ogonecw_transaction</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

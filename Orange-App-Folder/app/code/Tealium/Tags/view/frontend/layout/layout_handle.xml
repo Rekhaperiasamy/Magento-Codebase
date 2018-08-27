@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">        
+    <referenceContainer name="after.body.start">
+        <referenceBlock name="tealium.tags.defaultudo" remove="true" />
+        <block
+            template="udo.phtml"
+            class="Tealium\Tags\Block\NewUdo"
+            name="tealium.tags.udo"
+            ifconfig = "tags/general/enabled"
+        />
+    </referenceContainer>
+</layout>            

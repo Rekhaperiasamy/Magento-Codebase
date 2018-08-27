@@ -1,0 +1,112 @@
+<?php
+$relatedProducts = $this->getRelatedProducts();
+if (count($relatedProducts)) {
+$prod = $this->getProduct();
+$virtualSKU = $prod['linked_hero_tariff_b2c'];
+$priceLabel = $this->getPriceLabel();
+$_helper = $this->helper('Orange\Bundle\Helper\Data');
+$_cataloghelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+ //$CatalogListBlockCustom =  $block->getLayout()->createBlock('Orange\Catalog\Block\Rewrite\Product\ListProduct');
+ //$blockObj= $block->getLayout()->createBlock('Orange\Catalog\Block\Rewrite\Product\ListProduct');
+    ?>
+    <div class="row margin-xs-v-m">
+        <?php
+        foreach ($relatedProducts as $product):
+            ?>
+            <div class="col-xs-12 col-sm-6 padding-xs-b-m padding-sm-b-n">
+                   <!-- adding cashback and promotion stickers-->                   
+                <?php
+                $familyType = 'smartphone';				
+                $stockProduct = $block->getHighStockProduct($product->getHandsetFamily(), $familyType);                				
+                if (!$stockProduct->getId()) {
+                    $stockProduct = $prod;
+                }
+				
+                $tierPrice = $stockProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();				
+                $standAloneCashBack = $block->getStandAloneCashBack($stockProduct);										
+                if (isset($standAloneCashBack) && $standAloneCashBack!="") {?>
+                 <i class="oi oi-tag"></i>&nbsp; <?php echo __('Cashback %1', $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($standAloneCashBack, 0), true, false)) ?><br>
+                    <?php
+                }else {
+                    $promotionSticker = $block->getPromotionSticker($stockProduct);
+                    if ($promotionSticker) {
+                        ?>
+                        <i class="oi oi-tag"></i>&nbsp; <?php echo __($promotionSticker); ?><br>  
+                    <?php }
+                }
+                ?>               
+                <div class="media phone-item margin-xs-t-n smartphone_hgt">
+                    <div class="media-left pull-left">
+                        <div class="margin-xs-v-s">
+                            <?php
+                            $imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+                                    ->init($product, 'intermediate_page_image_medium')
+                                    ->setImageFile($product->getFile())
+                                    ->getUrl();
+                            ?>
+                            <img src="<?php echo $imageUrl; ?>">
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="js-matchBoxHeight margin-xs-t-s"><?php echo $product->getHandsetFamily(); ?></h3>
+                        <div class="ratings">
+                            <?php
+                            $storeCode = $block->getStoreName();
+                            if ($storeCode == 'Dutch') {
+                                $reevooId = 'MBD';
+                            } else {
+                                $reevooId = 'MBF';
+                            }
+                            ?>    
+                                       
+							<reevoo-reviewable-badge trkref="<?php echo $reevooId ?>" sku="<?php echo $product->getSku() ?>" variant="category_page"></reevoo-reviewable-badge>
+                        </div>
+                        <?php
+                        $familyId = $product->getHandsetFamily();
+                        $availableColors = $this->getAvailableColors($familyId);
+						
+                        ?>
+						<?php if(count($availableColors) > 1): ?>
+                        <p>												
+						<?php /* @escapeNotVerified */ echo __('Disponible en %1 couleurs', count($availableColors)) ?>												
+						</p>
+						<?php endif; ?>
+                        <?php if ($product->isAvailable()): ?>
+                            <p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+                        <?php else: ?>
+                            <p class="green"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+                        <?php endif; ?>
+                        <p class="title-price"><?php /* @escapeNotVerified */ echo __('Sans abonnement') ?></p>
+                        <?php $finalPrice = $stockProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(); ?>
+                        <?php echo $block->getOrangePricingHtml($finalPrice,true,true,false,'pdp new-price orange'); ?>						                  
+                        <?php
+                        //$subscriptionAmounts = $this->getWithSubscriptionPrice($product->getSku(), $virtualSKU);
+                        if($this->getCustomerTypeName()=='SOHO'):
+                            $subscriptionAmounts = $product->getMinSohoSubsidyPrice();
+                        else:
+                            $subscriptionAmounts = $product->getMinSubsidyPrice();
+                        endif;
+
+                        if (isset($subscriptionAmounts)) {
+                            ?>
+                            <p class="title-price"><?php /* @escapeNotVerified */ echo __('Avec abonnement') ?></p>
+                            
+							<?php echo $block->getOrangePricingHtml($subscriptionAmounts,true,true,false,'pdp new-price orange'); ?>                                
+                        <?php } ?>	
+						<?php
+						/** Format the URL to SOHO URL **/
+						$formattedAddToCartURL = $product->getProductUrl();
+						$formattedAddToCartURL = $_cataloghelper->getFormattedUrl($formattedAddToCartURL);
+						
+						?>
+                        <a class="btn btn-default margin-xs-b-l" href="<?php echo $formattedAddToCartURL ?>"><?php /* @escapeNotVerified */ echo __("Plus d'infos"); ?></a>
+                    </div>
+                </div>
+            </div>
+            <?php
+        endforeach;
+        ?>
+    </div>
+    <?php
+}
+?>

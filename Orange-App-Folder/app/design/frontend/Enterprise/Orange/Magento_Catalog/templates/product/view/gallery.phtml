@@ -1,0 +1,137 @@
+<?php
+/**
+* Copyright © 2016 Magento. All rights reserved.
+* See COPYING.txt for license details.
+*/
+ 
+// @codingStandardsIgnoreFile
+ 
+/**
+* Product media data template
+*
+* @var $block \Magento\Catalog\Block\Product\View\Gallery
+*/
+?>
+<?php $galleryImages = $block->getGalleryImages();
+$catalogView = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$attributeSet = $om->create('\Magento\Eav\Api\AttributeSetRepositoryInterface');
+$attributeSetRepository = $attributeSet->get($block->getProduct()->getAttributeSetId());
+$attributeSetName = $attributeSetRepository->getAttributeSetName();
+?>
+<div class="media phone-item margin-xs-t-n" style="border-bottom:0">
+                <div class="media-left pull-left <?php if($attributeSetName == 'Accessories'):?>accessories_left<?php else: ?>smartphone_left<?php endif;?>">
+                                <div class="margin-xs-t-s margin-xs-b-n tab-content">
+                                                <?php $i=1; ?>
+                                                <?php foreach($galleryImages as $galleryImage): ?>
+                                                                <?php if($block->isMainImage($galleryImage)): ?>
+                                                                                <div  id="product-image-<?php echo $i ?>" class="tab-pane fade in active">
+                                                                                                <img itemprop="image" src="<?php echo $galleryImage->getData('medium_image_url') ?>" class="js-zoom" data-magnify-src="<?php echo $galleryImage->getData('large_image_url') ?>">
+                                                                                </div>
+                                                                <?php else: ?>
+                                                                                <div id="product-image-<?php echo $i ?>" class="tab-pane fade">
+                                                                                                <img src="<?php echo $galleryImage->getData('medium_image_url') ?>" class="js-zoom" data-magnify-src="<?php echo $galleryImage->getData('large_image_url') ?>">
+                                                                                </div>
+                                                                <?php endif; ?>
+                                                                <?php $i++; ?>
+                                                <?php endforeach; ?>
+                                </div>
+                </div>
+				<?php if ($block->getProduct()->getTypeId() == 'bundle') {
+				?>
+                <div class="media-body">                                                          
+					<?php
+						try{
+							$mobCollection = $catalogView->getMobileDeviceProduct($block->getProduct());
+							$mobilePrds = $mobCollection->getFirstItem();
+							$handsetDes = $mobilePrds->getHandsetDescription();
+						}
+						catch(exception $e)
+						{}
+					?>		
+					<div class="product-bullet">
+						<ul>
+							<?php if($handsetDes): echo __($handsetDes); endif; ?>
+						</ul>
+					</div>
+					<?php if($block->getProduct()->isAvailable()):?>
+									<p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+					<?php else: ?>
+									<p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+					<?php endif; ?>                               
+					<?php echo $block->getChildHtml('product.color.swatch'); ?>                   
+                </div>
+				<?php } else { ?>
+				<div class="media-body"> 
+				                <?php
+										try{
+											//$deviceType = $block->getProduct()->getResource()->getAttribute('mobile_network_type')->getFrontend()->getValue($block->getProduct());
+											//$deviceResolution = $block->getProduct()->getResource()->getAttribute('primary_camera_resolution')->getFrontend()->getValue($block->getProduct());
+											$handsetDes = $block->getProduct()->getHandsetDescription();
+										}
+										catch(exception $e)
+										{}
+									?>
+								<?php if($handsetDes): ?>
+									<div class="product-bullet">
+											<?php if($handsetDes): echo __($handsetDes); endif; ?>
+									</div>
+								<?php endif; ?>
+								<?php if($block->getProduct()->getObsoleteDevice() == 1): ?>
+									 <p class="red"><?php /* @escapeNotVerified */ echo __('Epuisé') ?></p>
+								<?php else: ?>
+									<?php if($block->getProduct()->isAvailable()):?>
+                                        <p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+									<?php else: ?>
+										<p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+									<?php endif; ?> 
+                                <?php endif; ?>                                     
+                                <?php echo $block->getChildHtml('product.color.swatch'); ?>                   
+                </div>
+				<?php } ?>
+</div>
+<div class="row-fluid">
+                <div class="col-xs-12">
+                                <ul class="phone-thumbs">
+                                                <?php $j=1; ?>
+                                                <?php foreach($galleryImages as $galleryImage): ?>      
+                                                                <?php if($block->isMainImage($galleryImage)): ?>
+                                                                                <li class="active">
+                                                                                                <a href="#product-image-<?php echo $j ?>" data-toggle="tab">
+                                                                                                                <img src="<?php echo $galleryImage->getData('small_image_url') ?>">
+                                                                                                </a>
+                                                                                </li>
+                                                                <?php else:?>
+                                                                                <li>
+                                                                                                <a href="#product-image-<?php echo $j ?>" data-toggle="tab">
+                                                                                                                <img src="<?php echo $galleryImage->getData('small_image_url') ?>">
+                                                                                                </a>
+                                                                                </li>
+                                                                <?php endif; ?>
+                                                <?php $j++; ?>
+                                                <?php endforeach; ?>
+                                </ul>
+                </div>
+</div>
+ 
+<script>// <![CDATA[
+                require([
+                                'jquery',
+                                'Orange_Catalog/js/tab',
+                                'Orange_Catalog/js/responsive-tabs',
+                                'Orange_Catalog/js/jquery.magnify',
+                                'Orange_Catalog/js/jquery.magnify-mobile'                      
+                ], function ($) {
+                                $(document).ready(function() {
+								if($(window).width() >= 768){
+									// initialize the zoom when a tab is shown
+									$('.phone-thumbs a[data-toggle="tab"]').on('shown.bs.tab',function(){
+										$($(this).attr('href')).find('.js-zoom').magnify();
+									});
+									// initialize default open active tab
+									$('.phone-item .tab-pane.in .js-zoom').magnify();
+								}
+							});
+                });
+                // ]]>
+</script>

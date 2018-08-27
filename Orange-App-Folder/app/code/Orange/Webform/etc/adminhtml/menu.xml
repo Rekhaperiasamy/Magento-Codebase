@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Orange. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+	    <add id="Orange_Webform::orange_mainmnpform_index" title="Webform" module="Orange_Webform"  sortOrder="20"   resource="Orange_Webform::orange_mnpform_index"/>
+        <add id="Orange_Webform::orange_mnpform_index" title="MNP Form" module="Orange_Webform"  sortOrder="20" parent="Orange_Webform::orange_mainmnpform_index"  action="webform/mnpform/index" resource="Orange_Webform::Mnpform"/>
+		<add id="Orange_Webform::orange_activerform_index" title="Activer Form" module="Orange_Webform"  sortOrder="20" parent="Orange_Webform::orange_mainmnpform_index" action="webform/activerform/index" resource="Orange_Webform::Activerform"/>
+<!--AddMenu-->
+    </menu>
+</config>

@@ -1,0 +1,10 @@
+<?php
+if ($_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == '/nl' || $_SERVER['REQUEST_URI'] == '/nl/' ){
+        header('Location: https://www.orange.be/nl');
+        die();
+}
+if($_SERVER['REQUEST_URI'] == '/fr' || $_SERVER['REQUEST_URI'] == '/fr/') {
+	header('Location: https://www.orange.be/fr');
+    die();	
+}
+?>

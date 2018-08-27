@@ -1,0 +1,525 @@
+<?php
+$subCatId = '';
+$intermediateProduct = $this->getIntermediateProduct(); //Virtual product
+//$upsellProducts = $this->getIntermediateCollection(); // Bundled product	
+$simpleProducts = $this->getIntermediateCollection();
+$productCategory = $this->getCategory(); //Virtual product category
+$parentCategoryId = $this->getParentId(); //Parent category of the Virtual product category		
+$childCategories = explode(',', $this->getChildren($parentCategoryId));
+$currentStoreId = $this->getStoreId();
+//$listBlock = $block->getLayout()->createBlock('Orange\Catalog\Block\Rewrite\Product\ListProduct');
+$selected = "background-color: #ffffff;color:black";
+$sortVal = strtolower($this->getRequest()->getParam('sort'));
+$_catalogHelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+$priceLabel = $block->getPriceLabel();
+$customerType = $this->getCustomerTypeName();
+$breadcrumbs = $block->getBeadcrumb($intermediateProduct);
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$productObj = $objectManager->get('Magento\Catalog\Model\Product'); 
+$urlInterface = $objectManager->get('Magento\Framework\UrlInterface');
+$currentUrl = $urlInterface->getCurrentUrl();
+$mainBlock = $objectManager->create('Magento\Catalog\Model\Category')->load(12);
+
+// Check Tealium Module output status //
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$tealiumStatus = $scopeConfig->getValue('tags/general/enabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+if($tealiumStatus){
+	$udoBlock = $block->getLayout()->createBlock('Tealium\Tags\Block\DefaultUdo');
+	$utagProductData = array();
+	$udodata = $udoBlock->getUTagData($intermediateProduct->getPageName());
+}
+?>
+
+<div class="region region-content">
+    <article class="node clearfix">
+				<div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-n">
+					<div class="container landing-page-top quick-menu-wrapper">
+						<div class="field field-name-field-display-title field-type-text field-label-hidden margin-xs-t-n margin-sm-t-s">
+							<div class="field-items">
+								<div class="field-item even">
+									<section id="block-bean-produits-et-services-quick-menu-" class="block block-bean clearfix">
+										<div class="entity entity-bean bean-quick-menu clearfix">
+											<div class="content">
+												<div class="field field-name-field-quick-menu-body field-type-text-long field-label-hidden">
+													<div class="field-items">
+														<div class="field-item even">
+															<div>
+																<?php																	
+																	$formattedUrl = $_catalogHelper->getFormattedUrl($mainBlock->getUrl());//Format Category URL as per SOHO
+																?>
+																<span class="quick-menu-prefix"><a href="<?php echo $formattedUrl; ?>"><?php echo $mainBlock->getName() ?></a> > </span>
+																<div class="dropdown">
+																	 <select class="dropdown-menu-1" onchange="javascript:location.href = this.value;">
+																	 <?php foreach($breadcrumbs as $breadcrumb): ?>
+																		<?php
+																		if ($breadcrumb->getCustomUrlVirtual()) {
+																			$intermediate = $block->getUrl().$breadcrumb->getCustomUrlVirtual(); 
+																		}
+																		else {
+																			$intermediate = $block->getUrl('intermediate/listing/item/id/'.$breadcrumb->getId());												
+																		}
+																		$intermediateUrl = $_catalogHelper->getFormattedUrl($intermediate);
+																		?>
+																		<option value="<?php echo $intermediateUrl; ?>" <?php if($intermediateProduct->getId()==$breadcrumb->getId()): ?> selected <?php endif; ?> ><?php echo $breadcrumb->getName(); ?></option>
+																	<?php endforeach; ?>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>  
+											</div>
+										</div>
+									</section>						
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+			<div data-aw-csblock-block-name="csblock_intermediate_before_tab"></div>
+			<div class="container margin-xs-t-s">
+				<div class="field field-name-field-column-body field-type-text-long field-label-hidden" style="min-height: 314px;">
+					<div class="field-items">
+						<div class="field-item even">
+							<div class="product-box equal-height">
+								<div class="">
+								<?php
+									$imageType = 'intermediate_thumbnail';
+									if ($customerType == 'SOHO'):
+										$intermediateProduct->load('media_gallery');
+										$productImageAttr = $intermediateProduct->getCustomAttribute('soho_image');
+										if ($productImageAttr):
+											$productImage = $this->helper('Magento\Catalog\Helper\Image')
+													->init($intermediateProduct, $imageType)
+													->setImageFile($productImageAttr->getValue());
+											$subscriptionImg = $productImage->getUrl();                                                                                        
+										else:                                                                                        
+											//$subscriptionImg = $listBlock->getImage($intermediateProduct, 'intermediate_other_thumbnail')->getImageUrl();
+										endif;
+                                                                                $iconImage = "soho-".$intermediateProduct->getAttributeText('product_icon_image');
+									else:
+                                                                                $iconImage = $intermediateProduct->getAttributeText('product_icon_image');
+										//$subscriptionImg = $listBlock->getImage($intermediateProduct, 'intermediate_other_thumbnail')->getImageUrl();
+									endif;
+								?>
+									<div class="col-xs-12 col-sm-4 equal-height product-box-black-wrapper">
+										<div class="product-box-black" style="min-height: 330px;">
+											<h2 class="margin-xs-t-s">
+                                                                                            <p class="oi oi-<?php echo $iconImage; ?>"></p>  
+                                                                                                <?php echo __($intermediateProduct->getName()) ?></h2>
+											<?php $subscriptionAmount = $block->getSubscriptionByType($intermediateProduct); ?>
+											<p class="margin-xs-t-xm margin-sm-t-xl">
+												<?php echo $this->getOrangePricingHtml($subscriptionAmount,true,true,true,'new-price orange'); ?>												
+											</p>
+											<p><?php echo $block->escapeHtml(__("Engagement de")) ; echo "&nbsp;"; echo __($intermediateProduct->getSubsidyDuration()); echo "&nbsp;"; echo  $block->escapeHtml(__("mois")) ?></p>
+										</div>
+									</div>
+                                                                    <?php
+                                                                      if($customerType == 'SOHO'){
+																		if($intermediateProduct->getDescriptionSoho() ==''){
+																			echo __($intermediateProduct->getDescription()); 
+																		} else {
+																			echo __($intermediateProduct->getDescriptionSoho()); 
+																		 }
+                                                                      }else{ 
+																		echo __($intermediateProduct->getDescription()); 
+                                                                      } ?>
+									<?php
+									/** Tealium Tag Data *********/
+									if($tealiumStatus){
+										$udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($intermediateProduct,'tealium_product_category'));
+										$udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($intermediateProduct,'tealium_product_type'));
+										$udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($intermediateProduct,'brand'));
+										$udodata['product_sku'][] = $intermediateProduct->getSku();
+										$udodata['product_name'][] = strtolower($intermediateProduct->getTealiumPageName());
+										$udodata['product_engagement_period'][] = $intermediateProduct->getSubsidyDuration();
+										$udodata['product_monthly_price'][] = number_format($subscriptionAmount,2);
+										
+										$udodata['product_unit_price'][] = "0.00";
+										$udodata['product_list_price'][] = "0.00";
+									}
+									/*****************************/
+									?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <div class="container">
+                <div class="row margin-xs-v-m">
+                    <div class="col-xs-12 col-sm-6">
+                        
+                    </div>
+                    <div class="col-xs-12 col-sm-6 order-dd">
+                        <div class="dropdown">
+                            <select class="dropdown-menu-1" onchange="javascript:location.href = this.value;">
+                                <option <?php if ($sortVal == 'asc'): echo 'selected'; endif; ?> value="?sort=ASC"><?php echo $block->escapeHtml(__('Prix croissants')) ?></option >
+                                <option <?php if ($sortVal == 'desc'): echo 'selected'; endif; ?> value="?sort=DESC" ><?php echo $block->escapeHtml(__('Prix décroissants')) ?></option >
+                                <option <?php if ($sortVal == 'popularity' || !$sortVal): echo 'selected'; endif; ?> value="?sort=POPULARITY" ><?php echo $block->escapeHtml(__('Popularité')) ?></option >
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin-xs-v-m">
+				    <?php 
+				    try 
+				    {
+						$i=0;
+						$j = 0;
+						$_productCount = count($simpleProducts);
+						$_productCount = $_productCount-1;
+						?>
+						<?php if ($this->getRequest()->getParam('p')):?>
+						<?php 
+							  $cur = $this->getRequest()->getParam('p') - 1;
+				              $j = $cur * 3;
+						?>
+						<?php endif;?>
+		            	<?php $coloffsetdiv = 0; ?>
+	                    <?php
+	                    foreach ($simpleProducts as $simpleproduct):
+	                        if ($simpleproduct->getStatus() == 1) {
+	                            $parentProduct = $this->getParentProduct($simpleproduct->getHandsetFamily());
+	                            $familyType = 'smartphone';
+	                            $stockProduct = $this->getHighStockProduct($simpleproduct->getHandsetFamily(), $familyType);
+	                            if (!$stockProduct->getId()) {
+	                                $stockProduct = $simpleproduct;
+	                            }
+	                            /* $popularProduct = $listBlock->getPopularProduct($simpleproduct->getHandsetFamily(),$familyType,$currentStoreId);
+	                              if(!$popularProduct)
+	                              {
+	                              $popularProduct = $simpleproduct;
+	                              } */
+	                            if (!$parentProduct) {
+	                                $parentProduct = $simpleproduct;
+	                            }
+								$familyId = $parentProduct->getHandsetFamily();
+	                            //$availableColors = $this->getBundledAvailableColors($parentProduct->getId());
+								$availableColors = $this->getBundledAvailableColors($familyId);							
+	                            ?>			
+
+								
+									<?php if ($i % 2 == 0) :?>
+										<?php $j++; ?>
+										<?php $coloffsetdiv++; ?>
+										<div class="row margin-xs-v-m item product product-item">
+										<?php if ($coloffsetdiv % 2 == 0):?>
+											<div class="col-xs-12 col-sm-5 col-sm-offset-2 item product product-container <?php echo 'custom-row'.$j; ?>">
+										<?php else: ?>
+											<div class="col-xs-12 col-sm-5 item product product-container <?php echo 'custom-row'.$j; ?>">
+										<?php endif;?>
+									<?php else : ?>
+										<?php $coloffsetdiv++; ?>
+										<?php if ($coloffsetdiv % 2 == 0):?>
+											<div class="col-xs-12 col-sm-5 col-sm-offset-2 item product product-container <?php echo 'custom-row'.$j; ?>">
+										<?php else: ?>
+											<div class="col-xs-12 col-sm-5  item product product-container <?php echo 'custom-row'.$j; ?>">
+										<?php endif;?>
+									<?php endif; ?>
+	                                    
+	                                <div class="media phone-item margin-xs-t-n smartphone_hgt">
+										<div class="coupon-stickk" >
+											<?php $subsidyCashBack = $this->getSubsdidyCashBack($stockProduct);                                 
+											if ($subsidyCashBack){ ?>
+												<i class="oi oi-tag"></i>&nbsp; <?php echo __('Cashback %1', $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($subsidyCashBack, 0), true, false)) ?><br>
+											<?php } else{
+												$promotionSticker = $this->getPromotionSticker($stockProduct);
+												if ($promotionSticker) { ?>
+												<i class="oi oi-tag"></i>&nbsp; <?php echo __($promotionSticker); ?><br>
+												<?php } } ?>
+										</div>
+	                                    <div class="media-left pull-left">
+	                                        <div class="margin-xs-v-s">
+	                                            <?php
+												$colorName  = $_catalogHelper->getColorOption($stockProduct);
+												$productTitle = str_replace($colorName,"",$stockProduct->getName());
+												$alt_tag = __('Orange Belgique').' - '.$productTitle.' - '.$colorName;
+												
+												/** Tealium Tag Data *********/
+												if($tealiumStatus){
+													$udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($stockProduct,'tealium_product_category'));
+													$udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($stockProduct,'tealium_product_type'));
+													$udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($stockProduct,'brand'));
+													$udodata['product_sku'][] = $stockProduct->getSku();
+													$udodata['product_name'][] = strtolower($stockProduct->getTealiumPageName());
+													//$udodata['product_unit_price'][] = number_format($stockProduct->getPrice('final_price'),2);
+													$udodata['product_engagement_period'][] = "";
+													$udodata['product_monthly_price'][] = 0;
+													$udodata['product_unit_price'][] = str_replace(",", "",number_format($stockProduct->getPrice('final_price'),2));
+													$udodata['product_list_price'][] = str_replace(",", "",number_format($simpleproduct->getBundlePrice(),2));
+												}
+												/*****************************/
+												
+	                                            $imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+	                                                    ->init($stockProduct, 'intermediate_page_image_medium')
+	                                                    ->setImageFile($stockProduct->getFile())
+	                                                    ->getUrl();
+												if(isset($_GET['p'])){ ?>
+											<img src="<?php echo $imageUrl; ?>" alt="<?php echo trim($alt_tag); ?>">	
+											<?php }else{
+											?>
+										<div id="lazy" class="lazy-load">
+										<img class="lof-lazy" data-src="<?php echo $imageUrl; ?>"  alt="<?php echo trim($alt_tag); ?>" 
+										<?php 
+										$id = $simpleproduct->getId();
+										$ProductNew = $productObj->load($id);
+										$image = 'category_page_grid';
+										$productImage = $block->getImage($ProductNew, $image);
+										echo $productImage->toHtml();
+										?>
+										</div>
+										<?php	}
+										?>
+												
+	                                            <?php 
+												
+												
+												?>
+	                                        </div>
+	                                    </div>
+	                                    <div class="media-body">
+	                                        <?php $handsetName = $block->escapeHtml(__($simpleproduct->getHandsetFamily()));?>
+											<?php if (str_word_count($handsetName)>1):?>
+												<?php $arr = explode(' ',trim($handsetName));?>
+												<h3 class="js-matchBoxHeight margin-xs-t-s">
+												<?php echo nl2br($arr[0]."\n".substr(strstr($handsetName," "), 1));?>
+												</h3>
+											<?php else:?>
+												<h3 class="js-matchBoxHeight margin-xs-t-s"><?php echo $handsetName ?></h3>
+											<?php endif?>	
+											
+	                                        <div class="ratings">
+	                                            <?php
+	                                            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	                                            $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+	                                            //getting current store id                                                                                                                                                                                                                     
+	                                            $storeCode = $storeManager->getStore()->getName();
+	                                            if ($storeCode == 'Dutch') {
+	                                                $reevooId = 'MBD';
+	                                            } else {
+	                                                $reevooId = 'MBF';
+	                                            }
+	                                            ?>
+	                                            <reevoo-reviewable-badge trkref="<?php echo $reevooId ?>" sku="<?php echo $simpleproduct->getSku() ?>" variant="category_page"></reevoo-reviewable-badge>                                                                        
+	                                        </div>
+	                                        <?php if (count($availableColors) > 1): ?>                                        
+	                                            <p><?php /* @escapeNotVerified */ echo __('Disponible en %1 couleurs', count($availableColors)) ?></p>
+	                                        <?php elseif (count($availableColors) == 1): ?>
+	                                            <p><?php /* @escapeNotVerified */ echo __('Disponible en %1 couleur', count($availableColors))?></p>
+	                                        <?php else: ?>
+	                                            <p><?php /* @escapeNotVerified */ echo __('Disponible en %1 couleur', 1) ?></p>
+	                                            <?php endif; ?>	                                        
+	                                        <?php if ($this->getStock($simpleproduct) > 0): ?>
+	                                            <p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+                                            <?php else: ?>
+									            <p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+									        <?php endif; ?>	                                        
+											<?php echo $this->getOrangePricingHtml($simpleproduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(),true,false,false,'intermediate old-price'); ?>
+											<?php if($customerType == 'SOHO'): ?>
+												<?php echo $this->getOrangePricingHtml($simpleproduct->getBundleSohoPrice(),true,true,false,'intermediate new-price orange'); ?>
+											<?php else:?>
+												<?php echo $this->getOrangePricingHtml($simpleproduct->getBundlePrice(),true,true,false,'intermediate new-price orange'); ?>
+											<?php endif;?>
+	                                        <p class=""><?php echo $block->escapeHtml(__('avec')) ?><?php echo "&nbsp;";?><?php echo $block->escapeHtml(__($intermediateProduct->getName())) ?></p>  
+	                                       <?php
+										   $product_id = $parentProduct->getId();
+										   $nintendoUrl = $intermediateProduct->getCustomUrlVirtual();
+										   $connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+	                                       $results = $connection->fetchAll("SELECT * FROM url_rewrite where entity_id = $product_id AND request_path like '%$nintendoUrl%'");
+						
+										   if(count($results)!=0)
+										   {
+										   foreach($results as $result){
+										       
+											   if(strstr($result['request_path'],$nintendoUrl)!==false){
+												$urlKey = $parentProduct->getUrlKey();
+												$formattedUrl = $currentUrl."/".$urlKey;
+												} else {
+												$formattedUrl = $_catalogHelper->getFormattedUrl($this->getProductUrl($parentProduct));
+												}
+											}
+											}
+											else{
+											$formattedUrl = $_catalogHelper->getFormattedUrl($this->getProductUrl($parentProduct));
+											}
+								           ?>                                     
+	                                    </div>
+	                                </div>
+									<div class="order-bttn">
+										<a class="btn btn-primary margin-xs-b-l <?php if($currentStoreId == 2): ?>inter-cta-fr<?php else:?>inter-cta<?php endif;?>" href="<?php echo $formattedUrl; ?>"><?php echo $block->escapeHtml(__("Plus d'infos")) ?></a>
+									</div>
+							</div>		
+							<?php if ($i % 2 != 0) :?>
+							</div>
+							<?php endif; ?>
+							<?php if($_productCount == $i && $i % 2 == 0): ?>
+							</div>
+							<?php endif; ?>
+							<?php $i++; ?>
+	                        <?php
+	                        }
+	                    endforeach;
+	               	} catch (\Exception $e) {	               		
+	               		$this->_logger = $objectManager->get('Psr\Log\LoggerInterface');
+	               		$this->_logger->critical($e->getMessage());
+				    }
+
+                    ?>
+                </div>  
+
+            </div>
+			
+<?php if($this->getCustomerGroup() == 'SOHO'): ?>
+	<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('propacks')->toHtml(); ?>
+    <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('intermediate_footer1')->toHtml(); ?>
+<?php endif; ?>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('intermediate-footer-non-soho')->toHtml(); ?>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('nintendo_order_online')->toHtml(); ?>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('see_as_well')->toHtml(); ?>
+<?php 
+	$intermediateId = $this->getRequest()->getParam('id');
+	$product = $objectManager->create('Magento\Catalog\Model\Product')->load($intermediateId);
+	echo $product->getTariffPlanBottomDescription();
+?>
+</div>
+<script type="text/javascript">	
+	require(['jquery','bss/ias','bss/goup','bss/lazyload'],function($){
+		jQuery(window).load(function() {
+			jQuery.goup({
+				<?php if($this->getConfigGototop('goup_speed')):?>
+					goupSpeed: '<?php echo $this->getConfigGototop("goup_speed");?>',
+				<?php endif;?>
+				<?php if($this->getConfigGototop('location')):?>
+					location: '<?php echo $this->getConfigGototop("location");?>',
+				<?php endif;?>
+				<?php if($this->getConfigGototop('location_offset')):?>
+					locationOffset: parseInt('<?php echo $this->getConfigGototop("location_offset");?>'),
+				<?php endif;?>
+				<?php if($this->getConfigGototop('bottom_offset')):?>
+					bottomOffset: parseInt('<?php echo $this->getConfigGototop("bottom_offset");?>'),
+				<?php endif;?>
+				<?php if($this->getConfigGototop('container_size')):?>
+					containerSize: parseInt('<?php echo $this->getConfigGototop("container_size");?>'),
+				<?php endif;?>
+				<?php if($this->getConfigGototop('container_radius')):?>
+					containerRadius: parseInt('<?php echo $this->getConfigGototop("container_radius");?>'),
+				<?php endif;?>
+				// containerClass: 'goup-container',
+				// arrowClass: 'goup-arrow',
+				<?php if($this->getConfigGototop('always_visible')):?>
+					alwaysVisible: true,
+				<?php endif;?>
+				<?php if($this->getConfigGototop('trigger')):?>
+					trigger: '<?php echo $this->getConfigGototop("trigger");?>',
+				<?php endif;?>
+				// entry: 'slide', // "slide" or "fade"
+				<?php if($this->getConfigGototop('hide_under_width')):?>
+					hideUnderWidth: '<?php echo $this->getConfigGototop("hide_under_width");?>',
+				<?php endif;?>
+				<?php if($this->getConfigGototop('container_color')):?>
+					containerColor: '#<?php echo $this->getConfigGototop("container_color");?>',
+				<?php endif;?>
+				<?php if($this->getConfigGototop('arrow_color')):?>
+					arrowColor: '#<?php echo $this->getConfigGototop("arrow_color");?>',
+				<?php endif;?>
+				<?php if($this->getConfigGototop('text_hover')):?>
+					title: '<?php echo $this->getConfigGototop("text_hover");?>',
+				<?php endif;?>
+				// titleAsText: false,
+				// titleAsTextClass: 'goup-text',
+				<?php if($this->getConfigGototop('zindex')):?>
+					zIndex: '<?php echo $this->getConfigGototop("zindex");?>',
+				<?php endif;?>
+			});
+		});
+	});
+</script>
+<script>
+	require(['jquery', 'js/dropdown','Orange_Intermediate/js/tab'], function ($) {
+		function equalheight(container){
+
+			var currentTallest = 0,
+						currentRowStart = 0,
+						rowDivs = new Array(),
+						$el,
+						topPosition = 0;
+			
+			$(container).each(function() {
+
+						$el = $(this);
+						$($el).height('auto')
+						topPostion = $el.position().top;
+
+						if (currentRowStart != topPostion) {
+									for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+												rowDivs[currentDiv].height(currentTallest);
+									}
+									rowDivs.length = 0; // empty the array
+									currentRowStart = topPostion;
+									currentTallest = $el.height();
+									rowDivs.push($el);
+						} else {
+									rowDivs.push($el);
+									currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+						}
+						for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+									rowDivs[currentDiv].height(currentTallest);
+						}
+			});
+		}
+		$(document).ready(function ($) {
+			$('.content-collapsable h4').click(function () {
+				$(this).toggleClass('open')
+				$(this).next().slideToggle().toggleClass('closed');
+			})
+			
+			$(window).load(function() {
+						$('.product-item').each(function(index){
+									position = index + 1;
+									equalheight('.custom-row'+position+' .smartphone_hgt');
+						});
+			}); 
+			 $(window).resize(function(){
+						$('.product-item').each(function(index){
+									position = index + 1;
+									equalheight('.custom-row'+position+' .smartphone_hgt');
+						});
+			});
+			
+			$(window).scroll(function () {
+					$('.product-item').each(function(index){
+								position = index + 1;
+								equalheight('.custom-row'+position+' .smartphone_hgt');
+					});
+			});
+			
+		});
+	});
+
+</script>
+<script id="reevoomark-loader" type="text/javascript" charset="utf-8">
+require(['jquery'], function ($) {
+	$(window).load(function() {
+		(function (w, d, u, i, f, s, l) {
+			s = d.createElement('script');
+			s.type = 'text/javascript';
+			s.src = u;
+			l = d.getElementById(i);
+			l.parentNode.insertBefore(s, l);
+			w['ReevooMarkHandlerName'] = f;
+			w[f] = function () {
+				(w[f].q = w[f].q || []).push(arguments)
+			}
+		})(window, document, '//cdn.mark.reevoo.com/assets/reevoo_mark.js', 'reevoomark-loader', 'reevooMark');
+	});
+});           
+</script>
+<?php if($tealiumStatus){ ?>
+<script type="text/javascript">
+	// Tealium Data Call for Landing Page //
+	var utag_data = <?php echo str_replace("\n", "\n    ", json_encode($udodata, JSON_PRETTY_PRINT)); ?>;
+</script>
+<?php } ?>

@@ -1,0 +1,48 @@
+<div class="wrapper">
+    <p>
+        <form action="<?php echo $block->getMagentoCachePurgeUrl(); ?>" method="post" id="cache_clean_custom_module_magento">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <button type="submit" class="scalable action-default scalable primary flush-cache-magento">
+                <?php /* @escapeNotVerified */ echo __('Clean Magento Cache'); ?>
+            </button>
+        </form>
+    </p>
+    <?php
+    // TODO: After ACC testing remove this block and Fastly. php file from controller
+    /*<p>
+        <form action="<?php echo $block->getFastlyCachePurgeUrl(); ?>" method="post" id="cache_clean_custom_module_fastly">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+    <button type="submit" class="scalable action-default scalable primary flush-cache-magento">
+        <?php  echo __('Clean Fastly cache'); ?>
+    </button>
+    </form>
+    </p> */
+    ?>
+    <p>
+        <form action="<?php echo $block->getTruncateBookmarksUrl(); ?>" method="post" id="cache_clean_custom_module_fastly">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <button type="submit" class="scalable action-default scalable primary flush-cache-magento">
+                <?php /* @escapeNotVerified */ echo __('Truncate Bookmarks'); ?>
+            </button>
+            <span>Truncate Database table Bookmarks</span>
+        </form>
+    </p>
+    <p>
+        <form action="<?php echo $block->getStaticSohoURL(); ?>" method="post" id="create_soho_static_url">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <button type="submit" class="scalable action-default scalable primary flush-cache-magento">
+                <?php /* @escapeNotVerified */ echo __('Create Static SOHO URL'); ?>
+            </button>
+            <span>Create custom SOHO URL for all STATIC Pages</span>
+        </form>
+    </p>
+    <p>
+        <form action="<?php echo $block->getOtherSohoURL(); ?>" method="post" id="create_other_soho_url">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+                <button type="submit" class="scalable action-default scalable primary flush-cache-magento">
+                    <?php /* @escapeNotVerified */ echo __('Create Other SOHO URL'); ?>
+                </button>
+                <span>Create custom SOHO URL for all CUSTOM Pages</span>
+        </form>
+    </p>
+</div>

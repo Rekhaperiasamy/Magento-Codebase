@@ -1,0 +1,67 @@
+<?php $produt = $block->getProduct(); ?> 
+<?php $videoJson = $block->getMediaGalleryDataJson(); $url = json_decode($videoJson); $youtubeLinks = array_column($url, 'mediaType');?> 
+<?php $youtubeUrl = '' ?>
+<?php 	foreach($url as $ids){
+			foreach($ids as $key=>$vidVal){
+				if($key == 'videoUrl' && $vidVal != ''){
+					$youtubeUrl=substr($vidVal,-11);
+					} } } ?>
+<?php if($youtubeUrl != ''){?>
+	<?php $images = $produt->getMediaGalleryImages();
+                foreach($images as $child){ ?>
+					<?php $thumb = $child->getUrl();?>                                                
+                <?php } ?> 
+		<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">
+		<div id="video" >
+				<img class="orange_vid" alt="orage_video_preview" src="https://img.youtube.com/vi/<?php echo $youtubeUrl; ?>/0.jpg" style="height: 250px;">
+				<div id="popup-mpdal">
+					<?php foreach($url as $items){
+						foreach($items as $key=>$vidVal){
+							if($key == 'videoUrl' && $vidVal != ''){
+								$youtubeId=substr($vidVal,-11); ?> 
+								<iframe  width="100%" id="player" height="315" src="https://www.youtube.com/embed/<?php echo $youtubeId ?>" frameborder="0" allowfullscreen></iframe>
+				<?php  } } } ?>
+				</div>
+		</div>
+		</div>
+		</div>
+	
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+			var videoControl = document.getElementById("player"); 
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,                
+                buttons: [{
+                    text: $.mage.__('Exit'),
+                    class: 'btn btn-primary',
+                    click: function () {
+                        this.closeModal();
+						videoControl.pause();
+                    }
+                }]
+            };
+            var popup = modal(options, $('#popup-mpdal'));
+			 $(".orange_vid").on("click",function(){
+            $('#popup-mpdal').modal('openModal');
+			});
+			
+			 $(".action-close").on("click",function(){             
+			 $('#player').attr('src', $('#player').attr('src'));
+			});			  
+			var KEYCODE_ESC = 27;
+			$(document).keyup(function(e) {			  
+			  if (e.keyCode == KEYCODE_ESC) {$('#player').attr('src', $('#player').attr('src'));}
+			});
+        }
+    );</script>
+	<?php  } ?>	

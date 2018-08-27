@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+	<update id="FME_Extensions::fmeextensions" 
+                title="FME Extensions" 
+                module="Magento_Backend" 
+                sortOrder="70" 
+                resource="FME_Extensions::fmeextensions"/>
+         
+        <add id="FME_Geoipultimatelock::geoipultimatelock" 
+             title="Geo-IP Ultimate Lock" 
+             module="FME_Geoipultimatelock" 
+             sortOrder="20" 
+             parent="FME_Extensions::fmeextensions" 
+             resource="FME_Geoipultimatelock::geoipultimatelock" />
+
+        <add id="FME_Geoipultimatelock::rule" 
+             title="Manage Rules" 
+             module="FME_Geoipultimatelock" 
+             sortOrder="2" 
+             parent="FME_Geoipultimatelock::geoipultimatelock" 
+             action="geoipultimatelock/rule/index" 
+             resource="FME_Geoipultimatelock::rule" />
+        
+        <add id="FME_Geoipultimatelock::restrict_ip" 
+             title="Block IPs" 
+             module="FME_Geoipultimatelock" 
+             sortOrder="3" 
+             parent="FME_Geoipultimatelock::geoipultimatelock" 
+             action="geoipultimatelock/restrict/index" 
+             resource="FME_Geoipultimatelock::restrict_ip" />
+        
+<!--        <add id="FME_Geoipultimatelock::online" 
+             title="Online Visitors" 
+             module="FME_Geoipultimatelock" 
+             sortOrder="4" 
+             parent="FME_Geoipultimatelock::geoipultimatelock" 
+             action="geoipultimatelock/online/index" 
+             resource="FME_Geoipultimatelock::online" />-->
+        
+        <add id="FME_Geoipultimatelock::import_index" 
+             title="Import countires list" 
+            module="FME_Geoipultimatelock" 
+             sortOrder="5" 
+             parent="FME_Geoipultimatelock::geoipultimatelock" 
+            action="geoipultimatelock/import/index" 
+             resource="FME_Geoipultimatelock::import_index" />
+        
+        <add id="FME_Geoipultimatelock::configuration" 
+             title="Configurations" 
+            module="FME_Geoipultimatelock" 
+             sortOrder="6" 
+             parent="FME_Geoipultimatelock::geoipultimatelock" 
+            action="adminhtml/system_config/edit/section/geoipultimatelock" 
+            resource="FME_Geoipultimatelock::configuration" />
+    </menu>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="Customweb_OgoneCw::transactions" title="Ogone Transactions" module="Customweb_OgoneCw" sortOrder="10" parent="Customweb_Base::sales_customweb" action="ogonecw/transaction" resource="Customweb_OgoneCw::transaction" />
+
+        <add id="Customweb_OgoneCw::config" title="Ogone" module="Customweb_OgoneCw" sortOrder="100" parent="Customweb_Base::config" action="ogonecw/config" resource="Customweb_OgoneCw::config"/>
+    </menu>
+</config>

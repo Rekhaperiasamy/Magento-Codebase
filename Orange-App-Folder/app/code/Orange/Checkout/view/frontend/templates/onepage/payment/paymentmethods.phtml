@@ -1,0 +1,49 @@
+<?php $payTypes = $block->getPaymentTypes(); ?>
+<div class="col-xs-12 col-sm-8">
+	<div class="margin-xs-v-s margin-sm-v-m">
+		<h3 class="margin-xs-t-l margin-sm-t-l margin-xs-b-m"><?php echo __('Paiement'); ?></h3>
+		<h4 class="margin-xs-b-m"><?php echo __('Je choisis une methode de paiement pour mon abonnement'); ?></h4>
+
+		<div class="row margin-xs-t-s margin-xs-b-m">	
+			<div class="col-xs-12">						
+				<div class="form-item form-item-gender form-type-radio radio"> 
+					<label for="edit-nationality"><input type="radio" id="edit-nationality" name="nationality2" value="belgian" class="form-radio"><?php echo __('Virement'); ?></label>
+				</div>
+			</div>
+			<div class="col-xs-12">	
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-3">	
+						<div class="form-item form-item-gender form-type-radio radio margin-xs-t-s margin-xs-b-s margin-xs-r-m"> 
+							<label for="edit-nationality"><input type="radio" id="edit-nationality" name="nationality2" value="other" class="form-radio" checked><?php echo __('Domiciliation'); ?></label>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<p class="pull-left margin-xs-t-s margin-xs-b-s margin-xs-r-m"><?php echo __('Numero de compte') ?> <span class="form-required" title="Ce champ est requis.">*</span></p>	
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-5">		
+						<input class="form-control  pull-left" type="text" id="account_number" name="account_number" value="" size="60" maxlength="20">
+					</div>
+				</div>
+				<!-- <div class="clearfix"></div> -->
+			</div>
+		</div>
+		
+		<h4 class="margin-xs-b-m"><?php echo __('Je choisis une methode de paiement pour mon telephone'); ?></h4>		
+		<div class="row margin-xs-t-s">
+			<?php foreach($payTypes as $payTypekey => $payType): ?>				
+			<div class="col-xs-12 col-sm-6">	
+				<h5 class="margin-xs-t-s margin-sm-t-n"><?php echo __($payType['label']) ?></h5>
+				<?php $paymentMethods = $block->getPaymentMethodByType($payType['value']); ?>				
+				<?php foreach($paymentMethods as $paymentCode => $method): ?>
+					<div class="col-xs-12 col-sm-6">	
+						<?php if($method['show_image'] == 1): ?>
+							<img src="<?php echo $block->getViewFileUrl('Customweb_OgoneCw::images/payment/method/' . $block->escapeHtml($method['label']) . '.png') ?>" />						
+						<?php endif; ?>
+						<input type="radio" value="<?php echo $method['value'] ?>" name="payment_method"/><span><?php echo $method['label'] ?> <br class="hidden-xs"><small>(<?php echo $method['description'] ?>)</small></span></input>						
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<?php endforeach; ?>							
+		</div>
+	</div>
+</div>

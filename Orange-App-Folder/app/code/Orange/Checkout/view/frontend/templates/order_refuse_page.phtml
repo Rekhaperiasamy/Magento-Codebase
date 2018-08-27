@@ -1,0 +1,62 @@
+<?php
+//$storeName = $block->getStoreName();
+$helper			= $this->helper('Orange\Upload\Helper\Data')->storeInfo();
+$storeCode 		= $helper->getStore()->getCode();
+$objectManager 	= \Magento\Framework\App\ObjectManager::getInstance();
+$scoringCode 	= $objectManager->get('Magento\Checkout\Model\Session')->getScoringCode();
+$scoringModel 	= $model = $objectManager->create('Orange\Scoringfield\Model\Scoringresponse')->load($scoringCode,'ws_response_content');
+/*echo 'hate';
+echo $configuredResContent;*/
+if($storeCode == 'nl'){
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_refuse_page_nl')->toHtml();
+	$supportUrl = 'https://www.orange.be/nl/hulp';
+	$configuredResContent = $scoringModel->getContentNl();
+} else {
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_refuse_page_fr')->toHtml();
+	$supportUrl = 'https://www.orange.be/fr/support';
+	$configuredResContent = $scoringModel->getContentFr();
+}
+$blockEndHtmlTag = '</div></section></div>';
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$storeUrl = 'https://www.orange.be/';
+					
+$nlContent = $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_refuse_page__content_nl')->toHtml();
+$frContent = $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_refuse_page__content_fr')->toHtml();
+
+$nlsupportLink = $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_refuse_page_supportlink_nl')->toHtml();
+$frsupportLink = $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_refuse_page_supportlink_fr')->toHtml();
+ ?>
+	<div class="row margin-xs-v-s">
+		<div class="col-xs-12">
+			<div class="well-grey well-grey-padded margin-xs-v-m">
+				<div class="row">
+					<div class="col-xs-12">								
+						<?php
+						if(!empty($configuredResContent)){
+							echo $configuredResContent;										
+						} else {
+							if($storeCode == 'nl'){
+								echo $nlContent;							
+							} else { 
+								echo $frContent;  
+							} 
+						}
+						?>						
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<?php 
+			if($storeCode == 'nl'){
+				echo $nlsupportLink;							
+			} else { 
+				echo $frsupportLink;  
+			} 
+		?>
+			<a class="btn btn-primary margin-xs-t-m margin-xs-b-m" href="<?php echo $storeUrl;?>" target="_blank"><?php echo __("Retour à la page d'accueil") ?></a></div>
+	</div>
+<?php echo $blockEndHtmlTag ?>

@@ -1,0 +1,46 @@
+﻿<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<div class="container">
+<div  data-role="checkout-loader" class="loading-mask"  data-mage-init='{"checkoutLoader": {}}'>
+<div class="loader">
+            <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                 alt="<?php /* @escapeNotVerified */ echo __('Loading...'); ?>"
+                 style="position: absolute;">
+        </div>
+</div>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @var $block \Magento\Checkout\Block\Cart
+ */
+
+if ($block->getItemsCount()) { ?>
+    <h1><?php echo __('Votre panier') ?></h1>
+     <?php echo $block->getChildHtml('with-items');
+} else {
+    echo $block->getChildHtml('no-items');
+ }
+ ?>
+<script>
+require([
+    'jquery',
+    'mage/translate'
+], function ($) {
+    $(window).load(function () {
+	    $('[data-role="checkout-loader"]').trigger('hide.checkoutLoader');
+        var translates = <?php echo \Zend_Json::encode(
+            array(
+                'This is a required field.' => __('This is a required field.'),
+                'Les reductions sont deja deduites de vos totaux' => __('Les reductions sont deja deduites de vos totaux'),
+            )
+        )?>;
+        $.mage.translate.add(translates);
+    });
+});
+</script>

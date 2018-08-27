@@ -1,0 +1,479 @@
+<?php
+$specialCharacter = "A-Za-zA-ÿŒŸœĲ'._\s-";
+$upsellProducts = $this->getUpsellProducts();
+$priceLabel = $this->getPriceLabel();
+$_product = $block->getProduct();
+$productId=$_product->getId();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$obsolete_device_val = $_product->getObsoleteDevice();
+$_helper = $this->helper('Orange\Bundle\Helper\Data');
+$catalogView = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$customerType = $catalogView->getCustomerTypeName();
+//$stockStatus = $_product->isAvailable();
+$product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+$stockStatus = $product['quantity_and_stock_status']['is_in_stock'];
+/* obsolete device */
+$upsellProductSubscriptionAmountArray = array();
+foreach ($upsellProducts as $upsellProduct){
+	$subscription = $this->getSubscriptionProduct($upsellProduct);
+    $subscriptionItem = $subscription->getFirstItem();
+	$subscriptionAmount = $this->getDeviceSubscriptionAmount($subscriptionItem);
+	$upsellProductSubscriptionAmountArray[$upsellProduct->getId()] = $subscriptionAmount;
+}
+asort($upsellProductSubscriptionAmountArray);
+$upsellProductswithSort = array();
+foreach ($upsellProductSubscriptionAmountArray as $key => $val) {
+	$upsellProductswithSort[] = $objectManager->create('Magento\Catalog\Model\Product')->load($key);
+}
+
+if ($this->getAttributeSetName() != "Accessories") {
+    if (!$obsolete_device_val) {
+        ?>
+        <?php if(count($upsellProductswithSort) > 0): ?>
+        <h3 class="margin-xs-t-s">
+            <?php /* @escapeNotVerified */ echo __('Avec abonnement') ?>
+        </h3>
+        <?php endif; ?>
+        <?php
+        foreach ($upsellProductswithSort as $upsellProduct):
+            $subscription = $this->getSubscriptionProduct($upsellProduct);
+            $subscriptionItem = $subscription->getFirstItem();
+            $device = $this->getMobileDeviceProduct($upsellProduct);
+            $deviceItem = $device->getFirstItem();
+            $subscriptionAmount = $this->getDeviceSubscriptionAmount($subscriptionItem);
+            $deviceAmount = $this->getDeviceAmount($deviceItem);
+			if($customerType == 'SOHO'):
+				$deviceSubsidyAmount = $upsellProduct->getSohoPrice();
+			else:
+				$deviceSubsidyAmount = $upsellProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
+			endif;
+            ?>
+            <div class="row">
+                <div class="col-xs-12 prod-promo margin-xs-t-n black_container_simple">
+                    <?php if($stockStatus): ?>
+					<a class="btn btn-primary pull-right hidden-sm hidden-xs margin-xs-t-m add_to_cart_click margintop30" href="<?php echo $this->getCustomCartUrl($upsellProduct->getId()) ?>"><?php /* @escapeNotVerified */ echo __('Commander') ?></a>
+                    <?php endif; ?>
+					<div class="left1 pull-left">
+                        <h5>
+                            <div id="upsell_content_<?php echo $upsellProduct->getId(); ?>" class="upsell_content">
+                                <?php echo __($subscriptionItem->getName()) ?></div>
+
+                        </h5>
+                        <?php echo $block->getOrangePricingHtml($subscriptionAmount, true, true, true, 'pdp new-price orange'); ?>
+                        <p>
+                            <?php if ($subscriptionItem->getSubsidyDuration() == 12 ):?>
+							<p><?php echo __('Engagement de').' '; echo $subscriptionItem->getSubsidyDuration().' '; echo __('mois'); ?></p>
+							<?php else: ?>
+								<p><?php echo __('Engagement de 24').' '; echo __('mois'); ?></p>
+							<?php endif; ?>
+                        </p>
+						<?php if($stockStatus): ?>
+                        <a class="btn btn-primary visible-sm-block visible-xs-block pull-left" href="<?php echo $this->getCustomCartUrl($upsellProduct->getId()) ?>"><?php /* @escapeNotVerified */ echo __('Commander') ?></a>
+						<?php endif; ?>
+                    </div>
+
+                    <div class="left2 pull-left">
+                        <h5>
+                            <?php echo $block->getOrangePricingHtml($deviceItem->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(), false, false, false, 'pdp old-price white'); ?>
+                        </h5>
+                        <h4>
+                            <?php echo $block->getOrangePricingHtml($deviceSubsidyAmount, true, true, false, 'pdp new-price orange'); ?>
+                            <h4>
+                                </div>
+                                <div class="modal-content-upsell" id="modal-content-upsell_<?php echo $upsellProduct->getId(); ?>" style="display:none">
+
+                                    <!--- Upsell Popup Starts -->
+
+                                    <div class="modal-body">
+                                        <div class="row margin-xs-b-m">
+                                            <div class="col-xs-12">
+                                                <div class="no-final-border margin-xs-b-n">								
+                                                    <div class="prod-promo margin-xs-b-n hidden-xs">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">													
+                                                                <div class="row padding-xs-h-m">
+                                                                    <div class="col-xs-6 col-sm-4 left1">
+                                                                        <h5><?php echo __($subscriptionItem->getName()); ?></h5>
+                                                                        <?php echo $block->getOrangePricingHtml($subscriptionAmount, true, true, true, 'pdp new-price orange'); ?>
+                                                                        <p>
+                                                                            <?php echo __('Engagement de 24' . $subscriptionItem->getSubscriptionMonth() . ' mois') ?>
+                                                                        </p>
+                                                                        <?php if($stockStatus): ?>
+																		<a class="btn btn-primary hidden-xs hidden-sm hidden-md hidden-lg" href="
+                                                                           <?php echo $this->getCustomCartUrl($upsellProduct->getId()) ?>">
+                                                                               <?php /* @escapeNotVerified */ echo __('Commander') ?>
+                                                                        </a>
+																		<?php endif ;?> 
+                                                                    </div>
+                                                                    <div class="left2 pull-left">
+                                                                        <h5>
+                                                                            <?php echo $block->getOrangePricingHtml($deviceItem->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(), false, false, false, 'pdp old-price white'); ?>
+                                                                        </h5>
+                                                                        <h4>
+                                                                            <?php echo $block->getOrangePricingHtml($deviceSubsidyAmount, true, true, false, 'pdp new-price orange'); ?>
+                                                                            <h4>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-5 pull-right">
+                                                                                    <?php if ($upsellProduct->isAvailable()) { ?>
+                                                                                        <?php if($stockStatus): ?>
+																						<a class="btn btn-primary pull-right margintop33 add_to_cart_click"    href="
+                                                                                           <?php echo $this->getCustomCartUrl($upsellProduct->getId()) ?>">
+                                                                                               <?php /* @escapeNotVerified */ echo __('Commander') ?>
+                                                                                        </a>
+																						<?php endif; ?>
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="grey-bordered grey-bordered-top">
+                                                                                    <h2><p class="oi oi-<?php if($customerType == 'SOHO'){ echo 'soho-'; } ?><?php echo $subscriptionItem->getAttributeText('product_icon_image'); ?>"></p>
+                                                                                    <?php echo __($subscriptionItem->getName()); ?></h2>
+																					<?php 
+																					
+																					if($customerType == 'SOHO'){
+																						if($subscriptionItem->getDescriptionSoho() ==''){
+																							echo $subscriptionItem->getDescription();
+																						} else {
+																							echo $subscriptionItem->getDescriptionSoho();
+																						}
+																					}else{
+                                                                                     echo $subscriptionItem->getDescription();
+																					}?>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                <!--- Upsell Popup Ends -->
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                <?php
+                                                                            endforeach;
+                                                                        }
+                                                                    }
+
+                                                                    if ($this->getAttributeSetName() == "Accessories" && !$stockStatus) {
+                                                                        $obsolete_device_accessories = $_product->getObsoleteDevice();
+                                                                        if (!$obsolete_device_val) {
+                                                                            ?>
+                                                                            <form action="
+                                                                                  <?php echo $this->getAccessoriesCartUrl($_product->getId()); ?>" method="post">
+                                                                                <div class="grey-strip margin-xs-b-s" id="cart_add_data">
+                                                                                    <?php if ($stockStatus) { ?>
+                                                                                        <a class="btn btn-primary pull-right hidden-sm hidden-xs margin-xs-t-m device-cart" href="<?php echo $this->getAddCartUrl($_product->getSku()) ?>">
+                                                                                            <?php echo __('Commander') ?>
+                                                                                        </a>
+                                                                                    <?php } ?>
+                                                                                    <h5 class="">
+                                                                                        <?php /* @escapeNotVerified  echo __('Notre offre') */ ?>
+                                                                                    </h5>
+                                                                                    <h4>
+                                                                                        <?php echo $block->getOrangePricingHtml($_product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(), true, true, true, 'pdp new-price orange'); ?>
+                                                                                        <h4>
+																						  <?php if($stockStatus): ?>
+                                                                                            <a class="btn btn-primary visible-sm-block visible-xs-block margin-xs-b-s mobile-width" href="
+                                                                                               <?php echo $this->getAccessoriesCartUrl($_product->getId()); ?>">
+                                                                                               <?php /* @escapeNotVerified */ echo __('Commander') ?>
+                                                                                            </a>
+																							<?php endif; ?>
+                                                                                            <?php echo $block->getBlockHtml('formkey') ?>
+                                                                                            <?php echo $block->getChildHtml('form_top'); ?>
+                                                                                            <?php echo $block->getChildHtml('form_bottom'); ?>
+                                                                                            </div>
+                                                                                            </form>
+																							<!-----outofstock code here--->
+																									<!--outofstock-->
+																					  <?php 
+																					 //url
+																					 /** @var \Magento\Framework\UrlInterface $urlInterface */
+																					$urlInterface = $objectManager->get('Magento\Framework\UrlInterface');
+																					$product_url=$urlInterface->getCurrentUrl();
+																					  //$url = $this->getBaseUrl();
+																					//$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+																					$productId =  $block->getProduct()->getId() ;
+																								$productName  = $_product->getName();
+																								$productSku   = $_product->getSku();
+																								$productPrice = $_product->getPrice();
+
+																					$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+																					$currentStore = $storeManager->getStore();
+																					 $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+																					 //$image_url =   $mediaUrl.'catalog/product'.$_product->getImage();
+																					$_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+																					$image_url = $_imagehelper->init($_product,'category_page_list')->getUrl();
+																					if(!$stockStatus)
+																					{ ?>
+																						<div class="row">
+																										<div class="col-xs-12 grey-strip margin-xs-b-s">
+																										
+																											<a class="btn btn-inverse btn-inverse-ongrey pull-right hidden-sm hidden-xs margin-xs-t-m" id="openModel1"><?php echo __('Etre informé') ?></a>
+																											<h5 class="out_stock_txt"><big><?php echo __('Actuellement indisponible') ?></big></h5>
+																											<p class="margin-xs-v-s pull-left"><small><?php echo __('Voulez-vous être informé dès que') ?> <br class="hidden-xs"><?php echo __('ce produit est de nouveau en stock') ?>&nbsp;?</small></p>
+																											<a class="btn btn-inverse btn-inverse-ongrey visible-sm visible-xs margin-xs-b-s mobile-width" id="openModel2" ><?php echo __('Etre informé') ?> </a>
+																											<div id="etre-popup" style="display:none">
+																											<div class="myModel "id="myModel"  width="100%" >
+																											<div class="" role="document">
+																											<div id="reminderdiv">
+																											<div class="">
+																												<div class="modal-header" style="padding-top:0px; padding-left:17px;">
+																													<div class="row">
+																														
+																															
+																															<h3 class="no_margin"><?php echo __('Prévenez-moi quand ce produit sera à nouveau disponible') ?></h3>
+																														
+																													</div>
+																												</div>
+																												<!---form-->
+																												   <div class="modal-body">
+																										<div class="row">
+																											<div class="col-xs-12">
+																										
+																												<p class="margin-xs-b-m"><?php echo __('Nous vous préviendrons par e-mail dès que le'); ?>
+																												<?php echo $productName; ?>
+																												<?php echo __('sera disponible.'); ?><br class="hidden-xs">
+																												<?php echo __('Vos informations personnelles ne seront pas utilisées à dautres effets.Consultez notre politique de confidentialité.') ?></p>
+																						<form action="" method="post" id="pop_up_model">
+																												<div class="row">
+																													<div class="col-xs-12">
+																														<div class="form-item form-item-gender form-type-radio radio pull-left margin-xs-r-s"> 
+																															<label for="edit-gender-mr"><input type="radio" id="edit-gender-mr" name="gender" value="mr" class="form-radio" checked ><?php echo __('Mr') ?> </label>
+																														</div>
+																														<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+																															<label for="edit-gender-mme"><input type="radio" id="edit-gender-mme" name="gender" value="mme" class="form-radio"><?php echo __('Mme') ?> </label>
+																														</div>
+																													</div>
+																													<div class="col-xs-12 col-sm-4">
+																														<label for="edit-first-name"><?php echo __('Prénom') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>			 
+																														<input class="form-control validation_check margin-xs-b-s" type="text" id="edit-first-name" name="first_name" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-namefiled':true}">
+																													<span class="pull-left margin-xs-b-s" id="errmsg" style="color:#e02b27; font-size: 1.2rem;" ></span>
+																													</div>
+																													<div class="col-xs-12 col-sm-4">
+																														<label for="edit-name"><?php echo __('Nom') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>		 
+																														<input class="form-control validation_check margin-xs-b-s" type="text" id="edit-name" name="name" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-namefiled':true}">
+																													</div>
+																													<div class="col-xs-12 col-sm-4">
+																														<label for="edit-email"><?php echo __('Mail') ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __('Vous recevrez votre numéro de réservation unique à cette adresse email. Vous en avez besoin pour retirer votre appareil dans le magasin. ')?>" data-trigger="click" class="orange">?</a></label>			 
+																														<input class="form-control validation_check margin-xs-b-s" type="text" id="edit-email" name="edit-email" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-new-email':true}">
+																													</div>
+																													
+																													
+																													
+																													<div class="col-xs-12">
+																														<a class="btn btn-primary margin-xs-v-s" id="btn1"><?php echo __('Me prévenir') ?></a>
+																													</div>
+																													
+																												
+																												</div>
+																											</form>
+																											</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																												
+																												<!---form-->
+																											</div>
+																							
+																											<div id="confirmmsg" style="margin-top:10px;margin-bottom:45px;"></div>
+																											</div><!---my model-->
+																											</div>
+																											
+																					</div>
+<script>
+		require(
+                    [
+                        'jquery',
+                        'Magento_Ui/js/modal/modal',
+                        'mage/template',
+                        'mage/mage',
+                        'js/dropdown',
+                        'jquery/validate',
+                        'jquery/ui',
+                        'mage/translate',
+						'js/checkout_new',
+                        'mage/validation'
+                    ],
+		function ($) {
+					  //<![CDATA[	
+						var translates = <?php
+						echo \Zend_Json::encode(
+								array(
+								"This is a required fields." => __("This is a required fields."),
+								"Please enters a valid email address (Ex: johndoe@domain.com)."=> __('Please enters a valid email address (Ex: johndoe@domain.com).'),
+								"Please use letters only in this field."=> __('Please use letters only in this field.'),
+									)
+						);?>;
+						$.mage.translate.add(translates);
+						
+						$.validator.addMethod(
+						'validate-namefiled', function (value) { 
+						 return /^[ <?php echo $specialCharacter; ?>]*$/.test(value);
+						}, $.mage.__('Please use letters only in this field.'));
+
+						 $.validator.addMethod(
+						'validate-new-email', function (value) { 
+						   return $.mage.isEmptyNoTrim(value) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test(value);
+						}, $.mage.__('Please enters a valid email address (Ex: johndoe@domain.com).'));
+						
+						$.validator.addMethod(
+						'custom-required', function (value) {
+						return !$.mage.isEmpty(value);
+						 }, $.mage.__('This is a required fields.'));
+						});
+		</script>
+																						
+<script>
+  require(
+		[
+			'jquery',
+			'Magento_Ui/js/modal/modal',
+			'mage/template',
+			'mage/mage',
+			'js/dropdown'	,
+			'jquery/validate',
+			'jquery/ui',
+			'mage/translate',
+			'js/checkout_new',
+			'mage/validation'
+		],
+		
+		function($,modal) {
+			
+			var options = {
+				type: 'popup',
+				responsive: true,
+				innerScroll: false,
+			  
+			};
+			
+			var popup = modal(options, $('#myModel'));
+			$("#openModel1").on("click",function(){
+			$('#myModel').modal('openModal');
+				
+			});
+			$("#openModel2").on("click",function(){
+			$('#myModel').modal('openModal');
+				
+			});
+			$( ".validation_check" ).blur(function() {
+			var id = "#"+this.id;
+			$(pop_up_model).validation();
+			$.validator.validateElement($(id));	
+			});
+			 
+			$("#btn1").on("click",function(){
+				$('#confirmmsg').empty();
+				var gender_val = $('input[name=gender]:checked').val();
+				$(pop_up_model).validation();
+					var first_name              = $.validator.validateElement($("#edit-first-name"));	
+					var last_name               = $.validator.validateElement($("#edit-name"));	
+					var email                   = $.validator.validateElement($("#edit-email"));	
+					if(first_name == false  || last_name == false  || email == false  )
+					{
+					return false;
+					}
+				$('#reminderdiv').hide();
+				
+					$('#reminderappend').hide();
+					
+					   var data = {
+						name:$('#edit-name').val(),
+						id:"<?php echo $productId; ?>",
+						firstname: $('#edit-first-name').val(),
+						email:$('#edit-email').val(),
+						//newsletterval: newslettervalue,
+						title:gender_val,
+						url:"<?php echo $product_url; ?>",
+						productname:"<?php echo $productName; ?>",
+						sku:"<?php echo $productSku; ?>",
+						price:"<?php echo $productPrice; ?>",
+						product_image:"<?php echo $image_url; ?>",
+						};
+						$.ajax({
+				   
+						  url:"<?php echo $this->getBaseUrl().'outofstockreminder/index/index/'?>",
+						  dataType: 'text',
+						  type : 'post',
+						  data: data,
+						  success: function (data) {
+							if (data == 'fname') {
+								$("#confirmmsg").append('Veuillez remplir le prénom.');
+							} else if (data == 'lastname') {
+								$("#confirmmsg").append('Veuillez remplir le nom.');
+							} else if (data == 'email') {
+								$("#confirmmsg").append('Veuillez remplir le courriel.');
+							} else if (data == 'succ') {
+								$("#confirmmsg").append('Vous recevrez un email dès que le produit sera à nouve disponible.');
+							} else {
+								$("#confirmmsg").append('Quelque chose a mal tourné. Veuillez réessayer.');
+							}
+						}
+
+					});
+			});//close
+			 }
+	);
+
+</script>
+
+<?php  }  ?>
+<!--outofstock-->
+<!----outofstock code ends here ---->
+<?php
+} //obsoletedevcies
+} //accessories and stock status
+?>
+<script>
+	require(['jquery'], function ($) {
+		$(document).ready(function ($) {
+			//$('.add_to_cart_click').click(function (e) {
+			$(document).on("click", ".add_to_cart_click", function () {
+				if (!$(this).hasClass('visited'))
+				{
+					$(this).addClass('visited')
+					return true;
+				} else
+				{
+					$(this).removeAttr("href"); // optional
+					return false;
+				}
+			});
+		});
+	});
+
+</script>
+<script>
+	require([
+		'jquery',
+		'Magento_Ui/js/modal/modal',
+		'mage/template',
+		'mage/mage',
+		'js/dropdown',
+		'jquery/validate',
+		'jquery/ui',
+		'mage/translate',
+		'mage/validation'
+	], function ($, modal) {
+
+		$(".upsell_content").on("click", function () {
+			var idValue1 = '';
+			idValue1 = this.id;
+			var str_array1 = '';
+			str_array1 = idValue1.split('upsell_content_');
+
+			var optionsVal = {
+				type: 'popup',
+				responsive: true,
+				innerScroll: false,
+			};
+			var popupData = modal(optionsVal, $('#modal-content-upsell_' + str_array1[1]));
+			$('#modal-content-upsell_' + str_array1[1]).modal('openModal');
+		});
+	});
+</script>
+<style>
+.catalog-product-view .message-error{width:940px !important; margin:0px auto;}
+</style>

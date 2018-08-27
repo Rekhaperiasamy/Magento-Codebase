@@ -1,0 +1,99 @@
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');
+$_cataloghelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+$upsellProducts = $this->getUpsellProducts();
+$no_of_count    = count($upsellProducts);
+/* obsolete device Fix for 5635 */
+$upsellProductSubscriptionAmountArray = array();
+foreach ($upsellProducts as $upsellProduct){
+	$subscription = $this->getSubscriptionProduct($upsellProduct);
+	$subscriptionItem = $subscription->getFirstItem();
+	$subscriptionAmount = $this->getDeviceSubscriptionAmount($subscriptionItem);
+	$upsellProductSubscriptionAmountArray[$upsellProduct->getId()] = $subscriptionAmount;
+}
+asort($upsellProductSubscriptionAmountArray);
+$upsellProductswithSort = array();
+foreach ($upsellProductSubscriptionAmountArray as $key => $val) {
+	$upsellProductswithSort[] = $objectManager->create('Magento\Catalog\Model\Product')->load($key);
+}
+?>
+<?php $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface'); ?>
+<?php $storeId = $store->getStore()->getStoreId(); 
+if($product->getTypeId() == 'bundle')
+{
+        $virtualData = $this->helper('Orange\Bundle\Helper\Data')->VirtualProductInfo($product->getId());
+		$simpleProductdata = $this->helper('Orange\Bundle\Helper\Data')->SimpleProductInfo($product->getId());
+		$deviceName =  $simpleProductdata->getName();
+		$tpName =  $virtualData->getName();
+                /* subscription duration info */
+                    $subscription = $virtualData->getSubsidyDuration();
+                /* end */
+		if($storeId == 1)
+		{
+		$formattedAmortissementURL = $_cataloghelper->getFormattedUrl($store->getStore($storeId)->getUrl("afbetalingen/"));
+?>
+		<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">
+        <a href='<?php echo $formattedAmortissementURL;?>?id=<?php echo $product->getId();?>'  class="amortisation" target="_blank" rel="noopener noreferrer"><?php echo __("Tableau d'amortissement pour le").' '.$deviceName.' '.__("avec").' '.$tpName; ?> 
+            <?php if($subscription == 12): ?>
+                <?php echo '('; echo __('Engagement de').' '; echo $subscription.' '; echo __('mois'); echo ')';?>
+            <?php else: ?>
+                <?php echo '('; echo __('Engagement de 24').' '; echo __('mois'); echo ')'; ?>
+            <?php endif; ?>
+        </a><br>
+		</div>
+		</div>
+<?php 
+    }
+	else
+	{
+		$formattedAmortissementURL = $_cataloghelper->getFormattedUrl($store->getStore($storeId)->getUrl("amortissement/"));
+	?>
+	<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">
+	<a href='<?php echo $formattedAmortissementURL;?>?id=<?php echo $product->getId();?>' class="amortisation" target="_blank" rel="noopener noreferrer"><?php echo __("Tableau d'amortissement pour le").' '.$deviceName.' '.__("avec").' '.$tpName; ?>
+            <?php if($subscription == 12): ?>
+                <?php echo '('; echo __('Engagement de').' '; echo $subscription.' '; echo __('mois'); echo ')';?>
+            <?php else: ?>
+                <?php echo '('; echo __('Engagement de 24').' '; echo __('mois'); echo ')';?>
+            <?php endif; ?>
+        </a><br>
+		</div>
+		</div>
+	<?php
+	}
+} 
+else {
+if($upsellProductswithSort)
+	{
+foreach ($upsellProductswithSort as $upsellProduct){
+
+       if($storeId == 1)
+		 {
+         $formattedAmortissementURL = $_cataloghelper->getFormattedUrl($store->getStore($storeId)->getUrl("afbetalingen/"));
+         }
+		else
+		{
+		$formattedAmortissementURL = $_cataloghelper->getFormattedUrl($store->getStore($storeId)->getUrl("amortissement/"));
+		}
+		$virtualData = $this->helper('Orange\Bundle\Helper\Data')->VirtualProductInfo($upsellProduct->getId());
+		$simpleProductdata = $this->helper('Orange\Bundle\Helper\Data')->SimpleProductInfo($upsellProduct->getId());
+		$deviceName =  $simpleProductdata->getName();
+		$tpName =  $virtualData->getName();
+                /* subscription duration info */
+                    $subscription = $virtualData->getSubsidyDuration();
+                /* end */
+?>
+<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">
+<a href='<?php echo $formattedAmortissementURL;?>?id=<?php echo $upsellProduct->getId();?>'  class="amortisation" target="_blank" rel="noopener noreferrer"><?php echo __("Tableau d'amortissement pour le").' '.$deviceName.' '.__("avec").' '.$tpName; ?>
+    <?php if($subscription == 12): ?>
+        <?php echo '('; echo __('Engagement de').' '; echo $subscription.' '; echo __('mois'); echo ')';?>
+        <?php else: ?>
+        <?php echo '('; echo __('Engagement de 24').' '; echo __('mois'); echo ')';?>
+        <?php endif; ?>
+</a><br>
+</div>
+</div>
+<?php 
+ }
+  }
+ } ?>

@@ -1,0 +1,252 @@
+<?php
+$helper = $this->helper('Orange\Upload\Helper\Data')->storeInfo();
+$storeCode = $helper->getStore()->getCode();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$request=$objectManager->get('Magento\Framework\App\Request\Http');
+$fullAction= $request->getFullActionName();
+$customerGroupName = $objectManager->create('Orange\Customer\Model\Session')->getCustomerTypeName();
+$urlInterface=$objectManager->get('Magento\Framework\UrlInterface');
+$clearUrl=$urlInterface->getUrl('checkout/cart/clear');
+$identifier = '';
+if ($storeCode == 'nl' && $customerGroupName == 'B2C') {
+    $identifier = "header_static_" . $storeCode;
+} else if ($storeCode == 'fr' && $customerGroupName == 'B2C') {
+    $identifier = "header_static_" . $storeCode;
+} else if ($storeCode == 'nl' && $customerGroupName == 'SOHO') {
+    $identifier = "header_static_" . $storeCode . "_soho";
+} else if ($storeCode == 'fr' && $customerGroupName == 'SOHO') {
+    $identifier = "header_static_" . $storeCode . "_soho";
+}
+$storeKey = '';
+if ($customerGroupName == 'SOHO') {
+    if ($storeCode == 'fr') {
+        $storeKey = 'independants';
+    }
+    if ($storeCode == 'nl') {
+        $storeKey = 'zelfstandigen';
+    }
+}
+echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($identifier)->toHtml();
+if(isset($fullAction) && $fullAction=='intermediate_listing_item'){
+$changeUrl = $this->helper('Orange\Upload\Helper\Data')->getSohoChange($helper->getStore()->getId());
+?>
+   <script>
+        //console.log('');
+        require(['jquery'], function ($) {
+            $(document).ready(function(){
+                var pageURL = $(location).attr("href");
+
+                if (pageURL.indexOf('/nl') > -1) {
+                    var res = '<?php echo $changeUrl; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $("body .lang-fr").attr('href',res);
+
+                if (pageURL.indexOf('/fr') > -1) {
+                    var res = '<?php echo $changeUrl; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $("body .lang-nl").attr('href',res);
+            });
+        });
+    </script>
+<?php
+}else if(isset($fullAction) && $fullAction=='cms_page_view'){
+ $storeName = $this->helper('Orange\Upload\Helper\Data')->getCmsPageChangeUrl($helper->getStore()->getId());
+ if($storeName){ ?>
+   <script>
+        //console.log('');
+        require(['jquery'], function ($) {
+            $(document).ready(function(){
+                var pageURL = $(location).attr("href");
+
+                if (pageURL.indexOf('/nl') > -1) {
+                    var res = '<?php echo $storeName; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $("body .lang-fr").attr('href',res);
+
+                if (pageURL.indexOf('/fr') > -1) {
+                    var res = '<?php echo $storeName; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $("body .lang-nl").attr('href',res);
+            });
+        });
+    </script>
+<?php }else{ ?>
+     <script>
+        require(['jquery'], function ($) {
+            $(document).ready(function(){
+                var pageURL = $(location).attr("href");
+                var ductchLanguage = $(".lang-nl").attr("href");
+                var frenchlangugae = $(".lang-fr").attr("href");
+
+                var storekey = "<?php echo $storeKey ?>";
+                var l = window.location;
+                var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+                if (pageURL.indexOf('/nl') > -1) {
+                    var storekey = "<?php echo $storeKey ?>";
+                    if (storekey == "zelfstandigen") {
+                        var res = pageURL.replace("/nl/zelfstandigen", "/fr/independants");
+                    } else {
+                        var res = pageURL.replace("/nl", "/fr");
+                    }
+                    $("body .lang-fr").attr('href',res);
+                } else {
+                    frenchlanguage = frenchlangugae.replace("/fr", "fr");
+                    if (pageURL.indexOf('/fr') > -1) {
+                        res = pageURL;
+                    } else {
+                        res = pageURL + frenchlanguage;
+                    }
+                    $("body .lang-fr").attr('href',res);
+                }
+
+
+                if (pageURL.indexOf('/fr') > -1) {
+                    var storekey = "<?php echo $storeKey ?>";
+                    if (storekey == "independants") {
+                        var res = pageURL.replace("/fr/independants", "/nl/zelfstandigen");
+                    } else {
+                        var res = pageURL.replace("/fr", "/nl");
+                    }
+                    $("body .lang-nl").attr('href',res);
+                } else {
+                    ductchLanguage = ductchLanguage.replace("/nl", "nl");
+                    if (pageURL.indexOf('/nl') > -1) {
+                        res = pageURL;
+                    } else {
+                        res = pageURL + ductchLanguage;
+                    }
+                    $("body .lang-nl").attr('href',res);
+                }
+
+            });
+        });
+    </script>
+<?php }
+}else if ($this->helper('Orange\Upload\Helper\Data')->productPage() == 'category') {
+    $storeName = $this->helper('Orange\Upload\Helper\Data')->storeIdChanger($helper->getStore()->getCode());
+    ?>
+
+    <script>
+        require(['jquery'], function ($) {
+            $(document).ready(function(){
+                var pageURL = $(location).attr("href");
+                $(".lang-nl").attr("href", "javascript:void(0)");
+                $(".lang-fr").attr("href", "javascript:void(0)");
+                <?php $helperURL = $this->helper('Orange\Upload\Helper\Data')->urlRewriteTable($storeName); ?>
+                
+                if (pageURL.indexOf('/nl') > -1) {
+                    var res = '<?php echo $helperURL['request_path']; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $(".lang-fr").attr('href',res);
+
+                if (pageURL.indexOf('/fr') > -1) {
+                    var res = '<?php echo $helperURL['request_path']; ?>';
+                    //return false;
+                } else {
+                    var res = window.location.href;
+                }
+                $(".lang-nl").attr('href',res);
+               
+            });
+        });
+    </script>
+
+<?php } else if ($this->helper('Orange\Upload\Helper\Data')->productPage() == 'others') { ?>
+    <script>
+        require(['jquery'], function ($) {
+            $(document).ready(function(){
+                var pageURL = $(location).attr("href");
+                var ductchLanguage = $(".lang-nl").attr("href");
+                var frenchlangugae = $(".lang-fr").attr("href");
+
+                var storekey = "<?php echo $storeKey ?>";
+                var l = window.location;
+                var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+                if (pageURL.indexOf('/nl') > -1) {
+                    var storekey = "<?php echo $storeKey ?>";
+                    if (storekey == "zelfstandigen") {
+                        var res = pageURL.replace("/nl/zelfstandigen", "/fr/independants");
+                    } else {
+                        var res = pageURL.replace("/nl", "/fr");
+                    }
+                    $("body .lang-fr").attr('href',res);
+                } else {
+                    frenchlanguage = frenchlangugae.replace("/fr", "fr");
+                    if (pageURL.indexOf('/fr') > -1) {
+                        res = pageURL;
+                    } else {
+                        res = pageURL + frenchlanguage;
+                    }
+                    $("body .lang-fr").attr('href',res);
+                }
+
+
+                if (pageURL.indexOf('/fr') > -1) {
+                    var storekey = "<?php echo $storeKey ?>";
+                    if (storekey == "independants") {
+                        var res = pageURL.replace("/fr/independants", "/nl/zelfstandigen");
+                    } else {
+                        var res = pageURL.replace("/fr", "/nl");
+                    }
+                    $("body .lang-nl").attr('href',res);
+                } else {
+                    ductchLanguage = ductchLanguage.replace("/nl", "nl");
+                    if (pageURL.indexOf('/nl') > -1) {
+                        res = pageURL;
+                    } else {
+                        res = pageURL + ductchLanguage;
+                    }
+                    $("body .lang-nl").attr('href',res);
+                }
+
+            });
+        });
+    </script>
+<?php } else if ($this->helper('Orange\Upload\Helper\Data')->productPage() == 'product') { ?>
+    <?php
+    $storeName = $this->helper('Orange\Upload\Helper\Data')->storeIdChanger($helper->getStore()->getCode());
+    $productUrl = $this->helper('Orange\Upload\Helper\Data')->getProductUrl($storeName);
+    ?>
+    <script>
+        //console.log('');
+        require(['jquery'], function ($) {
+            $(document).ready(function(){
+                var pageURL = $(location).attr("href");
+
+                if (pageURL.indexOf('/nl') > -1) {
+                    var res = '<?php echo $productUrl; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $("body .lang-fr").attr('href',res);
+
+                if (pageURL.indexOf('/fr') > -1) {
+                    var res = '<?php echo $productUrl; ?>';
+                } else {
+                    var res = window.location.href;
+                }
+                $("body .lang-nl").attr('href',res);
+            });
+        });
+    </script>
+
+<?php } ?>
+<?php
+if($fullAction=='checkout_cart_tempo'){
+?>
+<?php
+}elseif($fullAction=='checkout_cart_index' || $fullAction=='checkout_index_index'){ ?> <?php }else{
+?>
+<?php
+}
+?>

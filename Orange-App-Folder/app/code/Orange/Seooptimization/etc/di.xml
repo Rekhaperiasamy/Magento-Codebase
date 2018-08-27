@@ -1,0 +1,6 @@
+<?xml version="1.0"?>    
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<preference for="Magento\Sitemap\Model\ResourceModel\Catalog\Category" type="Orange\Seooptimization\Model\ResourceModel\Catalog\Category" />
+<preference for="Magento\Sitemap\Model\ResourceModel\Catalog\Product" type="Orange\Seooptimization\Model\ResourceModel\Catalog\Product" />
+<preference for="Magento\Sitemap\Model\Sitemap" type="Orange\Seooptimization\Model\Sitemap" />
+</config>

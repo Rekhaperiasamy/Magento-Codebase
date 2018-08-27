@@ -1,0 +1,689 @@
+<?php
+$tempSession    =  $block->getCheckoutTempSession();
+
+	if(isset($tempSession ))
+    {
+	 	$previousStep = $tempSession['step'];
+		
+		$step1DivClass = "";
+		$step2DivClass = "disable_div";
+		$step3DivClass = "disable_div";
+		$step1TabClass = "first active";
+		$step2TabClass = "";
+		$step3TabClass = "last";
+		$stepvalue = 'step2';
+
+		if(!isset($previousStep))
+		{
+			$step1DivClass = "";
+			$step2DivClass = "disable_div";
+			$step3DivClass = "disable_div";
+			$step1TabClass = "first active";
+			$step2TabClass = "";
+			$step3TabClass = "last";
+			$stepvalue = 'step2';
+		}  
+		else if($previousStep == 'step2')
+		{
+			$step1DivClass = "disable_div";
+			$step2DivClass = "";
+			$step3DivClass = "disable_div";
+			$step1TabClass = "first done";
+			$step2TabClass = "active";
+			$step3TabClass = "last"; 
+			$stepvalue = 'step3';
+		}
+		else if($previousStep == 'step3')
+		{
+			$step1DivClass = "disable_div";
+			$step2DivClass = "disable_div";
+			$step3DivClass = "";
+			$step1TabClass = "first done";
+			$step2TabClass = "done";
+			$step3TabClass = "last active";
+			$stepvalue = 'final';
+		}
+		//////////////////////Step1 Calculation///////////////////////////////
+		/////////////////////////Nationality Check////////////////////
+		if(isset($tempSession['nationality']) && ($tempSession['nationality'] =='belgian') )
+		{
+			$nationality_bl_checked  =  'checked';
+			$residence_div_st        =  'col-xs-12 col-sm-6 col-sm-offset-6 disable_div';
+			$q_registerd_div_st      = 'col-xs-12 col-sm-6 margin-xs-t-s disable_div';
+			$client_code_div         = 'row margin-xs-t-l';
+		}
+		else if(isset($tempSession['nationality'])  && ($tempSession['nationality'] =='other'))
+		{
+			$nationality_other_checked  =  'checked';
+			$residence_div_st           =  'col-xs-12 col-sm-6 col-sm-offset-6';
+			$q_registerd_div_st         = 'col-xs-12 col-sm-6 margin-xs-t-s ';
+			$client_code_div         = 'row margin-xs-t-l disable_div';  
+		}
+		else
+		{
+			$nationality_bl_checked  =  'checked';
+			$nationality_other_checked  =  '';
+			$residence_div_st        =  'col-xs-12 col-sm-6 col-sm-offset-6 disable_div';
+			$q_registerd_div_st         = 'col-xs-12 col-sm-6 margin-xs-t-s disable_div';
+			$client_code_div         = 'row margin-xs-t-l';   
+		}
+		////////////////////////////////////////////////////////////
+		////Exinvoice/////////////////
+		$ex_invoice_yes_checked  =  'checked';
+		if(isset($tempSession['ex_invoice']) && ($tempSession['ex_invoice'] =='yes') )
+		{
+			$ex_invoice_yes_checked  =  'checked';
+		}
+		else if(isset($tempSession['ex_invoice'])  && ($tempSession['ex_invoice'] =='no'))
+		{
+			$ex_invoice_no_checked  =  'checked';
+		}
+    	///////////////////
+		////Disocunt/////////////////
+		$discount_f_yes_checked  =  'checked';
+		if(isset($tempSession['discount_f']) && ($tempSession['discount_f'] =='yes') )
+		{
+			$discount_f_yes_checked  =  'checked';
+		}
+		else if(isset($tempSession['discount_f'])  && ($tempSession['discount_f'] =='no'))
+		{
+			$discount_f_no_checked  =  'checked';
+		}
+		///////////////////
+		////Gender/////////////////
+		$gender_male_checked  =  'checked';
+		if(isset($tempSession['gender']) && ($tempSession['gender'] =='1') )
+		{
+			$gender_male_checked  =  'checked';
+		}
+		else if(isset($tempSession['gender'])  && ($tempSession['gender'] =='2'))
+		{
+			$gender_female_checked  =  'checked';
+		}
+		///////////////////
+		////terms_condition/////////////////
+		if(isset($tempSession['terms_condition']))
+		{
+			$terms_condition_checked  =  'checked';
+		}
+		///////////////////
+		/////////////////Profile Switch Case//////////////////////////////
+		$legal_status_div = "row margin-sm-b-s disable_div";
+		$company_div      = "row margin-sm-b-s disable_div";
+		$vat_number_div   = "row margin-sm-b-s disable_div";
+		if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 1 || $tempSession['tx_profile_dropdown'] == 4)) 
+		{ 
+			$legal_status_div = "row margin-sm-b-s disable_div";
+			$company_div      = "row margin-sm-b-s disable_div";
+			$vat_number_div   = "row margin-sm-b-s";
+		}
+		else if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 2)) 
+		{ 
+			$legal_status_div = "row margin-sm-b-s disable_div";
+			$company_div      = "row margin-sm-b-s disable_div";
+			$vat_number_div   = "row margin-sm-b-s disable_div";
+		}
+		else if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 3)) 
+		{ 
+			$legal_status_div = "row margin-sm-b-s ";
+			$company_div      = "row margin-sm-b-s ";
+			$vat_number_div   = "row margin-sm-b-s ";
+		}
+		////////////////////////////////////////////////////////////////////
+}
+else
+{
+	$step1DivClass = "";  
+	$step2DivClass = "disable_div";
+	$step3DivClass = "disable_div";
+	$step1TabClass = "first active";
+	$step2TabClass = "";
+	$step3TabClass = "last";
+	$legal_status_div = "row margin-sm-b-s disable_div";
+	$company_div      = "row margin-sm-b-s disable_div";
+	$vat_number_div   = "row margin-sm-b-s disable_div";
+	$nationality_bl_checked = "checked";
+	$nationality_other_checked  =  '';
+	$residence_div_st        =  'col-xs-12 col-sm-6 col-sm-offset-6 disable_div';
+	$q_registerd_div_st         = 'col-xs-12 col-sm-6 margin-xs-t-s disable_div';
+	$legal_status_div = "row margin-sm-b-s disable_div";
+	$company_div      = "row margin-sm-b-s disable_div";
+	$vat_number_div   = "row margin-sm-b-s disable_div";
+	$ex_invoice_yes_checked  =  'checked';
+	$ex_invoice_no_checked  =  '';
+	$discount_f_yes_checked  =  'checked';
+	$discount_f_no_checked  =  '';
+	$terms_condition_checked  =  'checked';
+	$client_code_div         = 'row margin-xs-t-l';   
+	$gender_male_checked  =  'checked';
+}
+?>
+  <div id="step2_information" class="<?php if(isset($step1DivClass)) {  echo $step2DivClass; } ?>">
+  
+   <div class="container">
+   
+		<div class="row">
+			<div class="col-xs-12">
+				<h3> <?php echo __('Informations') ?></h3>				
+			</div>
+
+			<div class="col-xs-12">				
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="tooltip_help"><?php echo __('Voulez-vous ajouter cet ou ces abonnement(s) à votre facture ? *') ?> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></p>
+					</div>
+					<div class="col-xs-12 margin-xs-t-m">
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-postpaid"><input type="radio" id="ex_invoice" name="ex_invoice" value="yes" class="form-radio" <?php if(isset($ex_invoice_yes_checked)) { echo $ex_invoice_yes_checked; }?> ><?php echo __('Oui') ?></label>
+						</div>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-prepaid"><input type="radio" id="ex_invoice" name="ex_invoice" value="no" class="form-radio" <?php if(isset($ex_invoice_no_checked)) { echo $ex_invoice_no_checked; }?>><?php echo __('Non') ?></label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12 margin-xs-t-m">
+						<p><?php echo __("Si vous êtes déjà abonné chez Orange, vous bénéficiez d'une réduction de 5 €/mois.<br>
+						Avez-vous un abonnement mobile d'au moins 10 €/mois ? *") ?></p>
+					</div>
+					<div class="col-xs-12 margin-xs-t-m">
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-postpaid"><input type="radio" id="discount_f" name="discount_f" value="yes" class="form-radio" <?php if(isset($discount_f_yes_checked)) { echo $discount_f_yes_checked; }?> ><?php echo __('Oui') ?></label>
+						</div>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-prepaid"><input type="radio" id="discount_f" name="discount_f" value="no" class="form-radio" <?php if(isset($discount_f_no_checked)) { echo $discount_f_no_checked; }?>><?php echo __('Non') ?></label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="row margin-xs-t-s">
+							<div class="col-xs-12">
+								<h3 class="margin-xs-b-m"><?php echo __('Données personnelles') ?></h3>
+								<label class="" for="edit-submitted-test-checkbox-1"><input type="checkbox" id="i_ind_copm" name="i_ind_copm" value="1" class="form-checkbox pull-left margin-xs-b-m" <?php if(isset($tempSession['i_ind_copm']) ) { echo "checked"; } ?>> <span class=""><?php echo __('Indépendant ou société') ?></span></label>
+
+								<div class="clearfix margin-xs-b-s"></div>
+
+	
+								<div class="row margin-xs-b-s">
+									<div class="col-xs-12 col-sm-6 col-md-6">
+										<p class="pull-left margin-xs-t-s margin-xs-r-m"><?php echo __('Profil') ?><span class="form-required">*</span></p>			
+										<div class="dropdown drowpdown-full-width margin-sm-b-s">
+										<select class="dropdown-menu-form" name="tx_profile_dropdown" id="tx_profile_dropdown" data-validate="{required:true}">
+										<option value=""  ><?php echo __('Sélectionnez') ?></option>
+										<option value="3" <?php if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 3)) 
+												{ 
+												echo 'selected';
+												} ?> ><?php echo __('Entreprise') ?></option>
+										<option value="4" <?php if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 4)) 
+												{ 
+												echo 'selected';
+												} ?> ><?php echo __('Indépendant') ?></option>
+										<option value="2" <?php if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 2)) 
+												{ 
+												echo 'selected';
+												} ?>  ><?php echo __('Profession libérale sans numéro de TVA') ?></option>
+										<option value="1" <?php if(isset($tempSession['tx_profile_dropdown']) && ($tempSession['tx_profile_dropdown'] == 1)) 
+												{ 
+												echo 'selected';
+												} ?>  ><?php echo __('Profession libérale avec numéro de TVA') ?></option>
+				                        </select>
+				
+										</div>
+								
+								</div>
+									<div class="col-xs-12 col-md-6">
+										<div class="<?php if(isset($legal_status_div)) { echo $legal_status_div ; } ?>" id="legal_status_div">
+											<div class="col-xs-12 col-sm-5">
+												<p class="pull-left margin-xs-t-s margin-xs-b-s margin-xs-r-m"><?php echo __('Statut juridique') ?> <span class="form-required" title="Ce champ est requis.">*</span></p>	
+											</div>
+											<div class="col-xs-12 col-sm-7">		
+												<div class="dropdown drowpdown-full-width margin-sm-b-s">
+						     <select class="dropdown-menu-form" name="legal_status" id="legal_status" >
+										<option value=""  ><?php echo __('Veuillez choisir&nbsp;'); ?></option>
+										<option  value="Entreprise individuelle" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "Entreprise individuelle")) {?>  selected <?php } ?> ><?php echo __('Entreprise individuelle') ?></option>
+                                        <option  value="ASBL" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "ASBL")) {?>  selected <?php } ?>><?php echo __('ASBL') ?></option>
+                                        <option  value="SPRL" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SPRL")) {?>  selected <?php } ?>><?php echo __('SPRL') ?></option>
+                                        <option  value="SA" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SA")) {?>  selected <?php } ?>><?php echo __('SA') ?></option>
+                                        <option  value="SCRI" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SCRI")) {?>  selected <?php } ?>><?php echo __('SCRI') ?></option>
+                                        <option  value="SCRL" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SCRL")) {?>  selected <?php } ?>><?php echo __('SCRL') ?></option>
+                                        <option  value="GIE" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "GIE")) {?>  selected <?php } ?>><?php echo __('GIE') ?></option>
+                                        <option  value="GEIE" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "GEIE")) {?>  selected <?php } ?>><?php echo __('GEIE') ?></option>
+                                        <option  value="SNC" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SNC")) {?>  selected <?php } ?>><?php echo __('SNC') ?></option>
+                                        <option  value="SCA" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SCA")) {?>  selected <?php } ?>><?php echo __('SCA') ?></option>
+                                       <option  value="SCS" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "SCS")) {?>  selected <?php } ?>><?php echo __('SCS') ?></option>
+                                       <option  value="Associations" <?php if(isset($tempSession['legal_status']) && ($tempSession['legal_status'] == "Associations")) {?>  selected <?php } ?>><?php echo __('Associations') ?></option>
+				                       </select>
+										
+												</div>
+											</div>
+										</div>
+										<div class="<?php if(isset($company_div)) { echo $company_div ; } ?>" id="company_div">
+											<div class="col-xs-12 col-sm-5">
+												<p class="pull-left margin-xs-t-s margin-xs-b-s margin-xs-r-m"><?php echo __('N° de TVA') ?><span class="form-required" title="Ce champ est requis.">*</span></p>	
+											</div>
+											<div class="col-xs-12 col-sm-7">		
+												<input class="form-control required pull-left" type="text" id="company_name" name="company_name" value="<?php if(isset($tempSession['company_name'])) { echo $tempSession['company_name']; }?>" size="60" maxlength="50">
+											</div>
+										</div>
+										<div class="<?php if(isset($vat_number_div)) { echo $vat_number_div ; } ?>" id="vat_number_div" >
+											<div class="col-xs-12 col-sm-5">
+												<p class="pull-left margin-xs-t-s margin-xs-b-s margin-xs-r-m"> <?php echo __('N° de TVA') ?><span class="form-required" title="Ce champ est requis.">*</span></p>	
+											</div>
+											<div class="col-xs-12 col-sm-7">		
+												<input class="form-control required pull-left" type="text" id="vat_number" name="vat_number" value="<?php if(isset($tempSession['vat_number'])) { echo $tempSession['vat_number']; }?>" size="60" maxlength="50">
+											</div>
+										</div>
+									</div>
+								</div>
+
+						
+						
+
+						</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-12">		
+								<div class="margin-xs-t-m">
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-gender-mr"><input type="radio" id="edit-gender-mr" name="gender" value="1" class="form-radio" <?php if(isset($gender_male_checked)) {  echo $gender_male_checked; } ?> ><?php echo __('Mr') ?></label>
+									</div>
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-gender-mme"><input type="radio" id="edit-gender-mme" name="gender" value="2" class="form-radio" <?php if(isset($gender_female_checked)) {  echo $gender_female_checked; } ?>><?php echo __('Mme') ?>.</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row margin-xs-t-s">
+							<div class="col-xs-12 col-sm-6">
+								<label for="edit-first-name"><?php echo __('Prénom.') ?>. <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+								<input class="form-control required" type="text" id="first_name" name="first_name" value="<?php if(isset($tempSession['first_name'])) { echo $tempSession['first_name']; }?>" size="60" maxlength="35" data-validate="{required:true, 'validate-alpha':true}">
+							</div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+								<label for="edit-name"><?php echo __('Nom.') ?>. <span class="form-required" title="Ce champ est requis.">*</span></label>									 
+								<input class="form-control required disabled" id="last_name" type="text" name="last_name" value="<?php if(isset($tempSession['last_name'])) { echo $tempSession['last_name']; }?>" size="60" maxlength="35" data-validate="{required:true, 'validate-alpha':true}">
+							</div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+								<label for="edit-mail"><?php echo __('Email.') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+								<input class="form-control required" type="text" id="email" name="email" value="<?php if(isset($tempSession['email'])) { echo $tempSession['email']; }?>" size="60" maxlength="50" data-validate="{required:true, 'validate-email':true}">
+							</div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+								<label for="edit-date"><?php echo __('Date de naissance') ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>	
+								<div class="row">
+									<div class="col-xs-4">
+										<input class="form-control required" type="text" id="date_day" name="date_day" value="<?php if(isset($tempSession['date_day'])) { echo $tempSession['date_day']; }?>" size="60" maxlength="2" placeholder="Jour" data-validate="{required:true, 'validate-dateday':true}">
+									</div>
+									<div class="col-xs-4">
+										<input class="form-control required" type="text" id="date_month" name="date_month" value="<?php if(isset($tempSession['date_month'])) { echo $tempSession['date_month']; }?>" size="60" maxlength="2" placeholder="Mois" data-validate="{required:true, 'validate-datemonth':true}">
+									</div>
+									<div class="col-xs-4">
+										<input class="form-control required" type="text" id="date_year" name="date_year" value="<?php if(isset($tempSession['date_year'])) { echo $tempSession['date_year']; }?>" size="60" maxlength="4" placeholder="Année" data-validate="{required:true, 'validate-dateyear':true}">
+									</div>
+								</div>
+							</div>
+								
+
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+								<label for="edit-nationality"><?php echo __('Nationalité') ?>  <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>						
+								<br>
+								<div class="margin-xs-t-s">
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-nationality-mr"><input type="radio" id="nationality" name="nationality" value="belgian" class="form-radio" <?php  if(isset($nationality_bl_checked)) { echo $nationality_bl_checked; } ?>><?php echo __('Belge') ?> </label>
+									</div>
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-nationality-mme"><input type="radio" id="nationality" name="nationality" value="other" class="form-radio" <?php  if(isset($nationality_other_checked)) { echo $nationality_other_checked; } ?>><?php echo __('Autre') ?></label>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+					
+
+							
+							<div class="<?php if(isset($q_registerd_div_st)) { echo $q_registerd_div_st ; } ?>" id="q_registered_div">
+								<label for="edit-name"><?php echo __('Etes-vous enregistré en Belgique?') ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>
+								<br>
+								<div class="margin-xs-t-s">
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-registered-yes"><input type="radio" id="registered" name="registered" value="1" class="form-radio" checked><?php echo __('Oui') ?></label>
+									</div>
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-registered-no"><input type="radio" id="registered" name="registered" value="0"  class="form-radio"><?php echo __('Non') ?></label>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="<?php if(isset($residence_div_st)) { echo $residence_div_st ; } ?>" id="residence_div">
+								<div class="margin-xs-t-s">
+									<label for="edit-sejour"><?php echo __('Numéro de titre de séjour') ?> <span class="form-required" title="Ce champ est requis.">*</span> </label>						 
+									<input class="form-control required" type="text" id="residence_number" name="residence_number" value="<?php if(isset($tempSession['residence_number'])) { echo $tempSession['residence_number']; }?>" size="60" maxlength="50">
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6" id="passport_div">
+								<div class="margin-xs-t-s">
+									<label for="edit-passport"><?php echo __('Numéro de passport') ?> <span class="form-required" title="Ce champ est requis.">*</span> </label>						 
+									<input class="form-control required" type="text" id="passport_number" name="passport_number" value="<?php if(isset($tempSession['passport_number'])) { echo $tempSession['passport_number']; }?>" size="60" maxlength="50" data-validate="{required:true}">
+								</div>
+							</div>
+						</div>
+
+						<div class="row margin-xs-t-m">
+							<div class="col-xs-12 margin-xs-b-s">
+								<h3><?php echo __('Adresse de facturation') ?></h3>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<label for="edit-postcode"><?php echo __('Code postal,ville') ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>						 
+								<input class="form-control required" type="text" id="b_postcode_city" name="b_postcode_city" value="<?php if(isset($tempSession['b_postcode_city'])) { echo $tempSession['b_postcode_city']; }?>" size="60" maxlength="10" data-validate="{required:true}">																
+								<span id="zip_validation" style="color:#e02b27; font-size: 1.2rem;" ></span>
+								<input type="hidden" name="b_zipcode_validation" id="b_zipcode_validation" value="" >	
+									</div>							
+							<div class="col-xs-12 col-sm-6">
+								<label for="edit-street"><?php echo __('Rue') ?>  <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+								<input class="form-control required" type="text" id="b_street" name="b_street" value="<?php if(isset($tempSession['b_street'])) { echo $tempSession['b_street']; }?>" size="60" maxlength="100" data-validate="{required:true}">
+								<span id="street_validation" style="color:#e02b27; font-size: 1.2rem;"></span>
+								<input type="hidden" name="b_street_validation" id="b_street_validation" value="" >
+							</div>
+							<div class="clearfix" ></div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+								<label for="edit-number"><?php echo __('Numéro') ?>  <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+								<input class="form-control required" type="text" id="b_number" name="b_number" value="<?php if(isset($tempSession['b_number'])) { echo $tempSession['b_number']; }?>" size="60" maxlength="10" data-validate="{required:true, 'validate-streetnumber':true}">
+							</div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+								<label for="edit-box"><?php echo __('Boîte') ?> </label>						 
+								<input class="form-control required" type="text" id="b_box" name="b_box" value="<?php if(isset($tempSession['b_box'])) { echo $tempSession['b_box']; }?>" size="60" maxlength="20" data-validate="{required:true}">
+							</div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+								<label for="edit-country"><?php echo __('Pays: Belgique') ?> </label>						 
+							</div>
+						</div>
+
+						<div class="row margin-xs-t-m">
+							<div class="col-xs-12">
+								<h3><?php echo __('Adresse de livraison') ?></h3>
+
+								<div class="margin-xs-t-m">
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-gender-mr"><input type="radio" id="c_delivery_address" name="c_delivery_address" value="1" class="form-radio"><?php echo __('Mon adresse de livraison est identique à mon adresse de facturation') ?></label>
+									</div>
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-gender-mr"><input type="radio" id="c_delivery_address" name="c_delivery_address" value="2" class="form-radio"><?php echo __('Je désire être livré à une adresse différente de mon adresse de facturation') ?></label>
+									</div>
+
+									<div class="row margin-xs-b-m padding-xs-l-n">
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+											<label for="edit-name"><?php echo __('Nom') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+											<input class="form-control required" type="text" id="s_name" name="s_name" value="<?php if(isset($tempSession['s_name'])) { echo $tempSession['s_name']; }?>" size="60" maxlength="35" data-validate="{required:true, 'validate-alpha':true}" >
+										</div>
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+											<label for="edit-attention-to"><?php echo __('A l’attention de') ?></label>									 
+											<input class="form-control required disabled" id="s_attention_n" type="text" name="s_attention_n" value="<?php if(isset($tempSession['s_attention_n'])) { echo $tempSession['s_attention_n']; }?>" size="60" maxlength="50">
+										</div>
+										<div class="clearfix"></div>
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+											<label for="edit-postcode"><?php echo __('Code postal, ville') ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>						 
+											<input class="form-control required" type="text" id="s_postcode_city" name="s_postcode_city" value="<?php if(isset($tempSession['s_postcode_city'])) { echo $tempSession['s_postcode_city']; }?>" size="60" maxlength="50" data-validate="{required:true}">
+											<span id="zip_validation_s" style="color:#e02b27; font-size: 1.2rem;" class="clearfix" ></span>
+											<input type="hidden" name="s_zipcode_validation" id="s_zipcode_validation" value="" >
+										</div>										
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+											<label for="edit-street"><?php echo __('Rue') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+											<input class="form-control required" type="text" id="s_street" name="s_street" value="<?php if(isset($tempSession['s_street'])) { echo $tempSession['s_street']; }?>" size="60" maxlength="128" data-validate="{required:true}">
+												<span id="street_validation_s" style="color:#e02b27; font-size: 1.2rem;"></span>
+												<input type="hidden" name="s_street_validation" id="s_street_validation" value="" >
+										</div>
+										<div class="clearfix"></div>
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+											<label for="edit-number"><?php echo __('Numéro') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+											<input class="form-control required" type="text" id="s_number" name="s_number" value="<?php if(isset($tempSession['s_number'])) { echo $tempSession['s_number']; }?>" size="60" maxlength="10" data-validate="{required:true, 'validate-streetnumber':true}" >
+										</div>
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+											<label for="edit-box"><?php echo __('Boîte') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>						 
+											<input class="form-control required" type="text" id="s_box" name="s_box" value="<?php if(isset($tempSession['s_box'])) { echo $tempSession['s_box']; }?>" size="60" maxlength="128" data-validate="{required:true}">
+										</div>
+										<div class="col-xs-12 col-sm-6 margin-xs-t-s">
+											<label for="edit-country"><?php echo __('Pays: Belgique ') ?><span class="form-required" title="Ce champ est requis.">*</span></label>
+										</div>
+									</div>
+									<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+										<label for="edit-gender-mr"><input type="radio" id="edit-gender-mr" name="gender" value="mr" class="form-radio">Je désire être livré dans un point de collecte Bpost <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange"><b>?</b></a></label>
+									</div>
+									<div class="row margin-xs-b-m padding-xs-l-n padding-sm-l-m">
+										<div class="col-xs-12 col-sm-6">
+											<a class="btn btn-default margin-xs-t-n" href="">Choisir un point de collecte</a>
+											<p class="margin-xs-t-s">Vous avez choisi:<br>
+											Point de collecte XYZ, Avenue du Bourget 3, 1140 Evere<br>
+											<a href="" class="orange cursor"><?php echo __('Modifier le pickup point')?></a>
+										</div>
+									</div>
+								</div>
+							</div>							
+						</div>
+
+						<div class="<?php if(isset($client_code_div)) { echo $client_code_div; } ?>" id="code_div">
+							<div class="col-xs-12 col-sm-6">
+								<label for="edit-code-client"><?php echo __('Code client sur votre facture') ?> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>						 
+								<input class="form-control required" type="text" id="client_code" name="client_code" value="<?php if(isset($tempSession['client_code'])) { echo $tempSession['client_code']; }?>" size="60" maxlength="50">
+							</div>
+							<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+								<label for="edit-name-client"><?php echo __('Nom du client') ?></label>									 
+								<input class="form-control required disabled" id="client_name" type="text" name="client_name" value="<?php if(isset($tempSession['client_name'])) { echo $tempSession['client_name']; }?>" size="60" maxlength="50">
+							</div>
+						</div>
+
+		
+				
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-10">	
+				<h3><?php echo __('Prochaines étapes') ?></h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus accumsan massa lacus, eget pulvinar est accumsan vitae. Mauris a eros nec nisl aliquet tempus at sed massa. Integer justo odio, rhoncus in.</p>
+
+
+				<h3 class="margin-xs-t-m"><?php echo __('Offres & conditions') ?></h3>
+				<label class="" for="edit-offer"><input type="checkbox" id="offer_subscription" name="offer_subscription" value="1" class="form-checkbox pull-left margin-xs-b-m" <?php if(isset($tempSession['offer_subscription']) ) { echo "checked"; } ?>> <span class="">Voulez vous recevoir les offres intéressantes et les denières nouvelles mobistar</span></label>
+				<label class="" for="edit-conditions"><input type="checkbox" id="terms_condition" name="terms_condition" value="1" class="form-checkbox pull-left margin-xs-b-m" <?php if(isset($terms_condition_checked) ) { echo "checked"; } ?>> <span class="">J’accepte les <a href="" class="orange">conditions générales de vente</a> de Mobistar</span></label>
+
+				<div class="margin-xs-t-m margin-xs-b-m">
+					<a class="btn btn-primary" href="javascript:void(0);" id="step2">Continuer</a>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+   	</div>
+	</div>
+
+</div>
+
+<div class="test"></div>
+<!--Adderss validation-->
+<script type="text/javascript">
+require(['jquery','js/tooltipform'], function ($) {
+	$(document).ready(function ($) {
+		$('[data-toggle="tooltip"]').tooltip();
+		$('.content-collapsable h4').click(function () {
+			$(this).toggleClass('open');
+			$(this).next().slideToggle().toggleClass('closed');
+		});
+	});
+});
+</script>
+<script type="text/javascript">
+    require( [
+        "jquery",
+        "mage/mage"        
+    ],function($){
+	var city = [];
+	var zipcodeS = [];
+	var streetWeb = [];
+	var streetWebTwo = [];
+	var cstreetWebTwo = [];
+	var zipcodeWeb = [];
+	var zipcodeWebTwo = [];
+	var cityName = [];
+	$(document).ready(function() {		
+		 $("#b_postcode_city").blur(function(){			
+			var zipcode = $("#b_postcode_city").val();		
+		   if (zipcode.length != 0) {   
+			 //zipcodeWeb.splice(0, zipcodeWeb.length);		 	
+			 //streetWeb.splice(0, streetWeb.length);	
+			zipcode =  zipcode.substring(0,2);
+			data = new Array();	
+			$.ajax({
+			url: "<?php echo $this->getUrl('road/roadsixtyfivecheckout/roadsixtyfivecheckout'); ?>",
+			type: "POST", 
+			data: "zipcode=" + zipcode,		
+			success:function(result){			
+			var data = $.parseJSON(result);		
+			var obj = $.parseJSON(result);				 
+			for (var prop in obj) {
+				city.push(prop);				
+			}
+			zipcodeWeb = obj;			
+				$( "#b_postcode_city" ).autocomplete({
+					source: obj
+				});		
+			},
+			complete: function () {			
+			if(zipcodeWeb.indexOf($("#b_postcode_city").val())==-1){
+				 $("#zip_validation").text("Zipcode & city doesn't exist");
+				 $("#b_zipcode_validation").val('1');
+				 $("#b_postcode_city-error").hide();
+				}else{
+				 $("#b_zipcode_validation").val('');
+				$("#zip_validation").text(" ");
+				}
+				}
+			});		
+		}
+	});
+	//second zipcode
+		 $("#s_postcode_city").blur(function(){		 				
+		var zipcode = $("#s_postcode_city").val();		
+		if (zipcode.length != 0) {			
+			zipcode =  zipcode.substring(0,2);
+			data = new Array();	
+			$.ajax({			
+			url: "<?php echo $this->getUrl('road/roadsixtyfivecheckout/roadsixtyfivecheckout'); ?>",
+			type: "POST", 
+			data: "zipcode=" + zipcode,		
+			success:function(result){			
+			var data = $.parseJSON(result);		
+			var obj = $.parseJSON(result);				 
+			for (var prop in obj) {
+				city.push(prop);				
+			}
+			zipcodeWebTwo = obj;			
+				$( "#s_postcode_city" ).autocomplete({
+					source: obj
+				});		
+			},
+			complete: function () {			
+			if(zipcodeWebTwo.indexOf($("#s_postcode_city").val())==-1){
+				$("#zip_validation_s").text("Zipcode & city doesn't exist");
+				$("#s_postcode_city-error").hide();
+				 $("#s_zipcode_validation").val('1');
+				}else{
+				 $("#s_zipcode_validation").val('');
+				$("#zip_validation_s").text(" ");
+				}
+			}
+		});			
+		}
+	});
+	//second zipcode ends 
+	$("#b_street").blur( function(){
+	var streetName = [];
+	var zipcode = $("#b_postcode_city").val();
+	var street = $("#b_street").val();	
+		if (zipcode.length != 0) {
+			if (street.length != 0) {
+			streetName.splice(0, streetName.length);			
+				data = new Array();
+				$.ajax({
+					url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+					type: "POST", 
+					data: "zipcode=" + zipcode + "&street=" + street,
+					success:function(result){		
+						var data = $.parseJSON(result);		
+						var obj = $.parseJSON(result);				 
+						for (var prop in obj) {			
+							city.push(prop);				
+							$.each(obj[prop],function(key, val){																	
+									streetName.push(val[1]);						
+								}); 						
+						}						
+						streetWeb = streetName;							
+						var temp = $.unique((streetName));					
+						$( "#b_street" ).autocomplete({
+						source: streetWeb
+						});							
+					},
+					complete: function (e) {					
+					if(streetWeb.indexOf($("#b_street").val())==-1){
+					$("#street_validation").text("Street doesn't exist");
+					 $("#b_street-error").hide();
+				    $("#b_street_validation").val('1');
+					}else{
+				    $("#b_street_validation").val('');
+					$("#street_validation").text(" ");
+					}					
+					}											
+				});								
+				}
+				}
+			});	
+	//second street starts
+	$("#s_street").blur( function(){
+	var streetName = [];
+	var zipcode = $("#s_postcode_city").val();
+	var street = $("#s_street").val();	
+		if (zipcode.length != 0) {
+			if (street.length != 0) {
+			streetName.splice(0, streetName.length);			
+				data = new Array();
+				$.ajax({
+					url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+					type: "POST", 
+					data: "zipcode=" + zipcode + "&street=" + street,
+					success:function(result){		
+						var data = $.parseJSON(result);		
+						var obj = $.parseJSON(result);				 
+						for (var prop in obj) {			
+							city.push(prop);				
+							$.each(obj[prop],function(key, val){																	
+									streetName.push(val[1]);						
+								}); 						
+						}
+						//streetWeb=streetName.substr(5, 15);	
+						streetWebTwo = streetName;							
+						var temp = $.unique((streetName));					
+						$( "#s_street" ).autocomplete({
+						source: streetWebTwo
+						});							
+					},
+					complete: function (e) {					
+					if(streetWebTwo.indexOf($("#s_street").val())==-1){
+					$("#street_validation_s").text("Street doesn't exist");	
+		            $("#s_street_validation").val('1');
+					 $("#s_street-error").hide();
+									
+					}else{
+					 $("#s_street_validation").val('');
+					$("#street_validation_s").text(" ");
+					}					
+					}											
+				});								
+				}
+				}
+			});	
+	//second street ends			
+	});
+});</script>

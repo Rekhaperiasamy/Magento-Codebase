@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magenest_AbandonedCartReminder::css/style.css"/>
+    </head>
+    <body>
+
+        <referenceContainer name="content">
+            <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add" name="abandonedcartreminder_rule_new"/>
+
+        </referenceContainer>
+        <referenceContainer name="js">
+            <block class="Magento\Backend\Block\Template" template="Magenest_AbandonedCartReminder::rule/js.phtml" name="abandonedcartreminder_rule_add_jsinit"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,1196 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+?>
+<style type="text/css">
+
+    .top-heading { font-family:Arial, Helvetica, sans-serif; font-size:40px;font-weight:bold; text-align:left; color:#000000; }
+	.top-parent-price { font-family:Arial, Helvetica, sans-serif; font-size:30pt;font-weight:bold; text-align:left; color:#ff7900;}
+	.common-color-email { font-family:Arial, Helvetica, sans-serif; font-weight:bold; text-align:left; color:#ff7900; top:15px; left:4px;}
+	.email-currency-symbol { font-size:15pt;margin:0px 0px 0px 4px;float:left;width:10px;color:#ff7900; }
+	.email-new-price-soho {float: left;font-size: 10px;line-height: 0em; mso-line-height-rule: exactly; }
+	.email-new-price-period {font-size: 15pt;float: left;margin: 8px 0px 0px 4px;}
+	.email-decharge-txt {float: left;font-size: 9pt;margin: 0px 0px 0px 3px;}
+	.email-left { float:left;}
+	.email-section1 {width:100%;height:46px; }
+	.email-section2 { font-size: 30pt;float: left; }
+	.email-section3 { font-size: 15pt;margin: 8px 0px 0px 4px;float: left;width:10px;}
+	.email-section4 {font-size: 15pt;margin: 8px 0px 0px 4px;float:left;width:10px;}
+	.email-section5 {float:left; left:4px; font-size: 8pt;margin: 7px 0px 0px 4px;width: 10px;}
+	.email-section6 {font-size:9pt;text-align:left;color:#000000;font-weight:normal; }
+	.m_4903870160027235030top-parent-price{width:20px!important;font-size:20px !important;color: #cc6100 !important; font-weight:bold !important; width:100% !important;}
+	.m_4903870160027235030email-section2{width:10px!important;font-size:20px !important;color: #cc6100 !important; font-weight:bold !important; }
+	.m_4903870160027235030email-section4{width:10px!important;font-size:20px !important;font-size: 9px !important;margin: 10px 0px 0px 2px !important;color: #cc6100 !important; font-weight:bold !important; }
+    .m_4903870160027235030email-new-price-period{width:50px !important;}
+	.top-gratuite { font-size:20pt;}
+	<!--[if gte mso 9]>
+	 
+	sup{font-size:40%; vertical-align:top;position:relative; top:15px;}
+	 
+	<[endif]-->
+    /* force hotmail to display emails at full width */
+    body { width:100% !important; }
+    .readmsgbody { width:100%; }
+    .externalclass { width:100%; }
+    /* force hotmail to display normal line spacing */
+    .externalclass,
+    .externalclass p,
+    .externalclass span,
+    .externalclass font,
+    .externalclass td,
+    .externalclass div,
+    .externalclass *   { line-height: 100%; }
+    /* fix paragraph margins for yahoo */
+    p { margin-bottom:1em; }
+    /* fix  for outlook */
+    /*table tr td { mso-line-height-rule: exactly; }*/
+    table tr td { border-collapse:collapse; }
+    /* style link colors for ios */
+    .linksblack a { color:#000000 !important; text-decoration:none; }
+    @media only screen and (max-width: 480px){
+        .break-responsive{
+            display:block !important;
+            width:100% !important;
+        }
+		.mail_qnty{width:25% !important;}
+ .mail_txt{width:75% !important}
+    }
+    /* fix for mobile */
+    @media only screen and (min-device-width : 320px) and (max-device-width :
+    480px)
+    {
+        body
+        {
+            -webkit-text-size-adjust:100%;
+            -ms-text-size-adjust:100%;
+        }
+		 
+		 .top-gratuite { font-size:20px;}
+		 .mail_qnty{width:25% !important;}
+ .mail_txt{width:75% !important}
+    }
+    @media only screen and (min-device-width: 768px) and (max-device-width:
+    1024px)
+    {
+        body
+        {
+            -webkit-text-size-adjust:100%;
+            -ms-text-size-adjust:100%;
+        }
+    }
+    @media only screen and (-webkit-min-device-pixel-ratio : 1.5),
+    only screen and (min-device-pixel-ratio : 1.5)
+    {
+        body
+        {
+            -webkit-text-size-adjust:100%;
+            -ms-text-size-adjust:100%;
+        }
+    }
+	p{margin:0pt 0pt 0pt 0pt;}
+	@media (min-width: 320px) and (max-width:767px)
+{
+ .top-parent-price{width:auto !important;font-size:20px !important;color: #ff7900 !important; font-weight:bold !important; }
+ .email-section2{font-size:20px !important;color: #ff7900 !important; font-weight:bold !important; }
+ .email-section3 {font-size: 15pt;margin: -8px 0px 0px 4px;float: left;width:10px;}
+ .email-section4{font-size:20px !important;margin: -8px 0px 0px 4px !important;color: #ff7900 !important; font-weight:bold !important; }
+ .email-new-price-period {font-size: 15pt;float: left;margin: -8px 0px 0px 4px;}
+ .top-gratuite { font-size:20px;}
+ .mail_qnty{width:25% !important;}
+ .mail_txt{width:75% !important}
+ .marg-price{margin-left:15px !important;margin-top:-20px !important;}
+}
+</style>
+<?php
+$order = $block->getOrder();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$model = $objectManager->create('Orange\Abandonexport\Model\Items');
+$abandonexport = $model->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId());
+$gender = unserialize($abandonexport->getFirstItem()->getStepsecond());
+$customerType = $this->getLayout()->createBlock('Orange\Checkout\Block\Success')->getCustomerGroup($order->getCustomerGroupId());
+if ($order->getShippingAddress() != ""):
+    $shippingAddress = $order->getShippingAddress();
+else:
+    $shippingAddress = $order->getBillingAddress();
+endif;
+$billingAddress = $order->getBillingAddress();
+$allItems = $order->getAllItems();
+$countAllItems = count($allItems);
+if ($order) {
+    $_items = $order->getAllItems();
+}
+$successBlock= $block->getLayout()->createBlock('Orange\Checkout\Block\Onepage\Success');
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+if($customerType == 'SOHO'):
+	$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy_soho', $storeScope);
+else:
+	$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy', $storeScope);
+endif;
+$discountSohoPrice = $scopeConfig->getValue('soho/soho_configuration/soho_discount', $storeScope);
+$store = $objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+$storeCode = $store->getStore()->getCode();
+if ($storeCode == 'fr') {
+	$country = "Belgique";
+	$spaceColon = ' : ';
+	$classtotal = "fr-total-class";
+	$tdwidth = "59.5%";
+} else {
+	$country = "België";
+	$spaceColon = ': ';
+	$classtotal = "nl-total-class";
+	$tdwidth = "61%";
+}
+?>
+<?php 
+$hideFreedelivery =  "";
+$hideVirtualHideFreeDelivery = 1;
+$maxQty = false;
+foreach($order->getAllVisibleItems() as $quoteItem):
+	$totalCartQty = $quoteItem->getQtyOrdered() * 1;
+	if($totalCartQty >1) {
+		$maxQty = true;
+	}
+	if ($quoteItem->getProductType() == 'simple') {
+		$hideFreedelivery = 2;
+	}
+endforeach;
+?>
+<?php $overallItem = array();?>
+<?php $i = 0; ?>
+<?php 
+   $i = 0;
+   $overallvalid = 2;
+   $parentQuoteItemId = '';
+   $finalSorting = 2;
+   foreach ($allItems as $items) {
+	  $i++;
+	  if ($items->getParentItemId() && $parentQuoteItemId == $items->getParentItemId()) {
+		if($items->getProduct()->getTypeId() == 'simple') {
+		  
+			$i++;
+			if ($overallvalid == 2) {
+				$k = $i + 1;
+				$overallItem[$k] = $items;
+			} else {
+				$overallItem[$i] = $items;
+			}
+			/*if ($overallvalid == 1) {
+				$i = $i+2;
+			}*/
+			$finalSorting = 1;
+		 } else {
+			$overallvalid = 1;
+			if ($finalSorting == 1) {
+				$j = $i - 1; 
+				$i = $i + 2;
+				$overallItem[$j] = $items;
+				$finalSorting = 2;
+			} else {
+				$overallItem[$i] = $items;
+			}
+		 }
+	  } else {
+			$overallvalid = 2;
+			$parentQuoteItemId = $items->getId();
+			$overallItem[$i] = $items;
+	  }
+	  
+	   
+	} 
+ksort($overallItem);
+?>
+<body bgcolor="#e1e1e1" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0" style="margin:0; padding:0; background-color:#e1e1e1"> 
+  <table style="background-color: #e1e1e1" cellspacing="0" cellpadding="0" width="100%" bgcolor="#e1e1e1" border="0">
+    <tbody>
+      <tr>
+        <td height="" valign="top" align="center">
+          <table cellspacing="0" cellpadding="0" align="center" border="0" width="100%">
+            <tbody>
+              <tr>
+                <td valign="middle" height="47" align="center" style="font-family:Arial, Helvetica,
+                sans-serif;font-size:11px;color:#000000;">
+                <?php echo __('Merci d’avoir acheté sur Orange.be'); ?><br>
+              </td>
+            </tr>
+            <tr>
+              <td height="80" bgcolor="#000000" style="background-color:#000000"><!-- HEADER START -->
+                <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tbody>
+                    <tr>
+                      <td width="20" height="80" style="font-size: 1px; line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                      <td height="80">
+                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                          <tbody>
+                            <tr>
+                              <td height="20" style="font-size: 1px; line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                            </tr>
+                            <tr>
+                              <td height="43">
+                                <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                  <tbody>
+                                    <tr>
+                                      <td width="40" height="43" valign="top"><a href="https://www.orange.be/<?php echo $storeCode;?>" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/logo_orange.jpg" alt="Orange" width="40" height="40" border="0" style="display:block;"></a></td>
+                                      <td width="20" height="43" style="font-size:
+                                      1px; line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                                      <td height="43" valign="bottom" align="left" style="font-family:Arial, Helvetica, sans-serif;font-size:15px;font-weight:bold; color:#ffffff;
+                                      text-decoration:none; text-align:left;">
+                                      <span data-bind="i18n:"><?php echo __('Vous rapprocher de l’essentiel'); ?></span></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td height="17" style="font-size: 1px;
+                                line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td width="40" height="80" style="font-size: 1px;
+                        line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- HEADER END --></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#50BE87" style="background-color:#50BE87">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td colspan="4" height="30">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="40" valign="top">&nbsp;</td>
+                          <td valign="top" style="line-height: 30pt;" class="top-heading">
+							<?php /* @escapeNotVerified */ echo __('Merci %1 pour votre commande', ucfirst(strtolower(trim($gender['first_name'])))) ?>
+						  </td>
+                          <td width="40" valign="top">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" height="10">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#000000;"><?php echo __('Votre numéro de commande').$spaceColon; echo $order->getIncrementId();?></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" height="30">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td height="416" bgcolor="#ffffff" style="background-color:#ffffff" valign="top">
+                    <!-- BODY START -->
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td valign="top">
+                            <table border="0" cellspacing="0" cellpadding="0">
+                              <tbody>
+                                <tr>
+                                  <td height="416" valign="top">
+                                    <table border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                        <tr>
+                                          <td width="40" valign="top">&nbsp;</td>
+                                          <td valign="top">
+                                            <table border="0" cellspacing="0" cellpadding="0">
+                                              <tbody>
+                                                <tr>
+                                                  <td height="40" valign="top">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                  <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:30px;font-weight:bold; text-align:left; color:#000000;">
+                                                  <?php echo __('Prochaines étapes'); ?></br></br></td>
+                                                </tr>
+                                                <tr>
+                                                  <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+													<?php 
+														$ItemDeliveyMethod = '';
+														if(isset($gender['deliveryMethod']) && $gender['deliveryMethod'] == 'Pugo') {
+															$ItemDeliveyMethod = 'pickup';
+														} else if(isset($gender['deliveryMethod']) && $gender['deliveryMethod'] == 'Parcels depot') {
+															$ItemDeliveyMethod = 'parcel';
+														} else {
+															$ItemDeliveyMethod = 'home';
+														}
+														$visibleItems = $order->getAllVisibleItems();
+														foreach ($visibleItems as $item) : 	
+                                                        $postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+														$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$item->getQuoteItemId());
+														$product = $item->getProduct();
+														$attributeSet = $successBlock->getAttributeSetName($product->getAttributeSetId());
+														if ($attributeSet == 'Postpaid'): 
+														$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+														$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$item->getQuoteItemId());
+														foreach($postpaidModelCollections as $postpaidCollection) {
+															if($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+																if($storeCode == 'fr') {
+																echo "<h4>".__('Votre abonnement');
+																echo "&nbsp;";
+																echo $item->getName();
+																echo ' ('.__('N°');
+																echo "&nbsp;";
+																echo $postpaidCollection->getDesignTeExistingNumber();
+																echo __(')').$spaceColon;
+															    echo "</h4>";
+																} else { 
+																echo "<h4>".__('Jouw');
+																echo "&nbsp;";
+																echo $item->getName();
+																echo __(' - abonnement');
+																echo "&nbsp;";
+																echo ' ('.__('N°');
+																echo "&nbsp;";
+																echo $postpaidCollection->getDesignTeExistingNumber();
+																echo __(')').$spaceColon;
+															    echo "</h4>";
+																}
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('postpaid_simonly_migration')->toHtml();
+															} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 3) {
+															if($storeCode == 'fr') {
+															    echo "<h4>".__('Votre abonnement');
+																echo "&nbsp;";
+															    echo $item->getName();
+																echo ' ('.__('N°');
+																echo "&nbsp;";
+																echo $postpaidCollection->getDesignTeExistingNumber();
+																echo __(')').$spaceColon;
+															    echo "</h4>";
+																} else {
+																 echo "<h4>".__('Jouw');
+																echo "&nbsp;";
+															    echo $item->getName();
+																echo __(' - abonnement');
+																echo "&nbsp;";
+																echo ' ('.__('N°');
+																echo "&nbsp;";
+																echo $postpaidCollection->getDesignTeExistingNumber();
+																echo __(')').$spaceColon;
+															    echo "</h4>";
+																}
+															    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('postpaid_simonly_mnp')->toHtml();
+															} else {
+																if($storeCode == 'fr') {
+																echo "<h4>".__('Votre abonnement');
+															    echo "&nbsp;";
+															    echo $item->getName();
+																echo "&nbsp;";
+								                                echo __('(Nouveau numéro)');
+																echo $spaceColon;
+															    echo "</h4>";
+																} else { 
+																 echo "<h4>".__('Jouw');
+															    echo "&nbsp;";
+															    echo $item->getName();
+																echo __(' - ');
+																echo __('abonnement');
+																echo "&nbsp;";
+																echo __('(Nouveau numéro)');
+																echo $spaceColon;
+															    echo "</h4>";
+																 }
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('postpaid_simonly_new_number')->toHtml();
+															}
+														}
+														endif;
+														if ($attributeSet == 'Simcard'): 
+														if($storeCode == 'fr') {
+															echo "<h4> ";
+															echo __('Votre carte prépayée');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo $spaceColon;
+															echo "</h4>";
+															 } else { 
+															 echo "<h4> ";
+															echo __('Jouw');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo __(' - ');
+															echo __('herlaadkaart');
+															echo $spaceColon;
+															echo "</h4>";
+															 }
+															echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('new_step_prepaid')->toHtml();
+														endif; 
+														if ($attributeSet == 'handset'): 
+															echo "<h4>";					
+															echo __('Votre');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo $spaceColon;
+															echo "</h4>";
+															if($ItemDeliveyMethod == 'pickup') {
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('handset_pickup')->toHtml();
+															} else if($ItemDeliveyMethod == 'parcel'){
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('handset_parcel')->toHtml();
+															} else {
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('handset_home')->toHtml();
+															}
+														endif; 
+														if ($attributeSet == 'Accessories'): 
+															echo "<h4>";
+															echo __('Votre');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo $spaceColon;
+															echo "</h4>";
+															if($ItemDeliveyMethod == 'pickup') {
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('accessories_pickup')->toHtml();
+															} else if($ItemDeliveyMethod == 'parcel'){
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('accessories_parcel')->toHtml();
+															} else {
+																echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('accessories_home')->toHtml();
+															}
+														endif; 
+														if ($attributeSet == 'IEW'): 
+														if($storeCode == 'fr') {
+															echo "<h4>";
+															echo __('Votre abonnement');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo $spaceColon;
+															echo "</h4>";
+															 } else { 
+															 echo "<h4>";
+															echo __('Jouw');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo __(' - ');
+															echo __('abonnement');
+															echo $spaceColon;
+															echo "</h4>";
+															 }
+															echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('iew_simonly')->toHtml();
+														endif; 
+														if ($attributeSet == 'Prepaid'): 
+														if($storeCode == 'fr') {
+															echo "<h4> ";
+															echo __('Votre carte prépayée');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo $spaceColon;
+															echo "</h4>";
+														} else {
+															echo "<h4> ";
+															echo __('Jouw');
+															echo "&nbsp;";
+															echo $item->getName();
+															echo __(' - ');
+															echo __('herlaadkaart');
+															echo $spaceColon;
+															echo "</h4>";
+														}
+														endif;
+														if ($attributeSet == 'Default'):
+														if($item->getProductType() == 'bundle'):
+														if($item->getChildrenItems()):
+														foreach($item->getChildrenItems() as $childItem):
+														$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+														$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$item->getQuoteItemId());
+														$productChild = $childItem->getProduct(); 
+														$attributeSetChild = $successBlock->getAttributeSetName($productChild->getAttributeSetId());
+														foreach($postpaidModelCollections as $postpaidCollection) {
+														if($attributeSetChild == 'IEW') {
+														 ?>
+															<?php
+																$virtName = '';
+																$simpName = '';
+																foreach ($item->getChildrenItems() as $childs){
+																	$productChild = $childs->getProduct();
+																	if($productChild->getTypeId() == 'virtual') {
+																		$virtName = $productChild->getName();
+																	} else if ($productChild->getTypeId() == 'simple') {
+																		$simpName = $productChild->getName();
+																	}
+																	if($virtName!='' && $simpName!='') {
+																		if($storeCode == 'fr') {
+																		echo "<h4>";
+																		echo __('Votre');
+																		echo "&nbsp;";
+																		echo $simpName.' + '.$virtName;
+																		echo $spaceColon;
+																		echo "</h4>";
+																	} else {
+																		echo "<h4>";
+																		echo __('Jouw');
+																		echo "&nbsp;";
+																		echo $simpName.' + '.$virtName;
+																		echo $spaceColon;
+																		echo "</h4>";
+																	}
+																	}
+																}
+															?>
+															<?php
+															echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('iew_nintendo')->toHtml();
+															} else if($attributeSetChild == 'Postpaid') {
+															?>
+																<?php 
+																if($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) { ?>
+																<?php
+																	$virtName = '';
+																	$simpName = '';
+																	foreach ($item->getChildrenItems() as $childs){
+																		$productChild = $childs->getProduct();
+																		if($productChild->getTypeId() == 'virtual') {
+																			$virtName = $productChild->getName();
+																		} else if ($productChild->getTypeId() == 'simple') {
+																			$simpName = $productChild->getName();
+																		}
+																		if($virtName!='' && $simpName!='') {
+																		if($storeCode == 'fr') {
+																			echo "<h4>";
+																			echo __('Votre');
+																			echo "&nbsp;";
+																			echo $simpName.' + '.$virtName;
+																			echo "&nbsp;";
+																			echo ' ('.__('N°');
+																			echo "&nbsp;";
+																			echo $postpaidCollection->getDesignTeExistingNumber();
+																			echo __(')').$spaceColon;
+																			echo "</h4>";
+																			} else {
+																			echo "<h4>";
+																			echo __('Jouw');
+																			echo "&nbsp;";
+																			echo $simpName.' + '.$virtName;
+																			echo "&nbsp;";
+																			echo ' ('.__('N°');
+																			echo "&nbsp;";
+																			echo $postpaidCollection->getDesignTeExistingNumber();
+																			echo __(')').$spaceColon;
+																			echo "</h4>";
+																			}
+																		}
+																	}
+																?>
+																<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('nintendo_postpaid_simonly_migration')->toHtml();
+																} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 3) { ?>
+																<?php
+																	$virtName = '';
+																	$simpName = '';
+																	foreach ($item->getChildrenItems() as $childs){
+																		$productChild = $childs->getProduct();
+																		if($productChild->getTypeId() == 'virtual') {
+																			$virtName = $productChild->getName();
+																		} else if ($productChild->getTypeId() == 'simple') {
+																			$simpName = $productChild->getName();
+																		}
+																		if($virtName!='' && $simpName!='') {
+																		if($storeCode == 'fr') {
+																			echo "<h4>";
+																			echo __('Votre');
+																			echo "&nbsp;";
+																			echo $simpName.' + '.$virtName;
+																			echo "&nbsp;";
+																			echo ' ('.__('N°');
+																			echo "&nbsp;";
+																			echo $postpaidCollection->getDesignTeExistingNumber();
+																			echo __(')').$spaceColon;
+																			echo "</h4>";
+																		} else {
+																			echo "<h4>";
+																			echo __('Jouw');
+																			echo "&nbsp;";
+																			echo $simpName.' + '.$virtName;
+																			echo "&nbsp;";
+																			echo ' ('.__('N°');
+																			echo "&nbsp;";
+																			echo $postpaidCollection->getDesignTeExistingNumber();
+																			echo __(')').$spaceColon;
+																			echo "</h4>";
+																		}
+																		}
+																	}
+																?>
+																<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('nintendo_postpaid_simonly_mnp')->toHtml();
+																} else { ?>
+																<?php
+																	$virtName = '';
+																	$simpName = '';
+																	foreach ($item->getChildrenItems() as $childs){
+																		$productChild = $childs->getProduct();
+																		if($productChild->getTypeId() == 'virtual') {
+																			$virtName = $productChild->getName();
+																		} else if ($productChild->getTypeId() == 'simple') {
+																			$simpName = $productChild->getName();
+																		}
+																		if($virtName!='' && $simpName!='') {
+																		if($storeCode == 'fr') {
+																			echo "<h4>";
+																			echo __('Votre');
+																			echo "&nbsp;";
+																			echo $simpName.' + '.$virtName;
+																			echo "&nbsp;";
+								                                            echo __('(Nouveau numéro)');
+																			echo $spaceColon;
+																			echo "</h4>";
+																		} else {
+																			echo "<h4>";
+																			echo __('Jouw');
+																			echo "&nbsp;";
+																			echo $simpName.' + '.$virtName;
+																			echo "&nbsp;";
+																			echo __('(Nouveau numéro)');
+																			echo $spaceColon;
+																			echo "</h4>";
+																		}
+																		}
+																	}
+																?>
+																<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('nintendo_postpaid_newnumber')->toHtml();
+																} ?>
+														<?php }} ?>
+														<?php endforeach; ?>
+														<?php endif; ?>
+														<?php endif; ?>
+														<?php endif; 
+														endforeach;
+													?>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="20" valign="top">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+													<td>
+													<table border="0" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="background-color:#eeeeee" width="100%">
+													<tr>
+													<td height="20" colspan="4">&nbsp;</td>
+													</tr>
+													<tr>
+													<td width="20"></td>
+													<td style="font-family:Arial, Helvetica, sans-serif; font-size:30px;font-weight:bold; text-align:left; color:#000000;"><?php echo __('Résumé de votre commande');?></td>
+													<td width="20"></td>
+													</tr>
+													<tr>
+													<td height="20" colspan="4">&nbsp;</td>
+													</tr>
+													<?php $prodId = $item->getProduct()->getAttributeSetId();?>
+													<tr>
+													<td></td>
+													<td valign="top"><?php $subTotal = 0;$bundleCount = 1;$bundleItemId = "";$seplingFlag = '0';$bundleBorder = 0;$virtCount = 0;$childShortDes = '';$currentItem = 1;$itemnameexisting = array();$iewTelephone = "";$iewContract = "";$iewFirstname = "";$iewLastname = "";$iewDob = "";$isTeneuroYes = "";if ((isset($gender['iew_items'])) && $gender['iew_items']) {$iewTelephone = $gender['iew_telephone_'.$gender['iew_items']];$iewContract = $gender['iew_contract_'.$gender['iew_items']];$iewFirstname = $gender['iew_first_name_'.$gender['iew_items']];$iewLastname = $gender['iew_last_name_'.$gender['iew_items']];$iewDob = $gender['iew_dob_'.$gender['iew_items']];$isTeneuroYes = $gender['is_teneuro_'.$gender['iew_items']];}foreach ($overallItem as $item):if ($item->getParentItemId() && $item->getProductType() == 'virtual') {$itemnameexisting[$item->getParentItemId()]['name'] = $item->getName();$product = $item->getProduct();$attributeSet = $successBlock->getAttributeSetName($product->getAttributeSetId());$itemnameexisting[$item->getParentItemId()]['attribute_set'] = $attributeSet;$itemnameexisting[$item->getParentItemId()]['iew_is_teneuro'] = $item->getIewIsTeneuro();$itemnameexisting[$item->getParentItemId()]['iew_telephone'] = $item->getIewTelephone();$itemnameexisting[$item->getParentItemId()]['iew_contract'] = $item->getIewContract();$itemnameexisting[$item->getParentItemId()]['iew_firstname'] = $item->getIewFirstname();$itemnameexisting[$item->getParentItemId()]['iew_lastname'] = $item->getIewLastname();$itemnameexisting[$item->getParentItemId()]['iew_dob'] = $item->getIewDob();} else if (!$item->getParentItemId() && $item->getProductType() == 'virtual') {$itemnameexisting[$item->getId()]['name'] = $item->getName();$product = $item->getProduct();$attributeSet = $successBlock->getAttributeSetName($product->getAttributeSetId());$itemnameexisting[$item->getId()]['attribute_set'] = $attributeSet;$itemnameexisting[$item->getId()]['iew_is_teneuro'] = $item->getIewIsTeneuro();$itemnameexisting[$item->getId()]['iew_telephone'] = $item->getIewTelephone();$itemnameexisting[$item->getId()]['iew_contract'] = $item->getIewContract();$itemnameexisting[$item->getId()]['iew_firstname'] = $item->getIewFirstname();$itemnameexisting[$item->getId()]['iew_lastname'] = $item->getIewLastname();$itemnameexisting[$item->getId()]['iew_dob'] = $item->getIewDob();}$hideBorder = false;if($currentItem == $countAllItems):$hideBorder = true;endif;if ($item->getProductType() == 'virtual'):$virtCount++;endif;$product = $item->getProduct();if($customerType == 'SOHO'):$iconImage = "soho-".$product->getAttributeText('product_icon_image');else:$iconImage = $product->getAttributeText('product_icon_image');endif;$attr = $item->getOriSubscriptionAmount();$subTotalAttr = $item->getSubscriptionAmount();if($item->getProductType() == 'bundle'):$total_price = $item->getPrice();endif;?><?php if ($item->getProductType() == 'bundle'):$bundleCount =1;$nNumber = '';if($item->getQtyOrdered() == 1){$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$item->getQuoteItemId());foreach($postpaidModelCollections as $postpaidCollection) {if($postpaidCollection->getDesignSimNumber() == 1) {$nNumber .= __('N°').$spaceColon;$nNumber .= $postpaidCollection->getDesignTeExistingNumber();}else{$nNumber .= __('N° : nouveau numéro');}}}if($item->getChildrenItems()):foreach($item->getChildrenItems() as $childItem):$childShortDes .= $childItem->getProduct()->getShortDescription();endforeach;endif;$qtyitemordered = $item->getQtyOrdered() * 1;if ($maxQty):?><table border="0" align="left" cellspacing="0" cellpadding="" width="13%" style="clear:both;" class="break-responsive mail_qnty"><tbody><tr><td valign="middle" <?php if($childShortDes):?>height="145" <?php else:?>height="115" <?php endif;?>style="font-family:Arial, Helvetica, sans-serif; font-size:15px;font-weight:bold; color:#000000; background:#ccc; text-align:center;width: 100%;height:210px;"><?php echo __("Quantité").$spaceColon; ?><b> <?php echo $item->getQtyOrdered() * 1;?></b></td></tr></tbody></table><?php $childShortDes = '';?><?php endif; ?><?php $bundleItemId = $item->getId();?><?php endif; ?><?php if(($item->getProductType() == 'simple' || $item->getProductType() == 'virtual') && ($item->getParentItemId() != "")): ?><?php if($bundleBorder == 0): ?><table border="0" class="<?php if ($maxQty):?>mail_txt<?php endif;?>" align="<?php if ($maxQty):?>right <?php else:?>left <?php endif; ?>" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="background-color:#eeeeee;" width="<?php if ($maxQty):?>85% <?php else:?>100% <?php endif; ?>"><tbody><?php endif; ?><?php if($bundleCount !=1):?><tr><td height="15" colspan="4" align="center"><img src="<?php echo $this->getViewFileUrl('Magento_Sales::images/sepp.png'); ?>" width="640" height="15" style="width: 100%;display: block;"></td></tr><?php endif; ?><?php if($item->getProductType() == 'virtual'):$subTotal+= ($item->getQtyOrdered() * 1) * $subTotalAttr;$bundleBorder++;?><tr><td width="2%"><div style="float: left;width: 40px;height: 80px;"><?php  if($customerType == 'SOHO') { $iconimg1 = "soho-".$product->getAttributeText('product_icon_image'); } else { $iconimg1 = $product->getAttributeText('product_icon_image'); } $urlimg1 = $this->getViewFileUrl('Magento_Sales::images/'.$iconimg1.'.png'); ?><img src='<?php echo $urlimg1; ?>' width="40" height="40" style="margin-right:10px;"></div></td><td height="<?php if($item->getProduct()->getShortDescription()):?>85<?php endif; ?>" width="<?php if ($maxQty):?>60%<?php else:?>70%<?php endif; ?>" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#000000;" valign="top" class="break-responsive"><span style="float: left;position: relative;margin-left: 15px;"><?php echo $item->getName(); ?><br/><?php if($customerType == 'SOHO'): ?><span style="font-weight: normal;font-size: 16px;float: left;width: 100%;"><?php if($item->getProduct()->getShortDescriptionSoho() ==''){echo $item->getProduct()->getShortDescription();} else {echo $item->getProduct()->getShortDescriptionSoho();} ?></span><br/><?php else:?><span style="font-weight: normal;font-size: 16px;float: left;width: 100%;"><?php echo $item->getProduct()->getShortDescription(); ?></span><br/><?php endif;?><?php echo '<span style ="font-size:16px;">'.$nNumber.'</span>';$nNumber = '';?></span></td><td width="<?php if ($maxQty):?>15%<?php else:?>8%<?php endif; ?>" class="break-responsive">&nbsp;</td><?php if ($customerType == 'SOHO'): ?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if($maxQty): echo $successBlock->getOrangeEmailPricingHtml($attr, true, true, true, 'order new-price orange price-marg marg-price',$order); else: echo $successBlock->getOrangeEmailPricingHtml($attr, true, true, true, 'order new-price orange marg-price',$order); endif; ?></td><?php else: ?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if($maxQty):echo $successBlock->getOrangeEmailPricingHtml($attr, true, false, true, 'order new-price orange price-marg marg-price',$order);else: echo $successBlock->getOrangeEmailPricingHtml($attr, true, false, true, 'order new-price orange marg-price',$order);endif; ?></td><?php endif; ?></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php endif; ?><?php if($item->getProductType() == 'simple'): ?><?php $bundleBorder++; ?><tr><td width="2%"><div style="float: left;width: 40px;height: 80px;"><?php if($customerType == 'SOHO') { $iconimg2 = "soho-".$product->getAttributeText('product_icon_image'); } else { $iconimg2 = $product->getAttributeText('product_icon_image'); } $urlimg2 = $this->getViewFileUrl('Magento_Sales::images/'.$iconimg2.'.png'); ?><img src='<?php echo $urlimg2; ?>' width="40" height="40" style="margin-right:10px;"></div></td><td width="<?php if ($maxQty):?>60%<?php else:?>70%<?php endif; ?>" <?php if($item->getProduct()->getShortDescription()): ?> height ="99" <?php else: ?> height="70" <?php endif; ?>style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#000000;" valign="top" class="break-responsive"><span style="float: left;position: relative;margin-left: 15px;line-height:39pt"><?php echo $item->getName(); ?><br><?php if($customerType == 'SOHO'): ?><span style="font-weight: normal;font-size: 16px;float:left;width: 100%;"><?php if($item->getProduct()->getShortDescriptionSoho() ==''){echo $item->getProduct()->getShortDescription();}else{echo $item->getProduct()->getShortDescriptionSoho();} ?></span><br/><?php else:?><span style="font-weight: normal;font-size: 16px;float:left;width: 100%;"><?php echo $item->getProduct()->getShortDescription(); ?></span><br/><?php endif;?></span></td><td width="<?php if ($maxQty):?>15%<?php else:?>8%<?php endif; ?>" class="break-responsive">&nbsp;</td><?php if ($customerType == 'SOHO'):?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if ($maxQty): echo $successBlock->getOrangeEmailPricingHtml($total_price, true, true, false, 'order new-price orange price-marg marg-price',$order); else: echo $successBlock->getOrangeEmailPricingHtml($total_price, true, true, false, 'order new-price orange marg-price',$order); endif;?><table><tr><td style="font-family: Arial,Helvetica,sans-serif !important; font-size: 9pt !important; text-align: left !important; color: #000000 !important; font-weight: normal !important;" valign="top" class="break-responsive email-section6"><?php if($total_price < $discountFullTotalPrice ): ?><?php echo __('à payer sur votre première facture')?><?php endif; ?></td></tr></table></td><?php else:?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if ($maxQty): echo $successBlock->getOrangeEmailPricingHtml($total_price, true, false, false, 'order new-price orange price-marg marg-price',$order); else:echo $successBlock->getOrangeEmailPricingHtml($total_price, true, false, false, 'order new-price orange marg-price',$order);endif; ?><table><tr><td style="font-family: Arial,Helvetica,sans-serif !important; font-size: 9pt !important; text-align: left !important; color: #000000 !important; font-weight: normal !important;" valign="top" class="break-responsive email-section6"><?php if($total_price < $discountFullTotalPrice ): ?><?php echo __('à payer sur votre première facture')?><?php endif; ?></td></tr></table></td><?php endif;?></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php endif; ?><?php if($bundleBorder == 2): ?><?php $bundleBorder=0; ?><?php if(!$hideBorder || $order->getAppliedRuleIds()): ?><tr><td height="2" colspan="4" style="background-color:#D0D0D0;"></td></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php endif; ?></tbody></table><?php endif; ?><?php $bundleCount++; ?><?php endif; ?><?php if(($item->getProductType() == 'simple' || $item->getProductType() == 'virtual') && ($item->getParentItemId() == "")):?><?php $qtyitemordered = $item->getQtyOrdered() * 1;?><?php if ($maxQty): ?><table border="0" style="float:left;clear:both;" align="left" cellspacing="0" cellpadding="" width="13%" class="break-responsive mail_qnty"><tbody><tr><td valign="middle" <?php if($item->getProduct()->getShortDescription()): ?> height ="99" <?php else: ?> height="70" <?php endif; ?> style="font-family:Arial, Helvetica, sans-serif; font-size:15px;font-weight:bold; color:#000000; background:#ccc; text-align:center;width: 100%;"><?php echo __("Quantité").$spaceColon; ?><b> <?php echo $item->getQtyOrdered() * 1;?></b></td></tr></tbody></table><?php endif; ?><table border="0" class="<?php if ($maxQty):?>mail_txt<?php endif;?>" align="<?php if ($maxQty):?>right <?php else:?>left <?php endif; ?>" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="background-color:#eeeeee;" width="<?php if ($maxQty):?>85% <?php else:?>100% <?php endif; ?>"><tbody><tr><td width="2%"><?php if($item->getProductType() == 'virtual'): ?><div style="float: left;width: 40px;height: 80px;"><?php if($customerType == 'SOHO') { $iconimg3 = "soho-".$product->getAttributeText('product_icon_image'); } else { $iconimg3 = $product->getAttributeText('product_icon_image'); } $urlimg3 = $this->getViewFileUrl('Magento_Sales::images/'.$iconimg3.'.png'); ?><img src='<?php echo $urlimg3; ?>' width="40" height="40" style="margin-right:10px;"></div><?php else: ?><span style="float: left;width: 40px;height: 80px;"> <?php if($customerType == 'SOHO'){ $iconimg4 = "soho-".$product->getAttributeText('product_icon_image'); } else { $iconimg4 = $product->getAttributeText('product_icon_image');} $urlimg4 = $this->getViewFileUrl('Magento_Sales::images/'.$iconimg4.'.png'); ?><img src='<?php echo $urlimg4; ?>' width="40" height="40" style="margin-right:10px;"></span><?php endif; ?></td><td width="<?php if ($maxQty):?>60%<?php else:?>70%<?php endif; ?>" <?php if($item->getProduct()->getShortDescription()): ?> height ="99" <?php else: ?> height="70" <?php endif; ?> style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#000000;" valign="top" class="break-responsive"><span style="float: left;position: relative;margin-left: 15px;"><?php echo $item->getName(); ?><br><?php if($customerType == 'SOHO'): ?><span style="font-weight: normal;font-size: 16px; float:left;width: 100%;"><?php if($item->getProduct()->getShortDescriptionSoho() =='') {echo $item->getProduct()->getShortDescription();} else { echo $item->getProduct()->getShortDescriptionSoho(); } ?></span><br/><?php else:?><span style="font-weight: normal;font-size: 16px; float:left;width: 100%;"><?php echo $item->getProduct()->getShortDescription(); ?></span><br/><?php endif;?><?php if($item->getProductType() == 'virtual'): ?><?php  $totalVirtualQtyOrdered = $item->getQtyOrdered() * 1; if($totalVirtualQtyOrdered == 1) {$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$item->getQuoteItemId());foreach($postpaidModelCollections as $postpaidCollection) {if($postpaidCollection->getDesignSimNumber() == 1) {echo '<span style ="font-size:16px;">'.__('N°').$spaceColon;echo $postpaidCollection->getDesignTeExistingNumber();echo '</span>';}else{echo '<span style ="font-size:16px;">'.__('N° : nouveau numéro');echo "</span>";}}} ?><?php endif; ?></span></span></td><td width="<?php if ($maxQty):?>15%<?php else:?>8%<?php endif; ?>" class="break-responsive">&nbsp;</td><?php if($item->getProductType() == 'virtual'):$subTotal+= ($item->getQtyOrdered() * 1) * $subTotalAttr; ?><?php if ($customerType == 'SOHO'): ?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if ($maxQty): echo $successBlock->getOrangeEmailPricingHtml($attr, true, true, true, 'order new-price orange price-marg marg-price',$order); else: echo $successBlock->getOrangeEmailPricingHtml($attr, true, true, true, 'order new-price orange marg-price',$order); endif; ?></td><?php else:?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if ($maxQty): echo $successBlock->getOrangeEmailPricingHtml($attr, true, false, true, 'order new-price orange price-marg marg-price',$order); else:echo $successBlock->getOrangeEmailPricingHtml($attr, true, false, true, 'order new-price orange marg-price',$order); endif; ?></td><?php endif; ?><?php else: ?><?php if ($customerType == 'SOHO'): ?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if ($maxQty): echo $successBlock->getOrangeEmailPricingHtml($item->getPrice(), true, true, false, 'order new-price orange price-marg marg-price',$order); else: echo $successBlock->getOrangeEmailPricingHtml($item->getPrice(), true, true, false, 'order new-price orange marg-price',$order); endif; ?></td><?php else:?><td width="<?php if ($maxQty):?>23%<?php else:?>20%<?php endif; ?>" valign="top" class="top-parent-price break-responsive"><?php if($item->getProduct()->getAttributeSetId()==14):?><?php if ($maxQty): echo $successBlock->getOrangeEmailPricingHtml($item->getPrice(), true, false, false, 'order new-price orange simcard-cnt price-marg marg-price',$order); else: echo $successBlock->getOrangeEmailPricingHtml($item->getPrice(), true, false, false, 'order new-price orange simcard-cnt marg-price',$order); endif; ?><?php else:?><?php if ($maxQty):echo $successBlock->getOrangeEmailPricingHtml($item->getPrice(), true, false, false, 'order new-price orange price-marg marg-price',$order); else:echo $successBlock->getOrangeEmailPricingHtml($item->getPrice(), true, false, false, 'order new-price orange marg-price',$order);endif; ?><?php endif;?></td><?php endif; ?><?php endif; ?></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php if(!$hideBorder || $order->getAppliedRuleIds()): ?><tr><td height="2" colspan="4" style="background-color:#D0D0D0;"></td></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php endif; ?></tbody></table><?php endif; ?><?php $currentItem++;endforeach;?></td>
+													<td></td>
+													</tr>
+													<?php if($order->getAppliedRuleIds()): ?><?php $couponBlock = $block->getLayout()->createBlock('Amasty\Coupons\Block\Coupon');$orangeCouponHelper = $this->helper('Orange\Coupon\Helper\Data');$couponCodes = explode(",",$order->getCouponCode());$couponCodes = array_unique($couponCodes);$allCouponsCount = count($couponCodes);$currentCouponItem = 1;foreach($couponCodes as $couponCode):$coupon = $couponBlock->getCouponData($couponCode);$ruleId = $coupon->getRuleId();$label = $couponBlock->getStoreLabel($ruleId,$store->getStore()->getId());if($coupon):$hideBorderBottom = false;if($currentCouponItem == $allCouponsCount):$hideBorderBottom = true;endif;$rule = $couponBlock->getRuleData($ruleId);$ruleDiscount = $orangeCouponHelper->getRuleDiscountAmount($ruleId,$order->getQuoteId());$ruleDiscountAmount =0;foreach($ruleDiscount as $ruleDsnt):$ruleDiscountAmount += $ruleDsnt->getTotalDiscountAmount() + $ruleDsnt->getTotalSubscriptionDiscountAmount();endforeach;?>
+													<tr>
+													<td></td>
+													<td valign="top"><table border="0" align="left" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="background-color:#eeeeee" width="100% "><tbody><tr><td width="2%"><div style="float: left;width: 40px;height: 80px;"><img src="<?php echo $this->getViewFileUrl('Magento_Sales::images/coupon_icn.png');?>" width="40" height="40" style="margin-right:10px;"></div></td><td width="70%" height="99" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#000000; line-height:20pt" valign="top" class="break-responsive"><span style="float: left;position: relative;margin-left: 15px;"><?php echo $couponCode; ?><br><small style="display: block;"><?php echo $label; ?></small></span></td><td width="8%" class="break-responsive">&nbsp;</td><td width="20%" style="" valign="top" class="top-parent-price break-responsive"><?php echo $successBlock->getOrangeEmailPricingHtml($ruleDiscountAmount, false, false, false, 'order new-price orange',$order,true,true); ?></td></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php if(!$hideBorderBottom): ?><tr><td height="2" colspan="4" style="background-color:#D0D0D0;"></td></tr><tr><td height="15" colspan="4">&nbsp;</td></tr><?php endif;?></tbody></table></td>
+													<td></td>
+													</tr>
+													<?php endif; $currentCouponItem++; endforeach;?><?php endif;?>
+													</table>
+													</td>
+												</tr>
+                                                <tr>
+                                                  <td bgcolor="#000000" style="background-color:#000000" width="100%">
+                                                    <table border="0" cellspacing="0" cellpadding="0" bgcolor="#000000" style="background-color:#000000" width="100%">
+												<tr>
+													<td width="20"></td>
+													<td valign="top">														
+														<table border="0" cellspacing="0" cellpadding="0" width="100%">
+															<tbody>
+																<tr>
+																	<td height="30" colspan="4">&nbsp;</td>
+																</tr>
+																<tr>                                                       
+																	<td width="70%" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#ffffff;" valign="top" class="break-responsive"><?php echo __('Total payé maintenant');?></td>
+																	<td width="<?php if($maxQty):?>11%<?php else: ?>10.5%<?php endif; ?>" class="break-responsive">&nbsp;</td>
+																	<td width="20%" align="left" valign="top" class="top-parent-price break-responsive"><span class="new-price orange line-100percent"><?php if ($customerType == 'SOHO'): ?><?php $increasedGrandTotal = $order->getGrandTotal() / (1+($discountSohoPrice/100));echo $successBlock->getOrangeEmailPricingHtml($order->getGrandTotal(), true, false, false, 'order new-price orange',$order,false,true);if($order->getGrandTotal() > 0):$priceHtml = str_replace(",00","",$this->helper('Magento\Framework\Pricing\Helper\Data')->currency($increasedGrandTotal,true,false)); $priceHtml = str_replace(".","",$priceHtml);?><span class="new-price-soho" style="float: left;font-size: 10px;line-height: 1em; mso-line-height-rule: exactly;">(<?php echo $priceHtml; ?><?php echo $successBlock->getPriceLabel('SOHO'); ?>)</span><?php endif; ?><?php else: ?><?php echo $successBlock->getOrangeEmailPricingHtml($order->getGrandTotal(), true, false, false, 'order new-price orange',$order); ?><?php endif; ?></span></td>
+																</tr>																
+																<tr>
+																	<td height="20" colspan="4">&nbsp;</td>
+																</tr>
+																<?php 
+																$bundleFlag = '1';
+																$hasShippingInfo = false;
+																$attributeSetArray = array();
+																$prepaidCount = "";
+																$attributeSet = "";
+																$prepaidcomb = "";
+																$onlyPostpaid = true;
+																$onlyPostpaidOrange = true;
+																$virtualProducthidden=0;
+																foreach ($allItems as $items){
+																	$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+																	$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$items->getQuoteItemId());
+																	foreach($postpaidModelCollections as $postpaidCollection) {
+																		if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !=1) {
+																			$onlyPostpaidOrange = false;
+																		}
+																		if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==3) {
+																			$hideVirtualHideFreeDelivery = 2;
+																		} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==1) {
+																			$hideFreedelivery = 1;
+																		}
+																	}
+																	$product = $items->getProduct();
+																	$attributeSet = $successBlock->getAttributeSetName($product->getAttributeSetId());
+																	$attributeSetArray[] = $successBlock->getAttributeSetName($product->getAttributeSetId());
+																	if($attributeSet != "Postpaid") {
+																		$onlyPostpaid = false;
+																	}
+																	if($items->getProductType() == 'simple' && $attributeSet !='Simcard') {
+																	$hasShippingInfo = true;
+																	}
+																	if (($items->getParentItemId() != "") && ($bundleFlag == '1')){
+																	$bundleFlag ='2';
+																	if($attributeSet == "Prepaid"){
+																		$prepaidcomb = 1;
+																	}
+																	?>																	
+																		<tr>
+																			<td width="70%"  style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#ffffff;" valign="top" class="break-responsive"><?php echo __('Total à payer sur votre prochaine facture');?></td>
+																			<td width="<?php if($maxQty):?>11%<?php else: ?>10.5%<?php endif; ?>"  class="break-responsive">&nbsp;</td>
+																			<td width="20%" align="left"  valign="top" class="top-parent-price break-responsive"><span class="new-price orange line-100percent"><?php if ($customerType == 'SOHO'): ?><?php $increasedsubTotal = $order->getSubsidyDiscount() / (1+($discountSohoPrice/100)); echo $successBlock->getOrangeEmailPricingHtml($order->getSubsidyDiscount(), true, false, false, 'order new-price orange',$order,false,true); if($increasedsubTotal > 0): $priceHtml = str_replace(",00","",$this->helper('Magento\Framework\Pricing\Helper\Data')->currency($increasedsubTotal,true,false)); $priceHtml = str_replace(".","",$priceHtml);?> <span class="new-price-soho" style="float: left;font-size: 10px;line-height: 1em; mso-line-height-rule: exactly;">(<?php echo $priceHtml; ?><?php echo $successBlock->getPriceLabel('SOHO'); ?>)</span><?php endif; ?><?php else: ?><?php echo $successBlock->getOrangeEmailPricingHtml($order->getSubsidyDiscount(), true, false, false, 'order new-price orange',$order); ?><?php endif; ?></span></td>
+																		</tr>																	
+																<?php } }if(in_array("Simcard",$attributeSetArray)){$prepaidCount = 1;}?>
+																<?php 
+																foreach ($allItems as $items){
+																	if($onlyPostpaidOrange && $onlyPostpaid && $items->getProduct()->getTypeId() == 'virtual' && $items->getParentItemId() == "") {
+																		$virtualProducthidden=1;
+																	}
+																}
+																?>
+																<tr>
+																	<td height="20" colspan="4">&nbsp;</td>
+																</tr>
+																<tr>
+																	<td width="70%" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#ffffff;" valign="top" class="break-responsive"><?php echo __('Total à payer mensuellement');?></td>
+																	<td width="<?php if($maxQty):?>11%<?php else: ?>10.5%<?php endif; ?>" class="break-responsive">&nbsp;</td>
+																	<td width="20%" align="left" style="font-family:Arial, Helvetica, sans-serif; font-weight:bold; text-align:left; color:#ff7900;" valign="top" class="top-parent-price break-responsive"><span class="new-price orange line-100percent"><?php if ($customerType == 'SOHO'): ?><?php $increasedsubTotal = $subTotal / (1+($discountSohoPrice/100));echo $successBlock->getOrangeEmailPricingHtml($subTotal, true, false, true, 'order new-price orange',$order,false,true);?><?php if($increasedsubTotal > 0):$priceHtml = str_replace(",00","",$this->helper('Magento\Framework\Pricing\Helper\Data')->currency($increasedsubTotal,true,false)); $priceHtml = str_replace(".","",$priceHtml);?><span class="new-price-soho" style="float: left;font-size: 10px;line-height: 1em; mso-line-height-rule: exactly;">(<?php echo $priceHtml; ?><?php echo __('/mois') ?><?php echo $successBlock->getPriceLabel('SOHO'); ?>)</span><?php endif; ?><?php else: ?><?php echo $successBlock->getOrangeEmailPricingHtml($subTotal, true, false, true, 'order new-price orange',$order); ?><?php endif; ?></span></td>																
+																</tr>
+																<?php if($hideVirtualHideFreeDelivery==1 && $hideFreedelivery==1) { ?>
+																<?php } else { ?>
+																<?php if($virtualProducthidden ==0) { ?>
+																	
+																	<tr>
+																		<td height="20" colspan="4">&nbsp;</td>
+																	</tr>
+																	<tr>
+																		<td width="70%" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#ffffff;" valign="top" class="break-responsive"><?php echo __('Livraison');?></td>
+																		<td width="<?php if($maxQty):?>11%<?php else: ?>10.5%<?php endif; ?>" class="break-responsive">&nbsp;</td>
+																		<td width="20%" valign="top" class="top-gratuite break-responsive" style="font-family:Arial, Helvetica, sans-serif; font-weight:bold; text-align:left; color:#ff7900;"><?php echo __('Gratuite');?></td>
+																	</tr>
+																	<?php } ?>
+																<?php } ?>
+																<tr>
+																	<td height="30" colspan="4">&nbsp;</td>
+																</tr>
+															</tbody> 
+														</table>
+													</td>
+													<td width="20"></td>
+												</tr>
+												</table>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="30" valign="top">&nbsp;</td>
+                                                </tr>
+												<tr>
+												<td>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="break-responsive">
+														<tbody class="break-responsive">
+															<?php 
+																$countItemnameexisting = count($itemnameexisting);
+																$nextConfigCount = 0;
+																$configCount = 0;
+																$payment = 0;
+															?>
+															 <?php foreach($order->getAllVisibleItems() as $item){ ?>
+															 <?php if(isset($itemnameexisting[$item->getId()])): ?>
+															 <?php
+																$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+																$postpaidModelCollections = $postpaidModel->getCollection()->addFieldToFilter('quote_id',$order->getQuoteId())->addFieldToFilter('item_id',$item->getQuoteItemId());
+																if ($postpaidModelCollections->count() > 0 ) {
+																$i = 1;
+																foreach($postpaidModelCollections as $postpaidCollection) {
+															 ?>
+															 <?php if ($configCount % 2 == 0): ?>
+															 <tr class="break-responsive">
+															 <?php endif;?>
+																<td width="45%" class="break-responsive" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+																	<p style="font-size:20pt;line-height:100%;margin:5px 0;"><b><?php echo __('Configuration de votre numéro pour');?> <?php echo $itemnameexisting[$item->getId()]['name']; if($postpaidModelCollections->count() >1 ){echo " (".$i.")";}?><?php echo $spaceColon;?></b></p>
+																	<p>
+																		<?php if($postpaidCollection->getDesignSimNumber()==1) {
+																		echo "<b>"; echo __('Numéro').$spaceColon;?></b><?php echo __("Garder votre numéro");?> <?php echo $postpaidCollection->getDesignTeExistingNumber()."<br/>"; ?>
+																		<?php if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !="1") {echo "<b>"; echo __('Type de carte').$spaceColon;?></b><?php if($postpaidCollection->getCurrentOperator()==1) {  echo __("Abonnement"); } else { echo __('Carte prépayée'); } echo "<br/>"; }?>
+																		<?php if($postpaidCollection->getSubscriptionType() !="") { echo "<b>"; echo __('Opérateur actuel').$spaceColon; ?></b> <?php echo $postpaidCollection->getSubscriptionType(); ?><br><?php } ?>
+																		<?php if($postpaidCollection->getNetworkCustomerNumber() !="") { echo "<b>"; echo __('N° de client actuel').$spaceColon; ?></b><?php echo $postpaidCollection->getNetworkCustomerNumber(); ?><br><?php } ?>
+																		<?php if($postpaidCollection->getSimcardNumber() !="") { echo "<b>"; echo __('N° de carte SIM actuel').$spaceColon; ?></b><?php echo $postpaidCollection->getSimcardNumber(); ?><br><?php } ?>
+																		<?php if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !="1"): ?>
+																		<?php if($postpaidCollection->getBillInName() =="1") { echo "<b>"; echo __('La facture est à votre nom').$spaceColon; ?></b> <?php echo __('Oui'); ?><br><?php } ?>
+																		<?php if($postpaidCollection->getBillInName() =="0") { echo "<b>"; echo __('La facture est à votre nom').$spaceColon; ?></b> <?php echo __('Non'); ?><br><?php } ?>
+																		<?php endif;?>
+																		<?php if($postpaidCollection->getHoldersName() !="") { echo "<b>"; echo __('Nom du titulaire').$spaceColon; ?></b> <?php echo $postpaidCollection->getHoldersName(); ?><br><?php } ?>
+																		<?php if($postpaidCollection->getHolderFirstname() !="") { echo "<b>"; echo __('Prénom du titulaire').$spaceColon; ?></b><?php echo $postpaidCollection->getHolderFirstname(); ?><br><?php } ?>
+																		<?php } ?>
+																		<?php if($postpaidCollection->getDesignSimNumber()==2){ ?><b><?php echo __('Numéro').$spaceColon;?></b><?php echo __('nouveau numéro');?><br/> <?php } ?>
+																		<?php
+																			if($itemnameexisting[$item->getId()]['attribute_set'] != 'IEW') {
+																		?>
+																		<?php if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!="") { echo "<b>"; echo __('Ajouter cet abonnement à une facture existante').$spaceColon; ?></b><?php echo __('Oui'); ?><br><?php } ?>
+																		<?php if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number'] == "") { echo "<b>"; echo __('Ajouter cet abonnement à une facture existante').$spaceColon; ?></b><?php echo __('Non'); ?><br><?php } ?>
+																		<?php if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!="") { echo "<b>"; echo __('N° de client').$spaceColon; ?></b><?php echo $gender['cu_ex_invoice_cust_number']; ?><br><?php } ?>
+																		<?php if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!="") { ?>
+																			<?php if(isset($gender['cu_ex_invoice_bill_in_name'])) { ?>
+																			 <span><?php echo "<b>"; echo __('La facture est à votre nom').$spaceColon; ?></b><?php if ($gender['cu_ex_invoice_bill_in_name'] == "1"): ?><?php  echo __('Oui'); ?><?php else:?><?php  echo __('Non'); ?><?php endif;?><br>
+																			<?php } ?>
+																		<?php }?>
+																		<?php if (isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name'] == "0"): ?>
+																			<?php if(isset($gender['cu_ex_invoice_cust_surname']) &&  $gender['cu_ex_invoice_cust_surname']!="") { echo "<b>"; echo __('Nom du titulaire').$spaceColon; ?></b><?php echo $gender['cu_ex_invoice_cust_surname']; ?><br><?php } ?>
+																			<?php if(isset($gender['cu_ex_invoice_cust_firstname']) &&  $gender['cu_ex_invoice_cust_firstname']!="") { echo "<b>"; echo __('Prénom du titulaire').$spaceColon; ?></b><?php echo $gender['cu_ex_invoice_cust_firstname']; ?><br><?php } ?>
+																			<?php if(isset($gender['cu_ex_invoice_cust_dob']) &&  $gender['cu_ex_invoice_cust_dob']!="") { echo "<b>"; echo __('Date de naissance du titulaire').$spaceColon; ?></b><?php $dob = str_replace('/', '-', $gender['cu_ex_invoice_cust_dob']); $dobIew = date("Y-m-d H:i:s", strtotime($dob));$date = date_create($dobIew); echo date_format($date,"d/m/Y"); ?><br><?php } ?>
+																		<?php endif; ?>
+																		<?php } ?>
+																		<?php if($itemnameexisting[$item->getId()]['attribute_set'] == 'IEW') { ?>
+																		<?php if($isTeneuroYes !=""){ ?><b><?php echo __("Bénéficier d'une réduction de 5 €/mois en ajoutant cet abonnement à une facture existante").$spaceColon;?></b><?php if ($isTeneuroYes == "yes"): ?><?php  echo __('Oui'); ?><?php else:?><?php  echo __('Non'); ?><?php endif;?><br><?php } ?>
+																		<?php if ($isTeneuroYes == "yes"){ ?>
+																		<?php if($iewTelephone !=""){ ?><b><?php echo __('N° de client').$spaceColon;?></b><?php echo $iewTelephone;?><br><?php } ?>
+																		<?php if($isTeneuroYes == "yes") { ?><span><?php echo "<b>"; echo __('La facture est à votre nom').$spaceColon; ?></b><?php if ($iewContract == "1"): ?><?php  echo __('Oui'); ?><?php else:?><?php  echo __('Non'); ?><?php endif;?><br><?php } ?>
+																		<?php if($iewContract=="0" && $iewLastname !=""){ ?><b><?php echo __('Nom du titulaire').$spaceColon; ?></b><?php echo $iewLastname;?><br><?php } ?>
+																		<?php if($iewContract=="0" && $iewFirstname !=""){ ?><b><?php echo __('Prénom du titulaire').$spaceColon; ?></b><?php echo $iewFirstname;?><br><?php } ?>
+																		<?php if($iewContract=="0" && $iewDob !=""){ ?><b><?php echo __('Date de naissance').$spaceColon; ?></b><?php $date = date_create($iewDob); echo date_format($date,"d/m/Y");?><br><?php } ?>
+																		<?php } ?>
+																		<?php } ?>
+																		<?php if($postpaidCollection->getProPacks() !=""): ?>
+																			<b><?php echo __('ProPacks').$spaceColon; ?></b><?php echo $postpaidCollection->getProPacks(); ?><br>
+																		<?php endif; ?>
+																	</p>
+																</td>
+																<?php $configCount++; ?>
+																<?php if ($configCount % 2 != 0): ?>
+																<td width="10%" class="break-responsive" valign="top">&nbsp;</td>
+																<?php endif;?>
+															 <?php if ($configCount % 2 == 0): ?>
+															 </tr>
+															 <tr class="break-responsive">
+																<td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+															 </tr>
+															 <?php endif;?>
+																<?php  $i++;}}endif; ?>
+																<?php } ?> 
+																<?php  ?>
+																<?php if ($configCount % 2 == 0 || $countItemnameexisting == 0):?>
+																		<tr class="break-responsive">
+																<?php endif; ?>
+																		<td width="45%" class="break-responsive" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+																			<p style="font-size:20pt;line-height:100%;margin:5px 0;white-space:nowrap;"><b><?php echo __('Données personnelles').$spaceColon;?></b></p>
+																			<?php 
+																			 if($gender['b_number'] && $gender['b_box']) {
+																				$billingStreetN = $gender['b_street']. " " .$gender['b_number']."/".$gender['b_box'];
+																			 }  else {
+																				$billingStreetN = $gender['b_street']. " " .$gender['b_number'];
+																			 }
+																			 ?>
+																			<?php 
+																				$streetN ='';
+																				$bpostPostal ='';
+																				if(isset($gender['isdeliveryMethod']) && $gender['isdeliveryMethod'] == 1 && isset($gender['customerPostalLocation']) && $gender['customerPostalLocation']) {
+																					$bpostPostal = $gender['customerPostalLocation'].", ";
+																				}
+																			?><?php 													
+																			 if(isset($gender['s_number']) && isset($gender['s_street']) && isset($gender['s_box']) && $gender['s_box']) {
+																				$streetN = $gender['s_street']. " " .$gender['s_number']."/".$gender['s_box'];
+																			 }  else if(isset($gender['s_number']) && isset($gender['s_street'])) {
+																				$streetN = $gender['s_street']. " " .$gender['s_number'];
+																			 } else {
+																				$streetN = $billingStreetN;
+																			 }
+																			 ?>
+																			<p >
+																				<b><?php echo __('Prénom').$spaceColon;?></b><?php echo $gender['first_name'];?><br>
+																				<b><?php echo __('Nom').$spaceColon;?></b><?php echo $gender['last_name'];?><br>
+																				<b><?php echo __('Adresse').$spaceColon;?></b><?php echo strtoupper(trim($billingStreetN)).", ".$gender['b_postcode_city'] ." ".strtoupper(trim($gender['b_city'])).", ". $country; ?><br>
+																				<b><?php echo __('Mail').$spaceColon;?></b><span style="color:black;text-decoration:none;"><a href="" onclick="return false" style="color:black;text-decoration:none;"><?php echo $shippingAddress->getEmail(); ?></a></span><br>
+																			<?php if(isset($gender['c_dob']) && $gender['c_dob'] != ""): ?>
+																				<b><?php echo __('Date de naissance').$spaceColon;?></b> <?php echo trim($gender['c_dob'])."<br>"; ?>
+																			<?php endif;?>
+																			<?php if(($shippingAddress->getTelephone() != "") && ($prepaidCount == "")): ?>
+																			<b><?php echo __('Numéro de contact').$spaceColon;?></b> <?php echo $billingAddress->getTelephone(); ?><br>	
+																			<?php endif;?>
+																			<?php // Start National ID implementation ?>
+																			<?php if (count($itemnameexisting) > 0) { ?>
+               																		<?php if($gender['nationality'] == 'belgian'): ?>
+																				<b><?php echo __("Possédez-vous un document d'identité délivré par les autorités belges ?").$spaceColon;?></b> <?php echo __('Oui') ?><br>
+																				<?php if($gender['id_number'] != ''): ?>
+																					<b><?php echo __("N° du document d'identité").$spaceColon;?></b> <?php echo $gender['id_number'];?><br>
+																				<?php endif; ?>
+																			<?php endif; ?> 
+																			<?php } ?>
+																			<?php // End National ID implementation ?>
+																			<?php if($prepaidCount == 1 && isset($gender['cust_birthplace'])): ?>
+																			<b><?php echo __('Lieu de naissance').$spaceColon;?></b> <?php echo $gender['cust_birthplace']; ?><br>
+																			<?php endif;?>
+																			<?php if($gender['tx_profile_dropdown'] != '' ): ?>
+																				<b><?php echo __('Indépendant ou société').$spaceColon;?></b> <?php echo __('Oui'); ?><br>
+																			<?php endif;?>
+																			<?php if($gender['tx_profile_dropdown'] != '' ): ?>
+																				<b><?php echo __('Profil').$spaceColon;?></b> <?php if($gender['tx_profile_dropdown'] == 3):?>
+																				<?php echo __('Entreprise'); ?>
+																				<?php endif;?>
+																				<?php if($gender['tx_profile_dropdown'] == 4):?>
+																				<?php echo __('Indépendant') ?>
+																				<?php endif;?>	    
+																				<?php if($gender['tx_profile_dropdown'] == 1):?>
+																				<?php echo __('Profession libérale avec numéro de TVA') ?>
+																				<?php endif;?>	
+																				<?php if($gender['tx_profile_dropdown'] == 2):?>
+																				<?php echo __('Profession libérale sans numéro de TVA') ?>
+																				<?php endif;?>	<br>
+																			<?php endif;?>
+																			<?php if($gender['legal_status'] != '' ): ?>
+																				<b><?php echo __('Statut juridique').$spaceColon;?></b> <?php echo __($gender['legal_status']); ?><br>
+																			<?php endif;?>
+																			<?php if($gender['company_name'] != '' ): ?>
+																				<b><?php echo __('Nom de la société').$spaceColon;?></b> <?php $companyName = $gender['company_name'];echo substr($companyName, 0, 25);if(strlen($companyName) > 25) {echo '<br>';echo substr($companyName, 26, 49);if(strlen($companyName) > 49) {echo '<br>';echo substr($companyName, 50, 100);}}?><br>
+																			<?php endif;?>
+																			<?php if($gender['vat_number'] != '' ): ?>
+																				<b><?php echo __('N° de TVA').$spaceColon;?></b> <?php echo $gender['vat_number']; ?><br>
+																			<?php endif;?>
+																					
+																			<?php #endforeach; ?>
+																			</p>
+																		</td>
+																		<?php $configCount++;?>
+																		<?php if ($configCount % 2 != 0): ?>
+																			<td width="10%" class="break-responsive" valign="top">&nbsp;</td>
+																		<?php endif;?>
+																		<?php if ($configCount % 2 == 0):?>
+																		</tr>  
+																				<tr class="break-responsive">
+																				  <td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+																				</tr>
+																				
+																				<!--derived design scenario html -->
+																								<tr class="break-responsive">
+																								<?php endif; if(!$hasShippingInfo){  }else{ ?>                                                 
+																									<?php // $nextConfigCount++; ?>
+																									<td width="45%" class="break-responsive" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+																										 <p style="font-size:20pt;white-space:nowrap;line-height:100%;margin:5px 0;"><b><?php echo __('Adresse de livraison').$spaceColon; ?></b></p>
+																										 <p>
+																											 <b>
+																											 <?php 
+																												if(isset($gender['s_city']) && $gender['s_city'] ) {
+																													$city = $gender['s_city'];
+																												} else {
+																													$city = $gender['b_city'];
+																												}
+																											?>
+																											 
+																											 <?php 
+																											 if(isset($gender['s_firstname'])  && $gender['s_firstname'])
+																											 {
+																											 $sfirstname = $gender['s_firstname'];
+																											 }
+																											 else
+																											 {
+																											 $sfirstname = $gender['first_name'];
+																											 }
+																											 if(isset($gender['s_name']) && $gender['s_name'])
+																											 {
+																											 $slastname = $gender['s_name'];
+																											 }
+																											 else
+																											 {
+																											 $slastname = $gender['last_name'];
+																											 }
+																											 if(isset($gender['s_postcode_city']) && $gender['s_postcode_city']) {
+																												$postCode = $gender['s_postcode_city'];
+																											 } else {
+																												$postCode = $shippingAddress->getPostcode();
+																											 }
+																											echo $sfirstname." ". $slastname;?></b><br>
+																											<?php if(isset($gender['s_attention_n']) && $gender['s_attention_n']) {echo __('A l’attention de'); echo " ".$gender['s_attention_n']."<br>"; } ?>
+																											<?php echo $bpostPostal.$streetN.", ".$postCode ." ".$city.", ".$country; ?><br>									
+																										 </p>
+																									 </td>
+																									 <?php $configCount++;?>
+																									<?php if ($configCount % 2 != 0): ?>
+																										<td width="10%" class="break-responsive" valign="top">&nbsp;</td>
+																									<?php endif;?>
+																									 
+																									 <?php } ?>
+																									 <?php if ($configCount % 2 == 0):?>
+																				</tr>  
+																				<tr class="break-responsive">
+																				  <td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+																				</tr>
+																							<tr class="break-responsive">
+																								<?php endif; ?>
+																									 <?php if ($order->getShippingDescription()):?>
+																									 <?php $grandTotal = $order->getGrandTotal();	 ?>
+																									 <?php if($grandTotal > 0): ?>
+																									<?php $nextConfigCount++; ?>
+																									<td width="45%" class="break-responsive <?php echo $configCount;?>" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+																										  <p style="font-size:20pt;white-space:nowrap;line-height:100%;margin:5px 0;"><b><?php echo __('Paiement de votre commande').$spaceColon;?></b></p>
+																										<?php if($order->getPayment()->getMethodInstance()->getTitle()):?>						
+																										<p><b><?php echo __("Méthode de paiement").$spaceColon; ?></b> <?php echo __($order->getPayment()->getMethodInstance()->getTitle()); ?></p>
+																										<div class="clearfix"></div>
+																										<?php
+																										$payments = $order->getPaymentsCollection();
+																											foreach ($payments as $_payment) {
+																												$method = $_payment->getMethod();
+																												$card_details = $_payment->getCcLast4();
+																															
+																											}
+																										?>
+                                                                                                        <?php if($card_details != '' ) { ?><p><b><?php echo __("Numéro de carte").$spaceColon; ?></b><?php echo $card_details; ?></p> <?php } ?>
+																										<div class="clearfix"></div>
+																										<?php
+																												if ($customerType == 'SOHO'):
+																													$priceHtml = $successBlock->getOrangeEmailPricingHtml($grandTotal, true, false, false, 'new-price total ban-contact '.$classtotal,$order,false,true);
+																												else:
+																													$priceHtml = $successBlock->getOrangeEmailPricingHtml($grandTotal, true, false, false, 'new-price total ban-contact '.$classtotal,$order);
+																												endif;
+																										
+																										?>
+																										<div style="float: left;"><table border="0" cellspacing="0" cellpadding="0" class="break-responsive" style=""><tbody><tr><td cell-padding="0" cell-spacing="0"  align="left" width="<?php echo $tdwidth;?>" style="white-space:nowrap;font-family:Arial,Helvetica,sans-serif;" ><b style="float:left;height:50px;"><?php echo __('Montant payé').$spaceColon;?></b></td><td valign="top" align="left" cell-padding="0" cell-spacing="0" style="float:left;margin-left:5px;padding:0in 0in 0in 0in;border-spacing:0px;font-family:Arial,Helvetica,sans-serif;width:100%;"><?php echo $priceHtml; ?></td></tr></tbody></table></div>
+																										<?php endif; ?>																	 
+																									</td>  
+																									 <?php $configCount++;?>
+																									<?php if ($configCount % 2 != 0): ?>
+																										<td width="10%" class="break-responsive" valign="top">&nbsp;</td>
+																									<?php endif;?>
+																									  <?php endif; ?>
+																									<?php endif; ?>
+																									<?php if($order->getAccountNumber()): ?>
+																									<?php $payment = 1;?>
+																									<?php if ($configCount % 2 == 0): ?>
+																									</tr>
+																									<tr class="break-responsive">
+																									  <td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+																									</tr>
+																									<tr class="break-responsive">
+																									<?php endif; ?>
+																									<td width="45%" class="break-responsive" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;font-family: Arial,Helvetica,sans-serif;">
+																										<p style="font-size:20pt;line-height:100%;margin:5px 0;white-space:nowrap;"><b><?php echo __('Paiement de l’abonnement').$spaceColon;?></b></p>
+																										<p><b><?php echo __("Méthode de paiement").$spaceColon; ?></b> <?php echo __('Domiciliation');?></p>
+																										<p><b><?php echo __('N° de compte').$spaceColon;?></b> <?php echo str_replace(" ","",$order->getAccountNumber());?></p>
+																									</td>
+																									<?php $configCount++;?>
+																									<?php if ($configCount % 2 != 0): ?>
+																										<td width="10%" class="break-responsive" valign="top">&nbsp;</td>
+																									<?php endif;?>
+																									<?php else: ?>
+																										<?php if(isset($gender['transfer_type']) && $gender['transfer_type'] == 'Virement'): ?>
+																											<?php if ($configCount % 2 == 0): ?>
+																									</tr>
+																									<tr class="break-responsive">
+																									  <td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+																									</tr>
+																									<tr class="break-responsive">
+																									<?php endif; ?>
+																											<td width="45%" class="break-responsive" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+																												<p style="font-size:20pt;line-height:100%;margin:5px 0;white-space:nowrap;"><b><?php echo __('Paiement de l’abonnement').$spaceColon;?></b></p>
+																												<p><b><?php echo __("Méthode de paiement").$spaceColon; ?></b> <?php echo __('Virement');?></p>																												
+																											</td>
+																									<?php $configCount++;?>
+																									<?php if ($configCount % 2 != 0): ?>
+																										<td width="10%" class="break-responsive" valign="top">&nbsp;</td>
+																									<?php endif;?>
+																										<?php endif; ?>
+																									<?php endif; ?>		
+																									<?php if (!$order->getAccountNumber() && $payment!=0):?>
+																									<?php if($configCount % 2 == 0):?>
+																								   </tr>
+																									<tr class="break-responsive">
+																									  <td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+																									</tr>
+																									<?php endif; ?>
+																									<?php endif; ?>
+																								 <?php if($order->getAccountNumber() && $payment==0): ?>
+																								 <?php if ($configCount % 2 == 0): ?>
+																								 <tr class="break-responsive">
+																									  <td class="break-responsive" height="20" valign="top" colspan="4">&nbsp;</td>
+																									</tr>
+																								   <tr class="break-responsive">  
+																									<?php endif; ?>
+																									<?php $nextConfigCount++; ?>
+																									<td width="45%" class="break-responsive" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:16px;line-height:140%;text-align:left; color:#000000;">
+																									 <p style="font-size:20pt;line-height:100%;margin:5px 0;white-space:nowrap;"><b><?php echo __('Paiement de l’abonnement').$spaceColon;?></b></p>
+																									<p><b><?php echo __("Méthode de paiement").$spaceColon; ?></b> <?php echo __('Domiciliation');?></p>
+																									<p><b><?php echo __('N° de compte').$spaceColon;?></b> <?php echo str_replace(" ","",$order->getAccountNumber());?></p>
+																									</td>
+																									</tr>
+																									<?php endif; ?>
+																						<!-- ends--> 
+																															
+														</tbody>  
+													</table>
+												</td>
+											</tr>
+                                                <tr>
+                                                  <td height="20" valign="top">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                  <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; font-weight:bold; text-align:left; color:#000000;">
+                                                  <?php echo __('L’équipe Orange');?></td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="20" valign="top">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+													<td height="40" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; text-align:left; color:#000000;">
+													<?php
+													$storeName = $order->getStoreId();	
+													//storeId 1 means nl else 2 means fr			
+													if($storeName == '1'){			
+													echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_confirmation_email_nl')->toHtml();
+													} else {
+													echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_confirmation_email_fr')->toHtml();
+													}
+													?>			
+													</td>
+												</tr>
+                                                <tr>
+                                                  <td height="40" valign="top">&nbsp;</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                          <td width="40" valign="top">&nbsp;</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor="#000000" style="background-color:#000000"><!-- FOOTER START -->
+                    <?php
+                      $storeName = $order->getStoreId();                     		
+                      if ($storeName == '1') {
+                          echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_confirmation_email_footer_nl')->toHtml();
+                      } else {
+                          echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_confirmation_email_footer_fr')->toHtml();
+                      }
+                      ?> 
+                      <!-- FOOTER END --></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

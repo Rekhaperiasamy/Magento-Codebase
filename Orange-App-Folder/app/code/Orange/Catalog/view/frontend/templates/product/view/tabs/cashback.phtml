@@ -1,0 +1,22 @@
+<?php
+$customerSession = $this->helper('Orange\Bundle\Helper\Data')->customerSessionInt();
+$customerGrp = $block->getCustomerTypeName();
+$produt = $block->getProduct();
+if ($block->getAttributeSetName() != "Accessories") {
+    /* if ($customerSession->getCustomerGroupId() == 0 && $produt['sticker_b2c'] != '') {
+        echo $produt['sticker_b2c'];
+    } else if ($customerSession->getCustomerGroupId() == 1 && $produt['sticker_soho'] != '') {
+        echo $produt['sticker_soho'];
+    } */
+	/* if($customerGrp == 'SOHO'):
+		echo $this->getLayout()
+          ->createBlock('Magento\Cms\Block\Block')
+          ->setBlockId('cash-back-soho')
+          ->toHtml();
+	else:
+		echo $this->getLayout()
+          ->createBlock('Magento\Cms\Block\Block')
+          ->setBlockId('cash-back')
+          ->toHtml();
+	endif; */
+}

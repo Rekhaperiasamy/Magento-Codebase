@@ -1,0 +1,28 @@
+<!--
+/**
+* Copyright © 2015 Amasty. All rights reserved.
+ */
+-->
+<div class="row" style="display:none">
+	<div class="col-xs-12 col-sm-8">
+		<div class="container-grey margin-xs-t-m">
+			<form class="form form-discount" id="discount-form" data-bind="blockLoader: isLoading">
+				<div class="row">
+					<div class="col-xs-12 col-sm-8 col-md-9">
+						<input class="form-control" autocomplete="off" type="text" name="discount_code_fake" id="discount-code-fake" data-validate="{'required-entry':true}" data-bind=" attr:{placeholder: $t('Enter promo code')} " >
+							<input class="input-text"
+								   type="hidden"
+								   id="discount-code"
+								   name="discount_code"
+								   data-bind="value: couponCode, attr:{placeholder: $t('Enter promo code')} " />
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-3 margin-xs-t-s margin-sm-t-n actions-toolbar">
+						<button class="action action-apply btn btn-primary" id="promocode-submit" type="submit" data-bind="'value': $t('Apply'), click: apply">
+							<span><!-- ko text: $t('Apply')--><!-- /ko --></span>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

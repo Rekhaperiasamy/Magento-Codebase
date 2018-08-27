@@ -1,0 +1,1475 @@
+<?php
+$om =   \Magento\Framework\App\ObjectManager::getInstance();
+
+/*Getting cart Item*/
+$quote = $om->create('Magento\Checkout\Model\Cart')->getQuote();
+$quoteitems = $quote->getAllVisibleItems();
+
+/*Product Collection*/
+$productObj = $om->get('Magento\Catalog\Model\Product');
+
+$tempSession = $om->get('Magento\Checkout\Model\Session')->getNewcheckout();
+$specialCharacter = "A-Za-zA-ÿŒŸœĲ'._\s-";
+$storeManager = $om->get('Magento\Store\Model\StoreManagerInterface');
+$_cataloghelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+	////Gender/////////////////
+	$gender_male_checked  =  'checked';
+	if(isset($tempSession['gender']) && ($tempSession['gender'] =='1') )
+	{
+		$gender_male_checked  =  'checked';
+	}
+	else if(isset($tempSession['gender'])  && ($tempSession['gender'] =='2'))
+	{
+		$gender_female_checked  =  'checked';
+	}
+
+/** URLS **/
+$sessionURL = $_cataloghelper->getFormattedUrl($this->getUrl('checkout/index/session'));
+$updateSessionURL = $_cataloghelper->getFormattedUrl($this->getUrl('checkout/index/updatesession'));
+//$formactionUrl  = $_cataloghelper->getFormattedUrl($block->getcartcount());
+$onepageSku  = $block->getOnepageSku();
+/*Customer Type */
+$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$customerType = $productViewblock->getCustomerTypeName();
+?>
+
+<?php foreach ($quoteitems as $item) :?>
+<div class="main-container">
+
+	<?php if ($item->getProduct()->getSku() == $onepageSku):?>
+	<article class="layer-style--gray clearfix">
+		<div class="container">
+			<h3 class="margin-xs-v-n"><?php echo $item->getProduct()->getName().":";?> <?php echo __('la carte prépayée avec un max de GB !') ?></h3>
+		</div>
+	</article>
+
+	<div class="container">
+		<div class="row margin-xs-v-m">
+
+                <?php $DescProductNew = $productObj->load($item->getProduct()->getId());
+			      echo $description_new = $DescProductNew->getDescription();
+			     ?>
+				<!-- <div class="well-black margin-xs-t-l">
+					<div class="row">
+						<div class="col-xs-12">
+							<h4>Tarifs en détails</h4>
+						</div>
+						<div class="col-xs-4">
+							<h5>Appels</h5>
+							<h4 class="orange margin-xs-b-s"><span class="font-30">0,30€</span> <small class="orange">/min</small></h4>
+						</div>
+						<div class="col-xs-4">
+							<h5>SMS</h5>
+							<h4 class="orange margin-xs-b-s"><span class="font-30">0,10€</span> <small class="orange">/SMS</small></h4>
+						</div>
+						<div class="col-xs-4">
+							<h5>Surf</h5>
+							<h4 class="orange margin-xs-b-s"><span class="font-30">0,50€</span> <small class="orange">/MB</small></h4>
+						</div>
+					</div>
+				</div> -->
+		<?php endif;?>
+<?php endforeach;?>
+			<div class="col-xs-12 margin-xs-t-n margin-sm-t-m">
+
+				<div class="price-box margin-xs-t-m one-checkout" style="height: auto;">
+					<h4 class="margin-xs-t-n margin-xs-b-s font-24">
+					<?php echo __('Commander votre carte prépayée') ?></h4>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<p class="tempo-onepage"><i class="oi oi-tick" style="color:#ffffff;">&nbsp;</i><?php echo __('Possibilité de conserver votre numéro actuel') ?></p>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+						    <p></p>
+							<div class="caddy caddy-pricee new-price orange simcard-cnt pull-left">
+								<span id="new-pricee" class=" new-pricee ">15</span>
+								<span id="new-price-symbol" class=" new-price-symbol ">€</span>
+								<small class="orange decharge-txt"> <?php echo __('de recharge') ?></small>	
+								<span class="new-price-soho"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+ 
+			<div class="col-xs-12">
+<div class="step-mage-error" style="display:none"><span><i class="glyphicon glyphicon-info-sign"></i> <?php echo __('Please correct below invalid fields') ?></span></div>   
+				<form enctype="multipart/form-data" autocomplete="on" action="<?php echo $block->getcartcount();?>" method="post" id="tempo" accept-charset="UTF-8" name="tempo" class="margin-xs-v-m">
+
+<input type="hidden" name="step" id="step" value="final">
+<input type="hidden" id="checksum" name="checksum" value="<?php if(isset($tempSession['checksum'])) { echo $tempSession['checksum'];  } ?>"/>	
+<input type="hidden" id="customerPostalLocation" name="customerPostalLocation" value="<?php if(isset($tempSession['customerPostalLocation'])) { echo $tempSession['customerPostalLocation'];  } ?>" />
+<input type="hidden" id="customerStreet" name="customerStreet" value="<?php if(isset($tempSession['customerStreet'])) { echo $tempSession['customerStreet'];  } ?>" />
+<input type="hidden" id="customerStreetNumber" name="customerStreetNumber" value="<?php if(isset($tempSession['customerStreetNumber'])) { echo $tempSession['customerStreetNumber'];  } ?>" />
+<input type="hidden" id="customerPostalCode" name="customerPostalCode" value="<?php if(isset($tempSession['customerPostalCode'])) { echo $tempSession['customerPostalCode'];  } ?>" />
+<input type="hidden" id="customerCity" name="customerCity" value="<?php if(isset($tempSession['customerPostalCode'])) { echo $tempSession['customerPostalCode'];  } ?>" />
+<input type="hidden" id="deliveryMethod" name="deliveryMethod" value="<?php if(isset($tempSession['deliveryMethod'])) { echo $tempSession['deliveryMethod'];  } ?>" />
+<input type="hidden" id="customerLastName" name="customerLastName" value="<?php if(isset($tempSession['customerLastName'])) { echo $tempSession['customerLastName'];  } ?>" />
+<input type="hidden" id="customerFirstName" name="customerFirstName" value="<?php if(isset($tempSession['checksum'])) { echo $tempSession['checksum'];  } ?>" />
+<input type="hidden" id="customerEmail" name="customerEmail" value="<?php if(isset($tempSession['customerEmail'])) { echo $tempSession['customerEmail'];  } ?>" />
+<input type="hidden" id="s_firstname" name="s_firstname" value="<?php if(isset($tempSession['s_firstname'])) { echo $tempSession['s_firstname'];  } ?>" />
+<input type="hidden" id="s_name" name="s_name" value="<?php if(isset($tempSession['s_name'])) { echo $tempSession['s_name'];  } ?>" />
+<input type="hidden" id="s_attention_n" name="s_attention_n" value="<?php if(isset($tempSession['s_attention_n'])) { echo $tempSession['s_attention_n'];  } ?>" />
+<input type="hidden" id="s_city" name="s_city" value="<?php if(isset($tempSession['s_city'])) { echo $tempSession['s_city'];  } ?>" />
+<input type="hidden" id="s_postcode_city" name="s_postcode_city" value="<?php if(isset($tempSession['s_postcode_city'])) { echo $tempSession['s_postcode_city'];  } ?>" />
+<input type="hidden" id="s_street" name="s_street" value="<?php if(isset($tempSession['s_street'])) { echo $tempSession['s_street'];  } ?>" />
+<input type="hidden" id="s_box" name="s_box" value="<?php if(isset($tempSession['s_box'])) { echo $tempSession['s_box'];  } ?>" />
+<input type="hidden" id="coupon_code" name="coupon_code" value="<?php if(isset($tempSession['coupon_code'])) { echo $tempSession['coupon_code'];  } ?>" />
+<input type="hidden" id="terms_condition" name="terms_condition" value="<?php if(isset($tempSession['terms_condition'])) { echo $tempSession['terms_condition'];  } ?>" />
+<input type="hidden" id="client_name" name="client_name" value="<?php if(isset($tempSession['checksum'])) { echo $tempSession['checksum'];  } ?>" />
+<input type="hidden" id="id_number" name="id_number" value="<?php if(isset($tempSession['id_number'])) { echo $tempSession['id_number'];  } ?>" />
+<input type="hidden" id="passport_number" name="passport_number" value="<?php if(isset($tempSession['passport_number'])) { echo $tempSession['passport_number'];  } ?>" />
+<input type="hidden" id="residence_number" name="residence_number" value="<?php if(isset($tempSession['residence_number'])) { echo $tempSession['residence_number'];  } ?>" />
+<input type="hidden" id="registered" name="registered" value="<?php if(isset($tempSession['registered'])) { echo $tempSession['registered'];  } ?>" />
+<input type="hidden" id="nationality" name="nationality" value="Belgium" />
+<input type="hidden" id="company_name" name="company_name" value="<?php if(isset($tempSession['company_name'])) { echo $tempSession['company_name'];  } ?>" />
+<input type="hidden" id="legal_status" name="legal_status" value="<?php if(isset($tempSession['legal_status'])) { echo $tempSession['legal_status'];  } ?>" />
+<input type="hidden" id="iew_items" name="iew_items" value="<?php if(isset($tempSession['iew_items'])) { echo $tempSession['iew_items'];  } ?>" />
+<input type="hidden" id="totalvirtualproduct" name="totalvirtualproduct" value="<?php if(isset($tempSession['totalvirtualproduct'])) { echo $tempSession['totalvirtualproduct'];  } ?>" />
+<input type="hidden" id="virtualproductonepage_one" name="virtualproductonepage_one" value="<?php if(isset($tempSession['virtualproductonepage_one'])) { echo $tempSession['virtualproductonepage_one'];  } ?>" />
+<input type="hidden" id="virtualproductonepage" name="virtualproductonepage" value="<?php if(isset($tempSession['virtualproductonepage'])) { echo $tempSession['virtualproductonepage'];  } ?>" />
+<input type="hidden" id="paymentBasedContent" name="paymentBasedContent" value="<?php if(isset($tempSession['paymentBasedContent'])) { echo $tempSession['paymentBasedContent'];  } ?>" />
+<input type="hidden" id="subsidybank" name="subsidybank" value="<?php if(isset($tempSession['subsidybank'])) { echo $tempSession['subsidybank'];  } ?>" />
+<input type="hidden" id="customer_type" name="customer_type" value="<?php if(isset($customerType)) { echo $customerType; }?>" />
+<input type="hidden" id="subs_result" name="subs_result" value="<?php if(isset($tempSession['subs_result'])) { echo $tempSession['subs_result'];  } ?>" />
+<input type="hidden" id="scoring_handset_count" name="scoring_handset_count" value="<?php if(isset($tempSession['scoring_handset_count'])) { echo $tempSession['scoring_handset_count'];  } ?>" />
+	<input type="hidden" name="pre_onepage" id="pre_onepage" value="1">
+	<input type="hidden" name="pre_onepage_trigger" id="pre_onepage_trigger" value="1">
+	<input type="hidden" name="chk_step_stat" id="chk_step_stat" value="final">
+	<input type="hidden" name="scoringResponse" id="scoringResponse" value="<?php if(isset($tempSession['checksum'])) { echo $tempSession['checksum'];  } ?>">
+	<input type="hidden" name="iewbundle" id="iewbundle" value="<?php if(isset($tempSession['iewbundle'])) { echo $tempSession['iewbundle'];  } ?>">
+	<input type="hidden" name="session_url" id="session_url" value="<?php echo $sessionURL ;?>">
+	<input type="hidden" name="update_session_url" id="update_session_url" value="<?php echo $updateSessionURL ;?>">
+	<input type="hidden" name="number_url" id="number_url" value="	<?php echo $this->getUrl('numbervalidation/index/index') ;?>">
+	<input type="hidden" name="coupon_subscription_url" id="coupon_subscription_url" value="<?php echo $this->getUrl('checkout/cart/CouponSubscription') ;?>">
+	<input type="hidden" name="number_screen" id="number_screen" value="<?php if(isset($tempSession['number_screen'])) { echo $tempSession['number_screen'];  } ?>">
+	<input type="hidden" name="scoring_redirect" id="scoring_redirect" value="<?php echo $this->getUrl('checkout/index/OrderRefusePage');?>">
+	<input type="hidden" name="scoring_handset_count" id="scoring_handset_count" value="<?php if(isset($tempSession['scoring_handset_count'])) { echo $tempSession['scoring_handset_count'];  } ?>">
+	<input type="hidden" name="scoring_url" id="scoring_url" value="<?php echo $this->getUrl('road/scoring/scoring'); ?>">
+	<input type="hidden" name="simcard_url" id="simcard_url" value="<?php echo $this->getUrl('checkout/index/simcard'); ?>">
+	<input type="hidden" name="vatnumber_url" id="vatnumber_url" value="<?php echo $this->getUrl('checkout/index/vatnumber'); ?>">
+	<input type="hidden" name="prepaid_check" id="prepaid_check" value="<?php if(isset($tempSession['prepaid_check'])) { echo $tempSession['prepaid_check'];  } ?>">
+	<input type="hidden" name="subs_result" id="subs_result" value="<?php if(isset($tempSession['subs_result'])) { echo $tempSession['subs_result'];  } ?>">
+
+	
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">						
+
+						<h4 class="margin-xs-b-m"><?php echo __('Données personnelles') ?> </h4>							
+
+						<div class="row form-line margin-xs-b-n">
+							<div class="col-xs-12">												
+								<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+									<label for="edit-gender-mr"><input type="radio" id="edit-gender-mr" name="gender" value="mr" class="form-radio" <?php if(isset($gender_male_checked)) {  echo $gender_male_checked; } ?>><?php echo __('Mr.') ?>  </label>
+								</div>
+								<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+									<label for="edit-gender-mme"><input type="radio" id="edit-gender-mme" name="gender" value="mme" class="form-radio" <?php if(isset($gender_female_checked)) {  echo $gender_female_checked; } ?>><?php echo __('Mme.') ?> </label>
+								</div>
+							</div>
+						</div>
+			
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label for="edit-first-name"><?php echo __('Prénom') ?>  <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>	
+								<input type="text" name="dummy-name" id="input" style="display:none;">								 
+								<input class="form-control validation_check" type="text" autocomplete="given-name" id="first_name" name="first_name"  value="<?php if(isset($tempSession['first_name'])) { echo $tempSession['first_name']; }?>" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'first-name':true}">
+							</div>
+						</div>
+	
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label for="edit-name"><?php echo __('Nom') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>
+								<input class="form-control validation_check disabled" autocomplete="family-name" id="last_name" type="text" name="last_name" value="<?php if(isset($tempSession['last_name'])) { echo $tempSession['last_name']; }?>" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'last-name':true}" >
+							</div>
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label for="edit-email"><?php echo __('Mail') ?> <span class="form-required" 
+								title="<?php echo __('Ce champ est obligatoire.') ?>">* </span></label>										
+								<input class="form-control validation_check" autocomplete="email" onchange="this.value=this.value.replace(/[\s]/g,'');" onkeyup="if (/[\s]/g.test(this.value)) this.value = this.value.replace(/[\s]/g,'')" type="text" id="email" name="email" value="<?php if(isset($tempSession['email'])) { echo $tempSession['email']; }?>" size="60" maxlength="50" data-validate="{'custom-required':true, 'validate-new-email':true}">
+							</div>
+						</div>
+						<div class="row form-line margin-xs-b-m">
+						<div class="col-xs-12">
+								<label for="edit-email"><?php echo __('Date de naissance') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("En raison de la nouvelle législation belge sur l'enregistrement des cartes SIM, les données concernant votre date de naissance sont obligatoires.")?>" class="orange">?</a></label>
+								<input class="form-control validation_check" type="text" autocomplete="c_dob" id="c_dob" name="c_dob" value="<?php if(isset($tempSession['c_dob'])) { echo $tempSession['c_dob']; }?>" size="60" maxlength="20" data-validate="{'custom-required':true,'validate-dob-date':true, 'validate-dob-month':true, 'dob-date-validation':true}">
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-xs-12 col-sm-6">
+
+						<h4 class="margin-xs-b-m"><?php echo __('Adresse de livraison') ?></h4>		
+
+						<div class="height-regulator"></div>					
+
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+						<label for="edit-postcode"><?php echo __('Code postal') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("Veuillez sélectionner votre code postal dans la liste proposée.")?>" class="orange">?</a> </label>
+								  <input class="form-control validation_check" autocomplete="postal-code" type="text" id="b_postcode_city" name="b_postcode_city" value="<?php if (isset($tempSession['b_postcode_city'])) {
+                                        echo $tempSession['b_postcode_city'];
+                                    } ?>" size="60" maxlength="4" autocomplete="shipping postal-code" style="text-transform:uppercase" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" data-validate="{'custom-required':true}" >
+							</div>
+							<div id="zipcodesList"></div>										
+                           <span id="b_zip_validation" style="color:#e02b27; font-size: 1.2rem;" ></span>
+							<input type="hidden" name="b_zipcode_validation" id="b_zipcode_validation" value="<?php if (isset($tempSession['b_zipcode_validation'])) {echo $tempSession['b_zipcode_validation'];} ?>">	
+							
+						</div>
+							<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label for="edit-street"><?php echo __('Ville') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("Veuillez sélectionner votre city dans la liste proposée.")?>" class="orange">?</a></label>
+								 <input class="form-control validation_check" style="text-transform:uppercase" type="text" id="b_city" name="b_city" spellcheck="false" value="<?php if(isset($tempSession['b_city'])) { echo $tempSession['b_city']; }?>" size="60" maxlength="25" onkeyup="if (/[^a-zA-Z-]/g.test(this.value)) this.value = this.value.replace(/[^a-zA-Z-]/g,'')" data-validate="{'custom-required':true,'validate-field':true}" autocomplete="nope">																
+							</div>
+							     <div id="cityList"></div>
+								<span id="b_city_validation"  style="color:#e02b27; font-size: 1.2rem;"></span>
+								<input type="hidden" name="b_zipcode_city_validation" id="b_zipcode_city_validation" value="<?php if (isset($tempSession['b_zipcode_city_validation'])) {echo $tempSession['b_zipcode_city_validation'];} ?>">	
+								
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label for="edit-street"><?php echo __('Rue') ?> <span class="form-required" 
+								title="<?php echo __('Ce champ est obligatoire.') ?>">*</span>&nbsp;<a type="button" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("Veuillez sélectionner votre rue dans la liste proposée.")?>" class="orange">?</a></label>
+								<input class="form-control validation_check" autocomplete="shipping street-address" type="text" style="text-transform:uppercase" id="b_street" name="b_street" value="<?php if(isset($tempSession['b_street'])) { echo $tempSession['b_street']; }?>" spellcheck="false" size="60" maxlength="100" data-validate="{'custom-required':true}" autocomplete="nope">
+							</div>
+							<div id="streetList"></div>
+								<span id="street_validation" style="color:#e02b27; font-size: 1.2rem;"></span>
+								<input type="hidden" name="b_street_validation" id="b_street_validation" value="<?php if (isset($tempSession['b_street_validation'])) {echo $tempSession['b_street_validation'];} ?>" >
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12 col-sm-8 margin-xs-b-s margin-sm-b-n">
+								<label for="edit-number"><?php echo __('Numéro') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>
+								<input class="form-control validation_check" type="text" autocomplete="tel" id="b_number" name="b_number" value="<?php if(isset($tempSession['b_number'])) { echo $tempSession['b_number']; }?>" size="60" maxlength="10" onkeyup="if (/[^a-zA-Z0-9]/g.test(this.value)) this.value = this.value.replace(/[^a-zA-Z0-9]/g,'')" data-validate="{'custom-required':true,'validate-street-valid':true}">
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<label for="edit-box"><?php echo __('Boîte') ?> <span class="form-required" 
+								title="<?php echo __('Ce champ est obligatoire.') ?>"></span></label>
+								<input class="form-control" type="text"  autocomplete="b_box" id="b_box" name="b_box" value="<?php if(isset($tempSession['b_box'])) { echo $tempSession['b_box']; }?>" size="60" onkeyup="if (/[^a-zA-Z0-9]/g.test(this.value)) this.value = this.value.replace(/[^a-zA-Z0-9]/g,'')" maxlength="10">
+							</div>
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">								
+								<label for="edit-birthplace"><?php echo __('Lieu de naissance') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>
+								<input class="form-control validation_check" autocomplete="cust_birthplace" type="text" id="cust_birthplace" name="cust_birthplace" value="<?php if(isset($tempSession['cust_birthplace'])) { echo $tempSession['cust_birthplace']; }?>" size="60" maxlength="35"  data-validate="{'custom-required':true, 'validate-namefiled':true,'min-lenth-validation-three':true}">
+							</div>										
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<?php echo __('Pays : Belgique') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span>
+							</div>
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label class="" for="edit-offer"><input type="checkbox" id="offer_subscription" name="offer_subscription" value="1" class="form-checkbox pull-left margin-xs-b-m" > <span class=""><?php echo __("Recevoir les offres intéressantes et les dernières nouvelles d'Orange") ?></span></label> 
+							</div>
+						</div>
+						<div class="row form-line margin-xs-b-s">
+							<div class="col-xs-12">
+								<label class="" for="edit-conditions"><input type="checkbox" id="terms_condition" name="terms_condition" value="1" class="tempo_terms_condition form-checkbox pull-left validation_check margin-xs-b-m"> <span class=""><?php echo __('Accepter les ') ?><a href="" class="orange" id="orange-conditions" target="_blank"><?php echo __('conditions générales de vente') ?> </a> <?php echo __("d'Orange") ?><?php echo "&nbsp;"?>* </span></label>
+			                    <div for="terms_condition" generated="true" class="mage-error" id="terms_condition-error" style="display: none;"></div> 
+							</div>
+						</div>
+						
+						<a class="btn btn-primary margin-xs-a-n"  id="tempo_check"><?php echo __('Continuer') ?></a>
+					</div>
+
+				</form>					
+
+			</div>
+
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 content-collapsable margin-xs-b-l">
+				<h4 class="padding-xs-r-m">
+					<?php echo __('Conditions générales') ?>
+				</h4>
+				<div class="closed padding-xs-b-m">
+					<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('onepage_footer')->toHtml(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+require(['jquery',
+      'mage/template',
+	  'mage/mage',
+	  'js/dropdown'	,
+	  'jquery/validate',
+      'jquery/ui',
+      'mage/translate',
+	  'mage/validation',
+	  'js/maskedinput',
+	  'mage/calendar'], function ($) {
+	  //<![CDATA[	
+		var translates = <?php
+		echo \Zend_Json::encode(
+				array(
+					"This is a required field." => __("This is a required field."),
+					"Please use Proper Street Number." => __("Please use Proper Street Number."),
+					"Zipcode & city doesn't exist" => __("Zipcode & city doesn't exist"),
+					"You Must be 18+ years old." => __("You Must be 18+ years old"),
+					"Street doesn't exist" => __("Street doesn't exist"),
+					"City does not exist" => __("City does not exist"),
+					'Vous avez annulé le code de coupon.' => __('Vous avez annulé le code de coupon.'),
+					'Le code promo a été appliqué à votre commande.' => __('Le code promo a été appliqué à votre commande.'),
+					"Please enter a valid email address (Ex: johndoe@domain.com)."=> __('Please enter a valid email address (Ex: johndoe@domain.com).'),
+					"Please use letters only in this field."=> __('Please use letters only in this field.'),
+					"Zipcode doesn't exist" => __("Zipcode doesn't exist"),
+					"Please use number start with 045,046,047,048 and 049" => __("Please use number start with 045,046,047,048 and 049"),
+					"Please enter a valid 10 digit mobile phone number."=> __("Please enter a valid 10 digit mobile phone number."),
+					"No Payment method available." => __("No Payment method available."),
+					"No Payment Methods" => __("No Payment Methods"),
+					"No Payment Information Required" => __("No Payment Information Required"),
+					"Please enter your current mobile phone number, consisting of 10 digits" => __("Please enter your current mobile phone number, consisting of 10 digits"),
+					"Please enter your current SIM card number, consisting of 13, 18 or 19 digits depending on the operator" => __("Please enter your current SIM card number, consisting of 13, 18 or 19 digits depending on the operator"),
+					"Please enter a valid 10 digit mobile phone number" => __("Please enter a valid 10 digit mobile phone number"),
+					"Please verify that you have correctly entered the 12 digits of your ID number" => __("Please verify that you have correctly entered the 12 digits of your ID number"),
+					"Please enter your account number in the following format: BEXX XXXX XXXX XXXX" => __("Please enter your account number in the following format: BEXX XXXX XXXX XXXX"),
+					"Please select an option." => __("Please select an option."),
+					"You must enter a valid date of birth (dd / mm / yyyy) and be over 18 years of age"=> __("You must enter a valid date of birth (dd / mm / yyyy) and be over 18 years of age"),
+					"This is a required fields." => __("This is a required fields."),
+					"Please enters a valid email address (Ex: johndoe@domain.com)."=> __('Please enters a valid email address (Ex: johndoe@domain.com).'),
+                    "Please enter a value greater than or equal to 2."=> __('Please enter a value greater than or equal to 2.'),
+                    "Please enter at least 2 characters."=> __('Please enter at least 2 characters.'),
+					"Please use only letter (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed."=> __('Please use only letter (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed.'),
+					"Please enter at least 3 characters."=> __('Please enter at least 3 characters.'),
+					"Please enter at least 3 characters newmessage."=> __('Please enter at least 3 characters newmessage.'),
+					"Please enter first character should be a number."=>__('Please enter first character should be a number.'),
+					"Please enter only 35 characters in first name and last name."=>__('Please enter only 35 characters in first name and last name.'),
+					"Current SIM card number and operator not matched."=>__('Current SIM card number and operator not matched.'),
+					"Please Enter valid month"=>__('Please Enter valid month'),
+					"Please Enter valid date"=>__('Please Enter valid date'),
+					"Please correct below invalid fields"=>__('Please correct below invalid fields'),
+					"MNP Number is already used"=>__('MNP Number is already used'),
+					"To finalize your order, please read and accept the general terms and conditions of Orange Belgium."=>__('To finalize your order, please read and accept the general terms and conditions of Orange Belgium.'),
+				)
+		);?>;
+		$.mage.translate.add(translates);
+/*Street Number Validation**/	 
+$('[data-toggle="tooltip"]').tooltip(); 
+
+var timeout;
+var finishTimeout = false;
+
+$('.orange').on("mouseover", function () {
+	
+   var el = $(this);
+    timeout = setTimeout(function(){
+       finishTimeout = true;
+       el.tooltip( "open" );
+       finishTimeout = false;
+    },1000);
+});
+$('.orange').mouseout(function(){
+    clearTimeout(timeout);
+}); 
+
+$.validator.addMethod(
+'validate-streetnumber', function (value) { 
+var slicevalue = value.substring(0, 1);
+ return /^[A-Za-z0-9]*$/.test(slicevalue);
+}, $.mage.__('Please use Proper Street Number.'));
+
+
+$.validator.addMethod(
+'validate-namefiled', function (value) { 
+ return /^[ <?php echo $specialCharacter; ?>]*$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+
+$.validator.addMethod(
+'validate-field', function (value) { 
+ return /^[a-zA-Z-]+$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+
+$.validator.addMethod(
+'validate-punctuation', function (value) { 
+ return /^[ A-Za-z_0-9'.-]*$/.test(value);
+}, $.mage.__('Please use only letters (a-z or A-Z) or numbers (0-9) or Punctuation.'));
+
+
+$.validator.addMethod(
+'validate-orangenumber', function (value) { 
+    var slicevalue = value.slice(0,3);
+    var orangeFrontNumber = ["045", "046", "047", "048","049"];
+    var finalVlaue = orangeFrontNumber.indexOf(slicevalue);
+    if (finalVlaue < 0) {
+		return false;
+    }
+return true;
+//return  /^((\+|00)32\s?|0)4(60|[56789]\d)(\s?\d{2}){3}$/.test(value);// Validation logic here
+}, $.mage.__('Please enter a valid 10 digit mobile phone number.'));
+
+
+$.validator.addMethod(
+'validate-contactnumber', function (value) { 
+    var slicevalue = value.slice(0,3);
+    var orangeFrontNumber = ["045", "046", "047", "048","049"];
+    var finalVlaue = orangeFrontNumber.indexOf(slicevalue);
+    if (finalVlaue < 0) {
+		return false;
+    }
+return true;
+}, $.mage.__('Please enter a valid 10 digit mobile phone number.'));
+
+$.validator.addMethod(
+'validate-street-valid', function (value) { 
+    var slicevalue = value.slice(0,1);   
+    if($.isNumeric(slicevalue)){
+        return true;
+    }else{
+        return false;
+    }
+}, $.mage.__('Please enter first character should be a number.'));
+
+
+
+$.validator.addMethod(
+'validate-orangenumber-total', function (value) { 
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 10) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter your current mobile phone number, consisting of 10 digits'));	
+
+$.validator.addMethod(
+'contact-number', function (value) { 
+    if (value.length < 10) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter a valid 10 digit mobile phone number'));
+
+$.validator.addMethod(
+'validate-select-newrule', function (value) { 
+   return ((value !== "none") && (value != null) && (value.length !== 0));
+}, $.mage.__('Please select an option.'));
+
+//DOB Validation
+	$.validator.addMethod(
+	'dob-date-validation', function (value) {
+		var c_dob_v    = value;
+		var c_dob_s    = c_dob_v.split('/');
+		var day     = c_dob_s[0];
+		var month  =  c_dob_s[1];
+		var year   =  c_dob_s[2];
+		var age    =  0;
+		var mydate = new Date();
+		mydate.setFullYear(year, month-1, day);
+		var currdate = new Date();
+		var minYear = currdate.getFullYear() - 100;
+		currdate.setFullYear(currdate.getFullYear() - age);
+		if (year < minYear) {
+			return false;
+		}
+		return (currdate - mydate < 0 ? false : true);
+	}, $.mage.__('Please Enter valid date'));
+
+	$.validator.addMethod(
+		'validate-dob-date', function (dob) {
+		var dd    = dob.split('/')[0];
+		var mm    = dob.split('/')[1];
+		var yy	  = dob.split('/')[2];
+		if(dd < 1)
+		{
+			return false;
+		}
+		// Create list of days of a month [assume there is no leap year by default] 
+		var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31]; 
+		if (mm==1 || mm>2)  
+		{  
+			if (dd>ListofDays[mm-1])  
+			{  				 
+				return false;  
+			}  
+		}
+		if (mm==2)  
+		{  
+			var lyear = false;  
+			if ( (!(yy % 4) && yy % 100) || !(yy % 400))   
+			{
+				lyear = true;  
+			}  
+			if ((lyear==false) && (dd>=29))  
+			{  				
+				return false;  
+			}  
+			if ((lyear==true) && (dd>29))  
+			{  				
+				return false;  
+			}  
+		}			
+		return true;	
+	}, $.mage.__('Please Enter valid date'));
+	
+	$.validator.addMethod(
+		'validate-dob-month', function (dob) {
+		var v    = dob.split('/')[1];
+		if(v < 1 || v > 12){
+			return false;
+		}
+		return true;		
+	}, $.mage.__('Please Enter valid month'));	
+//EOF DOB Validation
+
+
+$.validator.addMethod(
+'custom-required', function (value) {
+return !$.mage.isEmpty(value);
+ }, $.mage.__('This is a required fields.'));
+ 
+ $.validator.addMethod(
+'min-lenth-validation', function (value) { 
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 2) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter at least 2 characters.'));
+
+ $.validator.addMethod(
+'min-lenth-validation-three', function (value) { 
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 3) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter at least 3 characters.'));
+
+$.validator.addMethod(
+'min-lenth-validation-newmessage', function (value) { 
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 3) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter at least 3 characters newmessage.'));
+
+$.validator.addMethod(
+'first-name', function (value) {
+ var fname = parseInt(value.length);
+ var lname = parseInt($('#last_name').val().length);
+ var count = fname + lname;
+    if (count > 35) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+$.validator.addMethod(
+'last-name', function (value) {
+ var fname = parseInt(value.length);
+ var lname = parseInt($('#first_name').val().length);
+ var count = fname + lname;
+    if (count > 35) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+$.validator.addMethod(
+'validate-novalidation', function (value) { 
+ return /^[ <?php echo $specialCharacter; ?>]*$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+
+ 
+ $.validator.addMethod(
+'validate-new-email', function (value) { 
+   return $.mage.isEmptyNoTrim(value) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test($.trim(value));
+}, $.mage.__('Please enters a valid email address (Ex: johndoe@domain.com).'));
+
+$.validator.addMethod(
+'validate-new-alphanum', function (value) { 
+   return $.mage.isEmptyNoTrim(value) || /^[a-zA-Z0-9]+$/.test(value);
+}, $.mage.__('Please use only letter (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed.'));
+
+$(document).on("click", '#tempo_check', function (e) {
+
+	//$("html, body").animate({ scrollTop: 0 }, 600);
+
+
+	$(tempo).validation();
+	var val_last_name       = 	$('#last_name').val();
+	var val_b_postcode_city = 	$('#b_postcode_city').val();
+	var val_b_street        = 	$('#b_street').val();
+	var val_b_number        = 	$('#b_number').val();
+	var val_b_box           = 	$('#b_box').val();
+	$('#s_name').val(val_last_name);
+	$('#s_firstname').val($('#first_name').val());    
+	$('#s_postcode_city').val(val_b_postcode_city);
+	$('#s_street').val(val_b_street);
+	$('#s_number').val(val_b_number);
+	$('#s_box').val(val_b_box);
+	$('#s_city').val($("input:text[name='b_city']").val());
+	var first_name              = $.validator.validateElement($("#first_name"));	
+	var last_name               = $.validator.validateElement($("#last_name"));	
+	var email                   = $.validator.validateElement($("#email"));	
+	var b_postcode_city         = $.validator.validateElement($("#b_postcode_city"));	
+	var b_street                = $.validator.validateElement($("#b_street"));
+	var b_city                  = $.validator.validateElement($("#b_city"));
+	var b_number                = $.validator.validateElement($("#b_number"));	
+    var c_dob                = $.validator.validateElement($("#c_dob"));
+    var cust_birthplace = $.validator.validateElement($("#cust_birthplace"));
+	
+	var myForm = document.getElementById('tempo');
+    var x = AutoCompleteSaveForm(myForm);
+
+
+    function AutoCompleteSaveForm(form) {
+        var iframe = document.createElement('iframe');
+        iframe.name = 'save_autocomplete';
+        iframe.style.cssText = 'display:none';
+        document.body.appendChild(iframe);
+        var oldTarget = form.target;
+        var oldAction = form.action;
+        form.target = 'save_autocomplete';
+        form.action = '/checkout/index/chromeautocomplete';
+        form.submit();
+        setTimeout(function () {
+            form.target = oldTarget;
+            form.action = oldAction;
+        });
+    }
+
+
+		if($("#b_zipcode_validation").val() == 1) {
+			$("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+		}
+		else{
+			$("#b_zip_validation").text("");
+		}
+		
+		if($("#b_zipcode_city_validation").val() == 1) {
+			$("#b_city_validation").text($.mage.__("City does not exist"));
+		}
+		else {
+			$("#b_city_validation").text("");
+		}
+		if($("#b_street_validation").val() == 1) {
+			$("#street_validation").text($.mage.__("Street doesn't exist"));
+		}
+		else {
+			$("#street_validation").text("");
+		}
+		if($(".tempo_terms_condition").is(':checked'))
+	            {
+					$("#terms_condition-error").hide();
+					$("#terms_condition").removeClass('mage-error');
+					$("#terms_condition-error").empty();
+					var vald_terms_condition  = true;
+			    }
+			else
+			    {
+					$("#terms_condition-error").show();
+					$("#terms_condition-error").empty();
+					$("#terms_condition-error").append($.mage.__('To finalize your order, please read and accept the general terms and conditions of Orange Belgium.'));
+					$("#terms_condition").addClass('mage-error');
+					var vald_terms_condition  = false;
+			    }
+	
+		
+	    var b_city_validation = $("#b_city_validation").text();
+	    var b_zip_validation = $("#b_zip_validation").text();
+	    var street_validation = $("#street_validation").text();
+	    var b_zipcode_validation = $("#b_zipcode_validation").val();
+	    var b_street_validation = $("#b_street_validation").val();
+
+		if( b_city_validation.trim() != "" || b_zip_validation.trim() != "" || street_validation.trim() != "" ||  vald_terms_condition == false  || b_zipcode_validation == 1  || b_street_validation == 1  || cust_birthplace == false || first_name == false || last_name == false || email == false || c_dob == false || b_street == false || b_number == false || b_city == false  ) {
+			$("html, body").animate({ scrollTop: 0 }, 600);
+			$('.step-mage-error').show();
+			return false;
+		}
+		else {
+			$('.step-mage-error').hide();
+		}
+
+		//Post submit address validation
+        var zipcode = $("#b_postcode_city").val();
+		var cityValue = $("#b_city").val();
+		var street = $("#b_street").val();
+		var dataurl = "zipcode=" + zipcode.trim() + "&city=" + cityValue.trim() + "&street=" + street.trim();
+		var returnflag = 0;
+		if (zipcode.length <= 4 && zipcode.length >= 2) {
+			$.ajax({
+            url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+            type: "POST",
+			data: dataurl
+            }).done(function (result) {
+			var data_array = $.parseJSON(result);
+			if (!data_array[0]) {
+				$("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+				$("#b_zipcode_validation").val('1');
+				$("#b_postcode_city-error").hide();
+				returnflag = returnflag + 1;
+			}
+			if (!data_array[1]) {
+				$("#b_city_validation").text($.mage.__("City does not exist"));
+				$("#b_zipcode_city_validation").val("1");
+				returnflag = returnflag + 1;
+			}
+			if (!data_array[2]) {
+				$("#street_validation").text($.mage.__("Street doesn't exist"));
+				$("#b_street-error").hide();
+				$("#b_street_validation").val('1');
+				returnflag = returnflag + 1;
+			}
+			if (returnflag > 0 && returnflag !=0) {
+				$('.step-mage-error').show();
+				return false;
+			}
+			if (data_array[0] && data_array[1] && data_array[2]) {
+		        var shippingInformation   = $('form#tempo').serializeArray();
+				var ajaxStep = "step2";
+				var checkstepstat = "final";
+				var session_url = $("#session_url").val();
+				var shippingMethodStep = "freeshipping";
+                shippingInformation = JSON.stringify(shippingInformation);
+				$.ajax({
+				url: session_url,
+				data: {saveData:shippingInformation ,aStep: ajaxStep,checkstepstat: checkstepstat, shippingMethodStep: shippingMethodStep},
+				type: 'POST',
+				dataType: 'json',
+				showLoader: true,
+				context: $('#step2')
+				}).done(function(data){
+                window.location = "<?php echo $block->getcartcount(); ?>";
+				});
+			}
+			}); 
+
+		$('.step-mage-error').hide();
+		}
+});
+
+$.validator.addMethod(
+'restriction-postpaid-number', function (value, element) { 
+   var countofvalue = 0;
+   var finalVlaue = 0;
+   $('.design_te_existing_number').each(function(){
+	   if ($(this).val()) {
+			if ($(this).val() == value) {
+				var id = $(this).attr('name');
+				var designsimid = id.split("-");
+				if ($("#design_te_existing_number_final_validation_"+designsimid[1]).val() > 0) {
+					finalVlaue = $("#design_te_existing_number_final_validation_"+designsimid[1]).val();
+				}
+			    countofvalue = countofvalue + 1
+			}
+	   }
+	});
+	if (countofvalue > 1) {
+	    var finalvalidationId = $(element).attr('name');
+		var finalvalidationsimId = finalvalidationId.split("-");
+		$("#design_te_existing_number_final_validation_"+finalvalidationsimId[1]).val(finalVlaue);
+		return false;
+	} else {
+		return true;
+	}
+}, $.mage.__("MNP Number is already used"));
+
+$(".validation_check").blur( function(){
+	 var prepaid_check           = $("#prepaid_check").val();
+	 var number_screen           = $("#number_screen").val();
+	 var id = "#"+this.id;
+	 
+      $(tempo).validation();
+      $.validator.validateElement($(id));	
+	  
+	  if(this.id == 'terms_condition')
+		{
+		  	if($(".tempo_terms_condition").is(':checked'))
+	            {
+					$("#terms_condition-error").hide();
+					$("#terms_condition").removeClass('mage-error');
+					$("#terms_condition-error").empty();
+			    }
+			else
+			    {
+					$("#terms_condition-error").show();
+					$("#terms_condition-error").empty();
+					$("#terms_condition-error").append($.mage.__('To finalize your order, please read and accept the general terms and conditions of Orange Belgium.'));
+					$("#terms_condition").addClass('mage-error');
+			    }		
+		}
+	    
+	});
+	
+	/*DOB ON Change Validation*/	
+  $('#c_dob').change(function() {
+	 var prepaid_check           = $("#prepaid_check").val();
+	 var number_screen           = $("#number_screen").val();
+            if(number_screen == "" && prepaid_check==1)
+               {
+	                var c_dob                = $.validator.validateElement($("#c_dob"));
+	           }
+	         else 
+	          {
+	             c_dob                = $.validator.validateElement($("#c_dob"));
+			}
+      });
+	
+$.validator.addMethod(
+'vat-number-min-max-lenth-validation', function (value) { 
+    if (value.length < 12 || value.length > 13) {
+		return false;
+	}
+return true;
+}, $.mage.__('<?php echo __("Wrong format entered")?>'));
+
+
+	var MAGE_STORE_ID = '<?php echo $storeManager->getStore()->getCode();?>';
+	if (MAGE_STORE_ID == 'nl') {
+                               var url='https://www.orange.be/nl/algemene-voorwaarden';
+							   var store_url='https://e-services.business.orange.be/medias/conditions/nl/Herroepingsrecht_NL.pdf';                    
+                    } else {					
+                         var url='https://www.orange.be/fr/conditions-generales';
+						 var store_url='https://e-services.business.orange.be/medias/conditions/fr/Retractation_FR.pdf';
+                   
+                    }										
+					$('#orange-conditions').attr('href',url);
+					$('#orange-condition').attr('href',store_url);
+		if (MAGE_STORE_ID == 'nl') {
+			$('#c_dob').mask("00/00/0000", {placeholder: "DD/MM/JJJJ",clearIfNotMatch: true});
+			$('#cu_ex_invoice_cust_dob').mask("00/00/0000", {placeholder: "DD/MM/JJJJ",clearIfNotMatch: true});
+			$('#cu_discount_f_cust_dob').mask("00/00/0000", {placeholder: "DD/MM/JJJJ",clearIfNotMatch: true});
+		}
+		else {
+			$('#c_dob').mask("00/00/0000", {placeholder: "JJ/MM/AAAA",clearIfNotMatch: true});
+			$('#cu_ex_invoice_cust_dob').mask("00/00/0000", {placeholder: "JJ/MM/AAAA",clearIfNotMatch: true});
+			$('#cu_discount_f_cust_dob').mask("00/00/0000", {placeholder: "JJ/MM/AAAA",clearIfNotMatch: true});
+		}
+ 		
+		var minYear='-100';
+        var maxYear=new Date();
+       	var year = new Date().getFullYear()-18; 
+        var currentDay = maxYear.getDate();
+        var currentMonth = maxYear.getMonth()+1;
+		
+if (MAGE_STORE_ID == 'nl') {
+		$.datepicker.regional['nl'] = {
+ //   closeText: 'Chiudi', // set a close button text
+    currentText: 'Huidige', // set today text
+    monthNames: ['Januari','Februari','Maart','April','Mei','Juni',
+    'Juli','Augustus','September','Oktober','November','December'], // set month names
+    monthNamesShort: ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec'], // set short month names
+    dayNames: ['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'], // set days names
+    dayNamesShort: ['Zo','Ma','Di','Wo','Do','Vr','Za'], // set short day names
+    dayNamesMin: ['Zo','Ma','Di','Wo','Do','Vr','Za'], // set more short days names
+    dateFormat: 'dd/mm/yy' // set format date
+};
+
+$.datepicker.setDefaults($.datepicker.regional['nl']);
+		
+		$("#c_dob").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			maxDate: new Date(),
+			yearRange:minYear+':'+ maxYear,
+			dateFormat: "dd/mm/yy", 
+			defaultDate: currentDay+'/'+currentMonth+'/'+year,                      
+			onChangeMonthYear: function (year, month, inst) {
+				$(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month-1, 1)));
+			}
+		});			
+		$("#cu_ex_invoice_cust_dob").datepicker({
+			maxDate: new Date(),
+			yearRange: "-100:+0",
+			dateFormat: 'dd/mm/yy',
+			changeMonth: true,
+			changeYear: true,
+			onChangeMonthYear: function (year, month, inst) {
+				$(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month-1, 1)));
+			}
+		});		
+		$("#cu_discount_f_cust_dob").datepicker({
+			maxDate: new Date(),
+			yearRange: "-100:+0",
+			dateFormat: 'dd/mm/yy',			
+			changeMonth: true,
+			changeYear: true,
+			onChangeMonthYear: function (year, month, inst) {
+				$(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month-1, 1)));
+			}
+		});
+}
+else
+{
+
+$.datepicker.regional['fr'] = {
+ //   closeText: 'Chiudi', // set a close button text
+    currentText: 'Courant', // set today text
+    monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+    'Juillet','Août','Septembre','Octobre','Novembre','Décembre'], // set month names
+    monthNamesShort: ['Janv.','Févr.','Mars','Avr.','Mai','Juin','Juill.','Août','Sept.','Oct.','Nov.','Déc.'], // set short month names
+    dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'], // set days names 
+    dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'], // set short day names
+    dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'], // set more short days names
+    dateFormat: 'dd/mm/yy' // set format date
+};
+
+$.datepicker.setDefaults($.datepicker.regional['fr']);
+		
+		$("#c_dob").datepicker({
+		  changeMonth: true,
+          changeYear: true,
+		  maxDate: new Date(),
+          yearRange:minYear+':'+ maxYear,
+          dateFormat: "dd/mm/yy", 
+          defaultDate: currentDay+'/'+currentMonth+'/'+year,                      
+          onChangeMonthYear: function (year, month, inst) {
+				$(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month-1, 1)));
+			}
+		});			
+		$("#cu_ex_invoice_cust_dob").datepicker({  
+			maxDate: new Date(), 
+			yearRange: "-100:+0",
+			dateFormat: 'dd/mm/yy',
+			changeMonth: true,
+			changeYear: true,
+			onChangeMonthYear: function (year, month, inst) {
+				$(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month-1, 1)));
+			}
+		});		
+		$("#cu_discount_f_cust_dob").datepicker({  
+			maxDate: new Date(),
+			yearRange: "-100:+0",
+			dateFormat: 'dd/mm/yy',			
+			changeMonth: true,
+			changeYear: true,
+			onChangeMonthYear: function (year, month, inst) {
+				$(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month-1, 1)));
+			}
+		});
+
+}
+		
+//]]>
+ 
+});
+</script>
+<script type="text/javascript">
+    require( [
+        "jquery",
+        "mage/mage"        
+    ],function($){
+	var city = [];
+	var zipcodeS = [];
+	var streetWeb = [];
+	var streetWebTwo = [];
+	var cstreetWebTwo = [];
+	var zipcodeWeb = [];
+	var zipcodeWebTwo = [];
+	var cityName = [];
+	$(document).ready(function() {
+	var zipcode = $("#b_postcode_city").val();
+	   $.ajax({
+        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfiveall'); ?>",
+		type: "POST", 
+		data: "zipcode=" + zipcode
+        }).done(function(result){
+	   	cityName = [];	
+		cityName = cityName.slice(); 				
+		var data = $.parseJSON(result);		
+		var obj = $.parseJSON(result);				 
+		for (var prop in obj) {
+			
+	     $.each(obj[prop], function(key, val) {
+		 zipcodeS.push(val[0]);
+		
+		  });				
+		}
+		zipcodeWeb = obj;			
+		zipcodeWeb= $.unique(zipcodeS);	
+		var uniqueZip = zipcodeWeb.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+		
+			
+		var currentCity = $("#b_city").val().toUpperCase();
+		if(currentCity != '') {
+        if ($.inArray(currentCity, uniqueCity) == -1)
+			 {
+							$("#b_city_validation").text($.mage.__("City does not exist"));
+							$("#b_zipcode_city_validation").val("1");
+			}
+			else {
+							$("#b_city_validation").text("");
+							$("#b_zipcode_city_validation").val("");
+			}
+			}
+		
+        });
+		
+	 /*Start of BZipcode Validation  */
+	  var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+	 
+	 $("#b_postcode_city").keyup(function(){
+	  delay(function(){	
+	    var zipcode = $("#b_postcode_city").val();
+	   	if(zipcode.length <= 3){
+		$("#b_city").val('');
+		$("#b_street").val('');	
+		}
+	   $( "#b_postcode_city" ).autocomplete({
+       source: function(req, responseFn) {
+        var re = $.ui.autocomplete.escapeRegex(req.term);
+        var matcher = new RegExp( "^" + re, "i" );
+        var a = $.grep( uniquezipcode(zipcodeWeb), function(item,index){
+             return matcher.test(item);
+        });
+        responseFn( a );
+        },
+		minLength: 3,
+		select: function( event, ui ) { 						
+		$("#b_zip_validation").text(" ");		
+        $("#b_zipcode_city_validation").val("");		
+		}
+		}).keyup(function (e) {
+        if(e.which === 13) {
+            $(".ui-menu-item").hide();
+        }            
+    });
+	    if (zipcode.length == 0) {
+		$("#b_zip_validation").text(" ");
+		$("#b_zipcode_city_validation").val("");
+		}
+		 if(zipcode.length <= 4 && zipcode.length >= 2 )
+		{
+	   $.ajax({
+        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+		type: "POST", 
+		data: "zipcode=" + zipcode
+        }).done(function(result){
+	   	cityName = [];	
+		cityName = cityName.slice(); 				
+		var data = $.parseJSON(result);		
+		var obj = $.parseJSON(result);				 
+		for (var prop in obj) {
+		city.push(prop);	
+	     $.each(obj[prop], function(key, val) {
+		 zipcodeS.push(val[0]);
+		 cityName.push(val[1]);
+		  });				
+		}
+		zipcodeWeb = obj;			
+		zipcodeWeb= $.unique(zipcodeS);	
+		var uniqueZip = zipcodeWeb.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+		var uniqueCity = $.unique(cityName);
+			
+		var currentCity = $("#b_city").val().toUpperCase();
+		var zipcode_foucs = $("#b_postcode_city").is(":focus");
+		if(zipcode.length == 3 && zipcode_foucs == true)
+		{
+	     $('#b_postcode_city').autocomplete("search");
+		 $( "#b_postcode_city" ).autocomplete({
+        source: function(req, responseFn) {
+        var re = $.ui.autocomplete.escapeRegex(req.term);
+        var matcher = new RegExp( "^" + re, "i" );
+        var a = $.grep( uniquezipcode(zipcodeWeb), function(item,index){
+             return matcher.test(item);
+        });
+        responseFn( a );
+        },
+		minLength: 3,
+		select: function( event, ui ) { 						
+		$("#b_zip_validation").text(" ");		
+        $("#b_zipcode_city_validation").val("");		
+		}
+		}).keyup(function (e) {
+        if(e.which === 13) {
+            $(".ui-menu-item").hide();
+        }            
+    });
+		}
+	
+        });
+		}
+		}, 100 );
+	});
+
+function zipcodevalid()
+{
+	 $('#b_postcode_city').autocomplete('close');
+	 var zipcode = $("#b_postcode_city").val();
+	getzipCityNames();
+	if(zipcode.length != 4 && zipcode.length > 0 ){
+	$("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+    $("#b_zipcode_validation").val('');
+    $("#b_postcode_city-error").hide();
+    }
+   else
+   {
+   if(zipcode.length != 0)
+   {
+     if ($.inArray(zipcode, zipcodeWeb) == -1)
+     {
+
+    $("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+    $("#b_zipcode_validation").val('');
+    $("#b_postcode_city-error").hide();
+    }
+	else
+	{
+	$("#b_zip_validation").text("");
+    $("#b_zipcode_validation").val('');
+    $("#b_postcode_city-error").hide();
+	}
+	}
+
+}
+}	
+   $("#b_postcode_city").on("blur",function(){
+  delay(function(){	    
+	getzipCityNames();
+	}, 100 );
+	});
+	
+	 $("#b_postcode_city").on("change",function(){
+       delay(function(){	
+	  getzipCityNames();
+	  }, 100 );
+	}); 
+ 
+ /*End of BZipcode Validation  */
+
+ /*Road 65 for Billing City */ 
+ 
+	function getzipCityNames()
+	{
+	 var zipcode = $("#b_postcode_city").val(); 
+	  if (zipcode.length == 0) {
+		$("#b_zip_validation").text(" ");
+		$("#b_zipcode_city_validation").val("");
+		}
+	 if(zipcode.length <= 4 && zipcode.length >= 2 )
+		{
+	   $.ajax({
+        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+		type: "POST", 
+		data: "zipcode=" + zipcode
+        }).done(function(result){
+	   	cityName = [];	
+		cityName = cityName.slice(); 				
+		var data = $.parseJSON(result);		
+		var obj = $.parseJSON(result);				 
+		for (var prop in obj) {
+		city.push(prop);	
+	     $.each(obj[prop], function(key, val) {
+		 zipcodeS.push(val[0]);
+		 cityName.push(val[1]);
+		  });				
+		}
+		zipcodeWeb = obj;			
+		zipcodeWeb= $.unique(zipcodeS);	
+		var uniqueZip = zipcodeWeb.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+		var uniqueCity = $.unique(cityName);
+			
+		var currentCity = $("#b_city").val().toUpperCase();
+		if ($("#b_postcode_city").hasClass("ui-autocomplete-input")) {
+		     $('#b_postcode_city').autocomplete('close');
+		 }
+	       var zipcode = $("#b_postcode_city").val(); 
+	      if(zipcode.length != 4 && zipcode.length > 0 ){
+	      $("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+          $("#b_zipcode_validation").val('');
+          $("#b_postcode_city-error").hide();
+        }
+		
+      else
+      {
+      if(zipcode.length != 0)
+      {
+        if ($.inArray(zipcode, zipcodeWeb) == -1)
+        {
+
+        $("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+        $("#b_zipcode_validation").val('');
+        $("#b_postcode_city-error").hide();
+        }
+	
+	   else
+	  {
+	$("#b_zip_validation").text("");
+    $("#b_zipcode_validation").val('');
+    $("#b_postcode_city-error").hide();
+	 }
+	}
+
+   }
+		
+        });
+		}
+			else if(zipcode.length == 1)
+		{
+		$("#b_zip_validation").text($.mage.__("Zipcode doesn't exist"));
+        $("#b_zipcode_validation").val('1');
+        $("#b_postcode_city-error").hide();
+		}
+	}
+	 /** City Key **/
+	 	$("#b_city").keyup(function(){			
+		var cityValue = $("#b_city").val();
+		var uniqueCity = cityName.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+	
+		$( "#b_city" ).autocomplete({
+		source: $.unique(uniqueCity),
+		minLength: 3,
+		select: function( event, ui ) { 						
+		$("#b_city_validation").text(" ");																		
+		}
+		
+		});
+			if (cityValue.length == 0) {
+				$("#b_city_validation").text(" ");
+			}
+			$("input:text[name='city']").val(cityValue);
+			$("input:text[name='region']").val(cityValue);	             
+		}); 
+	 /*Billing Street */
+	 function cityValidation()
+	 {
+    var zipcode = $("#b_postcode_city").val(); 
+    if(zipcode.length <= 4 && zipcode.length >= 2 )
+		{
+	   $.ajax({
+        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+		type: "POST", 
+		data: "zipcode=" + zipcode
+        }).done(function(result){
+	   	cityName = [];	
+		cityName = cityName.slice(); 				
+		var data = $.parseJSON(result);		
+		var obj = $.parseJSON(result);				 
+		for (var prop in obj) {
+		city.push(prop);	
+	     $.each(obj[prop], function(key, val) {
+		 zipcodeS.push(val[0]);
+		 cityName.push(val[1]);
+		  });				
+		}
+		zipcodeWeb = obj;			
+		zipcodeWeb= $.unique(zipcodeS);	
+		var uniqueZip = zipcodeWeb.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+		var uniqueCity = $.unique(cityName);
+			
+		var currentCity = $("#b_city").val().toUpperCase();
+		var cityValue = $("#b_city").val();
+	    var uniqueCity = cityName.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+			if (cityValue.length > 0) {
+				if(cityValue.length >= 2){		 
+					if(cityName.indexOf(cityValue.toUpperCase())==-1){                				
+						$("#b_city_validation").text($.mage.__("City does not exist")); 
+						$("#b_zipcode_city_validation").val("1");						
+					} else {
+						$("#b_city_validation").text(" ");	
+						$("#b_zipcode_city_validation").val("");						
+					}
+				} else{
+                                    $("#b_city_validation").text($.mage.__("City does not exist")); 
+									$("#b_zipcode_city_validation").val("1");
+                                }
+			}
+			else
+			{
+			$("#b_city_validation").text(" ");	
+			$("#b_zipcode_city_validation").val("");
+			}
+			$("input:text[name='city']").val(cityValue);
+			$("input:text[name='region']").val(cityValue);
+	      });
+		}	
+	 }
+	 
+	 $("#b_city").change(function(){	
+		cityValidation();	         
+		});            
+		 $("#b_city").on("blur",function(){
+	      cityValidation();		            
+		}); 
+   /* ENd FOR ROAD 65 Billing City */	
+    /*Road 65 for Billing Street */ 
+	
+	   function uniquezipcode(array) {
+    return $.grep(array, function(el, index) {
+        return index == $.inArray(el, array);
+    });
+}	
+	$("#b_street").keyup(function(e){
+	 delay(function(){	
+  	 if(e.keyCode != 16) { 
+	  var streetName = [];
+	  var zipcode = $("#b_postcode_city").val();
+	  var street = $("#b_street").val();
+	  $( "#b_street" ).autocomplete({
+       source: function(req, responseFn) {
+        var re = $.ui.autocomplete.escapeRegex(req.term);
+        var matcher = new RegExp( "^" + re, "i" );
+        var a = $.grep( $.unique(streetWeb), function(item,index){
+             return matcher.test(item);
+        });
+        responseFn($.unique(streetWeb) );
+        },
+		minLength: 4,
+		select: function( event, ui ) { 						
+		$("#street_validation").text(" ");	
+		$("#b_street_validation").val('');	
+		}
+		});
+	   if (zipcode.length != 0) {
+		if(street.length >= 1)
+		{
+		
+		streetName.splice(0, streetName.length);			
+		data = new Array();
+	   $.ajax({
+        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+		type: "POST", 
+		data: "zipcode=" + zipcode + "&street=" + street
+        }).done(function(result){
+		var data = $.parseJSON(result);		
+		var obj = $.parseJSON(result);				 
+						for (var prop in obj) {			
+							city.push(prop);				
+							$.each(obj[prop],function(key, val){	
+									var tmp_street= val[1].toUpperCase();
+									streetName.push(tmp_street);									
+								}); 						
+						}						
+		streetWeb = streetName;							
+		var temp = $.unique((streetName));	
+		var street_foucs = $("#b_street").is(":focus");
+		if(street.length  >= 2 && street_foucs == true)
+		{
+		 
+	     $('#b_street').autocomplete("search");
+		 $( "#b_street" ).autocomplete({
+          source: function(req, responseFn) {
+        var re = $.ui.autocomplete.escapeRegex(req.term);
+        var matcher = new RegExp( "^" + re, "i" );
+        var a = $.grep( $.unique(streetWeb), function(item,index){
+             return matcher.test(item);
+        });
+        responseFn($.unique(streetWeb) );
+        },
+		minLength: 3,
+		select: function( event, ui ) { 						
+		$("#street_validation").text(" ");	
+		$("#b_street_validation").val('');	
+		}
+		});
+		
+		}
+							
+	   	
+		
+        });
+		 }
+		   }
+		   }
+	 }, 100 );
+	 });
+		/**End of Btreet Ajax*/
+	 /* Change */
+   function bstreetvalid()
+	{  
+    
+	 var street = $("#b_street").val();
+	 if(street.length != 0)
+	 {
+	  var streetName = [];
+	  var zipcode = $("#b_postcode_city").val();
+	   if (zipcode.length != 0) {
+		if(street.length >= 1)
+		{
+		if ($("#b_street").hasClass("ui-autocomplete-input")) {
+		     $('#b_street').autocomplete('close');
+		 }
+		
+		streetName.splice(0, streetName.length);			
+		data = new Array();
+	   $.ajax({
+        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+		type: "POST", 
+		data: "zipcode=" + zipcode + "&street=" + street
+        }).done(function(result){
+		var data = $.parseJSON(result);		
+		var obj = $.parseJSON(result);				 
+						for (var prop in obj) {			
+							city.push(prop);				
+							$.each(obj[prop],function(key, val){	
+									var tmp_street= val[1].toUpperCase();
+									streetName.push(tmp_street);									
+								}); 						
+						}						
+		streetWeb = streetName;							
+		var temp = $.unique((streetName));	
+	 var street1 = $("#b_street").val().toUpperCase();
+	  if(street1.length != 0)
+	{
+		if ($.inArray(street1, streetWeb) == -1)
+		{ 
+			$("#street_validation").text($.mage.__("Street doesn't exist"));
+			$("#b_street-error").hide();
+			$("#b_street_validation").val('1');
+		}
+		else
+		{
+			$("#street_validation").text("");
+			$("#b_street_validation").val('');
+		}
+	}
+	else
+	{
+	        $("#street_validation").text("");
+			$("#b_street_validation").val('');
+	}					
+	   	
+		
+        });
+		 }
+		   }
+		  
+	}
+	else
+	{
+	$("#street_validation").text(" ");	
+	$("#b_street_validation").val('');	
+	}
+
+}	
+   /*  $("#b_street").on("change",function(){ 
+		bstreetvalid();
+	 }); */
+    $("#b_street").on("blur",function(){ 
+		delay(function(){	
+		bstreetvalid();
+	  }, 100 );
+	});					
+	 /**End of Btreet Ajax*/
+
+	});
+	});
+</script>
+<script type="text/javascript">
+require(['jquery','js/tooltipform'], function ($) {
+	$(document).ready(function ($) {
+
+		$('.content-collapsable h4').click(function () {
+			$(this).toggleClass('open');
+			$(this).next().slideToggle().toggleClass('closed');
+		});
+	});
+});
+</script>

@@ -1,0 +1,132 @@
+<?php
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+?>
+<div class="aw-csblock-content">
+    <table class="aw-csblock-content_container">
+        <thead>
+            <tr>
+                <td class="select_cell"><?php echo __('Store View') ?></td>
+                <td class="select_cell"><?php echo __('Static Block') ?></td>
+                <td class="link_cell"><?php echo __('Edit Block') ?></td>
+                <td class="link_cell"><?php echo __('Remove') ?></td>
+            </tr>
+        </thead>
+        <tbody id="aw-csblock-content_body">
+            <?php foreach ($this->getContentCollection() as $row): ?>
+                <tr>
+                    <td>
+                        <input type="hidden" name="content[id][<?php echo $row->getId() ?>]" value="<?php echo $row->getId() ?>">
+                        <select id="store_id_<?php echo $row->getId() ?>" name="content[store_id][<?php echo $row->getId() ?>]" >
+                            <?php echo $this->getStoreOptionsHtml($row->getStoreId()) ?>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="static_block_id_<?php echo $row->getId() ?>" name="content[static_block_id][<?php echo $row->getId() ?>]" >
+                            <?php echo $this->getStaticBlockOptionsHtml($row->getStaticBlockId()) ?>
+                        </select>
+                    </td>
+                    <td class='link_cell'>
+                        <a href="#" class="static-block_edit-link" target="_blank" value="<?php echo $row->getId() ?>">
+                            <?php echo __('Edit') ?>
+                        </a>
+                    </td>
+                    <td class='link_cell'>
+                        <span id="remove_row_<?php echo $row->getId() ?>" class="remove-row-button"></span>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+    <span id="aw-csblock-content_add-row"></span>
+    <script id="row-template" type="text/x-magento-template">
+        <tr>
+            <td>
+                <input type="hidden" name="content[id][<%- data.id %>]" value="">
+                <select name="content[store_id][<%- data.id %>]" >
+                    <?php echo $this->getStoreOptionsHtml() ?>
+                </select>
+            </td>
+            <td>
+                <select id='static_block_id_<%- data.id %>' name="content[static_block_id][<%- data.id %>]" >
+                    <?php echo $this->getStaticBlockOptionsHtml() ?>
+                </select>
+            </td>
+            <td class='link_cell'>
+                <a href="#" class="static-block_edit-link" target="_blank" value="<%- data.id %>">
+                    <?php echo __('Edit') ?>
+                </a>
+            </td>
+            <td class='link_cell'>
+                <span id="remove_row_<%- data.id %> ?>" class="remove-row-button"></span>
+            </td>
+        </tr>
+    </script>
+    <script>
+    require([
+        'jquery',
+        'mage/template',
+        'prototype'
+    ], function(jQuery, mageTemplate){
+        var contentTemplateRow = jQuery('#row-template').html();
+
+
+        var awCsblockContentRenderer = {
+            templateRow : contentTemplateRow,
+            itemsCount : <?php echo $this->getLastId() ?>,
+            removeButtonSelector : '.remove-row-button',
+            addButtonSelector : '#aw-csblock-content_add-row',
+            editLinkSelector: '.static-block_edit-link',
+            editStaticBlockUrl : '<?php echo $this->getEditStaticBlockUrl() ?>' + 'block_id/',
+
+            initObserver : function() {
+                var me = this;
+                jQuery(this.addButtonSelector).click(function(){
+                    me.addRow();
+                });
+
+                jQuery(this.removeButtonSelector).click(function(){
+                    var element = jQuery(this).parent().parent();
+                    me.removeRow(element);
+                });
+
+                jQuery(this.editLinkSelector).click(function(){
+                    var linkId = jQuery(this).attr('value');
+                    var staticBlockId = jQuery('#static_block_id_' + linkId).attr('value');
+                    this.href = me.editStaticBlockUrl + staticBlockId;
+                });
+            },
+
+            addRow : function () {
+                var data = {};
+                data.id = this.itemsCount++;
+
+                this.template = mageTemplate(this.templateRow);
+                var escapedHTML = this.template({
+                    data: data
+                });
+                jQuery('#aw-csblock-content_body').append(escapedHTML);
+
+                var me = this;
+                jQuery(this.removeButtonSelector).click(function(){
+                    var element = jQuery(this).parent().parent();
+                    me.removeRow(element);
+                });
+
+                jQuery(this.editLinkSelector).click(function(){
+                    var linkId = jQuery(this).attr('value');
+                    var staticBlockId = jQuery('#static_block_id_' + linkId).val();
+                    this.href = me.editStaticBlockUrl + staticBlockId;
+                });
+            },
+
+            removeRow : function (element) {
+                jQuery(element).remove();
+            }
+        };
+        awCsblockContentRenderer.initObserver();
+    });
+    </script>
+</div>

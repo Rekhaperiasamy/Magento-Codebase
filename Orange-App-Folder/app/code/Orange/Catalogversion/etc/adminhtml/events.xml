@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_save_before">
+        <observer name="catalogversion_product_save_before" instance="Orange\Catalogversion\Observer\CatalogProductSaveBefore"/>
+    </event>
+	<event name="catalog_product_save_after">
+        <observer name="catalogversion_product_save_after" instance="Orange\Catalogversion\Observer\CatalogProductSaveAfter"/>
+    </event>
+	<event name="catalog_product_delete_after_done">
+        <observer name="catalogversion_after_delete" instance="Orange\Catalogversion\Observer\CatalogProductDeleteAfter"/>
+    </event>
+</config>

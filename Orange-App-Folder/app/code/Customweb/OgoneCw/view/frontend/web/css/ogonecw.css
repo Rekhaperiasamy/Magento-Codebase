@@ -1,0 +1,118 @@
+@media (min-width: 768px), print {
+	.ogonecw_fieldset {
+		width: 48%;
+	}
+}
+
+
+/*** EXTERNAL CHECKOUT ***/
+
+.ogonecw-externalcheckout-login .nav-sections,
+.ogonecw-externalcheckout-login .nav-toggle,
+.ogonecw-externalcheckout-login .panel.wrapper,
+.ogonecw-externalcheckout-login .page-footer,
+.ogonecw-externalcheckout-login .minicart-wrapper,
+.ogonecw-externalcheckout-login .block-search,
+.ogonecw-externalcheckout-login .compare.wrapper,
+.ogonecw-externalcheckout-review .nav-sections,
+.ogonecw-externalcheckout-review .nav-toggle,
+.ogonecw-externalcheckout-review .panel.wrapper,
+.ogonecw-externalcheckout-review .page-footer,
+.ogonecw-externalcheckout-review .minicart-wrapper,
+.ogonecw-externalcheckout-review .block-search,
+.ogonecw-externalcheckout-review .compare.wrapper {
+	display: none;
+}
+
+.ogonecw-externalcheckout-review .modal-popup .modal-footer .action-hide-popup {
+	line-height: 1.42857143;
+    padding: 0;
+    color: #1979c3;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    display: inline;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+#external-checkout-progress-wrapper .place-order-actions {
+	margin: 20px 0 0;
+	text-align: center;
+	padding: 0;
+	list-style: none none;
+}
+
+#external-checkout-progress-wrapper .place-order-actions .action.primary.checkout {
+	width: 100%;
+	line-height: 2.2rem;
+    padding: 14px 17px;
+    font-size: 1.8rem;
+}
+
+#external-checkout-review-table .item-actions {
+	display: none;
+}
+
+
+/*** CHECKOUT ***/
+
+.customweb-ogonecw-payment-form .card-brand-image-box {
+	display: inline-block;
+}
+
+.customweb-ogonecw-payment-form .card-brand-image-color.brand-is-deselected {
+	display:none;
+}
+
+.customweb-ogonecw-payment-form .card-brand-image-grey.brand-is-selected {
+	display:none;
+}
+
+.customweb-ogonecw-payment-form .card-brand-image-selection {
+	margin: 5px 0;
+}
+
+.customweb-ogonecw-payment-form .card-brand-image-selection img {
+	width:auto;
+	height: 20px;
+	margin-right: 3px;
+}
+
+.customweb-ogonecw-payment-form .invalid-card-number,
+.customweb-ogonecw-payment-form .invalid-cvc-number {
+	border-color: #ed8380;
+	background-image: url(../images/invalid.png) !important;
+	background-position: right 5px center;
+	background-repeat: no-repeat !important;
+}
+
+.customweb-ogonecw-payment-form .valid-card-number,
+.customweb-ogonecw-payment-form .valid-cvc-number {
+	background-image: url(../images/valid.png) !important;
+	background-position: right 5px center;
+	background-repeat: no-repeat !important;
+}
+
+.customweb-ogonecw-payment-form .multi-control:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.customweb-ogonecw-payment-form .multi-control > div > div {
+	width: auto;
+	float: left;
+	margin-right: 5px;
+	margin-top: 0;
+}
+
+.customweb-ogonecw-payment-form .help-block {
+	margin-top: 7px;
+}
+
+.customweb-ogonecw-payment-form .card-number .multi-control > div > div,
+.customweb-ogonecw-payment-form .alias .multi-control > div > div {
+	width: 100%;
+	float: none;
+	margin: 0;
+}

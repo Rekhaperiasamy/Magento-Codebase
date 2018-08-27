@@ -1,0 +1,41 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="import-export-tax-rates">    
+    <div class="import-tax-rates">        
+        <form id="import-form" class="admin__fieldset" action="<?php /* @escapeNotVerified */ echo $block->getUrl('orange_coupon/import/save') ?>" method="post" enctype="multipart/form-data">        
+            <?php echo $block->getBlockHtml('formkey')?>
+            <div class="fieldset admin__field">
+                <label for="import_coupons_file" class="admin__field-label"><span><?php /* @escapeNotVerified */ echo __('Import Coupons') ?></span></label>
+                <div class="admin__field-control">
+                    <input type="file" id="import_coupons_file" name="import_coupons_file" class="input-file required-entry"/>
+                    <?php echo $block->getButtonHtml(__('Import'), '', 'import-submit') ?>
+                </div>
+            </div>        
+        </form>        
+        <script>
+require(['jquery', "mage/mage", "loadingPopup"], function(jQuery){
+
+    jQuery('#import-form').mage('form').mage('validation');
+    (function ($) {
+        $('.import-submit').click(function(){
+            if($(':input[name="import_coupons_file"]').val()) {
+                $('body').loadingPopup({
+                    timeout: false
+                });
+
+                $(this.form).submit();
+            }
+        });
+    })(jQuery);
+
+});
+</script>
+    </div>    
+</div>

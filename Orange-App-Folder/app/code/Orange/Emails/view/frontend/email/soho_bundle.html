@@ -1,0 +1,80 @@
+<!--@subject Online Shop - New Postpaid/IEW order - Order ID:{{var OrderId}} @-->
+<br><span>Dear</span>
+<p style="height:0px;">Please encode this new Postpaid / IEW order in MyPartner</p>
+<p style="height:0px;">--------------------------------------------------------------------------------------</p>
+<span>OrderId : </span><span>{{var OrderId}}</span>
+<p style="height:0px;">--------------------------------------------------------------------------------------</p>
+<span>Order Created : </span><span>{{var OrderTime}}</span>
+{{layout handle="orange_emails_entra_soho_items_bundle" order=$order area="frontend"}}
+<span>Jupiter client type  {{var dynamicPromo}} </span><br>
+<span>{{var promotion}}</span>
+<p>--------------------------------------------------------------------------------------</p>
+<table>
+<tr><td>Customer Data:</td></tr>
+<tr><td>{{var tYourTelephoneNumberFor}}</td><td>{{layout handle="orange_emails_entra_soho_items_bundle_name" order=$order area="frontend"}}</td></tr>
+<tr><td>{{var tCurrentOpeartor}}</td><td>{{var currentoperator}}</td></tr>
+{{depend var sohomobilenumber}}
+<tr><td>{{var tCurrentPhoneNumber}}</td><td>{{var sohomobilenumber}}</td></tr>
+{{/depend}}
+{{depend var simnumber}}
+<tr><td>{{var tCurrentSimCardNumber}}</td><td>{{var simnumber}}</td></tr>
+{{/depend}}
+<tr><td>Type</td><td>Abonnement</td></tr>
+{{depend var currentcustomernamesoho}}
+<tr><td>{{var tCurrentCustomerNumber}}</td><td>{{var currentcustomernamesoho}}</td></tr>
+{{/depend}}
+{{depend var holder}}
+<tr><td>{{var tAreYouHolderContract}}</td><td>{{var holder}}</td></tr>
+{{/depend}}
+{{depend var profile}}
+<tr><td>{{var tYourProfile}}</td></tr>
+<tr><td>Profil</td><td>{{var tprofile}}</td></tr>
+{{/depend}}
+{{depend var vat}}
+<tr><td>{{var tVatNumber}}</td><td>{{var vat}}</td></tr>
+{{/depend}}
+<tr><td>{{var tYourPersonalData}}</td></tr>
+<tr><td>{{var tTitle}}</td><td>{{var prefix}}</td></tr>
+<tr><td>{{var tFirstName}}</td><td>{{var custFirstName}}</td></tr>
+<tr><td>{{var tName}}</td><td>{{var CustLastName}}</td></tr> 
+<tr><td>{{var tEmailAddress}}</td><td> <a href="" onclick="return false;" style="color:black;text-decoration:none;">{{var email}} </a></td></tr>	
+<tr><td>{{var tPhoneNumber}}</td><td>{{var phone}}</td></tr> 
+<tr><td>{{var tDob}} </td><td>{{var dob}}</td></tr>
+<tr><td>{{var tNationality}} </td><td>{{var nationality}}</td></tr>
+<tr><td>{{var tIdentityCardno}}</td><td> {{var passport}}</td></tr>
+<tr><td>{{var tCodePostal}} </td><td>{{var PostCode}}</td></tr>
+<tr><td>{{var tStreet}}</td><td>{{var street}}</td></tr>
+<tr><td>{{var tBox}}</td><td>{{var box}}</td></tr>
+<tr><td>{{var tCountry}}</td><td>{{var Country}}</td></tr>
+<tr><td>{{var tDelievery}}</td></tr>
+<tr><td>{{var tDelieverAddress}}</td></tr>
+{{depend var companyname}}
+<tr><td>{{var tcompany}}</td><td>{{var companyname}}</td></tr>      
+{{/depend}}
+{{depend var CustLastName}}
+<tr><td>{{var tForAttentionOf}}</td><td>{{var CustLastName}}</td></tr>      
+{{/depend}}
+<tr><td>{{var tCodePostal}}</td><td>{{var PostCode}}</td></tr>
+<tr><td>{{var tStreet}}</td><td>{{var street}}</td></tr>
+<tr><td>{{var tBox}}</td><td>{{var box}}</td></tr>
+<tr><td>{{var tCountry}}</td><td>{{var Country}}</td></tr>
+</table>
+{{var tYourBill}}<br>
+<span>{{var tAddToExitingMobistarBill}}</span>{{var existinginvoice}} <br>
+<span>{{var tPaymentMethod}}</span> {{var payment}}<br>
+<span>{{var tYouWillRecieveEmail}}</span><br>
+<span>{{var tEmailAddress}} {{var email}} </span><br>
+<span>{{var tYourDataAvailableWithUs}} </span>{{var pdf}}<br>
+<span>{{var tPaymentMethod}} </span> {{var payment}}<br>
+<p>bank account number BE59 0688 9628 9626
+{{var tYourBill}}
+{{var tMeansOfPaymentTransfer}} direct debit
+Bank account number BE59 0688 9628 9626</p>
+<span>{{var tYouWantToRecieveMobiNews}}</span>{{var newsletter_subscription}}<br><br>
+<span style="height:0px;">Scoring result:  {{var score}} </span><br>
+<span>--------------------------------------------------------------------------------------</span><br><br>
+<span>For any further questions, please contact us at mobile_shop@orange.be</span><br><br>
+<span>Best regards,</span> <br>
+<span>Orange Online Sales</span>
+
+

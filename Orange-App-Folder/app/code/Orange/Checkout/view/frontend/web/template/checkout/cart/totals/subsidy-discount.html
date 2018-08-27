@@ -1,0 +1,22 @@
+<!-- ko if: isPrice() -->
+<div class="row margin-xs-b-s subsidy-cart-total-iwd">
+	<div class="col-xs-6 col-md-6 col-sm-12" data-bind="text: title">
+	</div>
+	<div class="col-xs-6 col-md-6 col-sm-12 text-right">
+		<!-- ko if: isDecimal() -->
+		<div class="pdp total-pricee new-price orange">
+		<span id="new-pricee" class="new-pricee" data-bind="text: getSubsidydiscountTotal1()"></span>
+		<span class="new-price-desimal" data-bind="text: getSubsidydiscountTotal2()"></span>
+		<span id="new-price-symbol-desimal" class="new-price-symbol-desimal new-price-symbol" data-bind="text: getCurrencySymbol()"></span>
+		</div>
+	<!-- /ko -->
+	<!-- ko ifnot: isDecimal() -->
+		<div class="pdp total-pricee new-price orange">
+		<span id="new-pricee" class="new-pricee" data-bind="text: getSubsidydiscountTotal1()"></span>
+		<span id="new-price-symbol" class="new-price-symbol" data-bind="text: getCurrencySymbol()"></span>
+		</div>
+	<!-- /ko -->
+	<span class="orange line-100percent soho-totaal" data-bind="text: getSubsidyValue()"></span>
+	</div>
+</div>
+<!-- /ko -->

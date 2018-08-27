@@ -1,0 +1,39 @@
+<div class="followup-email-coupon-selector-wrapper>">
+    <fieldset id="rule_conditions_fieldset" class="fieldset">
+        <legend class="legend"><span><?php echo __('Select promotion rule to insert coupon'); ?>
+                .</span></legend>
+        <br
+
+        <div class="rule-coupon-wrapper">
+            <div class="admin__field-control control">
+                <label for="enable_coupon">
+                    <?php echo __('Enable coupon') ?>
+                </label>
+                <select id="enable_coupon" name="enable_coupon">
+                    <option value="1" <?php echo $this->getIsSelect(1) ?> > <?php echo __('Yes') ?></option>
+                    <option value="0"  <?php echo $this->getIsSelect(0) ?> > <?php echo __('No') ?></option>
+                </select>
+            </div>
+
+            <div class="admin__field-control control">
+
+            <label for="promotion_rule">
+                    <?php echo __('Select a promotion rule') ?>
+                </label>
+                <span class="note">( <?php echo __('Typing 3 character for auto-complete') ?> )</span>
+                <input id="promotion_rule" name="promotion_rule" type="text" value="<?php  echo $this->getPromotionName()  ?>">
+                <input id="promotion_rule_id" name="promotion_rule_id" type="hidden" value="<?php  echo $this->getPromotionId() ?>">
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<style>
+    .ui-autocomplete.ui-menu {
+        padding-top: 30px;
+    }
+    .ui-autocomplete.ui-menu li {
+        list-style: none;
+        cursor: pointer;
+    }
+</style>

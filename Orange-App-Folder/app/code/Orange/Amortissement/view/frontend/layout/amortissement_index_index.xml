@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+	    <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Orange_Webform::css/p05.css"/>
+		<meta name="robots" content="NOINDEX,NOFOLLOW"/>
+    </head>
+   <body>
+        <referenceContainer name="content">
+            <block class="Orange\Amortissement\Block\Index\Index" name="amortissement" template="Amortissement.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

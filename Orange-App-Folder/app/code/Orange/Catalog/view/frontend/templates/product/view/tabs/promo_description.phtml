@@ -1,0 +1,49 @@
+<?php
+//getting current product
+$product = $block->getProduct();
+$productType =  $product->getMetaProductTitle();
+$sku         =  $product->getSku();
+//creating instance of object manager
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+//creating instance of custom table for PromoDescription
+$model = $objectManager->create('Orange\Promo\Model\Promo');
+//creating instance of current customer ussing session
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+//getting customer group id
+$CustomerGroupId = $customerSession->getCustomerGroupId();
+//getting sku of product
+
+//getting product family if handset else accessory
+if (!empty($product->getHandsetFamily())) {
+    $family = $product->getHandsetFamily();
+} else {
+    $family = $product->getAccessoryFamily();
+}
+
+$storeId = $block->getStoreid();
+//creating instance of cms fileviewer for html content display
+$fieldProvider = $objectManager->get('Magento\Cms\Model\Template\FilterProvider');
+//Checking whether promotions available for particular sku (OR) family (AND) customerGroup (AND) StoreId
+/*$sku = 'Dauphin';
+$CustomerGroupId = '3';
+$storeId = '1';*/
+$tableCollection = $block->getPromoDescription($CustomerGroupId,$family);
+//print_r($tableCollection->getSelect()->__toString()); 
+//Rendering the WYSWYG Editor Output using FeildProvider Instance of Magento CMS
+  foreach ($tableCollection as $col) { 
+    //echo $col['html_content'];
+    if($fieldProvider->getBlockFilter()->setStoreId($storeId)->filter($col['html_content'])){ ?>
+	<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="panel-body">
+        <p><?php
+            echo $fieldProvider->getBlockFilter()
+                    ->setStoreId($storeId)
+                    ->filter($col['html_content']);
+            ?></p>
+    </div>
+	</div>
+	</div>
+    <?php
+    }
+}  
+ 

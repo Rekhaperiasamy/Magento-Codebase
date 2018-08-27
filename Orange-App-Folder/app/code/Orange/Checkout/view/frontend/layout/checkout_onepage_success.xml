@@ -1,0 +1,12 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+	<head>       
+        <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Magento_Catalog::css/p05.css"/>
+    </head>
+	<referenceBlock name="content">			
+		<block class="Orange\Checkout\Block\Onepage\Success" name="orange_checkout" template="onepage/success.phtml" cacheable="false" >
+		       <block class="Orange\Checkout\Block\Onepage\Success" name="success.newnumber" template="onepage/success/newnumber.phtml" cacheable="false" />
+           	   <block class="Orange\Checkout\Block\Onepage\Success" name="success.exisitngnumber" template="onepage/success/exnumber.phtml" cacheable="false" />
+     </block>	
+	</referenceBlock>      
+</page>

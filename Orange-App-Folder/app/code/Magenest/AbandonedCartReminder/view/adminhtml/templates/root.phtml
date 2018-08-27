@@ -1,0 +1,53 @@
+<?php
+
+$is_email_preview = false;
+
+if (strpos($_SERVER['REQUEST_URI'], "/admin/abandonedcartreminder/mail/preview") !==false) {
+    $is_email_preview = true;
+}
+
+?>
+
+<?php
+if (!$is_email_preview) {
+    ?>
+    <!doctype html>
+    <html <?php /* @escapeNotVerified */
+    echo $htmlAttributes ?>>
+
+    <head <?php /* @escapeNotVerified */
+    echo $headAttributes ?>>
+        <?php /* @escapeNotVerified */
+        echo $requireJs ?>
+        <?php /* @escapeNotVerified */
+        echo $headContent ?>
+        <?php /* @escapeNotVerified */
+        echo $headAdditional ?>
+    </head>
+
+    <body data-container="body" data-mage-init='{"loaderAjax": {}, "loader": { "icon": "<?php /* @escapeNotVerified */
+    echo $loaderIcon; ?>"}}' <?php /* @escapeNotVerified */
+    echo $bodyAttributes ?>>
+    <?php /* @escapeNotVerified */
+    echo $layoutContent ?>
+    </body>
+    </html>
+
+<?php
+} else {
+    ?>
+ <!doctype html>
+    <html <?php /* @escapeNotVerified */
+    echo $htmlAttributes ?>>
+
+    <head <?php /* @escapeNotVerified */
+    ?>>
+    </head>
+
+    <body>
+
+    <?php /* @escapeNotVerified */
+    echo $layoutContent ?>
+    </body>
+    </html>
+<?php } ?>

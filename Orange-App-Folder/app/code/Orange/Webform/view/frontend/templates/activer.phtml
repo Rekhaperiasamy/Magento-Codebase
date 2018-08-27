@@ -1,0 +1,43 @@
+<div class="main-container">
+	<header role="banner" id="page-header">
+	</header>
+<!-- /#page-header -->
+	<div class="container">
+	</div>
+
+	<section>
+
+		<article id="node-62461" class="node node-landing-page style-layer-style--green clearfix">
+			<div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-m padding-xs-b-m">
+				<div class="container landing-page-top">
+					<div class="row">
+						<div class="field field-name-field-display-title field-type-text field-label-hidden" style="width:100%;">
+							<div class="field-items">
+								<div class="field-item even padding-xs-h-s">
+								    <?php  $om = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+                                     <?php $model = $om->create('Orange\Webform\Model\Activerform');	?>
+									 <?php $data = $this->getRequest()->getPostValue(); ?>
+									 <?php $collection = $model->getCollection()->addFieldToFilter('order_number',$data['order_number'])->getFirstItem(); ?>
+									<h2><?php echo __("Dank U "); ?> <?php ucfirst(strtolower(trim(echo $collection->getFirstname())));?></h2>	
+									<h4><?php echo __("Je hebt ons bevestigd dat je je nieuwe Orange-simkaart goed ontvangen hebt."); ?></h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<div class="container">		
+			<div class="row">	
+				<div class="col-xs-12">
+					<p><?php echo __("We gaan nu je abonnementsaanvraag finaliseren."); ?></p>
+					<p><?php echo __("Je ontvangt binnenkort bevestiging dat je actief bent op het Orange-netwerk. Je hoeft dan enkel nog je nieuwe simkaart in je gsm te plaatsen en de pincode in te voeren."); ?></p>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</div>
+</section>
+</div>

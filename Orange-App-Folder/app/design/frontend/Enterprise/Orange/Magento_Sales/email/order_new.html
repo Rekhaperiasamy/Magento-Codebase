@@ -1,0 +1,252 @@
+<!--@subject {{trans "Your order confirmation  for id:#%order " order=$order.getIncrementId()}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var order.getEmailCustomerNote()":"Email Order Note",
+"var order.increment_id":"Order Id",
+"layout handle=\"sales_email_order_items\" order=$order area=\"frontend\"":"Order Items Grid",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.getShippingDescription()":"Shipping Description"
+"var shipping_msg":"Shipping message"
+} @-->
+
+<!doctype html public "-//w3c//dtd xhtml 1.0 transitional//en"
+"http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Bienvenue chez Orange</title>
+  <style type="text/css">
+
+   /* force hotmail to display emails at full width */
+   body { width:100% !important; }
+   .readmsgbody { width:100%; }
+   .externalclass { width:100%; }
+
+   /* force hotmail to display normal line spacing */
+   .externalclass,
+   .externalclass p,
+   .externalclass span,
+   .externalclass font,
+   .externalclass td,
+   .externalclass div,
+   .externalclass *   { line-height: 100%; }
+
+
+   /* fix paragraph margins for yahoo */
+   p { margin-bottom:1em; }
+
+
+   /* fix  for outlook */
+   /*table tr td { mso-line-height-rule: exactly; }*/
+   table tr td { border-collapse:collapse; }
+
+   /* style link colors for ios */
+   .linksblack a { color:#000000 !important; text-decoration:none; }
+
+   @media only screen and (max-width: 480px){
+    .break-responsive{
+      display:block !important;
+      width:100% !important;
+    }
+   }
+
+   /* fix for mobile */
+   @media only screen and (min-device-width : 320px) and (max-device-width :
+    480px)
+   {
+     body
+     {
+       -webkit-text-size-adjust:100%;
+       -ms-text-size-adjust:100%;
+     }
+   }
+   @media only screen and (min-device-width: 768px) and (max-device-width:
+    1024px)
+   {
+     body
+     {
+       -webkit-text-size-adjust:100%;
+       -ms-text-size-adjust:100%;
+     }
+   }
+   @media only screen and (-webkit-min-device-pixel-ratio : 1.5),
+   only screen and (min-device-pixel-ratio : 1.5)
+   {
+     body
+     {
+       -webkit-text-size-adjust:100%;
+       -ms-text-size-adjust:100%;
+     }
+   }
+ </style>
+</head>
+<body bgcolor="#e1e1e1" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0" style="margin:0; padding:0; background-color:#e1e1e1">
+  <table style="background-color: #e1e1e1" cellspacing="0" cellpadding="0" width="100%" bgcolor="#e1e1e1" border="0">
+    <tbody>
+      <tr>
+        <td height="" valign="top" align="center">
+          <table cellspacing="0" cellpadding="0" align="center" border="0" width="100%">
+            <tbody>
+              <tr>
+                <td valign="middle" height="47" align="center" style="font-family:Arial, Helvetica,
+                sans-serif;font-size:11px;color:#000000;">
+                Votre commande<br>
+              </td>
+            </tr>
+            <tr>
+              <td height="80" bgcolor="#000000" style="background-color:#000000"><!-- HEADER START -->
+                <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tbody>
+                    <tr>
+                      <td width="20" height="80" style="font-size: 1px; line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                      <td height="80">
+                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                          <tbody>
+                            <tr>
+                              <td height="20" style="font-size: 1px; line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                            </tr>
+                            <tr>
+                              <td height="43">
+                                <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                  <tbody>
+                                    <tr>
+                                      <td width="40" height="43" valign="top"><a href="https://www.orange.be/fr/"  target="_blank" rel="noopener noreferrer"><img src="https://e-services.business.orange.be/medias/e-mail/general/logo_orange.jpg" alt="Orange" width="40" height="40" border="0" style="display:block;"></a></td>
+                                      <td width="20" height="43" style="font-size:
+                                      1px; line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                                      <td height="43" valign="bottom" align="left" style="font-family:Arial, Helvetica, sans-serif;font-size:15px;font-weight:bold; color:#ffffff;
+                                      text-decoration:none; text-align:left;">
+                                      Votre commande</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td height="17" style="font-size: 1px;
+                                line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td width="40" height="80" style="font-size: 1px;
+                        line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- HEADER END --></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#50BE87" style="background-color:#50BE87">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" height="30">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="40" valign="top">&nbsp;</td>
+                          <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:40px;font-weight:bold; text-align:left; color:#000000;">{{trans "%customer_name, votre commande est validée" customer_name=$order.getCustomerName()}}</td>
+                          <td width="40" valign="top">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" height="10">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:20px;font-weight:bold; text-align:left; color:#000000;">{{trans 'Votre numéro de commande&nbsp: #%increment_id' increment_id=$order.increment_id |raw}}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" height="30">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td height="416" bgcolor="#ffffff" style="background-color:#ffffff" valign="top">
+                    <!-- BODY START -->
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td valign="top">         
+                                  {{layout handle="sales_email_order_items" order=$order area="frontend"}}
+                              <!-- conditional based will load from items.phtml-->                              
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor="#000000" style="background-color:#000000"><!-- FOOTER START -->
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td width="40" style="font-size: 1px; line-height:
+                          1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                          <td>
+                            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td height="22" style="font-size: 1px;
+                                  line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                                </tr>
+                                <tr>
+                                  <td height="28">
+                                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                      <tbody>
+                                        <tr>
+                                          <td height="28" valign="middle" align="left" style="font-family:Arial, Helvetica, sans-serif;font-size:13px;color:#ffffff;font-weight:bold;">
+                                          Contactez nous</td>
+                                          <td width="30" height="28" align="right"><a href="https://www.orange.be/fr/options-et-services/contr%C3%B4le-de-votre-budget/orange-app" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/icon_myorange.jpg" alt="Mail" width="28" height="28" border="0" style="display:block;"></a></td>
+                                          <td width="30" height="28" align="right"><a href="https://www.orange.be/fr/contact/en-ligne" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/icon_mail.jpg" alt="Mail" width="28" height="28" border="0" style="display:block;"></a></td>
+                                          <td width="30" height="28" align="right"><a href="https://shops.orange.be/fr" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/icon_map.jpg" alt="Map" width="28" height="28" border="0" style="display:block;"></a></td>
+                                          <td width="30" height="28" align="right"><a href="https://www.orange.be/fr/contact/par-telephone#number" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/icon_phone.jpg" alt="Tel" width="28" height="28" border="0" style="display:block;"></a></td>
+                                          <td width="30" height="28" align="right"><a href="https://www.facebook.com/Orange.Belgium" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/icon_facebook.jpg" alt="Facebook" width="28" height="28" border="0" style="display:block;"></a></td>
+                                          <td width="30" height="28" align="right"><a href="https://twitter.com/OrangeBe_Fr" target="_blank"><img src="https://e-services.business.orange.be/medias/e-mail/general/icon_twitter.jpg" alt="Twitter" width="28" height="28" border="0" style="display:block;"></a></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td height="28" style="font-size: 1px;
+                                  line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                                </tr>
+                                <tr>
+                                  <td valign="top" align="left" style="font-family:Arial, Helvetica,
+                                  sans-serif;font-size:10px;color:#ffffff;">
+                                  <br>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td height="24" style="font-size: 1px;
+                                line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                              </tr>
+                              <tr>
+                                <td valign="top" align="left" style="font-family:Arial, Helvetica,
+                                sans-serif;font-size:10px;color:#ffffff;">
+                                Orange Belgium s.a., Avenue du Bourget 3, 1140 Bruxelles</td>
+                              </tr>
+                              <tr>
+                                <td height="28" style="font-size: 1px;
+                                line-height: 1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td width="40" style="font-size: 1px; line-height:
+                        1px"><img style="border:0px; display: block; outline:none;" border="0" src="https://e-services.business.orange.be/medias/e-mail/general/spacer.gif" width="1" height="1"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- FOOTER END --></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

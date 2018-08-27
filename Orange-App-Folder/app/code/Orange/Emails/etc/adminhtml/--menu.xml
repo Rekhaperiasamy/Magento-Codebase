@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Orange_Emails::sender" title="sender" module="Orange_Emails" sortOrder="15" dependsOnModule="Orange_Emails" resource="Orange_Emails::config"/>
+		
+        <add id="Orange_Emails::reciever" title="receiver" module="Orange_Emails" sortOrder="10" parent="Orange_Emails::sender" resource="Orange_Emails::config" />
+		
+    
+    </menu>
+</config>

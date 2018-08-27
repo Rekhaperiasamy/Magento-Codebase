@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+        <referenceContainer name="content">
+            <block class="Orange\Customcache\Block\Adminhtml\Index\Index" name="customcache_index"  template="Orange_Customcache::customcache_index_index.phtml" after="fastly_cdn.cache.additional"/>
+        </referenceContainer> 
+</page>

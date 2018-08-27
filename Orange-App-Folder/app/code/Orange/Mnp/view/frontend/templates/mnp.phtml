@@ -1,0 +1,789 @@
+<style xml="space">
+.select_de{width:187px;}
+@media (min-width: 320px) and (max-width:767px){
+.select_de{width:100%;}
+}
+</style>
+<?php
+$specialCharacter = "A-Za-zA-ÿŒŸœĲ'._\s-";
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $om->get('Magento\Store\Model\StoreManagerInterface');
+$store   = $storeManager->getStore()->getCode();
+?>
+<div class="main-container">
+<div class="container">
+<div class="step-mage-error" style="display:none"><span><i class="glyphicon glyphicon-info-sign"></i> <?php echo __('Please correct below invalid fields') ?></span></div></div>
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('mnp_header_content')->toHtml();?>
+<section><form id="mnp-form" class="margin-xs-v-l" name= "mnpform" action="<?php echo $this->getUrl('webform/index/mnp') ;?>" enctype="multipart/form-data" method="post" data-mage-init="{&quot;validation&quot;:{}}" data-hasrequired="* Required Fields"><input id="edit-requestid" class="form-control" name="requestid" size="60" type="hidden" value="1" /> <input id="edit-confirmid" class="form-control" name="confirmid" size="60" type="hidden" value="5" />
+<input type="hidden" name="simcard_url" id="simcard_url" value="<?php echo $this->getUrl('checkout/index/simcard'); ?>">
+<input type="hidden" name="webform_title" id="webform_title" value="">
+<input type="hidden" name="vatnumber_url" id="vatnumber_url" value="<?php echo $this->getUrl('checkout/index/vatnumber'); ?>">
+<div class="container">
+<h3><?php echo __('Données personnelles') ?></h3>
+<div class="row">
+<div class="col-xs-12">
+<div class="margin-xs-t-s">
+<div class="form-item form-item-gender form-type-radio radio pull-left"><label for="edit-gender-mr"><input id="edit-gender-mr" class="form-radio" checked="checked" name="title" type="radio" value="<?php echo __('Mr') ?>" /><?php if($store=="fr"):?><?php echo __('Mr') ?><?php elseif($store=="nl"):?><?php echo __('Mr.') ?><?php endif;?></label></div>
+<div class="form-item form-item-gender form-type-radio radio pull-left"><label for="edit-gender-mme"><input id="edit-gender-mme" class="form-radio" name="title" type="radio" value="<?php echo __('Mme') ?>" /><?php if($store=="fr"):?><?php echo __('Mme') ?><?php elseif($store=="nl"):?><?php echo __('Mevr.') ?><?php endif;?></label></div>
+</div>
+</div>
+</div>
+<div class="row margin-xs-t-s">
+<div class="col-xs-12 col-sm-6">
+	<label for="edit-first-name"><?php echo __('Prénom') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>
+	<input class="form-control validation_check" type="text" id="firstname" name="firstname" value="" maxlength="35" size="60" data-validate="{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'first-name':true}" />
+	<div id="fnameerror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+	<label for="edit-name"><?php echo __('Nom') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>
+	<input id="lastname" class="form-control  validation_check" maxlength="35" name="lastname" size="60" type="text" value="" data-validate="{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'last-name':true}" />
+	<div id="lnameerror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+<div class="clearfix"></div>
+<div class="col-xs-12 col-sm-6 margin-xs-t-s"><label for="edit-mail"><?php echo __('Mail') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label> <input id="email" class="form-control validation_check" maxlength="50" name="email" size="60" type="text" value="" data-validate="{'custom-required':true,'validate-new-email':true}" />
+<div id="emailerror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+<div class="col-xs-12 col-sm-6 margin-xs-t-s"><label for="edit-tva"><?php echo __('N° de TVA') ?> </label>
+	<input id="edit-vatnumber" class="form-control validation_check" maxlength="50" name="vatnumber" size="60" type="text" value="" data-validate="{'vat-number-validation':true}" />
+	<div id="vaterror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+</div>
+<h3 class="margin-xs-t-l"><?php echo __('Carte SIM de votre opérateur actuel') ?></h3>
+<div class="row">
+<div class="col-xs-12  margin-xs-t-s">
+<p class="pull-left margin-xs-t-s margin-xs-r-m" title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo __('Quel est votre opérateur actuel ?') ?> *</p>
+<div>
+<div class="dropdown drowpdown-full-width margin-sm-b-s select_de">
+<select id="legal_status" class="dropdown-menu-form validation_check_dropdown validation_check" name="what_is_your_current_operator_make_your_choice" data-validate="{'custom-operator-required':true}">
+<option value=""><?php echo __('Sélectionnez') ?></option><option value="<?php echo __('Proximus') ?>"><?php echo __('Proximus') ?></option><option value="<?php echo __('Telenet') ?>"><?php echo __('Telenet') ?></option><option value="Base"><?php echo __('Base') ?></option><option value="<?php echo __('Autre') ?>"><?php echo __('Autre') ?></option></select></div>
+</div>
+</div>
+</div>
+<div class="row margin-xs-t-s">
+<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n"><label for="edit-number-orange"><?php echo __('N° de GSM actuel') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo "&nbsp;"?>*</span></label> <input id="current_mobile_phone_number" class="form-control validation_check"   name="current_mobile_phone_number" size="60" type="text" value="" data-validate="{'custom-required':true,'validate-orangenumber':true,'validate-contactno':true}" />
+<div id="moberror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n"><label for="edit-number-sim"><?php echo __('N° de carte SIM actuel') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo "&nbsp;"?>*</span></label> <input id="current_sim_card_number" class="form-control validation_check" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="20" name="current_sim_card_number" size="60" type="text" value="" data-validate="{'custom-required':true, 'simcard-number':true}" />
+<div id="current_sim_card_number-errorcustom" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+<div class="col-xs-12 margin-xs-t-m"><label class="pull-left" for="" title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo __('Quel est votre type de carte ?') ?><?php echo "&nbsp;"?>* </label>
+<div class="form-item form-item-gender form-type-radio radio pull-left abonment_radio"><label for="edit-card_type"><?php echo "&nbsp;"?><?php echo "&nbsp;"?><input id="edit-card_type" class="form-radio card_type" checked="checked" name="card_type" type="radio" value="1" /><?php echo __('Abonnement') ?></label></div>
+<div class="form-item form-item-gender form-type-radio radio pull-left"><label for="edit-card_type1"><input id="edit-card_type1" class="form-radio card_type" name="card_type" type="radio" value="0" /><?php echo __('Carte prépayée') ?></label></div>
+</div>
+</div>
+<div class="row margin-xs-t-m" id="customer_number_div">
+	<div class="col-xs-12 col-sm-6">
+		<label for="network_customer_number"><?php echo __('N° de client actuel *') ?>  <a type="button" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("Vous trouverez votre numéro de client sur l'une de vos factures.")?>" class="orange">?</a></label>
+		<input class="form-control validation_check sim_custom_number"  autocomplete="network_customer_number" type="search" id="network_customer_number" name="network_customer_number" value="" onkeyup="if (/[^a-zA-Z0-9'.-]/g.test(this.value)) this.value = this.value.replace(/[^a-zA-Z0-9'.-]/g,'')" size="60" maxlength="50"  data-validate="{'custom-required':true,'min-lenth-validation-newmessage':true}">
+	</div>
+</div>
+<div class="row margin-xs-t-m" id="bill_invoice_div">
+	<div class="col-xs-12">
+		<p title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo __('La facture est-elle à votre nom ? *') ?></p>
+		<div class="form-item form-item-gender form-type-radio radio pull-left">
+			<label for="bill_invoice"><input type="radio" id="bill_invoice" class='form-radio bill_in_name' name="bill_in_name" value="1" checked class="form-radio"><?php echo __('Oui') ?> </label>
+		</div>
+		<div class="form-item form-item-gender form-type-radio radio pull-left">
+			<label for="billsecond_invoice"><input type="radio" id="billsecond_invoice" class='form-radio bill_in_name' name="bill_in_name" value="0" class="form-radio"><?php echo __('Non') ?></label>
+		</div>
+	</div>
+</div>
+<div class="row margin-xs-t-s disable_div" id="holders_name_div">
+	<div class="col-xs-12 col-sm-6">
+		<label for="edit-first-name" class=""><?php echo __('Nom du titulaire') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>" >*</span></label>
+		<input class="form-control validation_check" autocomplete="holders_name" type="text" id="holders_name" name="holders_name" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holders-name':true}">
+	</div>
+	<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+		<label for="edit-first-name" class=""><?php echo __('Prénom du titulaire') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>">*</span></label>
+		<input class="form-control validation_check disabled" id="holder_name" type="text" name="holder_name" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holder-name':true}">
+	</div>
+</div>
+<div class="row">
+<div class="col-xs-12">
+<h3><?php echo __('Carte SIM Orange') ?></h3>
+</div>
+<div class="col-xs-12 col-sm-6 margin-xs-t-s edit-mob-number"><label for="edit-number-orange"><?php echo __('N° de GSM Orange') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo "&nbsp;"?>*</span>&nbsp;<a type="button" data-html="true" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("Il s'agit ici du numéro que vous avez reçu avec votre carte prépayée."); ?>" class="orange">?</a></label> <input id="orange_mobile_phone_number" class="form-control validation_check "  name="orange_mobile_phone_number" size="60" type="text" value="" data-validate="{'custom-required':true,'validate-orangenumber':true,'validate-contactno':true}" />
+<div id="ophoneerror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+<div class="col-xs-12 col-sm-6 margin-xs-t-s edit-sim-number"><label for="edit-number-sim"><?php echo __('N° de carte SIM Orange') ?> <span class="form-required" title="<?php echo __('Ce champ est obligatoire.') ?>"><?php echo "&nbsp;"?>*</span>&nbsp;<a type="button" data-html="true" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo __("Ce numéro se situe sur votre nouvelle carte SIM Orange."); ?>" class="orange">?</a></label> <input id="sim_card_number_orange" class="form-control validate-number validation_check" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="20" name="sim_card_number_orange" size="60" type="text" value="" data-validate="{'custom-required':true}" />
+<div id="osimerror" class="mage-error" style="color: #e02b27; font-size: 1.2rem;"></div>
+</div>
+</div>
+<div class="row margin-xs-t-s">
+<div class="col-xs-12 margin-xs-b-s">
+<h3><?php echo __('Offres') ?></h3>
+<label class="margin-xs-t-s" for="edit-offer"><input id="edit-offer" class="form-checkbox pull-left margin-xs-b-m" name="do_you_want_to_receive_interesting_offers_and_the_latest_Orange" type="checkbox" value="a" /> <span><?php echo __("Recevoir les offres intéressantes et les dernières nouvelles d'Orange.") ?></span></label></div>
+</div>
+<div class="row form-line">
+<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+<a class="btn-primary btn form-submit margin-xs-t-s" href="javascript:void(0);" id="mnpform">
+<?php if($store=="fr"):?><?php echo __('Valider') ?><?php elseif($store=="nl"):?><?php echo __('Bevestigen') ?>
+<?php endif;?></a>
+</div>
+</div>
+</div>
+</form></section></div>
+<script type="text/javascript">
+require(['jquery',
+      'mage/template',
+	  'mage/mage',
+	  'js/dropdown'	,
+	  'jquery/validate',
+      'jquery/ui',
+      'mage/translate',
+	  'mage/validation',
+	  'js/tooltipform',
+	  'js/maskedinput',
+	  'mage/calendar'], function ($) {
+	  //<![CDATA[
+		var translates = <?php
+		echo \Zend_Json::encode(
+				array(
+					"This is a required field." => __("This is a required field."),
+					"Please use Proper Street Number." => __("Please use Proper Street Number."),
+					"Zipcode & city doesn't exist" => __("Zipcode & city doesn't exist"),
+					"You Must be 18+ years old." => __("You Must be 18+ years old"),
+					"Street doesn't exist" => __("Street doesn't exist"),
+					"City does not exist" => __("City does not exist"),
+					'Vous avez annulé le code de coupon.' => __('Vous avez annulé le code de coupon.'),
+					'Le code promo a été appliqué à votre commande.' => __('Le code promo a été appliqué à votre commande.'),
+					"Please enter a valid email address (Ex: johndoe@domain.com)."=> __('Please enter a valid email address (Ex: johndoe@domain.com).'),
+					"Please use letters only in this field."=> __('Please use letters only in this field.'),
+					"Zipcode doesn't exist" => __("Zipcode doesn't exist"),
+					"Please use number start with 045,046,047,048 and 049" => __("Please use number start with 045,046,047,048 and 049"),
+					"No Payment method available." => __("No Payment method available."),
+					"No Payment Methods" => __("No Payment Methods"),
+					"No Payment Information Required" => __("No Payment Information Required"),
+					"Please enter your current mobile phone number, consisting of 10 digits" => __("Please enter your current mobile phone number, consisting of 10 digits"),
+					"Please enter your current SIM card number, consisting of 13, 18 or 19 digits depending on the operator" => __("Please enter your current SIM card number, consisting of 13, 18 or 19 digits depending on the operator"),
+					"Please enter a valid 10 digit mobile phone number." => __("Please enter a valid 10 digit mobile phone number."),
+					"Please verify that you have correctly entered the 12 digits of your ID number" => __("Please verify that you have correctly entered the 12 digits of your ID number"),
+					"Please enter your account number in the following format: BEXX XXXX XXXX XXXX" => __("Please enter your account number in the following format: BEXX XXXX XXXX XXXX"),
+					"Please select an option." => __("Please select an option."),
+					"You must enter a valid date of birth (dd / mm / yyyy) and be over 18 years of age"=> __("You must enter a valid date of birth (dd / mm / yyyy) and be over 18 years of age"),
+					"This is a required fields." => __("This is a required fields."),
+					"Please enters a valid email address (Ex: johndoe@domain.com)."=> __('Please enters a valid email address (Ex: johndoe@domain.com).'),
+                    "Please enter a value greater than or equal to 2."=> __('Please enter a value greater than or equal to 2.'),
+                    "Please enter at least 2 characters."=> __('Please enter at least 2 characters.'),
+					"Please use only letter (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed."=> __('Please use only letter (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed.'),
+					"Please enter at least 3 characters."=> __('Please enter at least 3 characters.'),
+					"Please enter at least 3 characters newmessage."=> __('Please enter at least 3 characters newmessage.'),
+					"Please enter first character should be a number."=>__('Please enter first character should be a number.'),
+					"Please enter only 35 characters in first name and last name."=>__('Please enter only 35 characters in first name and last name.'),
+					"Current SIM card number and operator not matched."=>__('Current SIM card number and operator not matched.'),
+					"Please Enter valid month"=>__('Please Enter valid month'),
+					"Please Enter valid date"=>__('Please Enter valid date'),
+					"Please correct below invalid fields"=>__('Please correct below invalid fields'),
+					"MNP Number is already used"=>__('MNP Number is already used'),
+					"Wrong format entered"=>__('Wrong format entered'),
+					"Veuillez introduire un n° de TVA valide."=>__('Veuillez introduire un n° de TVA valide.'),
+					"Veuillez sélectionner une des options."=>__('Veuillez sélectionner une des options.')
+				)
+		);?>;
+		$.mage.translate.add(translates);
+$('[data-toggle="tooltip"]').tooltip();
+$('.orange').on("mouseover", function () {
+	   var el = $(this);
+    timeout = setTimeout(function(){
+       finishTimeout = true;
+       el.tooltip( "open" );
+       finishTimeout = false;
+    },1000);
+});
+$('.orange').mouseout(function(){
+    clearTimeout(timeout);
+});
+$('#current_mobile_phone_number').mask("0000/00 00 00", {placeholder: "____/__ __ __"});
+$('#orange_mobile_phone_number').mask("0000/00 00 00", {placeholder: "____/__ __ __"});
+$.validator.addMethod(
+'validate-namefiled', function (value) {
+ return /^[ A-Za-zA-ÿŒŸœĲ]*$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+
+$.validator.addMethod(
+'validate-field', function (value) {
+ return /^[a-zA-Z-]+$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+
+$.validator.addMethod(
+'validate-punctuation', function (value) {
+ return /^[ A-Za-z_0-9'.-]*$/.test(value);
+}, $.mage.__('Please use only letters (a-z or A-Z) or numbers (0-9) or Punctuation.'));
+
+
+$.validator.addMethod(
+'validate-orangenumber', function (value) {
+    var slicevalue = value.slice(0,3);
+    var orangeFrontNumber = ["045", "046", "047", "048","049"];
+    var finalVlaue = orangeFrontNumber.indexOf(slicevalue);
+    if (finalVlaue < 0) {
+		return false;
+    }
+return true;
+//return  /^((\+|00)32\s?|0)4(60|[56789]\d)(\s?\d{2}){3}$/.test(value);// Validation logic here
+}, $.mage.__('Please enter a valid 10 digit mobile phone number.'));
+
+$.validator.addMethod(
+'validate-contactno', function (value) {
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 10) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter a valid 10 digit mobile phone number.'));
+
+$.validator.addMethod(
+'validate-street-valid', function (value) {
+    var slicevalue = value.slice(0,1);
+    if($.isNumeric(slicevalue)){
+        return true;
+    }else{
+        return false;
+    }
+}, $.mage.__('Please enter first character should be a number.'));
+
+
+
+$.validator.addMethod(
+'validate-orangenumber-total', function (value) {
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 10) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter your current mobile phone number, consisting of 10 digits'));
+
+$.validator.addMethod(
+'simcard-number', function (value) {
+    if (value.length < 13) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter your current SIM card number, consisting of 13, 18 or 19 digits depending on the operator'));
+
+$.validator.addMethod(
+'contact-number', function (value) {
+    if (value.length < 10) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter a valid 10 digit mobile phone number'));
+
+
+$.validator.addMethod(
+'id-number', function (value) {
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 10) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please verify that you have correctly entered the 12 digits of your ID number'));
+
+$.validator.addMethod(
+'validate-select-newrule', function (value) {
+   return ((value !== "none") && (value != null) && (value.length !== 0));
+}, $.mage.__('Please select an option.'));
+
+$(document).ready( function () {
+  var tealium_data = $('input[name="tealium_values"]').val();
+  var d = $.parseJSON(tealium_data);
+  var title = $('body.mnp-index-index section.margin-xs-b-m h1').text();
+  d.page_name = title;
+  utag.view(d);
+  $('#webform_title').val(title);
+});
+
+$("#current_sim_card_number").on("change", function() {
+  var myattrValue = $("#legal_status").val();
+  var value = $("#current_sim_card_number").val();
+        $(mnpform).validation();
+		var mnpinitialValidation = $.validator.validateElement($("#current_sim_card_number"));
+		var legalStatus = $.validator.validateElement($("#legal_status"));
+		$('#current_sim_card_number-errorcustom').empty();
+	    if (mnpinitialValidation == false || legalStatus == false) {
+		 return false;
+		}
+  if(myattrValue == 'Proximus'){
+	var result_prox = simcard_proxi(value);
+	if(!result_prox){
+	 $('#current_sim_card_number-errorcustom').empty();
+	 $("#current_sim_card_number").removeClass('form-control validation_check simcard_number');
+	 $("#current_sim_card_number").addClass('form-control simcard_number mage-error');
+	 $('#current_sim_card_number-errorcustom').append($.mage.__('Current SIM card number and operator not matched.'));
+	 $('#current_sim_card_number-errorcustom').show();
+	return false;
+
+	}
+		else
+	{
+	$('#current_sim_card_number-errorcustom').hide();
+	}
+  }else if(myattrValue == 'Base'){
+	var result_base = simcard_base(value);
+	if(!result_base){
+	    $('#current_sim_card_number-errorcustom').show();
+	$('#current_sim_card_number-errorcustom').empty();
+	 $("#current_sim_card_number").removeClass('form-control validation_check simcard_number');
+	 $("#current_sim_card_number").addClass('form-control simcard_number mage-error');
+	 $('#current_sim_card_number-errorcustom').append($.mage.__('Current SIM card number and operator not matched.'));
+	return false;
+	}
+	else
+	{
+	$('#current_sim_card_number-error').hide();
+	}
+  }else if(myattrValue == 'Other' || myattrValue == 'Andere' || myattrValue == 'Autre' ){
+	var result_others = simcard_others(value);
+	if(!result_others){
+    $('#current_sim_card_number-errorcustom').show();
+	$('#current_sim_card_number-errorcustom').empty();
+	 $("#current_sim_card_number").removeClass('form-control validation_check simcard_number');
+	 $("#current_sim_card_number").addClass('form-control simcard_number mage-error');
+	 $('#current_sim_card_number-errorcustom').append($.mage.__('Current SIM card number and operator not matched.'));
+	return false;
+	}		else
+	{
+	$('#current_sim_card_number-errorcustom').hide();
+	}
+
+  }else if(myattrValue == 'Telenet'){
+	var result_telnet = simcar_telnet(value);
+	if(!result_telnet){
+    $('#current_sim_card_number-errorcustom').show();
+	$('#current_sim_card_number-errorcustom').empty();
+	 $("#current_sim_card_number").removeClass('form-control validation_check simcard_number');
+	 $("#current_sim_card_number").addClass('form-control simcard_number mage-error');
+	 $('#current_sim_card_number-errorcustom').append($.mage.__('Current SIM card number and operator not matched.'));
+	return false;
+	}
+	else
+	{
+	$('#current_sim_card_number-errorcustom').hide();
+	}
+  }
+
+  if(!$("#current_sim_card_number").hasClass('mage-error')){
+
+    var data = {sim_number: value,providers: myattrValue};
+
+  $.ajax({
+                        url: $("#simcard_url").val(),
+                        type: "POST",
+			            showLoader: true,
+                        data: data,
+                        success: function (result) {
+                           if (result == 'Current SIM card number and operator not matched.') {
+								$('#current_sim_card_number-errorcustom').show();
+								$('#current_sim_card_number-errorcustom').empty();
+								$("#current_sim_card_number").removeClass('form-control validation_check simcard_number');
+								$("#current_sim_card_number").addClass('form-control simcard_number mage-error');
+							$('#current_sim_card_number-errorcustom').append($.mage.__('Current SIM card number and operator not matched.'));
+
+							 return false;
+						   } else {
+							$('#current_sim_card_number-errorcustom').hide();
+							 $('#current_sim_card_number-errorcustom').empty();
+							$("#current_sim_card_number").addClass('form-control validation_check simcard_number');
+							 $("#current_sim_card_number").removeClass('mage-error');
+                        }
+                        }
+                    });
+  }
+
+});
+
+function simcard_proxi(values){
+	var ok = false;
+     var value = values.toString();
+	 var length = value.length;
+
+    if (length == '13') {
+      var A = [];
+      var som = 0;
+      var check = 100;
+
+      for(var i = 0; i < 12; i++) {
+        if (i % 2 != 0) {
+          A[i] = value.substr(i, 1) * 2;
+          if (A[i] > 9)
+            A[i] = A[i] - 9;
+        } else {
+          A[i] = value.substr(i, 1);
+        }
+         som = som + parseFloat(A[i]);
+      }
+
+      check = check - (som + 4);
+      while (check >= 10) {
+       check = check -10;
+      }
+
+      if (check == value.substr(length - 1, 1))
+        ok = true;
+    }
+
+	return ok;
+
+}
+function simcard_base(value){
+
+  var ok = false;
+  var length = value.length;
+
+  if (length == 13 ||length == 19) {
+    var validat_digit = value.substr(value, -1); // dernier chiffre
+  if(length == 19){
+      var serieNummer = value.substr(value, 6, -1); // du 7? caract?re jusqu'a l'avant dernier
+    }else{
+      var serieNummer = value.substr(value, 0, -1); // allowing 13 digit number as well
+    }
+    var totalsom = 0;
+    var pos = 0;
+    var temp = 0;
+    var fois2 = 0;
+    var ln_marque = 0;
+    var ln_nomarque = 0;
+    for (var i = 0; i < serieNummer.length; i++) {
+      pos = pos + 1;
+      temp = serieNummer.substr(serieNummer, i, 1);
+      ln_nomarque = ln_nomarque + temp;
+      if (pos % 2 == 0) {
+        fois2 = temp * 2;
+        if (fois2 >= 10) {
+          ln_marque = ln_marque + 1 + fois2 -10;
+        } else {
+          ln_marque = ln_marque + fois2;
+        }
+      } else {
+        ln_marque = ln_marque + temp;
+      }
+    }
+
+    mod_10 = (ln_marque % 10);
+    if (mod_10 == 0) {
+      mod_10 = 10;
+    }
+
+    if (10 - mod_10 == validat_digit) {
+      ok = true;
+    }
+  }
+
+  return ok;
+
+}
+function simcard_others(value){
+var ok = false;
+var value1 = false;
+var value2 = false;
+var value3 = false;
+
+value1 = simcar_telnet(value);
+value2 = simcard_base(value);
+value3 = simcard_proxi(value);
+if(value1 == true || value2 == true|| value3 == true){
+	ok = true;
+	}
+
+return ok;
+
+}
+
+function simcar_telnet(value){
+  var length = value.length;
+  var ok = false;
+
+  if(length != 19) ok = false; else ok = true;
+  if ((((parseInt)(value / 10000000000000)) == 894101) || (((parseInt)(value / 10000000000000)) == 893207)) ok = true;
+  else ok = false;
+
+  return ok;
+}
+
+ $(".validation_check_dropdown").on("change", function() {
+	 $("#current_sim_card_number").val('');
+	 $("#current_mobile_phone_number").val('');
+});
+
+$.validator.addMethod(
+'custom-required', function (value) {
+return !$.mage.isEmpty(value);
+ }, $.mage.__('This is a required fields.'));
+
+$.validator.addMethod(
+'custom-operator-required', function (value) {
+return !$.mage.isEmpty(value);
+ }, $.mage.__('Veuillez sélectionner une des options.'));
+
+
+ $.validator.addMethod(
+'min-lenth-validation', function (value) {
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 2) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter at least 2 characters.'));
+
+ $.validator.addMethod(
+'min-lenth-validation-three', function (value) {
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 3) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter at least 3 characters.'));
+
+$.validator.addMethod(
+'min-lenth-validation-newmessage', function (value) {
+    var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+    if (replacedValue.length < 3) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter at least 3 characters newmessage.'));
+
+$.validator.addMethod(
+'first-name', function (value) {
+ var fname = parseInt(value.length);
+ var lname = parseInt($('#lastname').val().length);
+ var count = fname + lname;
+    if (count > 35) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+$.validator.addMethod(
+'last-name', function (value) {
+ var fname = parseInt($('#firstname').val().length);
+ var lname = parseInt(value.length);
+ var count = fname + lname;
+    if (count > 35) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+$.validator.addMethod(
+'holders-name', function (value) {
+ var fname = parseInt(value.length);
+ var lname = parseInt($('#holder_name').val().length);
+ var count = fname + lname;
+    if (count > 35) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+$.validator.addMethod(
+'holder-name', function (value) {
+ var lname = parseInt(value.length);
+ var fname = parseInt($('#holders_name').val().length);
+ var count = fname + lname;
+    if (count > 35) {
+		return false;
+	}
+return true;
+}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+$.validator.addMethod(
+'validate-novalidation', function (value) {
+ return /^[ <?php echo $specialCharacter; ?>]*$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+
+ $.validator.addMethod(
+'validate-new-email', function (value) {
+   return $.mage.isEmptyNoTrim(value) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test($.trim(value));
+}, $.mage.__('Please enters a valid email address (Ex: johndoe@domain.com).'));
+
+$.validator.addMethod(
+'validate-new-alphanum', function (value) {
+   return $.mage.isEmptyNoTrim(value) || /^[a-zA-Z0-9]+$/.test(value);
+}, $.mage.__('Please use only letter (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed.'));
+
+$('#edit-vatnumber').mask("BE00000000000000000000000000000000000000000000000000",{placeholder:""});
+$.validator.addMethod(
+'vat-number-validation', function (value) {
+	var data = {vat_number: value};
+   	if (value.length > 50) {
+		return false;
+	}
+	$('#vaterror').html('');
+	return true;
+}, $.mage.__('Veuillez introduire un n° de TVA valide.'));
+
+$("#edit-vatnumber").on("blur", function() {
+    $('form#mnp-form').validation();
+    var vat_number_validation = $.validator.validateElement($("#edit-vatnumber"));
+	if (vat_number_validation == false) {
+		$('#vaterror').html('');
+	}
+    if($(this).val() && vat_number_validation == true)
+    {
+	    var data = {vat_number: $(this).val()};
+		$.ajax({
+			url: $("#vatnumber_url").val(),
+			type: "POST",
+			showLoader: true,
+			data: data,
+			success: function (result) {
+			   if(result == 'Key not valid or not exist') {
+					$('#vaterror').html('<?php echo __("Veuillez introduire un n° de TVA valide.")?>');
+					$('#edit-vatnumber').addClass('mage-error');
+
+			   } else {
+					$('#vaterror').html('');
+					$('#edit-vatnumber').removeClass('mage-error');
+			   }
+			},
+			statusCode: {
+			    503: function(xhr) {
+			    	$('#vaterror').html('<?php echo __("Veuillez introduire un n° de TVA valide.")?>');
+					$('#edit-vatnumber').addClass('mage-error');
+			    }
+			}
+	   	});
+    }
+});
+$(document).on("click", "#mnpform", function (e) {
+	$(mnpform).validation();
+        $('body').loader('show');
+	var first_name              = $.validator.validateElement($("#firstname"));
+	var last_name               = $.validator.validateElement($("#lastname"));
+	var email                   = $.validator.validateElement($("#email"));
+	var legal_status            = $.validator.validateElement($("#legal_status"));
+	var current_mobile_phone_number = $.validator.validateElement($("#current_mobile_phone_number"));
+	var current_sim_card_number   = $.validator.validateElement($("#current_sim_card_number"));
+	var orange_mobile_phone_number  = $.validator.validateElement($("#orange_mobile_phone_number"));
+	var network_customer_number = '';
+	var holders_name = '';
+	var holder_name = '';
+	if ($("input:radio[name='card_type']:radio:checked").val() == '1') {
+		network_customer_number   = $.validator.validateElement($("#network_customer_number"));
+		if ($("input:radio[name='bill_in_name']:radio:checked").val() == '1') {
+			holders_name = true;
+			holder_name = true;
+		} else {
+			 holders_name             = $.validator.validateElement($("#holders_name"));
+			 holder_name             = $.validator.validateElement($("#holder_name"));
+		}
+	} else {
+		network_customer_number = true;
+		holders_name = true;
+		holder_name = true;
+	}
+	var sim_card_number_orange  = $.validator.validateElement($("#sim_card_number_orange"));
+   	var ecurrent_sim_card_number_error = $("#current_sim_card_number-errorcustom").text();
+   	var vaterror = true;
+   	if($("#vaterror").html()) {
+   		vaterror = false;
+   	}
+   	if(ecurrent_sim_card_number_error.trim() != "" )
+   	{
+   		$("#current_sim_card_number-errorcustom").show();
+   	}
+	if(ecurrent_sim_card_number_error.trim() != "" || vaterror == false || first_name == false || network_customer_number == false || holders_name == false || holder_name == false || current_mobile_phone_number ==false || sim_card_number_orange == false || orange_mobile_phone_number == false    || last_name == false || email == false || legal_status == false || current_mobile_phone_number == false )
+	{
+		$("html, body").animate({ scrollTop: 0 }, 600);
+		$('.step-mage-error').show();
+                $('body').loader('hide');
+		return false;
+	}
+	else
+	{
+	 	$('.step-mage-error').hide();
+		$( "#mnp-form" ).submit();
+	}
+});
+	$(".validation_check").blur( function(){
+		var firstname = $("#firstname").val();
+		var lastname = $("#lastname").val();
+		var holders_name = $("#holders_name").val();
+		var holder_name = $("#holder_name").val();
+		var id = "#"+this.id;
+        $(mnpform).validation();
+		if(id == "#firstname" && firstname !='' && lastname !='') {
+			$.validator.validateElement($("#lastname"));
+			$.validator.validateElement($("#firstname"));
+		} else if(id == "#lastname" && firstname !='' && lastname !='') {
+			$.validator.validateElement($("#lastname"));
+			$.validator.validateElement($("#firstname"));
+		} else if(id == "#holders_name" && holders_name !='' && holder_name !='') {
+			$.validator.validateElement($("#holder_name"));
+			$.validator.validateElement($("#holders_name"));
+		} else if(id == "#holder_name" && holders_name !='' && holder_name !='') {
+			$.validator.validateElement($("#holder_name"));
+			$.validator.validateElement($("#holders_name"));
+		} else {
+			$.validator.validateElement($(id));
+		}
+	});
+
+	$(".card_type").on('click', function () {
+
+		if (this.value == '1') {
+			$("#bill_invoice_div").show();
+			$("#customer_number_div").show();
+			$("#holders_name_div").removeClass("disable_div");
+			$('#network_customer_number').attr("data-validate", "{'custom-required':true,'min-lenth-validation-newmessage':true}");
+			$('#holder_name').attr("data-validate", "{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holder-name':true}");
+			$('#holders_name').attr("data-validate", "{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holders-name':true}");
+			if ($("input:radio[name='bill_in_name']:radio:checked").val() == '1') {
+				$("#holders_name_div").addClass("disable_div");
+				$('#holder_name').removeAttr("data-validate");
+				$('#holders_name').removeAttr("data-validate");
+				$('#holder_name').val("");
+				$('#holders_name').val("");
+				$('#holders_name').removeClass("mage-error");
+				$('#holders_name-error').hide();
+				$('#holder_name').removeClass("mage-error");
+				$('#holder_name-error').hide();
+			} else {
+				$("#holders_name_div").removeClass("disable_div");
+				$('#holder_name').attr("data-validate", "{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holder-name':true}");
+				$('#holders_name').attr("data-validate", "{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holders-name':true}");
+			}
+		} else {
+			$("#bill_invoice_div").hide();
+			$("#customer_number_div").hide();
+			$('#network_customer_number').removeAttr("data-validate");
+			$("#holders_name_div").addClass("disable_div");
+			$('#holder_name').removeAttr("data-validate");
+			$('#holders_name').removeAttr("data-validate");
+			$('#network_customer_number').val("");
+			$('#holder_name').val("");
+			$('#holders_name').val("");
+			$('#holders_name').removeClass("mage-error");
+            $('#holders_name-error').hide();
+			$('#holder_name').removeClass("mage-error");
+            $('#holder_name-error').hide();
+			$('#network_customer_number').removeClass("mage-error");
+            $('#network_customer_number-error').hide();
+		}
+    });
+	$(".bill_in_name").on('click', function () {
+		if (this.value == '1') {
+			$("#holders_name_div").addClass("disable_div");
+			$('#holder_name').removeAttr("data-validate");
+			$('#holders_name').removeAttr("data-validate");
+			$('#holder_name').val("");
+			$('#holders_name').val("");
+			$('#holders_name').removeClass("mage-error");
+            $('#holders_name-error').hide();
+			$('#holder_name').removeClass("mage-error");
+            $('#holder_name-error').hide();
+		} else {
+			$("#holders_name_div").removeClass("disable_div");
+			$('#holder_name').attr("data-validate", "{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holder-name':true}");
+			$('#holders_name').attr("data-validate", "{'custom-required':true, 'validate-novalidation':true,'min-lenth-validation':true,'holders-name':true}");
+		}
+	});
+
+
+//]]>
+
+});
+</script>
+
+

@@ -1,0 +1,170 @@
+<?php
+$tempSession    =  $block->getCheckoutTempSession();
+
+	if(isset($tempSession ))
+    {
+		$previousStep = $tempSession['step'];
+		
+		$step1DivClass = "";
+		$step2DivClass = "disable_div";
+		$step3DivClass = "disable_div";
+		$step1TabClass = "first active";
+		$step2TabClass = "";
+		$step3TabClass = "last";
+		$stepvalue = 'step2';
+		
+		if(!isset($previousStep))
+		{
+			$step1DivClass = "";
+			$step2DivClass = "disable_div";
+			$step3DivClass = "disable_div";
+			$step1TabClass = "first active";
+			$step2TabClass = "";
+			$step3TabClass = "last";
+			$stepvalue = 'step2';
+		}  
+		else if($previousStep == 'step2')
+		{
+			$step1DivClass = "disable_div";
+			$step2DivClass = "";
+			$step3DivClass = "disable_div";
+			$step1TabClass = "first done";
+			$step2TabClass = "active";
+			$step3TabClass = "last"; 
+			$stepvalue = 'step3';
+		}
+		else if($previousStep == 'step3')
+		{
+			$step1DivClass = "disable_div";
+			$step2DivClass = "disable_div";
+			$step3DivClass = "";
+			$step1TabClass = "first done";
+			$step2TabClass = "done";
+			$step3TabClass = "last active";
+			$stepvalue = 'final';
+		}
+	}
+	else
+	{
+		$step1DivClass = "";  
+		$step2DivClass = "disable_div";
+		$step3DivClass = "disable_div";
+		$step1TabClass = "first active";
+		$step2TabClass = "";
+		$step3TabClass = "last";
+	}
+?>
+<div class="main-container">
+
+	<form enctype="multipart/form-data" action="<?php echo $block->getFormAction(); ?>" method="post" id="checkout_form" >
+	
+	<input type="hidden" name="step" id="step" value="<?php if(isset($stepvalue)) { echo $stepvalue; }?>">
+	<input type="hidden" name="session_url" id="session_url" value="<?php echo $this->getUrl('checkout/index/session') ;?>">
+	<input type="hidden" name="number_url" id="number_url" value="	<?php echo $this->getUrl('numbervalidation/index/index') ;?>">
+	<div class="container">
+	
+		<div class="row">
+			<div class="col-xs-12 col-sm-8">
+				<h1><?php echo __('Votre commande') ?></h1>
+			</div>
+			<div class="col-xs-12 col-sm-4 padding-xs-t-n padding-sm-t-m">
+				<a href="<?php echo $block->getCartUrl(); ?>" class="orange pull-right mobile-realign margin-xs-t-n margin-sm-t-l"><i class="oi oi-caddy"></i><?php echo __('Voir votre panier') ?> </a>
+			</div>
+			<div class="col-xs-12">
+				<div class="row item-list">
+					<div class="col-xs-4 padding-xs-h-n item-step">
+						<div class="<?php if(isset($step1TabClass)) {  echo $step1TabClass; } ?>" id="step1_tab">1.<span class="hidden-xs"> <?php echo __('Numéro') ?></span></div>
+					</div>
+					<div class="col-xs-4 padding-xs-h-n item-step">
+						<div class="<?php if(isset($step2TabClass)) { echo $step2TabClass; } ?>" id="step2_tab">2.<span class="hidden-xs"> <?php echo __('Informations') ?></span></div>
+					</div>
+					<div class="col-xs-4 padding-xs-h-n item-step">
+						<div class="<?php if(isset($step3TabClass)) { echo $step3TabClass; } ?>" id="step3_tab">3.<span class="hidden-xs"> <?php echo __('Paiement') ?></span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php 
+			echo $block->getChildHtml('checkout.number', true);
+			echo $block->getChildHtml('checkout.information', true);
+			echo $block->getChildHtml('checkout.payment', true);
+		?>
+	</div>
+	</form>
+	</div>
+	<script type="text/javascript">
+require(['jquery',
+      'mage/template',
+	  'mage/mage',
+	  'js/dropdown'	,
+	  'jquery/validate',
+      'jquery/ui',
+      'mage/translate',
+	  'mage/validation',
+	  'js/tooltipform',
+	  'js/checkout_new'], function ($) {
+	  //<![CDATA[	
+///Street Number Validation
+$.validator.addMethod(
+'validate-streetnumber', function (value) { 
+return  /^[0-9][A-Za-z0-9-@./#&+\w\s]+$/.test(value);// Validation logic here
+}, $.mage.__('Please use Proper Street Number.'));
+
+/////////////////////////
+///Date Validation
+$.validator.addMethod(
+'validate-dateday', function (value) { 
+if(value > 31 || value == 0)
+{
+return false;
+}
+else
+{
+return  true;// Validation logic here
+}
+// Validation logic here
+}, $.mage.__('Invalid Date'));
+
+/////////////////////////
+///Month Validation
+$.validator.addMethod(
+'validate-datemonth', function (value) { 
+if(value > 12 || value == 0 )
+{
+return false;
+}
+else
+{
+return  true;// Validation logic here
+}
+// Validation logic here
+}, $.mage.__('Invalid Month'));
+
+/////////////////////////
+///Month Validation
+$.validator.addMethod(
+'validate-dateyear', function (value) { 
+if((value.length < 4))
+{
+return false;
+}
+else
+{
+return  true;// Validation logic here
+}
+// Validation logic here
+}, $.mage.__('Invalid year.Type Year as YYYY'));
+
+/////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////		
+		$('[data-toggle="tooltip"]').tooltip();
+		$('.content-collapsable h4').click(function () {
+			$(this).toggleClass('open');
+			$(this).next().slideToggle().toggleClass('closed');
+		});
+	
+//]]>
+ 
+});
+</script>
+

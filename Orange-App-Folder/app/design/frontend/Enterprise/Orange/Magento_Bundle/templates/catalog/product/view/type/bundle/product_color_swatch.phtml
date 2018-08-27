@@ -1,0 +1,12 @@
+<?php
+$availableColors = $this->getBundledAvailableColors();
+if (count($availableColors)) {
+    ?>
+    <p class="color_para"><?php echo __('Couleurs disponibles'); ?></p>
+
+    <?php foreach ($availableColors as $availalblecolor): ?>    
+        <a href="<?php echo $availalblecolor['bundled_product_url']; ?>" class="colour-circle <?php echo strtolower($availalblecolor['color']); ?>"></a>&nbsp;
+        <?php
+    endforeach;
+}
+?>

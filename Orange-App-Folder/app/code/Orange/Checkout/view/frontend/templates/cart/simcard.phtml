@@ -1,0 +1,350 @@
+<?php
+$om =   \Magento\Framework\App\ObjectManager::getInstance();
+?>
+<div class="main-container">
+	<section>
+		<div class="container">
+			<h1><?php echo __('Commander votre') ?><br><?php echo __('carte SIM prépayée') ?></h1>	
+			<div class="well-grey margin-xs-v-l">
+				<div class="row">
+					<div class="col-xs-12 margin-xs-b-m">
+						<h3><?php echo __('Je commande gratuitement') ?></h3>
+					</div>
+					<div class="col-xs-12 col-sm-7">
+					<?php $quoteitems = $block->getQuoteItems(); ?>
+					<?php foreach ($quoteitems as $item) : ?>
+						<?php $_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+							$product = $item->getProduct();
+							$img = $_imagehelper->init($product,'category_page_list',array('height' => '80' , 'width'=> '80'))->getUrl();
+						?>
+						<h2 class="margin-xs-t-n"><img src="<?php echo $img; ?>" /><?php echo intval($item->getQty()); ?> <span class="inside-text"><?php echo $item->getName(); ?></span></h2>
+					<?php endforeach;?>
+					</div>
+					<div class="col-xs-12 col-sm-5">
+						<ul class="checked-list">
+							<li><?php echo __('Vous conservez votre numéro actuel') ?></li>
+							<li><?php echo __('Livraison en 2 jours') ?></li>
+						</ul>
+					</div>
+				</div>				
+			</div>
+
+			<h3><?php echo __('Complètez ces données pour valider votre commande') ?></h3>
+			<form enctype="multipart/form-data" action="<?php echo $block->getFormAction(); ?>" method="post" id="simcard-order" data-mage-init='{"validation":{}}'  data-hasrequired="<?php echo __('* Required Fields') ?>" class="margin-xs-v-l">
+
+				<div class="row form-line">
+					<div class="col-xs-12">
+						<label class="" for="edit-submitted-test-checkbox-1"><input type="checkbox" id="edit-submitted-test-checkbox-1" name="existing_number" class="form-checkbox"><?php echo __('Je désire conserver mon numéro actuel de mon provider') ?></label>
+					</div>
+				</div>
+				<h3><?php echo __('Vos données personnelles') ?></h3>
+
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="" for="edit-gender"><?php echo __('Titre') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9">												
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-gender-mr"><input type="radio" id="edit-gender-mr" name="gender" value="<?php echo __('Mr') ?>" checked class="form-radio"><?php echo __('Mr.') ?> </label>
+						</div>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-gender-mme"><input type="radio" id="edit-gender-mme" name="gender" value="<?php echo __('Mme') ?>" class="form-radio"><?php echo __('Mme.') ?> </label>
+						</div>
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-first-name"><?php echo __('Prénom') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control validate-alpha required" type="text" id="edit-first-name" name="first_name" value="" size="60" maxlength="35">
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-name"><?php echo __('Nom') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control validate-alpha required" type="text" id="edit-name" name="name" value="" size="60" maxlength="35">
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-email"><?php echo __('Email') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control validate-email required" type="text" id="edit-email" name="email" value="" size="60" maxlength="50">
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-date">	<?php echo __('Date de naissance') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span>  </label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control required" type="text" id="c_dob" name="c_dob" readonly value="" size="60" maxlength="20">
+
+					</div>	
+		
+					</div>
+
+			<h3><?php echo __('Adresse de livraison') ?></h3>
+
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-postcode"><?php echo __('Code postal') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control validate-zip required" type="text" id="edit-postcode" name="postcode" value="" size="60" maxlength="10">						
+						<span id="zip_validation" style="color:#e02b27; font-size: 1.2rem;"></span>
+					</div>					
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-city"><?php echo __('Ville') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control required" type="text" id="edit-city" name="city" value="" size="60" maxlength="128">
+						<span id="city_validation"  style="color:#e02b27; font-size: 1.2rem;"></span>
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-street"><?php echo __('Rue') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control required" type="text" id="edit-street" name="street" value="" size="60" maxlength="128">
+						<span id="street_validation" style="color:#e02b27; font-size: 1.2rem;"></span>
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-number"><?php echo __('Numéro') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control validate-number required" type="text" id="edit-number" name="number" value="" size="60" maxlength="10">
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-box"><?php echo __('Boîte') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control required" type="text" id="edit-box" name="box" value="" size="60" maxlength="20">
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-3">
+						<label class="label-name" for="edit-country"><?php echo __('Pays: Belgique') ?> <span class="form-required" title="<?php echo __('Ce champ est requis.') ?>">*</span></label>
+					</div>
+					<div class="col-xs-12 col-sm-9 padding-xs-b-s padding-md-b-n">
+						<input class="form-control required" type="text" id="edit-country" name="country" value="" size="60" maxlength="50">
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-9 col-sm-offset-3 padding-xs-b-s padding-md-b-n">
+						<label class="" for="edit-submitted-test-checkbox-1"><input type="checkbox" id="edit-submitted-test-checkbox-1" name="newsletter" class="form-checkbox"><?php echo __('Voulez vous recevoir les offres intéressantes et les denières nouvelles Orange?') ?></label>
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-9 col-sm-offset-3 padding-xs-b-s padding-md-b-n">
+                                            <input type="checkbox" id="edit-submitted-test-checkbox-1" name="terms"  class="required form-checkbox"><label class="" for="edit-submitted-test-checkbox-1"><?php echo __('J’accepte les') ?> <a href="" class="orange"><?php echo __('conditions générales de vente de Orange') ?></a></label>
+					</div>
+				</div>
+				<div class="row form-line">
+					<div class="col-xs-12 col-sm-9 col-sm-offset-3 padding-xs-b-s padding-md-b-n">
+						<button class="btn-primary btn form-submit margin-xs-t-s" type="submit" id="edit-submit" name="op" value="submit"><?php echo __('Valider ma commande') ?></button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</section>
+</div>
+
+<script type="text/x-magento-init">
+    {
+    "#simcard-order": { "validation": {}
+    }
+    }
+</script>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "mage/mage",
+        "mage/validation"
+    ], function($) {
+        var city = [];
+        var zipcodeS = [];
+        var streetWeb = [];
+        var zipcodeWeb = [];
+        var cityName = [];
+        $(document).ready(function() {
+            $("#edit-postcode").blur(function() {
+                zipcodeWeb.splice(0, zipcodeWeb.length);
+                streetWeb.splice(0, streetWeb.length);
+                var zipcode = $("#edit-postcode").val();
+                if (zipcode.length != 0) {
+                    data = new Array();
+                    $.ajax({
+                        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+                        type: "POST",
+                        data: "zipcode=" + zipcode,
+                        success: function(result) {
+                            var data = $.parseJSON(result);
+                            var obj = $.parseJSON(result);
+                            for (var prop in obj) {
+                                city.push(prop);
+                                $.each(obj[prop], function(key, val) {
+                                    zipcodeS.push(val[0]);
+                                    cityName.push(val[1]);
+                                });
+                            }
+                            var temp = $.unique((cityName));
+                            zipcodeWeb = $.unique(zipcodeS);
+                 /*            $("#edit-postcode").autocomplete({
+                                source: zipcodeWeb
+                            }); */
+                        },
+                        complete: function() {
+                            if (zipcodeWeb.indexOf($("#edit-postcode").val()) == -1) {
+                                jQuery("#zip_validation").text("Zipcode doesn't exist");
+								jQuery("#edit-postcode-error").hide();
+								$("#simcard-order").submit(function(e) {
+                                    e.preventDefault();
+                                });
+                            } else {
+                                jQuery("#zip_validation").text(" ");
+                            }
+                        }
+                    });
+                }
+            });
+       /*      $("#edit-city").autocomplete({
+                source: cityName
+            }); */
+            $("#edit-city").blur(function() {
+			 var cityValue = $("#edit-city").val();
+			  if (cityValue.length != 0) {
+                if (cityName.indexOf($("#edit-city").val()) == -1) {
+                    jQuery("#city_validation").text("City does not exist");
+					jQuery("#edit-city-error").hide();
+                    $("#simcard-order").submit(function(e) {
+                        e.preventDefault();
+                    });
+                } else {
+                    jQuery("#city_validation").text(" ");
+                }
+				}
+            });
+            $("#edit-street").blur(function() {
+                var streetName = [];
+                var zipcode = $("#edit-postcode").val();
+                var street = $("#edit-street").val();
+                if (zipcode.length != 0) {
+					if (street.length != 0) {
+                    streetName.splice(0, streetName.length);
+                    data = new Array();
+                    $.ajax({
+                        url: "<?php echo $this->getUrl('road/roadsixtyfive/roadsixtyfive'); ?>",
+                        type: "POST",
+                        data: "zipcode=" + zipcode + "&street=" + street,
+                        success: function(result) {
+                            var data = $.parseJSON(result);
+                            var obj = $.parseJSON(result);
+                            for (var prop in obj) {
+                                city.push(prop);
+                                $.each(obj[prop], function(key, val) {
+                                    streetName.push(val[1]);
+                                });
+                            }
+                            streetWeb = streetName;
+                            var temp = $.unique((streetName));
+                      /*       $("#edit-street").autocomplete({
+                                source: streetWeb
+                            }); */
+                        },
+                        complete: function() {
+                            jQuery("#street_validation").text('');
+                            if (streetWeb.indexOf($("#edit-street").val()) == -1) {
+                                jQuery("#street_validation").text("Street doesn't exist");
+								jQuery("#edit-street-error").hide();
+                                $("#simcard-order").submit(function(e) {
+                                    e.preventDefault();
+                                });
+                            } else {
+                                jQuery("#street_validation").text(" ");
+                            }                           
+                        }
+                    });
+					}
+                }
+            });
+            $("#edit-submit").click(function() {   
+
+                  if($("#edit-postcode").val() == "")
+                 {
+                 $("#zip_validation").text('');
+                 }	
+                       if($("#edit-city").val() == "")
+                 {
+                    $("#city_validation").text('');
+                 }
+                 if($("#edit-street").val() == "")
+                 {
+                    $("#street_validation").text('');
+                 }				 
+                if (zipcodeWeb.indexOf($("#edit-postcode").val()) != -1) {                    
+                    if (cityName.indexOf($("#edit-city").val()) != -1) {                        
+                        if (streetWeb.indexOf($("#edit-street").val()) != -1) {                            
+							if ($('#simcard-order').valid()) {
+                            $("#simcard-order").unbind('submit').submit();
+							}                            
+                        }
+                    }
+                }
+            });
+        });
+		var MAGE_STORE_ID = '<?php echo $om->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getCode();?>';
+	if (MAGE_STORE_ID == 'nl') {
+                               var url='https://www.orange.be/nl/algemene-voorwaarden';
+							   var store_url='https://e-services.business.orange.be/medias/conditions/nl/Herroepingsrecht_NL.pdf';                    
+                    } else {					
+                         var url='https://www.orange.be/fr/conditions-generales';
+						 var store_url='https://e-services.business.orange.be/medias/conditions/fr/Retractation_FR.pdf';
+                   
+                    }					
+					console.log(url);
+					$('#orange-conditions').attr('href',url);
+					$('#orange-condition').attr('href',store_url); 
+    });
+</script>
+<script>
+require([
+    'jquery',
+    'mage/translate'
+], function ($) {
+    $(window).load(function () {
+        var translates = <?php echo \Zend_Json::encode(
+            array(
+                'This is a required field.' => __('This is a required field.'),
+            )
+        )?>;
+        $.mage.translate.add(translates);
+    });
+});
+</script>
+<script type="text/javascript">
+require(['jquery',
+      'mage/template',
+	  'mage/mage',
+      'jquery/ui',
+	  'mage/validation',
+	   'js/calender-ui'], function ($) {
+	  //<![CDATA[	
+/*Date Picker**/
+$( "#c_dob" ).datepicker({  maxDate: new Date,yearRange: "-100:+0",changeMonth: true,
+changeYear: true   });
+
+ 
+});
+</script>

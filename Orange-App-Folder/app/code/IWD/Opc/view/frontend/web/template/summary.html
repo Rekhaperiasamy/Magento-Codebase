@@ -1,0 +1,19 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="iwd-opc-block-summary opc-block-summary" data-bind="blockLoader: isLoading">
+    <span data-bind="i18n: 'Review Your Order'" class="title iwd-summary-title"></span>
+    <ol class="iwd-minicart-items-header">
+        <li class="iwd-product-items-title">
+            <div class="product-header-name"><span class="prod-name">PRODUCT NAME</span></div>
+            <div class="product-header-qty"><span class="prod-qty">QTY</span></div>
+            <div class="product-header-price"><span class="prod-subtotal">SUBTOTAL</span></div>
+        </li>
+    </ol>
+    <!-- ko foreach: elems() -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>

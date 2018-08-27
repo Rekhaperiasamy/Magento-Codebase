@@ -1,0 +1,59 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="icon-head head-tax-rate-importExport">
+                    <?php echo __('Important Notes') ?>
+                </h3>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="importnote">
+<!--    <div class="importnotehead">
+        <h2></h2>
+    </div>-->
+    <div class="importnotebody">
+        This Modules uses MaxMind Country IP Database For GeoIP Information. MaxMind is very relaible and updates 
+        its database every month. You can download the latest database from <strong><a href="http://geolite.maxmind.com/download/geoip/database/" target="_BLANK">here</a></strong> or copy the below URL into your browser<br/>
+        <b><code>http://geolite.maxmind.com/download/geoip/database/</code></b> <br/><br/>
+        Download the file <b><code>GeoIPCountryCSV.zip (file size: 2.1M approx)</code></b> and extract it to the <b><code>/pub/media/geoipultimatelock</code></b> folder inside magento. 
+        <br/><br/>
+        Make sure that the file is named as <b><code>GeoIPCountryWhois.csv<code></b> and <b><code>777</code></b> rights are given to the media folder.
+        <br/>
+    </div>
+</div>
+<div class="entry-edit">
+    <div class="box-left">
+        <form id="updateform" action="<?php echo $this->getFormAction() ?>" method="post" enctype="multipart/form-data">
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="entry-edit-head">
+                <!--<h4 class="icon-head head-edit-form fieldset-legend"><?php //echo __('Update GeoIP Database') ?></h4>-->
+            </div>
+            <div class="clear"></div>
+             <br/>
+            <fieldset>
+                <legend><?php echo __('Update GeoIP Database') ?></legend>
+                <input type="hidden" name="import_file" value=""/>
+                <?php echo $this->getButtonHtml('Import Database', "startImport()") ?>
+                <div id="show-spinner" style="display:none;"><img src="<?php echo $this->getViewFileUrl('FME_Geoipultimatelock::images/ajax-loader.gif');?>"/></div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="clear"></div>
+        <br/>
+    <b>Note:</b> Importing will erase the previous import record and new record will be imported. This operation will take time to complete.
+</div>
+<script type='text/javascript'>
+    function startImport() {
+
+        require(["jquery","jquery/ui"], function($){
+
+            var buttonId = $("#<?php echo $block->getHtmlId() ?>");
+            var formAction = "<?php echo $this->getFormAction() ?>";
+            var spinner = $("#show-spinner");
+
+            buttonId.prop("disabled", true);
+            $("#updateform").submit();
+        });
+    }
+</script>

@@ -1,0 +1,82 @@
+/*** Marketing description styles ***/
+/* USPs boxes on top*/
+.usps{
+  margin: 0 0 30px 0;
+}
+.usps .inner{
+  background: #eee;
+  color: #000;  
+  padding: 20px;
+}
+.usps .inner h3{
+  margin-top: 0 !important;
+  margin-bottom: 15px !important;
+  padding: 0 0 0 40px;
+}
+.usps .inner ul{
+  position: relative;
+}
+.usps .inner ul li{
+  list-style-type: none;
+}
+/* USPs good */
+.usp-positive{
+    padding-left: 0 !important;
+}
+.usp-positive h3{
+  background: url("https://www.orange.be/sites/b2c/files/usp-plus.png") center left no-repeat;
+  background-size: 28px 28px;
+}
+.usp-positive li:before{
+  font-family: "orange-icons";
+  content: "\f1ef";
+  position: absolute;
+  left: 16px;
+  font-size: 14px;
+  color: #ff7900;
+}
+/* USPs bad */
+.usp-negative{
+  padding-right: 0 !important;
+}
+.usp-negative h3{
+  background: url("https://www.orange.be/sites/b2c/files/usp-minus.png") center left no-repeat;
+  background-size: 28px 28px;
+}
+.usp-negative li:before{
+  font-family: "orange-icons";
+  content: "\f147";
+  position: absolute;
+  left: 16px;
+  font-size: 14px;
+  color: #ff7900;
+}
+/* Images alignemt */
+.image-left{
+  float: left;
+  margin: 0 15px 15px 0;
+}
+.image-right{
+  float: right;
+  margin: 15px 0 15px 15px;
+}
+/*** Mobile optimisation ***/
+@media only screen and (max-width : 736px) { 
+  .image-right, 
+  .image-left{ 
+    display: none !important; 
+  }
+  .usp-positive{
+    padding-right: 0px !important;
+  }
+   .usp-negative{
+    padding-left: 0px !important;
+  }
+}
+
+@media only screen and (min-device-width : 736px){
+	.usps .inner{
+		min-height: 260px;
+	}
+}
+

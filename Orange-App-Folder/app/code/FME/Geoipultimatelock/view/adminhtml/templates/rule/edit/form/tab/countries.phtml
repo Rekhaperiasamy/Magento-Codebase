@@ -1,0 +1,823 @@
+<?php
+/**
+ * Geoip Default Language Currency extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   FME
+ * @package    Geoipultimatelock
+ * @author     FME <support@fmeextensions.com>
+ * @copyright  Copyright 2016 © fmeextensions.com All right reserved
+ */
+?>
+<?php 
+$id = $this->getRequest()->getParam('geoipultimatelock_id'); 
+$helper = $this->getHelper();
+
+$flagWidth = 'width = "25px" height="15px"';
+//get Countries names from cc table
+$countries = $helper->getCountries();
+if (empty($countries)) {
+    echo __('Countries data is not imported yet!');exit;
+}
+//get grouped countries
+$aclcountries = [];
+if ($id != NULL) {
+    $aclcountries = $helper->getGroupedCountries($id); 
+}
+
+$flagsUrl = $this->getViewFileUrl('FME_Geoipultimatelock::images/geoipflags') . '/';
+?>
+
+
+
+<?php
+$main_i = 0;
+foreach ($countries as $country) {
+
+    //finds the continent of a country and place it in its continent array.        
+    if ($helper->getcontinent($country["cn"]) == 1) {
+        $africa[] = $country["cn"];
+        $africacc[] = $country["cc"];
+    } else if ($helper->getcontinent($country["cn"]) == 2) {
+        $asia[] = $country["cn"];
+        $asiacc[] = $country["cc"];
+    } else if ($helper->getcontinent($country["cn"]) == 3) {
+        $europe[] = $country["cn"];
+        $europecc[] = $country["cc"];
+    } else if ($helper->getcontinent($country["cn"]) == 4) {
+        $namerica[] = $country["cn"];
+        $namericacc[] = $country["cc"];
+    } else if ($helper->getcontinent($country["cn"]) == 5) {
+        $oceania[] = $country["cn"];
+        $oceaniacc[] = $country["cc"];
+    } else if ($helper->getcontinent($country["cn"]) == 6) {
+        $samerica[] = $country["cn"];
+        $samericacc[] = $country["cc"];
+    } else if ($helper->getcontinent($country["cn"]) == 7) {
+        $others[] = $country["cn"];
+        $otherscc[] = $country["cc"];
+    }
+}
+?>
+
+
+
+<div class="entry-edit">
+
+    <div id="group_fields4" class="fieldset fieldset-wide">
+        <legend class="admin__legend legend">
+            <span>Main Information</span>
+        </legend>
+        <br>
+        <div class="hor-scroll">
+            <input type="hidden" name="cnid" value="<?php echo $id ?>">
+            <span class="countrieslistlabel"><?php echo __("NOTE: Select the country or countries to restrict its visitor(s) from the selected store.") ?></span><br/>
+        </div>
+    </div>
+</div>
+
+
+<div class="test_left">
+    <ul class="accordion">
+
+        <li>
+            <div class="inp"><input id="africainp" name="countries_list[africa]" type="checkbox" <?php echo (isset($aclcountries['africa']) && sizeof($aclcountries['africa']) != 0) ? 'checked="checked"' : ''; ?> value="1"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __("AFRICA") ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($africa); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['africa'])) {
+                                foreach ($aclcountries['africa'] as $aclc) {
+
+                                    if (strcmp($aclc, $africa[$x]) == 0) {
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($africacc[$x]) . '.png'; ?>" alt="<?php echo $africa[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput africacbox" type="checkbox" name="countries_list[africa][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $africa[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $africa[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($africacc[$x]) . '.png'; ?>" alt="<?php echo $africa[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput africacbox" type="checkbox" name="countries_list[africa][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $africa[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $africa[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($africacc[$x]) . '.png'; ?>" alt="<?php echo $africa[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput africacbox" type="checkbox" name="countries_list[africa][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $africa[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $africa[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i) == sizeof($africa) && ($i) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>  
+
+
+                                <?php if (($i) == sizeof($africa) && ($i) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+
+
+
+        <li>
+            <div class="inp"><input id="asiainp" name="countries_list[asia]" type="checkbox" <?php echo (isset($aclcountries['asia']) && sizeof($aclcountries['asia']) != 0) ? 'checked="checked"' : ''; ?> value="2"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __('ASIA') ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($asia); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['asia'])) {
+                                foreach ($aclcountries['asia'] as $aclc) {
+
+                                    if (strcmp($aclc, $asia[$x]) == 0) {
+
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($asiacc[$x]) . '.png'; ?>" alt="<?php echo $asia[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput asiacbox" type="checkbox" name="countries_list[asia][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $asia[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $asia[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($asiacc[$x]) . '.png'; ?>" alt="<?php echo $asia[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput asiacbox" type="checkbox" name="countries_list[asia][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $asia[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $asia[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($asiacc[$x]) . '.png'; ?>" alt="<?php echo $asia[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput asiacbox" type="checkbox" name="countries_list[asia][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $asia[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $asia[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i) == sizeof($asia) && ($i) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>  
+
+
+                                <?php if (($i) == sizeof($asia) && ($i) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+        <li>
+            <div class="inp"><input id="europeinp" name ="countries_list[europe]" type="checkbox" <?php echo (isset($aclcountries['europe']) && sizeof($aclcountries['europe']) != 0) ? 'checked="checked"' : ''; ?> value="3"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __('EUROPE') ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($europe); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['europe'])) {
+                                foreach ($aclcountries['europe'] as $aclc) {
+
+
+                                    if (strcmp($aclc, $europe[$x]) == 0) {
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($europecc[$x]) . '.png'; ?>" alt="<?php echo $europe[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput europecbox" type="checkbox" name="countries_list[europe][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $europe[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $europe[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($europecc[$x]) . '.png'; ?>" alt="<?php echo $europe[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput europecbox" type="checkbox" name="countries_list[europe][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $europe[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $europe[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($europecc[$x]) . '.png'; ?>" alt="<?php echo $europe[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput europecbox" type="checkbox" name="countries_list[europe][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $europe[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $europe[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i) == sizeof($europe) && ($i) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>  
+
+
+                                <?php if (($i) == sizeof($europe) && ($i) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+
+
+
+
+
+
+
+        <li>
+            <div class="inp"><input id="namericainp" name="countries_list[north_america]" type="checkbox"  <?php echo (isset($aclcountries['north_america']) && sizeof($aclcountries['north_america']) != 0) ? 'checked="checked"' : ''; ?> value="4"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __('NORTH AMERICA') ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($namerica); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['north_america'])) {
+                                foreach ($aclcountries['north_america'] as $aclc) {
+
+
+                                    if (strcmp($aclc, $namerica[$x]) == 0) {
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($namericacc[$x]) . '.png'; ?>" alt="<?php echo $namerica[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput namericacbox" type="checkbox" name="countries_list[north_america][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $namerica[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $namerica[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($namericacc[$x]) . '.png'; ?>" alt="<?php echo $namerica[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput namericacbox" type="checkbox" name="countries_list[north_america][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $namerica[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $namerica[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img src="<?php echo $flagsUrl . strtolower($namericacc[$x]) . '.png'; ?>" alt="<?php echo $namerica[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput namericacbox" type="checkbox" name="countries_list[north_america][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $namerica[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $namerica[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i) == sizeof($namerica) && ($i) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                <?php endif; ?>  
+
+
+                                <?php if (($i) == sizeof($namerica) && ($i) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+
+        <li>
+            <div class="inp"><input id="oceaniainp" name="countries_list[oceania]" type="checkbox" <?php echo (isset($aclcountries['oceania']) && sizeof($aclcountries['oceania']) != 0) ? 'checked="checked"' : ''; ?> value="5"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __('OCEANIA') ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($oceania); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['oceania'])) {
+                                foreach ($aclcountries['oceania'] as $aclc) {
+
+
+                                    if (strcmp($aclc, $oceania[$x]) == 0) {
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($oceaniacc[$x]) . '.png'; ?>" alt="<?php echo $oceania[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput oceaniacbox" type="checkbox" name="countries_list[oceania][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $oceania[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $oceania[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($oceaniacc[$x]) . '.png'; ?>" alt="<?php echo $oceania[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput oceaniacbox" type="checkbox" name="countries_list[oceania][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $oceania[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $oceania[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($oceaniacc[$x]) . '.png'; ?>" alt="<?php echo $oceania[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput oceaniacbox" type="checkbox" name="countries_list[oceania][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $oceania[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $oceania[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i) == sizeof($oceania) && ($i) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>  
+
+
+                                <?php if (($i) == sizeof($oceania) && ($i) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+
+
+
+
+
+
+
+        <li>
+            <div class="inp"><input id="samericainp" name="countries_list[south_america]" type="checkbox" <?php echo (isset($aclcountries['south_america']) && sizeof($aclcountries['south_america']) != 0) ? 'checked="checked"' : ''; ?> value="6"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __('SOUTH AMERICA') ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($samerica); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['south_america'])) {
+                                foreach ($aclcountries['south_america'] as $aclc) {
+
+                                    if (strcmp($aclc, $samerica[$x]) == 0) {
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($samericacc[$x]) . '.png'; ?>" alt="<?php echo $samerica[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput samericacbox" type="checkbox" name="countries_list[south_america][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $samerica[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $samerica[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($samericacc[$x]) . '.png'; ?>" alt="<?php echo $samerica[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput samericacbox" type="checkbox" name="countries_list[south_america][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $samerica[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $samerica[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($samericacc[$x]) . '.png'; ?>" alt="<?php echo $samerica[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput samericacbox" type="checkbox" name="countries_list[south_america][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $samerica[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $samerica[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i) == sizeof($samerica) && ($i) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>  
+
+
+                                <?php if (($i) == sizeof($samerica) && ($i) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+
+        <li>
+            <div class="inp"><input id="otherinp" name="countries_list[others]" type="checkbox" <?php echo (isset($aclcountries['others']) && sizeof($aclcountries['others']) != 0) ? 'checked="checked"' : ''; ?> value="7"></div>
+            <a href="javascript:void(0)">&nbsp;&nbsp;<?php echo __('OTHERS') ?></a>
+            <div class="mapdiv">
+
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <?php $i = 0; //foreach($results as $row):     ?>
+                        <?php
+                        for ($x = 0; $x < sizeof($others); $x++) {
+                            $checked = false;
+                            if (isset($aclcountries['others'])) {
+                                foreach ($aclcountries['others'] as $aclc) {
+
+
+                                    if (strcmp($aclc, $others[$x]) == 0) {
+                                        $checked = true;
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php if (($i++) % 3 == 0): ?> 
+                                <tr>
+                                <?php endif; ?>
+                                <?php if (($i - 1) % 3 == 0): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($otherscc[$x]) . '.png'; ?>" alt="<?php echo $others[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput othercbox" type="checkbox" name="countries_list[others][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $others[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $others[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 1): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($otherscc[$x]) . '.png'; ?>" alt="<?php echo $others[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput othercbox" type="checkbox" name="countries_list[others][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $others[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $others[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+
+                                <?php if (($i - 1) % 3 == 2): ?>      
+                                    <td class="cboxflag"> <img <?php echo $flagWidth; ?> src="<?php echo $flagsUrl . strtolower($otherscc[$x]) . '.png'; ?>" alt="<?php echo $others[$x]; ?>" /></td>
+                                    <td class="cboxtd">
+                                        <input class="cboxinput othercbox" type="checkbox" name="countries_list[others][]" <?php if ($checked) echo "checked=\"checked\""; ?> value="<?php echo $others[$x]; ?>">
+                                    </td>
+                                    <td class="cboxlabel"><?php echo $others[$x]; ?></td>
+                                <?php endif; ?>    
+
+
+                                <?php if (($i - 1) == sizeof($others) && ($i - 1) % 3 == 1): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>  
+
+
+                                <?php if (($i - 1) == sizeof($others) && ($i - 1) % 3 == 2): ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php endif; ?>      
+
+
+
+
+
+                                <?php if (($i) % 3 == 0): ?>
+                                </tr>    
+                            <?php endif; ?> 
+
+
+
+
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </li>
+
+
+    </ul>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    require(["jquery", "gaccordian"], function ($) {
+
+        $(document).ready(function () {
+
+
+            $("#cabutton").live("click", checkall);
+            $("#ucabutton").live("click", uncheckall);
+
+            $("#africainp").live("click", checkafrica);
+            $("#asiainp").live("click", checkasia);
+            $("#europeinp").live("click", checkeurope);
+            $("#namericainp").live("click", checknamerica);
+            $("#oceaniainp").live("click", checkoceania);
+            $("#samericainp").live("click", checksamerica);
+            $("#otherinp").live("click", checkothers);
+
+            $(".test_left ul").accordion();
+
+        });
+
+        function checkafrica() {
+            if ($('#africainp').attr('checked'))
+                $('.africacbox').attr('checked', true);
+            else
+                $('.africacbox').attr('checked', false);
+        }
+
+
+        function checkasia() {
+            if ($('#asiainp').attr('checked'))
+                $('.asiacbox').attr('checked', true);
+            else
+                $('.asiacbox').attr('checked', false);
+        }
+
+        function checkeurope() {
+            if ($('#europeinp').attr('checked'))
+                $('.europecbox').attr('checked', true);
+            else
+                $('.europecbox').attr('checked', false);
+        }
+
+        function checknamerica() {
+            if ($('#namericainp').attr('checked'))
+                $('.namericacbox').attr('checked', true);
+            else
+                $('.namericacbox').attr('checked', false);
+        }
+
+
+        function checkoceania() {
+            if ($('#oceaniainp').attr('checked'))
+                $('.oceaniacbox').attr('checked', true);
+            else
+                $('.oceaniacbox').attr('checked', false);
+        }
+
+        function checksamerica() {
+            if ($('#samericainp').attr('checked'))
+                $('.samericacbox').attr('checked', true);
+            else
+                $('.samericacbox').attr('checked', false);
+        }
+
+        function checkothers() {
+            if ($('#otherinp').attr('checked'))
+                $('.othercbox').attr('checked', true);
+            else
+                $('.othercbox').attr('checked', false);
+        }
+
+        function checkall() {
+
+            //alert("checked");
+            $('.cboxinput').attr('checked', true);
+
+            $('#africainp').attr('checked', true);
+            $('#asiainp').attr('checked', true);
+            $('#europeinp').attr('checked', true);
+            $('#namericainp').attr('checked', true);
+            $('#oceaniainp').attr('checked', true);
+            $('#samericainp').attr('checked', true);
+            $('#otherinp').attr('checked', true);
+
+        }
+
+        function uncheckall() {
+
+
+            $('.cboxinput').attr('checked', false);
+
+            $('#africainp').attr('checked', false);
+            $('#asiainp').attr('checked', false);
+            $('#europeinp').attr('checked', false);
+            $('#namericainp').attr('checked', false);
+            $('#oceaniainp').attr('checked', false);
+            $('#samericainp').attr('checked', false);
+            $('#otherinp').attr('checked', false);
+        }
+    });
+
+
+
+</script>

@@ -1,0 +1,21 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko if: isDisplayed() -->
+<div class="totals row margin-xs-b-s">
+	<div class="col-xs-8 col-sm-12 col-md-7">
+		<!-- <span class="title" data-bind="text: title"></span> -->
+        <span class="discount coupon" data-bind="text: getCouponCode()"></span>
+	</div>	
+	<div class="col-xs-4 col-sm-12 col-md-5 text-right" data-bind="attr: {'data-th': title}">
+		 <span><span class="new-price-smaller price orange" data-bind="text: getValue()"></span></span>			
+	</div>
+</div>
+<div class="totals row margin-xs-b-s">
+	<div class="col-xs-8 col-sm-12 col-md-7" data-bind="text: getCouponDescription()">		
+	</div>
+</div>
+<!-- /ko -->

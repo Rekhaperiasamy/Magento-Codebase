@@ -1,0 +1,12 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+	<head>       
+        <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Magento_Catalog::css/p04.css"/>		
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>		
+		<script src="https:////ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script> -->
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" /> 
+    </head>
+	<referenceBlock name="content">			
+		<block class="Orange\Checkout\Block\Simcard" name="orange_checkout" template="cart/simcard.phtml" cacheable="false" />
+	</referenceBlock>      
+</page>

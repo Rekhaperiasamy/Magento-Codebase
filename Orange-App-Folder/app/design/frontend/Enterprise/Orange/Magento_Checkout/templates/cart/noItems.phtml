@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**  @var $block \Magento\Checkout\Block\Cart */
+?>
+  		
+<div class="cart-empty">
+   		<div class="container">
+			<h1><?php /* @escapeNotVerified */ echo __('Votre panier') ?></h1>	
+			<div class="row">
+				<div class="col-xs-12 col-sm-8">
+					<p class="margin-xs-t-m"><?php /* @escapeNotVerified */ echo __('Votre panier est vide.') ?></p>
+					<a class="btn btn-primary margin-xs-t-s" href="https://www.orange.be/<?php /* @escapeNotVerified */ 
+					$url_old 	=  	$block->getContinueShoppingUrl(); 
+					$url_love 	= 	explode('/',$url_old);
+					$lng 		= 	count($url_love)-2;
+					echo $url_love[$lng];
+					?>" id="url">
+				<?php /* @escapeNotVerified */ echo __('Ajouter des produits') ?></a>
+				</div>
+			</div>			
+		</div>		
+</div>

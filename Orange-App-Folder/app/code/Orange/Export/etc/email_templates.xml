@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="report_exception_email_backend" label="Report Exception" file="report_exception.html" type="html" module="Orange_Export" area="adminhtml"/>
+	<template id="report_exception_email_frontend" label="Report Exception" file="report_exception.html" type="html" module="Orange_Export" area="frontend"/>
+</config>

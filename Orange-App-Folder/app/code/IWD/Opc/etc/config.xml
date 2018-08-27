@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <iwd_opc>
+            <general>
+                <enable_in_frontend>1</enable_in_frontend>
+            </general>
+            <storecredit>
+                <is_enabled>0</is_enabled>
+                <email_template>Store Credit Update (Default)</email_template>
+                <email_identity>general</email_identity>
+                <show_history>0</show_history>
+            </storecredit>
+        </iwd_opc>
+        <carriers>
+            <iwdstorepickup>
+                <active>1</active>
+                <title>Store Pickup</title>
+                <sallowspecific>0</sallowspecific>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <model>IWD\Opc\Model\Carrier\Pickup</model>
+            </iwdstorepickup>
+        </carriers>
+    </default>
+</config>

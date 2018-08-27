@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route method="PUT" url="/V1/orange-coupon/setorangecoupon">
+		<service class="Orange\Coupon\Api\SetOrangeCouponManagementInterface" method="putSetOrangeCoupon"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/orange-coupon/getorangecoupon">
+		<service class="Orange\Coupon\Api\GetOrangeCouponManagementInterface" method="getGetOrangeCoupon"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+</routes>

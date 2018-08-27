@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+     <update handle="editor"/>
+    <body>
+	   <referenceContainer name="content">
+            <block class="Orange\Reserve\Block\Adminhtml\Blacklist\Edit" name="reserve_blacklist_edit"/>
+        </referenceContainer>
+		 <referenceContainer name="left">
+            <block class="Orange\Reserve\Block\Adminhtml\Blacklist\Edit\Tabs" name="reserve_blacklist_edit_tabs">
+				<block class="Orange\Reserve\Block\Adminhtml\Blacklist\Edit\Tab\BlackList" name="reserve_blacklist_edit_tab_blacklist"/>
+				 <action method="addTab">
+                    <argument name="name" xsi:type="string">blacklist_section</argument>
+                    <argument name="block" xsi:type="string">reserve_blacklist_edit_tab_blacklist</argument>
+                </action>
+				<!--CedAddTab-->
+			</block>
+        </referenceContainer>
+    </body>
+</page>

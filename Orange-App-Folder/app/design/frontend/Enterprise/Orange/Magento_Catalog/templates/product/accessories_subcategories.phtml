@@ -1,0 +1,301 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$deviceBlock = $block->getLayout()->createBlock('Orange\Intermediate\Block\Item');
+$deviceViewBlock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$brands = $deviceBlock->getBrands();
+$sortVal = $this->getRequest()->getParam('sort');
+$sortdirVal = $this->getRequest()->getParam('dir');
+$brandVal = $this->getRequest()->getParam('brand');
+$searchVal = $this->getRequest()->getParam('search');
+?>
+<?php echo $block->getToolbarHtml() ?>
+<?php echo $block->getAdditionalHtml() ?>
+<?php if (!$_productCollection->count()): ?>
+	<div style="background-color:#fdf0d5;"><div class="container">
+    <div class="message info empty" style="margin: 0px 0px 0px -10px;"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+	</div></div>
+<?php else: ?>
+	<section>
+		<div class="region region-content">
+			<section id="block-system-main" class="block block-system clearfix">
+				<!--<article class="node node-landing-page style-layer-style--blue clearfix">-->
+
+					<div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-n">
+						<div class="container landing-page-top">
+							<div class="field field-name-field-display-title field-type-text field-label-hidden" style="margin-top:20px;">
+								<div class="field-items">
+									<div class="field-item even">
+										<section id="block-bean-produits-et-services-quick-menu-" class="block block-bean clearfix">
+											<div class="entity entity-bean bean-quick-menu clearfix">
+												<div class="content">
+													<div class="field field-name-field-quick-menu-body field-type-text-long field-label-hidden">
+														<div class="field-items">
+															<div class="field-item even">
+																<div>
+																 <span class="quick-menu-prefix"><a href="/nl/produits-et-services">Accessoires</a> &gt;</span>
+																	<div class="dropdown">
+																		<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button"><?php echo $block->getCurrentCategory()->getName(); ?>&nbsp;<i class="oi oi-arrow_down"></i></a>
+																		<ul aria-labelledby="dropdownMenu1" class="dropdown-menu">
+																			
+																			<?php
+																			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+																			$this->_categoryFactory = $objectManager->create('\Magento\Catalog\Model\Category');
+																			$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+																			$parent_cat_id= $category->getParentCategory()->getId();
+																			$cat= $this->_categoryFactory->load($parent_cat_id);
+																			$subcats = $cat->getChildren();
+																														
+																			  foreach(explode(',',$subcats) as $subCatid)
+																			  {
+																				$_subCategory = $this->_categoryFactory->load($subCatid); ?>
+																				<li><a href="<?php echo $_subCategory->getData('url_key'); ?>"><?php echo $_subCategory->getName();?></a></li>
+																			<?php } ?>			
+																		</ul>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>  
+												</div>
+											</div>
+										</section>
+										<h1>
+											<?php echo $block->getCurrentCategory()->getName(); ?>
+										</h1>								
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				<!--</article>-->
+				<article class="node node-layer-columns layer-style--gray clearfix">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-2">
+								<span class="font-24"><?php echo __('Je filtre par') ?></span>
+							</div>
+							<div class="col-sm-3 col-md-4">
+								<input class="form-control search-device" autocomplete="off" value="<?php echo $searchVal ?>" type="hidden" name="USER" id="sso-email">
+							</div>
+							
+							<div class="col-sm-3">
+								<div class="dropdown drowpdown-full-width">
+									<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownMenu2" type="button">
+										<?php echo __('Popularité') ?>&nbsp;<i class="oi oi-arrow_down"></i>
+									</a>
+									<ul aria-labelledby="dropdownMenu2" class="dropdown-menu" id="sort-by">
+										<li><a class="sortby<?php if($sortVal == 'bestseller' && $sortdirVal == 'bestseller'):?> selected<?php endif; ?>" data-id="bestseller" data-dir="bestseller" href="javascript:void(0);">Popularité</a></li>
+										<li><a class="sortby<?php if($sortVal == 'price' && $sortdirVal == 'asc'):?> selected<?php endif; ?>" data-id="price" data-dir="asc" href="javascript:void(0);"><?php echo __('Prix croissant') ?></a></li>										
+										<li><a class="sortby<?php if($sortVal == 'price' && $sortdirVal == 'desc'):?> selected<?php endif; ?>" data-id="price" data-dir="desc" href="javascript:void(0);"><?php echo __('degressieve prijs') ?></a></li>										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>				
+				<div class="container">
+					<?php 
+						$i=0;
+						$_productCount = count($_productCollection);
+						$_productCount = $_productCount-1;
+					?>
+					<?php foreach ($_productCollection as $_product): ?>						
+						<?php if ($i % 2 == 0) :?>
+						<div class="row margin-xs-v-m product-item">
+						<div class="col-xs-12 col-sm-6">
+						<?php else : ?>
+						<div class="col-xs-12 col-sm-6">
+						<?php endif; ?>
+							<!-- Product Content -->
+							<i class="oi oi-tag"></i>&nbsp;+ abo<br>
+							<div class="media phone-item margin-xs-t-n">
+								<div class="media-left pull-left">
+									<div class="margin-xs-v-s">
+										<?php
+										$imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+											->init($_product, 'intermediate_page_image_medium')
+											->setImageFile($_product->getFile())
+											->getUrl();
+											?>
+										<img src="<?php echo $imageUrl; ?>">
+									</div>
+								</div>
+								<div class="media-body">
+									<h3 class="js-matchBoxHeight margin-xs-t-s"><?php /* @escapeNotVerified */ echo __($_product->getName()); ?></h3>
+									<!--<div class="ratings">
+										<span class="glyphicon glyphicon-star rating orange" aria-hidden="true"></span>
+										<span class="glyphicon glyphicon-star rating orange" aria-hidden="true"></span>
+										<span class="glyphicon glyphicon-star rating orange" aria-hidden="true"></span>
+										<span class="glyphicon glyphicon-star rating gray" aria-hidden="true"></span>
+										<span class="glyphicon glyphicon-star rating gray" aria-hidden="true"></span>
+										&nbsp;(3256 avis)
+									</div>-->
+                                                                          <!--<reevoo-reviewable-badge trkref="MBD" sku="9052602" variant="badge"></reevoo-reviewable-badge>-->
+									<?php 
+									$family = $deviceBlock->getDeviceFamilyText($_product); //Device family
+									$familyId = $_product->getHandsetFamily();
+									$availableColors = $deviceBlock->getAvailableColors($familyId);									
+									?>
+									<?php if($availableColors > 1):?>
+									<p><?php echo $block->escapeHtml(__('Disponibles en '.count($availableColors).' couleurs')) ?></p>
+									<?php endif; ?>
+									<?php if($_product->isAvailable()):?>
+										<p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+									<?php else: ?>
+										<p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+									<?php endif; ?>										
+									<p class="title-price"><?php /* @escapeNotVerified */ echo __('Sans abonnement') ?></p>
+									<span class="new-price orange price"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_product->getFinalPrice(),true,false) ?> </span>									
+									<?php 
+									$subscriptions = $deviceViewBlock->getSubscriptions($_product->getId());												
+									if($subscriptions):
+										$subscription = $subscriptions->getFirstItem();
+									?>
+									<p class="title-price"><?php /* @escapeNotVerified */ echo __('Avec abonnement') ?></p>
+									<span class="new-price orange"><small><?php /* @escapeNotVerified */ echo __('à partir de') ?></small> <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($subscription->getSubscriptionAmount(),true,false) ?></span>
+									<?php endif; ?>
+									<a class="btn btn-default margin-xs-b-l" href="<?php echo $_product->getProductUrl() ?>"><?php /* @escapeNotVerified */ echo __("Plus d'infos") ?></a>
+								</div>
+							</div>
+						</div>
+						<?php if ($i % 2 != 0) :?>
+						</div>
+						<?php endif; ?>
+						<?php if($_productCount == $i && $i % 2 == 0): ?>
+						</div>
+						<?php endif; ?>
+						</br>
+						<?php $i++; ?>
+					<?php endforeach; ?>
+				</div>
+			</section>
+		</div>
+
+		<div class="container">
+			<div class="row">
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</section>
+<?php endif; ?>
+<script type="text/javascript">				
+	require([
+		'jquery',
+		'js/dropdown'	
+	], function ($) {
+		//<![CDATA[				
+			$(document).on("keypress", "#sso-email", function(e) {
+			     if (e.which == 13) {
+			         processParams($(this));
+			     }
+			});
+           	$('.brand-filter').click(function(){
+				$('a.brand-filter').removeClass('selected');
+				$(this).addClass('selected');
+				processParams($(this));
+			});
+			$('.sortby').click(function(){
+				$('a.sortby').removeClass('selected');
+				$(this).addClass('selected');
+				processParams($(this));
+			});
+			function processParams(element)
+			{
+				if(element.attr('id') == 'sso-email')
+				{
+					var searchQuery = $('#sso-email').val();	
+					if($('a.brand-filter').hasClass('selected'))
+					{
+						var brandId = $('a.brand-filter.selected').attr('data-id');
+						var params = "?search="+searchQuery+"&brand="+brandId;
+					}
+					else
+					{
+						if(searchQuery!='')
+						{
+							var params = "?search="+searchQuery;
+						}						
+					}
+				}
+				else if(element.hasClass('brand-filter'))
+				{
+					var brandId = element.attr('data-id');
+					if($('#sso-email').val()!='')
+					{
+						var searchQuery = $('#sso-email').val();
+						var params = "?search="+searchQuery+"&brand="+brandId;
+					}
+					else
+					{
+						var params = "?brand="+brandId;					
+					}
+				}
+				else if(element.hasClass('sortby'))
+				{
+					var sortOpt = element.attr('data-id');
+					
+					var sortDir = element.attr('data-dir');
+					if($('#sso-email').val()!='' && !$('a.brand-filter').hasClass('selected'))
+					{
+						//has search 
+						var searchQuery = $('#sso-email').val();
+						var params = "?search="+searchQuery+"&sort="+sortOpt+'&dir='+sortDir;
+					}
+					else if($('a.brand-filter').hasClass('selected') && $('#sso-email').val()=='')
+					{
+						//has brand filter
+						var brandId = $('a.brand-filter.selected').attr('data-id');
+						var params = "?brand="+brandId+"&sort="+sortOpt+'&dir='+sortDir;
+					}
+					else if($('#sso-email').val()!='' && $('a.brand-filter').hasClass('selected'))
+					{
+						//has search and brand filter
+						var searchQuery = $('#sso-email').val();
+						var brandId = $('a.brand-filter.selected').attr('data-id');
+						var params = "?search="+searchQuery+"&brand="+brandId+"&sort="+sortOpt+'&dir='+sortDir;
+					}
+					else
+					{
+						var params = "?sort="+sortOpt+'&dir='+sortDir;
+					}
+									
+				}
+				
+				window.location.href = params;
+			}		
+	//]]>
+	});
+	require(['jquery'], function ($) {
+        function tog(v) {           
+            return v ? 'addClass' : 'removeClass';
+        }
+        $(document).on('input', '.search-device', function () {            
+            $(this)[tog(this.value)]('x');
+        }).on('mousemove', '.x', function (e) {
+            $(this)[tog(this.offsetWidth - 18 < e.clientX - this.getBoundingClientRect().left)]('onX');
+        }).on('touchstart click', '.onX', function (ev) {
+            ev.preventDefault();
+            $(this).removeClass('x onX').val('').change();
+        });
+    });
+</script>

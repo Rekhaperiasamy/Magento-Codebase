@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+ 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="fmeextensions" translate="label" sortOrder="1">
+            <label>FME Extensions</label>
+        </tab>
+        <section id="geoipultimatelock" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Geo-IP Ultimate Lock</label>
+            <tab>fmeextensions</tab>
+            <resource>FME_Geoipultimatelock::configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" 
+                   showInWebsite="1" 
+                   showInStore="1"
+            >
+                <label>General Settings</label>
+                <field id="enable_in_frontend" translate="label" type="select" sortOrder="1"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable in frontend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                
+                <field id="blocked_ip_msg" translate="label" type="editor" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Blocked IP Message</label>
+                    <comment>This message will show for visitors that have their IP(s) blocked directly </comment>
+                     <frontend_model>FME\Geoipultimatelock\Block\Adminhtml\System\Config\Editor</frontend_model>
+                </field>
+            </group>
+            
+            
+        </section>
+    </system>
+</config>

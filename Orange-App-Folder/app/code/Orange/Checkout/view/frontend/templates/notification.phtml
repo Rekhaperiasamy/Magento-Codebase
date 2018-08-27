@@ -1,0 +1,17 @@
+<?php
+//$storeName = $block->getStoreName();
+$helper			= $this->helper('Orange\Upload\Helper\Data')->storeInfo();
+$storeCode 		= $helper->getStore()->getCode();
+$objectManager 	= \Magento\Framework\App\ObjectManager::getInstance();
+$scoringCode 	= $objectManager->get('Magento\Checkout\Model\Session')->getScoringCode();
+$scoringModel 	= $model = $objectManager->create('Orange\Scoringfield\Model\Scoringresponse')->load($scoringCode,'ws_response_content');
+/*echo 'hate';
+echo $configuredResContent;*/
+if($storeCode == 'nl'){
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('uncertain_order_notification_message_nl')->toHtml();
+
+} else {
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('uncertain_order_notification_message_fr')->toHtml();
+
+}
+

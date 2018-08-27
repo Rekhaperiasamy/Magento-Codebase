@@ -1,0 +1,155 @@
+<?php
+$_product = $block->getProduct();
+$checkoutSession = $this->helper('Orange\Bundle\Helper\Data')->SessionInt();
+$pids = $checkoutSession->getBundledProductIds();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$simpleData = $this->helper('Orange\Bundle\Helper\Data')->simpleProductDetails($pids);
+$product = $objectManager->create('Magento\Catalog\Model\Product')->load($simpleData->getId());
+$stockStatus = $product['quantity_and_stock_status']['is_in_stock'];
+$bundle = $this->helper('Orange\Bundle\Helper\Data')->productDetails($_product->getId());
+$priceLabel = $this->helper('Orange\Bundle\Helper\Data')->getPriceLabel();
+$bundleTier = $this->helper('Orange\Bundle\Helper\Data')->getBundleTierPrice($_product->getId()); 
+
+$currentProductId = $this->getProduct()->getId();
+$virtualData = $this->helper('Orange\Bundle\Helper\Data')->VirtualProductInfo($currentProductId);
+$customerGroup = $this->helper('Orange\Bundle\Helper\Data')->getCustomerTypeName();
+$checkoutSession->setVirtualProductId($currentProductId);
+$customViewBlock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$data = $this->helper('Orange\Bundle\Helper\Data')->productDetails($virtualData['entity_id']);
+if($customerGroup == 'SOHO')
+{
+	$checkoutSession->setVirtualProductMonthlyPrice($data['subscription_amount']);
+	$imageType = 'intermediate_thumbnail';
+	$data->load('media_gallery');
+	$productImageAttr = $data->getCustomAttribute('soho_image');
+	if($productImageAttr):
+		$productImage = $this->helper('Magento\Catalog\Helper\Image')
+			->init($data, $imageType)
+			->setImageFile($productImageAttr->getValue());					
+		$subscriptionImg = $productImage->getUrl();
+	else:
+		$subscriptionImg = $block->getImage($data,'intermediate_other_thumbnail')->getImageUrl();
+	endif;
+	 $iconImage = "soho-".$data->getAttributeText('product_icon_image');
+}
+else
+{
+	$iconImage = $data->getAttributeText('product_icon_image');
+	$checkoutSession->setVirtualProductMonthlyPrice($data['subscription_amount']);
+	$subscriptionImg = $block->getImage($data,'intermediate_other_thumbnail')->getImageUrl();
+}
+$checkoutSession->setVirtualProductName($data['name']);
+?>
+<?php
+if ($_product->getTypeId() == 'bundle') {
+    $buttonTitle = __('Commander');
+    ?>
+    <?php if ($_product->isSaleable()): ?>
+	
+	
+	
+<div class="box-tocart row">
+	<div class="col-xs-12 prod-promo margin-xs-v-n">
+		<?php if ($block->shouldRenderQuantity()): ?>
+		<div class="field qty" style="display:none;">
+			<label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+			<div class="control" >
+				<input type="number"
+					   name="qty"
+					   id="qty"
+					   maxlength="12"
+					   value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+					   title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty"
+					   data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+					   />
+			</div>
+		</div>
+		<?php endif; ?>
+		<?php if($stockStatus): ?>
+		<div>
+		<a href="<?php echo $customViewBlock->getCustomCartUrl($_product->getId()) ?>" title="<?php /* @escapeNotVerified */ echo __('Commander') ?>" class="action primary tocart order-button hidden-sm hidden-xs" 
+		id="product-addtocart-button">
+			<span class="btn btn-primary pull-right margin-md-t-m"><?php echo __('Commander') ?></span>
+		</a>
+		</div>
+		<?php endif; ?>
+		<div class="left1 pull-left">
+			<h5><?php echo $checkoutSession->getVirtualProductName(); ?></h5>
+			<?php echo $customViewBlock->getOrangePricingHtml($checkoutSession->getVirtualProductMonthlyPrice(),true,true,true,'pdp new-price orange'); ?>			
+			    <?php if($data['subsidy_duration']): ?>
+					<p><?php echo __('Engagement de').' '; echo __($data['subsidy_duration']).' '; echo __('mois'); ?></p>
+				<?php else: ?>
+					<p><?php echo __('Engagement de 24').' '; echo __('mois'); ?></p>
+				<?php endif; ?>
+				<?php if($stockStatus): ?>
+				<a href="<?php echo $customViewBlock->getCustomCartUrl($_product->getId()) ?>" title="<?php /* @escapeNotVerified */ echo __('Commander') ?>" class="action primary visible-sm-block visible-xs-block tocart order-button"
+				id="product-addtocart-button">
+					<span class="btn btn-primary pull-right margin-md-t-m"><?php echo __('Commander') ?></span>
+				</a>
+				<?php endif; ?>
+		</div>
+		<div class="left2 pull-left">
+			<?php 
+			$simpleTierPrice = $simpleData->getTierPrice(1,$simpleData);
+			?>	
+			<?php echo $customViewBlock->getOrangePricingHtml($simpleTierPrice,false,false,false,'pdp old-price white'); ?>
+			<?php if($customerGroup == 'SOHO'): ?>
+			<?php echo $customViewBlock->getOrangePricingHtml($_product->getSohoPrice(),true,true,false,'pdp new-price orange'); ?>			
+			<?php else: ?>
+			<?php echo $customViewBlock->getOrangePricingHtml($bundleTier[0]['final_price'],true,true,false,'pdp new-price orange'); ?>			
+			<?php endif ?>
+		</div>
+	</div>
+</div>
+<div id="mobile-revoo"> </div>
+
+    <?php endif; ?>
+	<div class="row grey-bordered">
+		<div class="col-xs-12 col-sm-12 padding-xs-h-m">
+			<h2 class="font-30">
+			<p class="oi oi-<?php echo $iconImage; ?>"></p>
+			<?php echo $data->getName(); ?></h2>
+			<?php $catalogView = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+			$customerType = $catalogView->getCustomerTypeName();  
+			if($customerType == 'SOHO'){
+				if($data->getDescriptionSoho() =='') {
+					echo $data->getDescription();
+				} else {
+					echo $data->getDescriptionSoho();
+				}
+			}else{
+				echo $data->getDescription();			 
+			}?>
+		</div>
+	</div>
+	
+	<?php if ($data['subsidy_duration']== 12): ?>
+	<div class="<?php if($stockStatus):?>row<?php endif; ?>">
+		<div class="margin-xs-t-s">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('etalement-de-paiement')->toHtml(); ?>
+		</div>
+	</div>
+	<?php endif;?> 
+	
+<?php } ?>
+
+<script type="text/x-magento-init">
+    {
+    "#product_addtocart_form": {
+    "Magento_Catalog/product/view/validation": {
+    "radioCheckboxClosest": ".nested"
+    }
+    }
+    }
+</script>
+<?php if (!$block->isRedirectToCartEnabled()) : ?>
+    <script type="text/x-magento-init">
+        {
+        "#product_addtocart_form": {
+        "catalogAddToCart": {
+        "bindSubmit": false
+        }
+        }
+        }
+    </script>
+<?php endif; ?>

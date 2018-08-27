@@ -1,0 +1,1 @@
+define(["jquery","loadingPopup"],function(e){"use strict";return e.awCsblockManagerFieldset={addDependence:function(e,n,u){jQuery(n).change(function(){u.indexOf(this.value)<0?jQuery(e).hide():jQuery(e).show()}),jQuery(document).ready(function(){u.indexOf(jQuery(n).val())<0?jQuery(e).hide():jQuery(e).show()})}},e.awCsblockManagerFieldset});

@@ -1,0 +1,227 @@
+<?php
+$tempSession    =  $block->getCheckoutTempSession();
+
+	if(isset($tempSession ))
+    {
+		$previousStep = $tempSession['step'];
+		$step1DivClass = "";
+		if(!isset($previousStep))
+		{
+			$step1DivClass = "";
+		}  
+		else if($previousStep == 'step2' || $previousStep == 'step3')
+		{
+			$step1DivClass = "disable_div";
+		}
+		//////////////////////Step1 Calculation///////////////////////////////
+	   $bill_in_name_yes =  "checked";
+	   if(isset($tempSession['bill_in_name']) && $tempSession['bill_in_name'] ==1 ) 
+	   { 
+			$bill_in_name_no =  "checked";
+	   }
+	   
+	   $current_operator_yes =  "checked";
+	   if(isset($tempSession['current_operator']) && $tempSession['current_operator'] == 1)
+	   { 
+			$current_operator_yes =  "checked";
+	   }
+	   else if(isset($tempSession['current_operator']) && $tempSession['current_operator'] ==2 )
+	   {
+			$current_operator_no =  "checked";
+	   }
+	   
+	   $sim_number_new =  "checked";
+	   if(isset($tempSession['sim_number']) && $tempSession['sim_number'] == 1)
+	   { 
+			$sim_number_ex =  "checked";
+	   }
+	   else if(isset($tempSession['sim_number']) && $tempSession['sim_number'] ==2 )
+	   {
+			$sim_number_new =  "checked";
+	   }
+	}
+	else
+	{
+		$step1DivClass = "";  
+		$current_operator_yes =  "checked";
+		$bill_in_name_yes =  "checked";
+		$sim_number_new =  "checked";
+	}
+?>
+<div id="step1_number" class="<?php if(isset($step1DivClass)) { echo $step1DivClass;  }?>" >
+	
+	<div id="step1_exiting_num">
+
+		<?php $quoteitems = $block->getQuoteItems();
+                     ///Check Conditon For Displaying Virtual Product//////
+                    $totalItemCount = $block->getQuoteItemsCount();
+					?>
+					<?php foreach ($quoteitems as $item) : ?>
+						<?php 
+						 
+						$_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+						$product = $item->getProduct();
+						$price = $item->getProduct()->getSubscriptionAmount();
+						$img = $_imagehelper->init($product,'category_page_list',array('height' => '80' , 'width'=> '80'))->getUrl();
+					    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                        $_product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getProduct()->getId());
+						$attr = $_product->getResource()->getAttribute('subscription_amount')->getFrontend()->getValue($_product);
+						if ($totalItemCount == 1 && $item->getProduct()->getTypeId() == 'virtual' && $item->getParentItemId() == "")
+						{
+						?>
+	<div class="container">
+	
+		<div class="well-grey well-grey-padded margin-xs-v-m">
+			<a href="" class="bin-icon"><i class="oi oi-delete"></i></a>
+			<div class="row">
+				<div class="col-xs-12 col-sm-8">
+				
+					<h2 class="pull-left margin-xs-v-n margin-xs-r-s"><img src="<?php echo $img; ?>" /></h2>
+					
+					<h4><?php echo $item->getName(); ?></h4>
+				
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					 <span class="new-price orange line-100percent"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($attr,0),true,false) ?><small>/<?php echo __('mois') ?></small></span> 
+				</div>
+				
+				<div class="clear"></div>
+			</div>				
+		</div>
+	</div>
+             <?php }  ?>
+	<?php endforeach;?>
+
+	<div class="container">
+	
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="margin-xs-b-m"><?php echo __('Configurez votre numéro pour Panthère') ?></h3>
+			</div>
+		</div>
+
+		<div class="row">
+		
+			<div class="col-xs-12 col-sm-8" id="">
+				<div class="form-item form-item-gender form-type-radio radio"> 
+					<label for="edit-gender-mr"><input type="radio" id="sim_number" name="sim_number"  class="form-radio" value="1" <?php if(isset($sim_number_ex)) { echo $sim_number_ex; }?>  ><?php echo __('Je désire récupérer un numéro existant') ?></label>
+				</div>
+				<input class="form-control required" type="<?php if(isset($tempSession['te_existing_number']) && ($tempSession['te_existing_number'] != "") ) { echo "text"; } else { echo "hidden"; }?>" id="te_existing_number" name="te_existing_number" value="<?php if(isset($tempSession['te_existing_number'])) { echo $tempSession['te_existing_number']; }?>" size="60" maxlength="10"  placeholder="Numéro de GSM" data-validate="{required:true, 'validate-number':true}">				
+			
+				<div class="form-item form-item-gender form-type-radio radio margin-xs-t-m"> 
+					<label for="edit-gender-mr"><input type="radio" id="sim_number" name="sim_number"  class="form-radio" value="2" <?php if(isset($sim_number_new)) { echo $sim_number_new; }?> ><?php echo __('Je veux un nouveau numéro') ?></label>
+				</div>
+
+				<div class="margin-xs-t-m margin-xs-b-m" id="step1_continue_div">
+				
+					<a class="btn btn-primary" href="javascript:void(0);" id="step_1" ><?php echo __('Continuer') ?></a>
+					
+				</div>
+				<div class="margin-xs-t-m" id="existing_number_postpaid_div" style="display:none">
+					<p><?php echo __('Pour changer votre abonnement Orange actuel, rendez-vous dans votre Espace client.') ?></p>
+					
+					<a class="btn btn-primary" href="https://e-services.business.orange.be/en/customer-zone/"><?php echo __('Aller vers l’Espace client') ?></a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+  </div>  
+<div class="disable_div" id="transfer_number">
+  <div class="container"  >
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="margin-xs-b-m"><?php echo __('Transfert de votre numéro') ?><span id="display_div_number"></span></h3>	
+				<p class="pull-left margin-xs-t-s margin-xs-r-m"><?php echo __('Quel est votre opérateur actuel') ?></p>			
+				<div class="clearfix"></div>
+				<div class="col-sm-6">
+				<select class="dropdown-menu-form" name="subscription_type" id="subscription_type" >
+				<option value="Orange" <?php if(isset($tempSession['subscription_type']) && $tempSession['subscription_type'] == 'Orange') { echo 'selected'; }?>><?php echo __('Orange') ?></option>
+				<option value="Proximus" <?php if(isset($tempSession['subscription_type']) && $tempSession['subscription_type'] == 'Proximus') { echo 'selected'; }?>><?php echo __('Proximus') ?></option>
+				<option value="Base" <?php if(isset($tempSession['subscription_type']) && $tempSession['subscription_type'] == 'Base') { echo 'selected'; }?>><?php echo __('Base') ?></option>
+				</select>
+					<!--<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="subscription_div_a" type="button">
+						<?php
+                        if(isset($tempSession['subscription_type']))
+						{
+						echo $tempSession['subscription_type'];
+						}
+						else
+						{
+						echo __('Sélectionnez');
+                        } 
+						?><i class="oi oi-arrow_down"></i>
+					</a>
+					<div for="subscription_div_a" generated="true"  id="subscription_div_a_error" class="mage-error" style="display:none"><?php echo __('This is a required field.') ?></div>
+					<input type="hidden" value="<?php if(isset($tempSession['subscription_type'])) { echo $tempSession['subscription_type']; }?>" name="subscription_type" id="subscription_type">
+					<ul aria-labelledby="subscription_div_a" class="dropdown-menu" >
+						<li><a  href="javascript:void(0);" class="a_subscription_type" data-dir="<?php echo __('Orange') ?>"><?php echo __('Orange') ?></a></li>
+						<li><a  href="javascript:void(0);" class="a_subscription_type" data-dir="<?php echo __('Proximus') ?>"><?php echo __('Proximus') ?></a></li>
+						<li><a  href="javascript:void(0);" class="a_subscription_type" data-dir="<?php echo __('Base') ?>"><?php echo __('Base') ?></a></li>
+					</ul>-->
+				</div>
+					
+			</div>
+
+			<div class="col-xs-12 margin-xs-t-m">
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="pull-left margin-xs-r-m"><?php echo __('Quel est votre opérateur actuel') ?></p>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-postpaid"><input type="radio" id="current_operator" name="current_operator" value="1" class="form-radio" <?php if(isset($current_operator_yes)) { echo $current_operator_yes; }?>  ><?php echo __('J’ai un abonnement') ?></label>
+						</div>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-prepaid"><input type="radio" id="current_operator" name="current_operator" value="2" class="form-radio" <?php if(isset($current_operator_no)) { echo $current_operator_no; }?> ><?php echo __('J’ai une carte prépayée') ?></label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row margin-xs-t-m">
+					<div class="col-xs-12 col-sm-6">
+						<label for="edit-client"><?php echo __('Votre n° de client chez votre opérateur') ?>  <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>						 
+						<input class="form-control required" type="text" id="network_customer_number" name="network_customer_number" value="<?php if(isset($tempSession['network_customer_number'])) { echo $tempSession['network_customer_number']; }?>" size="60" maxlength="10">
+					</div>
+					<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+						<label for="edit-sim"><?php echo __('Votre n° de carte SIM') ?> <a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>									 
+						<input class="form-control required" type="text" id="simcard_number" name="simcard_number" value="<?php if(isset($tempSession['simcard_number'])) { echo $tempSession['simcard_number']; }?>" size="60" maxlength="10">
+					</div>
+				</div>
+				<div class="row margin-xs-t-m">
+					<div class="col-xs-12">
+						<p><?php echo __('La facture est-elle à votre nom&nbsp;?') ?></p>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-gender-mr"><input type="radio" id="bill_in_name" name="bill_in_name" value="1" <?php if(isset($bill_in_name_yes)) { echo $bill_in_name_yes; }?>  class="form-radio"><?php echo __('Oui') ?> </label>
+						</div>
+						<div class="form-item form-item-gender form-type-radio radio pull-left"> 
+							<label for="edit-gender-mme"><input type="radio" id="bill_in_name" name="bill_in_name" value="0" <?php if(isset($bill_in_name_no)  ) { echo $bill_in_name_no; }?>  class="form-radio" ><?php echo __('Non') ?></label>
+						</div>
+					</div>
+				</div>
+				<div class="row margin-xs-t-s">
+					<div class="col-xs-12 col-sm-6">
+						<label for="edit-first-name" class=""><?php echo __('Nom du titulaire ') ?><a type="button" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum nunc eget gravida vulputate." data-trigger="click" class="orange">?</a></label>						 
+						<input class="form-control required" type="text" id="holders_name" name="holders_name" value="<?php if(isset($tempSession['holders_name'])) { echo $tempSession['holders_name']; }?>" size="60" maxlength="35">
+					</div>
+					<div class="col-xs-12 col-sm-6 margin-xs-t-s margin-sm-t-n">
+						<label for="edit-first-name" class=""><?php echo __('Prénom du titulaire') ?></label>									 
+						<input class="form-control required disabled" id="holder_name" type="text" name="holder_name" value="<?php if(isset($tempSession['holder_name'])) { echo $tempSession['holder_name']; }?>" size="60" maxlength="35">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-xs-12 margin-xs-t-s">				
+		
+				<div class="margin-xs-t-m margin-xs-b-m">
+						<a class="btn btn-primary" href="javascript:void(0);" id="step_1_number" ><?php echo __('Continuer') ?></a>
+					<span class="or-separator"><?php echo __('ou') ?></span> 
+					<a class="btn btn-default margin-xs-t-n" href=""><?php echo __('J ajoute un deuxieme abonnement') ?></a>
+				</div>
+			</div>
+
+		</div>
+
+	</div> 
+ </div>
+
+ </div>

@@ -1,0 +1,161 @@
+<?php
+use Magento\Framework\App\TemplateTypesInterface;
+ $url 		= $block->getSaveUrl();
+ $path_nl 	= $block->downloadnl();
+ $path_fr 	= $block->downloadfr();
+?>
+<form enctype="multipart/form-data" id="header-footer" name="header-footer" method="post" action="<?php echo $url; ?>">
+    <br />
+	<div style="display:none" id="msg"></div>
+    <div id="uploader"> 
+       <div id="tl_label">
+	   <label id="labl_file" class="label admin__field-label" for="language" data-validate="{required:true}"> 
+            <span>Choose Translation Language  </span>
+        </label>
+		</div>
+		<div id="tl_value">
+		 <select name="language" id="language" data-validate="{required:true}">
+		<option value="fr">FR</option>
+		<option value="nl">NL</option>
+		</select>        
+	<!--<input class="action-default scalable task" type="button"  id="nl_file" value="Download">-->	
+	</div>
+    </div>
+	<div id="uploader"> 
+	<div id="tl_label">
+        <label id="labl_file" class="label admin__field-label" for="zip_file" data-validate="{required:true}"> 
+            <span id="lbl_file">Please Select The FR File    </span>
+        </label>
+		</div>
+		<div id="tl_value">
+        <input type="file" id="zip_file" name="zip_file" data-validate="{required:true}"/>
+		</div>
+    </div>
+	
+    <br />
+	<div id="uploader" class="btn_center"> 
+	<div id="tl_label"></div>
+	<div id="tl_value">
+    <input class="action-default scalable task" id="upload" type="submit" name="submit" value="Upload" />	
+	</div>
+	</div>
+</form>
+<style>
+	#uploader{
+	padding:10px;
+	width: 50%;
+	}
+	#labl_file{
+	padding:5px;	
+	}
+	#language{
+	padding:5px;
+    width: 100px;	
+	}
+	#msg{
+	background: #fcc;
+    border: none;
+    border-radius: 0;
+    color: #333;
+    font-size: 1.4rem;
+    margin: 0 0 1px;
+    padding: 1.8rem 4rem 1.8rem 5.5rem;
+    position: relative;
+    text-shadow: none;
+	}
+	#tl_label{
+	width: 40%;
+    float: left;
+    padding: 5px;
+	}
+	#tl_value{
+	width: 60%;
+    padding: 5px;
+	float: left;
+	}
+	
+	
+</style>
+<script type="text/x-magento-init">
+    {
+    "#header-footer": { "validation": {}
+    }
+    }
+</script>
+<script>
+require(['jquery', "mage/mage"], function(jQuery){   
+    (function ($) {
+		$('#header-footer').click(function(e) {
+		//$("#msg").hide();
+		//$("#messages").hide();		
+		});
+		/** Based On TL Change File To Download **/
+        $('#language').change(function(){
+			var lng =	$('#language').val();
+			if(lng != '' && lng == 'fr'){
+				$('#lbl_file').html('Please Select The FR File   '); 
+				
+			}else if(lng != '' && lng == 'nl'){
+			    $('#lbl_file').html('Please Select The NL File   '); 
+				
+		   }
+        });
+	
+ $('#nl_file').click(function(e) {
+   var lng =$('#language').val();
+   if(lng != '' && lng == 'fr'){
+		window.location.href = '<?php echo $path_fr; ?>';
+   }else if(lng != '' && lng == 'nl'){
+		window.location.href = '<?php echo $path_nl; ?>';
+   }    
+});
+$('#zip_file').click(function(e) {
+	var lng =$('#language').val();
+	if(lng == ''){
+		return false;
+	}
+});
+$('#upload').click(function(e) {
+        var fileExtension = ['csv'];
+        if ($.inArray($("#zip_file").val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            var msg = "Please Choose Translation File";
+			$("#msg").show();
+			$("#msg").html(msg);
+			return false;
+        }    
+});	
+$("#zip_file").change(function () {
+        var fileExtension = ['csv'];		
+		var name = $(this).val().split(/(\\|\/)/g).pop();
+		var lng =$('#language').val();
+		if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            var msg = "Please select a valid file";
+			$("#msg").show();
+			$("#msg").html(msg);
+			$(this).val('');
+			return false;
+        }else{
+			
+			
+   if(name == 'nl_BE.csv' && lng != 'nl'){
+	   $("#msg").show();
+			$("#msg").html('Please select a valid file "fr_FR.csv"');
+			$(this).val('');
+			return false;
+   }else if( name == 'fr_FR.csv' && lng != 'fr'){
+	   $("#msg").show();
+			$("#msg").html('Please select a valid file "nl_BE.csv"');
+			$(this).val('');
+			return false;
+   }else{
+	   $("#msg").hide();
+	   return true;
+   }
+   
+	   
+		}
+    });
+	})(jQuery);
+
+});
+</script>

@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_Rules
+ */
+?>
+<script>
+    require([
+        'jquery',
+        'Amasty_Rules/js/form',
+        'uiRegistry',
+        'Magento_Ui/js/lib/view/utils/async'
+    ], function($, form, registry, async) {
+        async.async('[data-index="simple_action"] select', 'sales_rule_form.sales_rule_form.actions', function () {
+            form.update();
+
+            registry.get('sales_rule_form.sales_rule_form.actions.simple_action', function (component) {
+                component.on('update', function () {
+                    form.update();
+                });
+            });
+        });
+    });
+</script>

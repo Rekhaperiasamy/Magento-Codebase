@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Fastly CDN for Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Fastly CDN for Magento End User License Agreement
+ * that is bundled with this package in the file LICENSE_FASTLY_CDN.txt.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Fastly CDN to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Fastly
+ * @package     Fastly_Cdn
+ * @copyright   Copyright (c) 2016 Fastly, Inc. (http://www.fastly.com)
+ * @license     BSD, see LICENSE_FASTLY_CDN.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <system>
+            <full_page_cache>
+                <fastly>
+                    <path>fastly.vcl</path>
+                    <fastly_advanced_configuration>
+                        <stale_ttl>86400</stale_ttl>
+                        <stale_error_ttl>86400</stale_error_ttl>
+                        <admin_path_timeout>180</admin_path_timeout>
+                        <ignored_url_parameters>utm_.*, gclid, gdftrk, _ga, mc_.*</ignored_url_parameters>
+                        <preserve_static>0</preserve_static>
+                        <soft_purge>1</soft_purge>
+                        <purge_catalog_category>0</purge_catalog_category>
+                        <purge_catalog_product>1</purge_catalog_product>
+                        <purge_cms_page>0</purge_cms_page>
+                        <enable_geoip>0</enable_geoip>
+                    </fastly_advanced_configuration>
+                    <fastly_web_hooks>
+                        <enable_webhooks>0</enable_webhooks>
+                        <publish_key_url_purge_events>1</publish_key_url_purge_events>
+                        <publish_purge_all_items_events>1</publish_purge_all_items_events>
+                        <publish_purge_all_trace>0</publish_purge_all_trace>
+                        <publish_config_change_events>1</publish_config_change_events>
+                    </fastly_web_hooks>
+                </fastly>
+            </full_page_cache>
+        </system>
+    </default>
+</config>

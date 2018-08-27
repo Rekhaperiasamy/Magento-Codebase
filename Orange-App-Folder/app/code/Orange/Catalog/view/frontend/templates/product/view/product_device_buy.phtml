@@ -1,0 +1,82 @@
+<?php $_product = $block->getProduct(); ?> 
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('subsidy_order_online')->toHtml();?> <script>
+  (function($) {
+    fakewaffle.responsiveTabs(['xs', 'sm']);
+  }
+  )(jQuery);
+  require(['jquery','Magento_Catalog/js/tab'], function($) {
+    jQuery('.panel-collapse').removeClass('in'); 
+	jQuery(document).ready(function() {
+	  jQuery('#head-collapse-tab1 .panel-collapse').css({'display':'none;'});
+      jQuery('.panel-heading').on('click',function(e){
+        //jQuery(this).find('h4.panel-title').toggleClass('open'); 
+		//5614 Device tabs on mobile don't work on a random basis
+		if(jQuery(this).hasClass('open')){
+			jQuery(this).removeClass('open');
+		}else{
+			jQuery(this).addClass('open');
+		}		
+        $(this).next(".panel-collapse").slideToggle('fast').toggleClass('open');
+        e.preventDefault();
+        e.stopPropagation();
+      }) ;
+    });
+    jQuery(document).ready(function() {
+	  if(jQuery(window).width() >= 768){
+		jQuery( "#device-steps-collapse h4.padding-xs-r-m" ).addClass('closed');
+        jQuery( "#device-steps-collapse h4.padding-xs-r-m" ).on( "click", function(e) {
+          if(jQuery(this).hasClass('closed')){
+            jQuery(this).next().show();
+			jQuery(this).removeClass('closed');
+			jQuery(this).addClass('open');
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          else{
+            jQuery(this).next().hide();
+            jQuery(this).removeClass('open');
+			jQuery(this).addClass('closed');
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+      }
+    });
+    (function($,window,document,undefined){
+      var boxes = $('.js-matchBoxHeight');      
+      var length = boxes.length;
+      function doMatchHeights(){
+        var i = 0;
+        while ( i < length) {
+          var list = [];
+          var mybox = $(boxes[i]);
+          var top = mybox.offset().top;
+          var height = 0;
+          do{
+            list.push(boxes[i]);
+            $(boxes[i]).css('min-height','0');
+            var myHeight = $(boxes[i]).outerHeight();
+            height = (height > myHeight)? height : myHeight;
+            i++;
+          }
+          while(i < length && top === $(boxes[i]).offset().top);
+          if(list.length > 1){
+            for(var j=0;j < list.length;j++){
+              var thisBox = $(list[j]),
+                  paddingDiff = thisBox.outerHeight() - thisBox.height();
+              thisBox.css({
+                "-webkit-box-sizing": "content-box",
+                "-moz-box-sizing": "content-box",
+                "box-sizing": "content-box",
+                "min-height": height - paddingDiff
+              }
+                         );
+            }
+          }
+        };
+      }
+      doMatchHeights();
+      return boxes;
+    }
+    )(jQuery,window,document);
+  });</script>

@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Fastly CDN for Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Fastly CDN for Magento End User License Agreement
+ * that is bundled with this package in the file LICENSE_FASTLY_CDN.txt.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Fastly CDN to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Fastly
+ * @package     Fastly_Cdn
+ * @copyright   Copyright (c) 2016 Fastly, Inc. (http://www.fastly.com)
+ * @license     BSD, see LICENSE_FASTLY_CDN.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="system">
+            <group id="full_page_cache">
+                <group id="fastly" translate="label" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="615">
+                    <label>Fastly Configuration</label>
+                    <comment>
+                        <![CDATA[To use this plugin you need a Fastly account (
+                        <a href="https://www.fastly.com/signup" target="_blank">Create a free account</a>). Once configured, you will need to <a href="https://docs.fastly.com/guides/basic-setup/adding-cname-records" target="_blank">add a CNAME to your domain.</a><br /><br />
+                        For setting up TLS/SSL and additional documentation please refer to <a href="https://github.com/fastly/fastly-magento2/tree/master/Documentation" target="_blank">the full plugin guide.</a>]]>
+                    </comment>
+                    <field id="fastly_service_id" type="text" translate="label comment" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Fastly Service ID</label>
+                        <comment>
+                            <![CDATA[Learn more about <a href="https://docs.fastly.com/guides/basic-setup/working-with-services#creating-a-new-service" target="_blank">creating a Fastly Service</a>
+                            and <a href="https://docs.fastly.com/guides/account-management-and-security/finding-and-managing-your-account-info" target="_blank">finding your Service ID.</a>]]>
+                        </comment>
+                        <backend_model>Magento\PageCache\Model\System\Config\Backend\Varnish</backend_model>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="fastly_api_key" type="text" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Fastly API token</label>
+                        <comment>
+                            <![CDATA[Please create a <a href="https://manage.fastly.com/account/personal/tokens" target="_blank">Fastly API token</a> with a global scope.<br /><br />
+                            After making any changes to Fastly Service ID or API token, please Save Config first before uploading VCL.]]>
+                        </comment>
+                        <backend_model>Magento\PageCache\Model\System\Config\Backend\Varnish</backend_model>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="test_connection" translate="label comment" sortOrder="25" showInDefault="1" showInStore="0" showInWebsite="0">
+                        <label><![CDATA[Test credentials]]></label>
+                        <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\TestConnectionBtn</frontend_model>
+                    </field>
+                    <field id="upload_vcl" translate="label comment" sortOrder="30" showInDefault="1" showInStore="0" showInWebsite="0">
+                        <label><![CDATA[Automatic upload & service activation]]></label>
+                        <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\UploadVclBtn</frontend_model>
+                    </field>
+                    <group id="fastly_backend_settings" sortOrder="200" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Backend settings</label>
+                        <field id="backends" translate="label comment tooltip" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Backends</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\Backend</frontend_model>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                        </field>
+                    </group>
+                    <group id="fastly_basic_auth" sortOrder="240" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Basic Authentication</label>
+                        <comment><![CDATA[Basic authentication allows you to protect every page and asset on your site with username and password. This can be used to protect the site during development. You will still be able to access Magento admin without basic auth. It is not advised to use this in production]]></comment>
+                        <field id="enable_basic_auth" translate="label comment" type="select" sortOrder="80" showInDefault="1">
+                            <label>Basic Authentication Status</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\EnableAuth</frontend_model>
+                        </field>
+                        <field id="authentication" translate="label comment tooltip" sortOrder="80" showInDefault="1">
+                            <label>Authentication</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\Auth</frontend_model>
+                        </field>
+                    </group>
+                    <group id="fastly_edge_dictionaries" sortOrder="250" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Edge dictionaries</label>
+                        <comment>
+                            <![CDATA[Edge Dictionaries are made up of dictionary containers and the dictionary items within them. In combination, containers and items allow you to store data as key-value pairs on Fastly Edge nodes. <a href="https://docs.fastly.com/guides/edge-dictionaries/about-edge-dictionaries">Click here for more details.</a>. This interface only allows management of containers and entries. To invoke them you will need to configure your Fastly service.]]></comment>
+                        <field id="dictionaries" translate="label comment tooltip" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Dictionaries</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\Edge</frontend_model>
+                        </field>
+                    </group>
+                    <group id="fastly_edge_acl" sortOrder="260" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Edge acl</label>
+                        <comment>
+                            <![CDATA[Edge ACLs are access control lists that allow you to manage IP addresses that are used in allowing or blocking access to resources. <a href="https://docs.fastly.com/guides/access-control-lists/creating-and-manipulating-edge-acl-entries">Click here for more details.</a> This interface only allows management of containers and entries. To invoke them you will need to configure your Fastly service.]]></comment>
+                        <field id="acl" translate="label comment tooltip" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Acl</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\Acl</frontend_model>
+                        </field>
+                    </group>
+                    <group id="fastly_advanced_configuration" sortOrder="300" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Advanced Configuration</label>
+                        <field id="force_tls" translate="label comment" sortOrder="10" showInDefault="1" showInStore="0" showInWebsite="0">
+                            <label><![CDATA[Force TLS]]></label>
+                            <comment>
+                                <![CDATA[Force unencrypted requests over to TLS, return a <strong>301
+                                Moved Permanently</strong> response to any unencrypted request, and redirect to the TLS equivalent.]]></comment>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\TlsBtn</frontend_model>
+                        </field>
+                        <field id="stale_ttl" type="text" translate="label comment" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Stale content delivery time</label>
+                            <comment><![CDATA[Time in seconds that Fastly will serve <a href="https://docs.fastly.com/guides/performance-tuning/serving-stale-content" target="_blank">stale content</a> while fresh content is being requested. Set to 0 to disable this feature.]]></comment>
+                            <backend_model>Magento\PageCache\Model\System\Config\Backend\Ttl</backend_model>
+                        </field>
+                        <field id="stale_error_ttl" type="text" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Stale content delivery time in case of backend error</label>
+                            <comment>
+                                <![CDATA[Time in seconds that Fastly will continue to serve <a href="https://docs.fastly.com/guides/performance-tuning/serving-stale-content#serving-stale-content-on-errors" target="_blank">stale content​</a> if your origin is unavailable. Set to 0 to disable this feature.]]>
+                            </comment>
+                            <backend_model>Magento\PageCache\Model\System\Config\Backend\Ttl</backend_model>
+                        </field>
+                        <field id="admin_path_timeout" type="text" translate="label comment" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Admin path timeout</label>
+                            <comment>
+                                <![CDATA[Time in seconds for the admin path first byte timeout. Please reupload VCL after making changes.]]>
+                            </comment>
+                            <backend_model>Fastly\Cdn\Model\Config\Backend\ValidateInt</backend_model>
+                            <validate>required-entry validate-digits</validate>
+                        </field>
+                        <field id="ignored_url_parameters" type="text" translate="label comment" sortOrder="32" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Ignored URL Parameters</label>
+                            <comment>
+                                <![CDATA[A comma separated list of ignored query string parameters.<br /><br />
+                                Please reupload VCL after making changes to Ignored URL Parameters.]]>
+                            </comment>
+                            <backend_model>Magento\PageCache\Model\System\Config\Backend\Varnish</backend_model>
+                        </field>
+                        <field id="purge_catalog_category" translate="label comment" type="select" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Purge category</label>
+                            <comment>Choose to purge all the category assets when saving a change to that category.</comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="purge_catalog_product" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Purge product</label>
+                            <comment>Choose to purge all the product’s assets when saving a change to that product.</comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="purge_cms_page" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Purge CMS page</label>
+                            <comment>Choose to purge page content when updating or adding a new page in the Magento CMS.</comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="preserve_static" translate="label comment" type="select" sortOrder="47" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Preserve static assets on purge</label>
+                            <comment>
+                                When flushing cache, flush only dynamic content and preserve static assets.
+                            </comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="soft_purge" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Use Soft Purge</label>
+                            <comment>
+                                <![CDATA[<a href="https://docs.fastly.com/guides/purging/soft-purges" target="_blank">Soft Purge</a>​ needs to be turned on in order to serve stale content.]]>
+                            </comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="enable_geoip" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Enable GeoIP</label>
+                            <comment>Enable GeoIP for country/language lookup.</comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="geoip_action" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>GeoIP Action</label>
+                            <comment>
+                                <![CDATA["Dialog" shows a modal dialog to select target store.<br /> "Redirect" redirects the client directly to the target store.]]>
+                            </comment>
+                            <source_model>Fastly\Cdn\Model\System\Config\Source\GeoIP\Action</source_model>
+                            <depends>
+                                <field id="enable_geoip">1</field>
+                            </depends>
+                        </field>
+                        <field id="geoip_country_mapping" translate="label comment tooltip" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>GeoIP Country Mapping</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\CountryMapping</frontend_model>
+                            <backend_model>Fastly\Cdn\Model\Config\Backend\Geoipcountry</backend_model>
+                            <comment>
+                                <![CDATA[Use capitalized <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">two-letter country codes</a> to map countries to store views. Use * to define a default fallback.]]>
+                            </comment>
+                            <depends>
+                                <field id="enable_geoip">1</field>
+                            </depends>
+                        </field>
+                    </group>
+                    <group id="fastly_error_maintenance_page" sortOrder="400" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Error/Maintenance page</label>
+                        <comment>
+                            <![CDATA[This option allows you to define an error/sorry page that will be sent to all users if Fastly is about to serve an error page (HTTP 500/503). It allows you to paste your own HTML which will override any backend or Fastly responses.]]>
+                        </comment>
+                        <field id="force_tls" translate="label comment" sortOrder="10" showInDefault="1" showInStore="0" showInWebsite="0">
+                            <label><![CDATA[Error Page HTML]]></label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\ErrorPageBtn</frontend_model>
+                        </field>
+                    </group>
+                    <group id="fastly_web_hooks" sortOrder="500" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Webhook notifications</label>
+                        <comment>
+                            <![CDATA[Webhooks are a simple way to post messages to external sources. This integration is geared for Slack however you can use it for anything else. <br /> To create Slack Incoming webhooks <a href="https://api.slack.com/incoming-webhooks">https://api.slack.com/incoming-webhooks</a>]]>
+                        </comment>
+                        <field id="enable_webhooks" translate="label comment" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Enabled</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        </field>
+                        <field id="incoming_webhook_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Incoming webhook URL</label>
+                            <depends>
+                                <field id="enable_webhooks">1</field>
+                            </depends>
+                        </field>
+                        <field id="publish_key_url_purge_events" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Publish Key and URL Purge Events</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <depends>
+                                <field id="enable_webhooks">1</field>
+                            </depends>
+                        </field>
+                        <field id="publish_purge_all_items_events" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Publish Purge All/Clean All Items Events</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <depends>
+                                <field id="enable_webhooks">1</field>
+                            </depends>
+                        </field>
+                        <field id="publish_purge_all_trace" translate="label comment" type="select" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Publish stack trace on purge all event</label>
+                            <comment>Submits the stack trace when the purge all event is created, for debugging purposes</comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <depends>
+                                <field id="enable_webhooks">1</field>
+                            </depends>
+                        </field>
+                        <field id="publish_config_change_events" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Publish Config change events</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <depends>
+                                <field id="enable_webhooks">1</field>
+                            </depends>
+                        </field>
+                        <field id="webhook_message_prefix" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Message prefix</label>
+                            <depends>
+                                <field id="enable_webhooks">1</field>
+                            </depends>
+                        </field>
+                    </group>
+                    <depends>
+                        <field id="caching_application">fastly</field>
+                    </depends>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

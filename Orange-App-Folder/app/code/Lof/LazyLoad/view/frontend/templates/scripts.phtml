@@ -1,0 +1,45 @@
+<?php
+$helper         = $this->helper('\Lof\LazyLoad\Helper\Data');
+$threshold      = (int)$helper->getConfig('general/threshold');
+$delay          = (int)$helper->getConfig('general/delay');
+$combined       = $helper->getConfig('general/combined');
+$effect         = $helper->getConfig('general/effect');
+$effectTime     = (int)$helper->getConfig('general/effectTime');
+$enableThrottle = $helper->getConfig('general/enableThrottle');
+$throttle       = (int)$helper->getConfig('general/throttle');
+?>
+
+<?php if ($helper->isEnable()) { ?>
+<script>
+	require(['jquery', 'jquery.LazyLoad'], function($) {
+		$(function() {
+			$('.lof-lazy').lazy({
+				effect: "<?php echo $effect ?>",
+				effectTime: <?php echo $effectTime ?>,
+				threshold: <?php echo $threshold; ?>,
+				combined: <?php echo $combined?'true':'false'; ?>,
+				delay: <?php echo $delay; ?>,
+				enableThrottle: <?php echo $enableThrottle?'true':'false' ?>,
+				throttle : <?php echo $throttle; ?>,
+				afterLoad: function(e) {
+					e.removeClass('lof-lazy');
+					$('#lazy').removeClass('lazy-load');
+				}
+			});
+		});
+	});
+	//image loader issue 
+	//if the loader not working we have manualy change the image path after page load.
+    require([ 'jquery', 'jquery/ui'], function($){
+	$(document).ready(function($) {
+		$('.lof-lazy').each(function(e){
+			var img = $(this).attr('data-src');
+			$(this).attr('src', img);
+			$(this).attr('data-src', '');
+			$(this).attr('class', '');
+			$(this).attr('style', 'display: inline-block');
+			});
+		});
+	});
+</script>
+<?php } ?>

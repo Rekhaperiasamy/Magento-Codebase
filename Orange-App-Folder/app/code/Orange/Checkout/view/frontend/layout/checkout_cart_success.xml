@@ -1,0 +1,9 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+	<head>       
+        <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Magento_Catalog::css/p04.css"/>
+    </head>
+	<referenceBlock name="content">			
+		<block class="Orange\Checkout\Block\Success" name="orange_checkout" template="cart/success.phtml" cacheable="false" />
+	</referenceBlock>      
+</page>

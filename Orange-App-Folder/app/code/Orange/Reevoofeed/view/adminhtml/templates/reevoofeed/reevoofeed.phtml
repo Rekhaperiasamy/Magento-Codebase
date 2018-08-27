@@ -1,0 +1,11 @@
+<?php
+
+use Magento\Framework\App\TemplateTypesInterface;
+
+$url = $block->getSaveUrl();
+?>
+
+<form enctype="multipart/form-data" id="header-footer" name="header-footer" method="post" action="<?php echo $url; ?>">
+
+    <input class="action-default scalable task" type="submit" name="submit" value="Generate Reevoo Feeds" />
+</form>

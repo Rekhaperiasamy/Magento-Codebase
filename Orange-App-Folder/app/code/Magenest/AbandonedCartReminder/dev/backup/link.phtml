@@ -1,0 +1,43 @@
+<?php
+/** @var  $block \Magenest\AbandonedCartReminder\Block\Link */
+
+$notifications = $block->getNotificationCollection();
+;
+?>
+<li class="link giftregistry"  id="fueNotification" >
+    <a href="<?php  echo $block->getHref() ?>" class="action link" > <?php echo __('Notification') ?></a>
+
+    <span class="notification-count"> <?php echo $block->getNotificationCount() ?></span>
+
+
+    <ul>
+
+        <?php  if (is_object($notifications) && $notifications->getSize() > 0) { ?>
+
+            <?php  foreach ($notifications as $notification) {   ?>
+                <li class="notification-each">
+                    <strong> <?php  echo  $notification->getData('title') ?></strong>
+                    <p class="notification-des">
+                        <span class="notification-part-one"> <?php echo $notification->getFirstPart() ?></span>
+                        <span class="notification-part-two"> <?php echo $notification->getSecondPart() ?></span>
+                    </p>
+
+                    <span class="notification-time"> <?php echo  $notification->getTime()  ?></span>
+                    <button type="button" class="notifications-close" title="<?php echo __('Close')  ?>"></button>
+                </li>
+
+            <?php }  ?>
+        <?php }  ?>
+    </ul>
+</li>
+<div data-bind="scope:'notification-marketing' ">
+    <!-- ko template:getTemplate() --> <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+        {
+            "#fueNotification": {
+                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+            }
+        }
+    </script>

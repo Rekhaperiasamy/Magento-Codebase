@@ -1,0 +1,50 @@
+<div class="iwd-discount-code-wrapper iwd-opc-additional-blocks" data-bind="visible: canVisibleBlock">
+    <div class="payment-option _collapsible opc-payment-additional discount-code"
+         data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
+        <div class="payment-option-title field choice" data-role="title">
+            <span class="action action-toggle iwd-action-toggle" id="block-comment-heading" role="heading" aria-level="2">
+                <!-- ko i18n: 'Comment'--><!-- /ko -->
+            </span>
+        </div>
+        <div class="iwd-payment-option-content payment-option-content" data-role="content">
+            <form class="iwd-discount-form iwd-additional-block-form-wrapper form form-discount" id="comment-form">
+                <div class="payment-option-inner">
+                    <div class="field">
+                        <label class="label" for="comment-code">
+                            <span data-bind="i18n: 'Enter comment'"></span>
+                        </label>
+                        <div class="control">
+                            <textarea class="input-text" id="comment-code" name="comment-code" rows="2" maxlength="200" data-bind="attr:{placeholder: $t('Enter comment')} " ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="payment-option _collapsible opc-payment-additional discount-code iwd-discount-code-wrapper iwd-opc-additional-blocks"-->
+<!--data-bind="mageInit: {'collapsible':{'openedState': '_active'}}, myTestHandler: {} ">-->
+<!--<div class="payment-option-title field choice" data-role="title">-->
+<!--<span class="action iwd-action-toggle action-toggle" id="block-discount-heading" role="heading" aria-level="2">-->
+<!--&lt;!&ndash; ko i18n: 'Comment'&ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;-->
+<!--</span>-->
+<!--</div>-->
+<!--<div class="iwd-payment-option-content payment-option-content" data-role="content">-->
+
+<!--<form class="form form-discount iwd-discount-form iwd-additional-block-form-wrapper" id="discount-form" data-bind="blockLoader: isLoading">-->
+<!--<div class="payment-option-inner">-->
+<!--<div class="field">-->
+<!--<div class="control">-->
+<!--<textarea-->
+<!--class="input-text"-->
+<!--id="customer_comment"-->
+<!--name="customer_comment"-->
+<!--data-bind="value: commentText"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->

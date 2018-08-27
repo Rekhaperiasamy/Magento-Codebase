@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block \Magento\Catalog\Block\Product\Image */ ?>
+<?php
+$helper      = $this->helper('Lof\LazyLoad\Helper\Data');
+$loadingIcon = $helper->getConfig('general/loadingIcon');
+$imgSrc      = $helper->getMediaUrl() . '' . $loadingIcon;
+?>
+<img class="photo image lof-lazy"
+     <?php /* @escapeNotVerified */ echo $block->getCustomAttributes(); ?>
+     src="<?php echo $block->getViewFileUrl('Lof_LazyLoad/images/AjaxLoader.gif') ?>"
+     data-src="<?php /* @escapeNotVerified */ echo $imgSrc; ?>"
+     width="<?php /* @escapeNotVerified */ echo $block->getWidth(); ?>"
+     height="<?php /* @escapeNotVerified */ echo $block->getHeight(); ?>"
+     alt="<?php /* @escapeNotVerified */ echo $block->stripTags($block->getLabel(), null, true); ?>" />
+<noscript><img class="photo image lof-lazy"
+     <?php /* @escapeNotVerified */ echo $block->getCustomAttributes(); ?>
+     src="<?php /* @escapeNotVerified */ echo $block->getImageUrl(); ?>"
+     width="<?php /* @escapeNotVerified */ echo $block->getWidth(); ?>"
+     height="<?php /* @escapeNotVerified */ echo $block->getHeight(); ?>"
+     alt="<?php /* @escapeNotVerified */ echo $block->stripTags($block->getLabel(), null, true); ?>" /></noscript>

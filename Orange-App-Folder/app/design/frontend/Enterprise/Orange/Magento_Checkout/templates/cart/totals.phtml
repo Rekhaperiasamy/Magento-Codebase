@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Shopping cart totals template
+ * @var $block \Magento\Checkout\Block\Cart\Totals
+ */
+ $productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+?>
+<div id="cart-totals" class="cart-totals-new col-xs-12" data-bind="scope:'block-totals'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+            {
+                "#cart-totals": {
+                    "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+                }
+            }
+    </script>
+	<script>
+	window.sohoDiscountAmount = <?php /* @escapeNotVerified */ echo $productViewblock->getSohoDiscountAmount(); ?>;
+	</script>
+    <div class="row margin-xs-b-s disable_div coupon-message">
+        <div class="col-xs-12" >                    
+            <small><?php echo __("Les reductions sont deja deduites de vos totaux") ?></small>
+        </div>
+    </div>
+<div class="row margin-xs-b-s total-shipping-section">
+	<div class="col-xs-5 col-sm-12 col-md-6 total-shipping-section-text"><?php echo __('Livraison'); ?></div>
+	<div class="col-xs-7 col-sm-12 col-md-6 text-right">
+		<span class="new-price-smaller orange free_ship_txt"><?php echo __('Gratuite') ?></span>
+	</div>
+</div>
+</div>

@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>       
+        <section id="click" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Click And Reserve Settings</label>
+            <tab>orange</tab> 
+            <resource>Orange_Reserve::reserveconfig</resource>       
+              
+            <group id="reserve_configuration" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Click And Reserve Configurationasdasd</label>
+                
+                <field id="click_reserve_enable" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Click And Reserve Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>             
+                <field id="zipcode_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Finding Webservice call URL</label>
+                </field>
+                <field id="zipcode_passData" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Finding Webservice call SSLCERTPASSWD</label>
+                </field>
+                <field id="zipcode_pem_file" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Finding Webservice call PEM File Path</label>
+                </field>
+                <field id="zipcode_key_file" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Finding Webservice call Key File Path</label>
+                </field>
+                <field id="zipcode_cer_file" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Finding Webservice call Certification File Path</label>
+                </field>
+                <field id="reservecall_uname" translate="label" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reserve Webservice call UserName</label>
+                </field>
+                <field id="reservecall_pass" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reserve Webservice call Password</label>
+                </field>
+                <field id="reservecall_url" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reserve Webservice call URL</label>
+                </field>
+                <field id="reservecall_pem_file" translate="label" type="text" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reserve Webservice call PEM File Path</label>
+                </field>
+                <field id="reservecall_key_file" translate="label" type="text" sortOrder="27" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reserve Webservice call Key File Path</label>
+                </field>
+                <field id="reservecall_cer_file" translate="label" type="text" sortOrder="28" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reserve Webservice call Certification File Path</label>
+                </field>
+                <field id="blacklist_based_codition" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Validation Criteria for Blacklist</label>
+                    <source_model>Orange\Reserve\Model\Config\Source\Custom</source_model>
+                </field> 
+                <field id="period_days" translate="label" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Click And Reserve Period (In Days)</label>
+                </field> 
+                <field id="interval_orders" translate="label" type="text" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number of Orders In Given Period</label>
+                </field>              
+            </group>
+            
+            <group id="reserve_error_configuration" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Click And Reserve Error Management</label>               
+                <field id="curl_call_error0" translate="label" type="textarea" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Aramiscode Unknow</label>
+                </field>
+				<field id="curl_call_error1" translate="label" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Blacklist Error Message</label>
+                </field>
+				<field id="curl_call_error2" translate="label" type="textarea" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>No Create Detail Order</label>
+                </field>
+				<field id="curl_call_error3" translate="label" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>No Create Header Order</label>
+                </field>
+				<field id="curl_call_error4" translate="label" type="textarea" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>No Create Order</label>
+                </field>
+				<field id="curl_call_error5" translate="label" type="textarea" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>No Create Validate Order</label>
+                </field>
+				<field id="curl_call_error6" translate="label" type="textarea" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shop No CC</label>
+                </field>
+				<field id="curl_call_error7" translate="label" type="textarea" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Not In Stock Error Message</label>
+                </field>
+				<field id="curl_call_error8" translate="label" type="textarea" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Unavailable Error Message</label>
+                </field>
+				<field id="curl_call_error9" translate="label" type="textarea" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Webservice Error Message</label>
+                </field>
+                <field id="curl_call_success" translate="label" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Webservice Call Success Message</label>
+                </field>                   
+            </group>
+        </section>
+            
+    </system>
+</config>

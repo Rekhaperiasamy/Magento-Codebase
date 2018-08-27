@@ -1,0 +1,178 @@
+<?php
+
+use Magento\Framework\App\TemplateTypesInterface;
+
+$url = $block->getSaveUrl();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+$formKey = $objectManager->get('Magento\Framework\Data\Form\FormKey');
+$formKeyvalue = $formKey->getFormKey();
+$reportPath = $block->getReportPath();
+
+?>
+<form enctype="multipart/form-data" id="abandon_export" name="abandon_export" method="post" action="<?php echo $url; ?>">
+    <br />
+   <input name="form_key" type="hidden" value="<?php echo $formKeyvalue; ?>" />
+    <div class="entry-edit form-inline" data-bind="scope: 'customer_form.areas'">
+        <fieldset id="segment_base_fieldset" class="fieldset admin__fieldset ">
+			<div>
+				<div>
+					<select id="report_type" name="report_type">
+						<option> Select Report Type </option>
+						<option selected="selected" value="month_report">Monthly</option>
+						<option value="today_report">Today</option>			
+					</select>
+				</div>
+				<div id="month_report">
+					<div>
+						<br><br>
+						<label class="label admin__field-label" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-text-name-label">
+							<span><?php echo __('* Can select upto maximum of 30 days') ?></span>
+						</label>
+						<div class="field overview required" data-role="filter-form" id="date_range">                    							
+							<div style="float:left; width:20%;" class="admin__field field field-name  required _required" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-form-field-name"> 
+								<label for="date_from" class="label admin__field-label" for="segment_name" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-text-name-label">
+									<span><?php echo __('From') ?>:</span>
+								</label>
+								<div class="admin__field-control control">
+									<input class="input-text required-entry admin__control-text"
+										   type="text"
+										   id="date_from"
+										   name="date_from"
+										   />
+								</div>
+							</div>
+							<div style="float:left; width:20%; margin-top:0px;" class="admin__field field field-name  required _required" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-form-field-name"> 
+								<label class="label admin__field-label" for="segment_name1" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-text-name-label">
+									<span><?php echo __('To') ?>:</span>
+								</label>
+								<div class="admin__field-control control">
+									<input class="input-text required-entry admin__control-text"
+										   type="text"
+										   id="date_to"
+										   name="date_to"
+										   />
+								</div>
+							</div>
+							<br>							
+						</div>
+					</div>
+					<br><br><br>
+					<div>
+						<input class="action-default scalable task" style="margin-top:13px;" type="submit" name="submit" value="Generate" />
+					</div>
+				</div>
+				<br>
+				<div id="today_report" style="display:none">
+					<input class="action-default scalable task" style="margin-top:13px;" type="submit" name="submit" value="Generate" />
+				</div>
+			</div>
+        </fieldset>
+
+    </div>
+	<br/>
+	<?php if(is_dir($reportPath)): ?>
+	<div class="entry-edit form-inline" data-bind="scope: 'customer_form.areas'">
+		<fieldset id="segment_base_fieldset" class="fieldset admin__fieldset ">
+		<div>
+			<div class="field overview required" data-role="filter-form" id="date_range">
+				<legend class="admin__legend legend"><span>Monthly Report's</span></legend>
+				<br>
+			</div>    
+				<?php 
+				//$outputFile 	= BP . "/common-header/abandonedreport";
+				$files 			= array_diff(scandir($reportPath), array('.', '..'));
+				rsort($files);
+				foreach($files as $file){
+					$filename 	= explode('.',$file);
+					$filename 	= $filename[0];
+					echo '<span><a href="'.$block->getDownloadUrl($file).'">'.$filename.'</a></span></br>';
+				}  
+				?>
+		</div>                                
+		</fieldset>
+	</div>
+	<?php endif; ?>
+</form>
+
+<script>
+    require([
+        "jquery",
+        "mage/calendar",
+        'jquery/validate',
+        'mage/validation'
+    ], function ($) {
+        var yDay = new Date();
+		yDay.setDate(yDay.getDate() - 1);        
+		var daysToMin = 30;
+		$("#date_from").datepicker({
+			maxDate: yDay,
+			onSelect: function (selected) {				
+				var dtMax = new Date(selected);
+				dtMax.setDate(dtMax.getDate() + daysToMin);				
+				if(dtMax > yDay) {
+					$("#date_to").datepicker("option", "maxDate", yDay);
+				}
+				else {
+					$("#date_to").datepicker("option", "maxDate", dtMax);
+				}
+			}
+		});
+		$("#date_to").datepicker({
+			maxDate: yDay,
+			onSelect: function (selected) {
+				var dtMin = new Date(selected);
+				dtMin.setDate(dtMin.getDate() - daysToMin);					
+				if(dtMin < yDay) {
+					$("#date_from").datepicker("option", "minDate", dtMin);
+					$("#date_from").datepicker("option", "maxDate", selected);
+				}
+				else {
+					$("#date_from").datepicker("option", "minDate", dtMin);
+				}
+			}
+		});
+
+		$('#report_type').change(function() {
+			if($(this).val() == 'month_report') {
+				$('#month_report').show();
+				$('#today_report').hide();
+			}
+			else {
+				$('#month_report').hide();
+				$('#today_report').show();
+			}
+		});
+		$("input[type='submit']").click(function() {
+			if($('#report_type').val() == 'month_report' ) {
+				$('input[id="date_from"]').validation();
+				$('input[id="date_to"]').validation();
+				if(!$('input[id="date_from"]').validation('isValid')){
+					return false;
+				}
+				if(!$('input[id="date_to"]').validation('isValid')){
+					return false;
+				}
+			}
+			return true;
+		});
+		
+		if($('#report_type').val() == "month_report") {
+			$('#month_report').show();
+			$('#today_report').hide();
+		}
+		else {
+			$('#month_report').hide();
+			$('#today_report').show();
+		}
+
+    });
+</script>
+<style type="text/css">
+	#date_from-error {
+		display:block;
+	}
+	#date_to-error {
+		display:block;
+	}
+</style>
+

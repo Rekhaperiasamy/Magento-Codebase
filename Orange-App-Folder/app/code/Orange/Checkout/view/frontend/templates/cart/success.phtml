@@ -1,0 +1,91 @@
+<?php 
+$order = $block->getOrder();
+$customerType = $block->getCustomerGroup($order->getCustomerGroupId()); ?>
+<div class="main-container">
+	<div class="container">
+	</div>
+	<?php $shippingAddress = $order->getShippingAddress(); ?>
+	<section>
+		<article id="node-62461" class="node node-landing-page style-layer-style--green clearfix">
+			<div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-m padding-xs-b-m">
+				<div class="container landing-page-top">
+					<div class="field field-name-field-display-title field-type-text field-label-hidden">
+						<div class="field-items">
+							<div class="field-item even">
+								<h2><?php echo __('Merci'); echo $shippingAddress->getFirstname(); echo ','; echo __('votre commande est validée'); ?></h2>	
+								<h4><?php echo __('Votre numéro de commande') ?>:<?php echo $block->getOrderId() ?></h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<div class="container">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('prepaid_order_next')->toHtml();?>
+			
+			<div class="well-grey margin-xs-v-l">
+				<div class="row">
+					<div class="col-xs-12 margin-xs-b-m">
+						<h3><?php echo __('Résumé de votre commande') ?></h3>
+					</div>
+					<div class="col-xs-12">
+					<?php $allItems = $order->getAllItems(); ?>
+					<?php foreach ($allItems as $item) : ?>
+						<?php $_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+							$product = $item->getProduct();							
+							$img = $_imagehelper->init($product,'category_page_list',array('height' => '80' , 'width'=> '80'))->getUrl();
+						?>
+						<h2 class="margin-xs-t-n">
+						<img src="<?php echo $img; ?>" /><?php echo intval($item->getData('qty_ordered')); ?>
+						<span class="inside-text"><?php echo $item->getName(); ?></span></h2>
+						<div class="short-desc">
+							<?php if($customerType == 'SOHO'): ?>
+								<?php 
+								if($item->getProduct()->getShortDescriptionSoho() =='') {
+									echo $item->getProduct()->getShortDescription();
+								} else {
+									echo $item->getProduct()->getShortDescriptionSoho();
+								}
+								?>
+							<?php else:?>
+								<?php echo $item->getProduct()->getShortDescription(); ?>
+							<?php endif;?>
+						</div>
+						<?php endforeach;?>
+					</div>
+					<div class="col-xs-12 col-sm-6 padding-xs-b-m padding-md-b-n">
+						<h3><?php echo __('Vos données personnelles') ?></h3>
+						<p>
+							<?php 
+								echo $shippingAddress->getPrefix().". ".$shippingAddress->getFirstname()." ".$shippingAddress->getLastname()."<br>";
+								echo $shippingAddress->getEmail()."<br>";
+								$date=date_create($shippingAddress->getDob());
+								echo date_format($date,"F d, Y")."<br>";
+							?>
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<h3><?php echo __('Adresse de livraison') ?></h3>
+						<p>
+							<?php $street = $shippingAddress->getStreet(); 
+							if($street && isset($street[1])):
+								$streetN = $street[1]." ".$street[0];
+							else:
+								$streetN = $street[0];
+							endif;							
+							?>							
+							<?php 
+								echo $streetN."<br>";
+								echo $shippingAddress->getCity()."<br>";
+								echo $shippingAddress->getRegion()." ".$shippingAddress->getPostcode()."<br>";							
+							?>
+						</p>
+					</div>
+				</div>				
+			</div>
+			
+
+		</div>
+
+	</section>
+</div>

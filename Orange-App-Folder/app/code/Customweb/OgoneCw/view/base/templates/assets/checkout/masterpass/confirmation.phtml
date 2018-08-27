@@ -1,0 +1,18 @@
+<div class="ogone-masterpass-shipping-pane">
+	<form action="<?php echo $confirmationPageUrl ?>" method="post">
+		<?php echo $shippingPane ?>
+		<input type="hidden" name="masterpass_update_shipping" value="true" />
+	</form>
+</div>
+
+<div class="ogone-masterpass-confirmation-pane">
+	<form action="<?php echo $confirmationPageUrl ?>" method="post">
+		<?php $additionalFormElements ?>
+		<?php echo $reviewPane ?>
+		<input type="hidden" name="masterpass_confirmation" value="true" />
+	</form>
+</div>
+
+<script type="text/javascript">
+<?php echo $javascript ?>
+</script>

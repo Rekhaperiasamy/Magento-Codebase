@@ -1,0 +1,39 @@
+<?php 
+$order    =  $block->getOrder(); 
+if($order->getShippingAddress() != ""):
+	$shippingAddress = $order->getShippingAddress();
+else:
+	$shippingAddress = $order->getBillingAddress();
+endif;
+$simnumber = '';
+foreach ($order->getAllVisibleItems() as $item) {
+	$designSimNumber = $item->getDesignSimNumber();
+	if ($designSimNumber == 1) {
+		$simnumber = 1;
+	}
+}
+?>
+
+<?php 
+echo $block->getChildHtml('success.newnumber', true);	
+?>
+<script>
+require([
+    'jquery',
+    'mage/translate'
+], function ($) {
+    $(window).load(function () {
+      
+	   if (window.frameElement) {
+ $('#contentIframe', window.parent.document).hide();
+				   var s = $('div').html();
+				   
+				   $('body', window.parent.document).html(s);
+				   
+				   $('.b2c-global-header-bar-middle').css({"height":"0"});
+				   //$("#contentIframe").hide();
+				   $('#contentIframe', window.parent.document).hide();
+				   }
+    });
+});
+</script>

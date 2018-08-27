@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+	    <!-- Removed Blocks from Header and Footer Part -->
+        <referenceBlock name="report.bugs" remove="true"/>
+        <referenceBlock name="catalog.topnav" remove="true" />
+        <referenceBlock name="header.panel" remove="true" />        
+        <referenceBlock name="logo" remove="true"/>
+        <referenceBlock name="top.search" remove="true"/>
+        <!--<referenceBlock name="minicart" remove="true"/>-->
+        <referenceBlock name="copyright" remove="true"/>
+        <referenceBlock name="footer_links" remove="true"/>
+        <referenceBlock name="form.subscribe" remove="true"/>
+		 <referenceContainer name="after.body.start">
+            <block class="Magento\RequireJs\Block\Html\Head\Config" name="requirejs-config"/>
+            <block class="Magento\Translation\Block\Html\Head\Config" name="translate-config"/>
+            <block class="Magento\Translation\Block\Js" name="translate" template="Magento_Translation::translate.phtml"/>
+            <block class="Magento\Framework\View\Element\Js\Cookie" name="js_cookies" template="Magento_Theme::js/cookie.phtml"/>
+            <block class="Magento\Theme\Block\Html\Notices" name="global_notices" template="html/notices.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" name="redirect.orange" template="Magento_Theme::html/orange_redirect.phtml"/> 
+        </referenceContainer>
+    
+        <referenceContainer name="header.panel.wrapper">
+            <block class="Magento\Framework\View\Element\Template" name="header.custom.links" template="Magento_Theme::html/header_body.phtml"/>              
+        </referenceContainer>
+       
+        
+        <referenceContainer name="footer-container">
+            <block class="Magento\Framework\View\Element\Template" name="footer.custom.links" template="Magento_Theme::html/footer_body.phtml"/>
+        </referenceContainer>
+
+       
+       
+    </body>
+</page>

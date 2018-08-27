@@ -1,0 +1,88 @@
+
+
+.header.panel > .header.links > li {
+    vertical-align: middle;
+}
+.link.notification .notification-wrapper{
+}
+.link.notification{
+    position: relative;
+}
+
+.link.notification .action.link {
+    padding-left: 11px;
+    display: block;
+    background-image: url(../images/bell.png);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    line-height: 28px;
+    height: 21px;
+}
+.link.notification .action.link .notification-count {
+    width: 16px;
+    text-align: center;
+    display: block;
+    line-height: 16px;
+    font-size: 10px;
+    background-color: red;
+    border-radius: 100%
+}
+.link.notification .notification-wrapper{
+    position: absolute;
+    width: 320px;
+    right: 0;
+    padding: 20px 0;
+    border: 1px solid #ccc;
+    top: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    background-color: #ffffff;
+    transition: all 0.15s ease 0s;
+    z-index: 10;
+    color: #41362f;
+    max-height: 500px;
+    overflow-y: auto;
+    font-size: 13px;
+
+}
+.link.notification .notification-wrapper a{
+
+    color: #41362f;
+
+}
+.link.notification .notification-wrapper li{
+
+    list-style: none;
+    padding: 10px;
+    padding-right: 25px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    position: relative;
+
+}
+.link.notification .notification-wrapper li:hover{
+
+    background-color: #E0F6FE;
+
+}
+.link.notification .notification-wrapper .notifications-entry-last {
+    border: none;
+}
+.link.notification .notification-wrapper .notifications-entry-last:hover {
+    background-color: transparent;
+}
+.link.notification .notification-wrapper .notifications-entry-last .action-tertiary:hover {
+    text-decoration: underline;
+}
+.link.notification .notifications-close {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    text-align: center;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    z-index: 10;
+}
+.link.notification .notifications-close:before{
+    content: "x";
+}

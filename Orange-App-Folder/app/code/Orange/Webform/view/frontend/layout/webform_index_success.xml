@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <head>
+        <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Orange_Webform::css/p05.css"/>
+		<css src="Magento_Catalog::css/jquery-ui.css"/>
+    </head>
+	<body>
+        <referenceContainer name="content">
+            <block class="Orange\Webform\Block\Index\Success" name="success" template="success.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

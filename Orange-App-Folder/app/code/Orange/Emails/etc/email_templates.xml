@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="entra_email_template" label="Entra Email" file="entra.html" type="html" module="Orange_Emails" area="frontend"/>
+	<template id="entra_email_soho" label="Entra Email Soho" file="soho.html" type="html" module="Orange_Emails" area="frontend"/>
+	<template id="entra_email_bundle" label="Entra Email Bundle" file="bundle.html" type="html" module="Orange_Emails" area="frontend"/>
+	<template id="entra_email_soho_bundle" label="Entra Email Soho Bundle" file="soho_bundle.html" type="html" module="Orange_Emails" area="frontend"/>	
+</config>

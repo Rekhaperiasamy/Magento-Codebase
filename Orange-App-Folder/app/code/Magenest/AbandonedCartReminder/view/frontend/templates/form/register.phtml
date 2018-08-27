@@ -1,0 +1,30 @@
+<?php
+/**
+ * Created by Magenest
+ * User: Luu Thanh Thuy
+ * Date: 17/06/2016
+ * Time: 10:03
+ */
+/** @var  $block \Magenest\AbandonedCartReminder\Block\Form\Customer\Mobile */
+$is_required_field = $block->isMobileRequired();
+?>
+<h2>What the hell?</h2>
+<fieldset class="fieldset create account"
+            <?php if ($is_required_field) { ?>
+          data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+            <?php } ?>
+    >
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Additional Information') ?></span></legend><br></p>
+
+<p>        <div class="field my_attribute <?php if ($is_required_field) {
+?> required <?php
+} ?>">
+    <label for="mobile_number" class="label"><span><?php /* @escapeNotVerified */ echo __('Mobile') ?></span></label>
+    <div class="control">
+        <input type="text" name="mobile_number" id="mobile_number" title="<?php /* @escapeNotVerified */ echo __('My Attribute') ?>" class="input-text"  <?php  if ($is_required_field) {
+?> data-validate="{required:true}" <?php
+} ?> autocomplete="off">
+    </div>
+</div>
+</div>
+</fieldset>

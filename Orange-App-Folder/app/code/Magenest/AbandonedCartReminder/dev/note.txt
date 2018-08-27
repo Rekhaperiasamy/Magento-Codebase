@@ -1,0 +1,36 @@
+need to test;
+
+   <ul>
+
+        <?php  if (is_object($notifications) && $notifications->getSize() > 0) { ?>
+
+            <?php  foreach ($notifications as $notification)  { ?>
+                <li class="notification-each">
+                    <strong> <?php  echo  $notification->getData('title') ?></strong>
+                    <p class="notification-des">
+                        <span class="notification-part-one"> <?php echo $notification->getFirstPart() ?></span>
+                        <span class="notification-part-two"> <?php echo $notification->getSecondPart() ?></span>
+                    </p>
+
+                    <span class="notification-time"> <?php echo  $notification->getTime()  ?></span>
+                    <button type="button" class="notifications-close" title="<?php echo __('Close')  ?>"></button>
+                </li>
+
+        <?php }  ?>
+        <?php }  ?>
+    </ul>
+
+
+
+  Notification list
+
+  menu;
+
+  this.menu = this.menu
+
+  getFux: test (){
+  if m
+
+
+
+  }

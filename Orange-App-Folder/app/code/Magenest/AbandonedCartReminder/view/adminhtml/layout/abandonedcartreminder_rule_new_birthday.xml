@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="left">
+            <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tabs" name="abandonedcartreminder_rule_new_tabs">
+                <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tab\Main" name="abandonedcartreminder_rule_new_tab_main"/>
+                <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tab\Condition\Birthday" name="abandonedcartreminder_rule_new_tab_conditions"/>
+                <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tab\Emails" name="abandonedcartreminder_rule_new_tab_emails"/>
+                <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tab\Coupon" name="abandonedcartreminder_rule_new_tab_coupon"/>
+                <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tab\GoogleAnalytic" name="abandonedcartreminder_rule_new_tab_ga"/>
+                <block class="Magenest\AbandonedCartReminder\Block\Adminhtml\Rule\Add\Tab\Message" name="abandonedcartreminder_rule_new_tab_message"/>
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">abandonedcartreminder_rule_new_tab_main</argument>
+                </action>
+                   <action method="addTab">
+                       <argument name="name" xsi:type="string">conditions_section</argument>
+                       <argument name="block" xsi:type="string">abandonedcartreminder_rule_new_tab_conditions</argument>
+                   </action>
+
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">email_section</argument>
+                    <argument name="block" xsi:type="string">abandonedcartreminder_rule_new_tab_emails</argument>
+                </action>
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">message_section</argument>
+                    <argument name="block" xsi:type="string">abandonedcartreminder_rule_new_tab_message</argument>
+                </action>
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">ga_section</argument>
+                    <argument name="block" xsi:type="string">abandonedcartreminder_rule_new_tab_ga</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">coupon_section</argument>
+                    <argument name="block" xsi:type="string">abandonedcartreminder_rule_new_tab_coupon</argument>
+                </action>
+
+            </block>
+            <!--<block class="Magento\Backend\Block\Template" template="Magento_SalesRule::promo/salesrulejs.phtml" name="abandonedcartreminder_rule_edit_jsinit"/>-->
+            <referenceContainer name="js">
+                <block class="Magento\Backend\Block\Template" template="Magenest_AbandonedCartReminder::rule/js.phtml" name="abandonedcartreminder_rule_add_jsinit"/>
+            </referenceContainer>
+            <block class="Magento\Backend\Block\Template" template="Magento_SalesRule::promo/salesrulejs.phtml" name="promo_quote_edit_jsinit"/>
+
+        </referenceContainer>
+
+    </body>
+</page>

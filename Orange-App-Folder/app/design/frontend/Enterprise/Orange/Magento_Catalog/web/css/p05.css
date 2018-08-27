@@ -1,0 +1,277 @@
+	.grey-bordered {
+		border: 2px solid #cccccc;
+		border-top: none;
+	}
+	.grey-bordered ul li {
+		font-size: 20px;
+		font-weight:bold;
+		margin-bottom:10px;
+	}
+	.grey-bordered ul li p {
+		font-weight:normal;
+	}
+	.grey-bordered ul li:before {
+		font-family: "orange-icons";
+		content: "\f1e3";	    
+			position: absolute;
+			left: 20px;
+		font-size:14px;
+		line-height:2;
+	}
+	.grey-bordered ul {
+		margin-bottom:20px;
+			list-style: none; /* Remove list bullets */
+			padding-left:20px;
+	}
+	.black-bordered .oi {
+		font-size: 60px;
+		line-height: 60px;
+	}
+	.flex {
+		display:flex;
+	}
+	.price-box {
+		background: black;
+		color: white;
+		padding:20px 17px;
+		height:80px;
+	}
+	.price-box h1 {
+		font-size:60px;
+		margin:0px;
+	}
+	.price-box h2 {
+		font-size:40px;
+		margin:0px;
+	}
+	.price-box small {
+		font-size:24px;
+		margin:0px;
+	}
+	.old-price {
+		text-decoration: line-through;
+		font-size:20px;
+		font-weight:normal;
+	}
+	.full-price {
+		font-size:20px;
+		font-weight:bold;
+	}
+	.new-price {
+		font-size:40px;
+	}
+	.gray {
+		color:#aaa;
+	}
+	.cta-text {
+		font-size:20px;
+	}
+	.offer-phone {
+		background:url(../images/Huawei_Y5.jpg) no-repeat center 10px;
+		background-size:contain;
+		height:330px;
+	}
+	.phone-item {
+		border-bottom: 2px solid #cccccc;
+	}
+	.no-border {
+		border-bottom: 0;
+	}
+	.phone-item h3{
+		line-height:1.4;
+	}
+	.content-collapsable h4 {
+		cursor: pointer;
+			padding: 15px 0;
+			border-top: 1px solid #cccccc;
+			margin: 0;
+			position: relative;
+	}
+	
+	.content-collapsable:last-child {
+		border-bottom: 1px solid #cccccc;
+	}
+
+	.content-collapsable h4:after {
+		font-family: 'Glyphicons Halflings';
+			content: '\e252';
+			position: absolute;
+			right: 0;
+	}
+	.content-collapsable h4.open:after {
+			content: '\e253';
+	}
+	.content-collapsable ol li {
+			font-weight: normal;
+	}
+	.content-collapsable ol.closed {
+			display:none;
+	}
+	.dropdown {
+		display:inline-block;
+	}
+	.dropdown a {
+		margin-top:0px;
+	}
+	.aqua {
+		background:#45bf97;
+		color:black;
+		padding:10px;
+		margin-top:10px;
+		margin-bottom:20px;
+	}
+	.black-bgd {
+		background:#000;
+		color:white;
+		padding:10px;
+		margin-top:10px;
+		margin-bottom:20px;
+	}
+	.rating {
+		font-size:20px;
+		vertical-align:-2px;
+	}
+	.ratings {
+		margin-bottom:20px;
+	}
+	.green {
+		color:#56c197;
+	}
+	.white {
+		color:#fff;
+	}
+	.media-left img {
+		margin-top:5px;
+	}
+	.font-24 {
+		font-size: 24px;
+	}
+	.drowpdown-full-width {
+		width: 100%;
+	}
+	.drowpdown-full-width a {
+		width: 100%;
+		text-align: left;
+	}
+	.drowpdown-full-width a i {
+		float: right;
+		margin-top: 3px;
+	}
+	.search-device {
+		border: 2px solid #222;
+		background: transparent url(../images/search-icon.png) no-repeat;
+	}
+	.well-grey {
+		padding: 25px;
+		background-color: #eee;
+	}
+	.well-grey h3 {
+		margin-top: 0;
+	}
+	.inside-text {
+		font-size: 18px;
+		vertical-align: top;
+	}
+	.checked-list {
+		list-style: none;
+		padding-left: 25px;
+	}
+	.checked-list li {
+    	font-weight: bold;
+    	margin-bottom: 10px;
+	}
+	.checked-list li:before {
+    	font-family: "orange-icons";
+	    content: "\f1e3";
+	    position: absolute;
+	    left: 10px;
+	    font-size: 14px;
+	    line-height: 1.7;
+	}
+	.form-item-gender {
+		margin-right: 25px;
+	}
+	.label-name {
+		line-height: 42px;
+	}
+	.label-name-2lines {
+		line-height: 0.8;
+	}
+	.form-line {
+		margin-bottom: 15px;
+	}
+	.form-checkbox {
+	    border: 2px solid #999999 !important;
+	    height: 20px !important;
+	    width: 20px !important;
+	    margin-right: 10px !important;
+	    margin-bottom: -4px !important;
+	}
+	ol {
+		padding-left: 20px;
+	}
+	ol li {
+		padding-left: 10px;
+		font-weight: normal;
+	}
+	.lowercase {
+		font-weight: normal !important;
+	}
+	.separator {
+		width: 100%;
+		border-top: 2px solid #ccc;
+		text-align: center;
+		height: 2px;
+		margin:15px 0 20px 0;
+	}
+	.separator .plus-box-grey {
+		width: 40px;
+		height: 10px;
+		background-color: #eee;
+		margin: 0 auto;
+		margin-top: -10px;
+	}
+	.separator .glyphicon {
+		margin-top: 0;
+	}
+	.well-black {
+		padding: 45px;
+		background-color: #000;
+		color: #fff;
+	}
+	.well-black h4 {
+		font-size: 20px !important;
+    	margin-top: 4px;
+	}
+	/*.style-layer-style--green {
+		background-color: #50be87;
+	}*/
+	@media (min-width: 768px) {
+		.black-bordered {
+			display:flex;
+		}
+		.offer-phone {
+			background-size:cover;
+			height:100%;
+		}
+		.cta-text {
+			font-size:16px;
+		}
+		.price-box.right {
+			text-align:right;
+		}
+		.order-dd {
+			text-align:right;
+		}
+	}
+	@media (max-width: 768px) {
+		.drowpdown-full-width {
+			margin-top: 20px;
+		}
+		.label-name {
+			line-height: 100%;
+		}
+		.form-line {
+			margin-bottom: 10px;
+		}
+	}

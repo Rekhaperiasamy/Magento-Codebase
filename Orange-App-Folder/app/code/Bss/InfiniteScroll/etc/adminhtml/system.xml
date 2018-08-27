@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!--
+/**
+* BSS Commerce Co.
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the EULA
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://bsscommerce.com/Bss-Commerce-License.txt
+*
+* =================================================================
+*                 MAGENTO EDITION USAGE NOTICE
+* =================================================================
+* This package designed for Magento COMMUNITY edition
+* BSS Commerce does not guarantee correct work of this extension
+* on any other Magento edition except Magento COMMUNITY edition.
+* BSS Commerce does not provide extension support in case of
+* incorrect edition usage.
+* =================================================================
+*
+* @category   BSS
+* @package    Bss_InfiniteScroll
+* @author     Extension Team
+* @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
+* @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">
+            <label><![CDATA[Bss Commerce]]></label>
+        </tab>
+        <section id="infinitescroll" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[Infinite Scroll]]></label>
+            <tab>bss</tab>
+            <resource>Bss_InfiniteScroll::config_infinitescroll</resource>
+            <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="loading_icon" translate="label" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Loading Icon</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">infinitescroll</upload_dir>
+                    <base_url type="media" scope_info="1">infinitescroll</base_url>
+                </field>
+                <field id="loading_icon_text" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text After Loading Icon</label>
+                </field>
+                <field id="use_previous" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Previous</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="triggerpage_threshold" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show load more button pages</label>
+                    <comment><![CDATA[Page number after which a 'Load more items' link is displayed. Users will manually trigger the loading of the next page by clicking this link.]]></comment>
+                </field> 
+                <field id="exclude_category" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude Category</label>
+                </field>
+                <field id="active_lazy" translate="label" type="select" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled Lazy Loading</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="gototop" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Go To Top</label>
+                <field id="enabled_gototop" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Go To Top</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="trigger" translate="label" type="text" sortOrder="171" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Trigger</label>
+                    <comment><![CDATA[After how many scrolled down pixels the button must be shown.]]></comment>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                        <field id="always_visible">0</field>
+                    </depends>
+                </field>
+                <field id="location_offset" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Location Offset</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="bottom_offset" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bottom Offset</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="container_size" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Container Size</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="container_radius" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Container Radius</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="hide_under_width" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide Under Width</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="container_color" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Container Color</label>
+                    <validate>jscolor</validate>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="arrow_color" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Arrow Color</label>
+                    <validate>jscolor</validate>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="text_hover" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>A text to show on the button mouse hover</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="zindex" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>zIndex</label>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="always_visible" translate="label" type="select" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Always Visible</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Set the button to be always visible.]]></comment>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="location" translate="label" type="select" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Location</label>
+                    <source_model>Bss\InfiniteScroll\Model\System\Location</source_model>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+                <field id="goup_speed" translate="label" type="select" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Go Up Speed</label>
+                    <source_model>Bss\InfiniteScroll\Model\System\Goupspeed</source_model>
+                    <depends>
+                        <field id="enabled_gototop">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="btn_loadmore" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Button Load More</label>
+                <field id="text_btn_loadmore" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Button Load More</label>
+                </field>
+                <field id="text_btn_prev" translate="label" type="text" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Button Load Previous</label>
+                </field>
+                <field id="text_end_load" translate="label" type="text" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text No More</label>
+                    <comment><![CDATA[Add a text when there are no more pages left to load.]]></comment>
+                </field>
+                <field id="background_btn_loadmore" translate="label" type="text" sortOrder="230" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Button Load More</label>
+                    <validate>jscolor</validate>
+                </field>
+                <field id="color_btn_loadmore" translate="label" type="text" sortOrder="240" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Color Button Load More</label>
+                    <validate>jscolor</validate>
+                </field>
+                <!-- <field id="hover_btn_loadmore" translate="label" type="text" sortOrder="250" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hover Button Load More</label>
+                </field> -->
+            </group>
+        </section>
+    </system>
+</config>

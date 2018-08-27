@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>       
+        <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Magento_Bundle::css/p12.css"/> 
+        <css src="Orange_Catalog::css/product_view_page.css"/>   
+        <css src="Orange_Catalog::css/magnify.css"/>
+        <css src="Orange_Catalog::css/marketing-description.css"/>
+        <css src="https://mark.reevoo.com/stylesheets/reevoomark/embedded_reviews.css" src_type="url"/> 
+		 <link src="Orange_Catalog::js/collapse.js"/>
+		<link src="Orange_Catalog::js/responsive-tabs.js"/>
+		<link src="Orange_Catalog::js/jquery.magnify.js"/>
+		<link src="Orange_Catalog::js/jquery.magnify-mobile.js"/>
+    </head>   
+    <body>
+        <attribute name="class" value="page-product-bundle"/>
+        <referenceBlock name="product.info.review" remove="true" />
+        <referenceBlock name="product.info.sku" remove="true" />
+        <referenceBlock name="product.info.description" remove="true"/>
+        <referenceBlock name="product.info.extrahint" remove="true" />
+        <referenceBlock name="breadcrumbs" remove="true"/>
+        <referenceBlock name="page.main.title" display="false"/>
+        <referenceBlock name="reviews.tab" remove="true"/>   
+        <referenceBlock name="content.aside" remove="true"/>	
+        <referenceBlock name="product.attributes" remove="true"/>              
+        <referenceBlock name="product.price.final" remove="true"/>
+        <referenceBlock name="navigation.sections" remove="true"/>
+        <referenceBlock name="product.info.stock.sku" remove="true"/>
+    
+        <referenceContainer name="product.info.type">
+            <block class="Magento\Catalog\Block\Product\View\Type\Simple" name="product.info.simple" as="product_type_data" template="product/view/type/default.phtml"/>
+            <container name="product.info.simple.extra" after="product.info.simple" as="product_type_data_extra" label="Product Extra Info"/>			 
+        </referenceContainer>
+        
+        <referenceBlock name="product.info.details">
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="tab1" template="Orange_Catalog::product/view/tabs/product_detail_tab.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Détail du produit</argument>
+                </arguments>
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="tab5" template="Orange_Catalog::product/view/tabs/cashback.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Cashback</argument>
+                </arguments>
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="tab2" template="Orange_Catalog::product/view/tabs/product_characteristics_tab.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Caractéristiques</argument>
+                </arguments>
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="tab3" template="Orange_Catalog::product/view/tabs/product_notice_tab.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Avis</argument>
+                </arguments>
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="tab4" template="Orange_Catalog::product/view/tabs/product_similar_tab.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Produits similaires</argument>
+                </arguments>
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="tab8" template="Orange_Catalog::product/view/tabs/promo_description.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Promos et cadeaux</argument>
+                </arguments>                
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="conditions_nintendo" template="Orange_Catalog::product/view/tabs/product_conditions_nintendo.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Conditions</argument>
+                </arguments>
+            </block>
+            <block class="Orange\Catalog\Block\Product\CustomView" group="detailed_info" name="amortissement" template="Orange_Catalog::product/view/tabs/product_amortissement.phtml">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Amortissement</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    
+        <referenceContainer name="content">
+            <container before="-" htmlClass="container" htmlTag="div" label="Product info auxiliary container" name="product.detail.top.container">                
+                <container before="-" htmlClass="row margin-xs-v-m" htmlTag="div" label="Product info auxiliary container" name="product.detail.container">                    
+					
+                    <block before="product.info.main"  class="Orange\Catalog\Block\Product\CustomView" name="product.info.media.name" template="Orange_Catalog::product/view/custom_container.phtml" >
+                        <block class="Orange\Catalog\Block\Product\CustomView" name="product.name.review.section" template="Orange_Catalog::product/view/product_rating_name.phtml" />						
+                        <block after="product.info.main" class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>                            
+                    </block>
+                    <container after="product.info.media.name" htmlClass="col-xs-12 col-sm-6 col-sm-offset-1 bundle-view" htmlTag="div" before="-">
+                        <block before="product.info" class="Magento\Catalog\Block\Product\View" name="bundle.summary" as="form_bottom" template="Magento_Bundle::catalog/product/view/type/summary.phtml"> 
+                            <block class="Magento\Catalog\Block\Product\View" name="virtual_prod" template="Magento_Bundle::catalog/product/view/type/bundle/virtual.phtml"/>                              
+                            <block class="Magento\Cms\Block\Block" name="bundle_virtual_block">
+                                <arguments>
+                                    <argument name="bundle_virtual_block" xsi:type="string">bundle_virtual_block</argument>
+                                </arguments>
+                            </block>
+                        </block>
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info" template="Orange_Catalog::product/view/form_bundled.phtml" after="alert.urls">
+                            <container name="product.info.form.content" as="product_info_form_content">
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart" as="addtocart" template="product/view/addtocart.phtml"/>
+                            </container>
+                            <block class="Magento\Framework\View\Element\Template" name="product.info.form.options" as="options_container">
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper" as="product_options_wrapper" template="product/view/options/wrapper.phtml">
+                                    <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="product/view/options.phtml">
+                                        <block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" as="default" template="product/view/options/type/default.phtml"/>
+                                        <block class="Magento\Catalog\Block\Product\View\Options\Type\Text" as="text" template="product/view/options/type/text.phtml"/>
+                                        <block class="Magento\Catalog\Block\Product\View\Options\Type\File" as="file" template="product/view/options/type/file.phtml"/>
+                                        <block class="Magento\Catalog\Block\Product\View\Options\Type\Select" as="select" template="product/view/options/type/select.phtml"/>
+                                        <block class="Magento\Catalog\Block\Product\View\Options\Type\Date" as="date" template="product/view/options/type/date.phtml"/>
+                                    </block>
+                                    <block class="Magento\Framework\View\Element\Html\Calendar" name="html_calendar" as="html_calendar" template="Magento_Theme::js/calendar.phtml"/>
+                                </block>
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="product/view/options/wrapper/bottom.phtml">
+                                    <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart.additional" as="product.info.addtocart" template="product/view/addtocart.phtml"/>
+                                </block>
+                            </block>
+                            <block class="Orange\Catalog\Block\Product\CustomView" name="product.click.reserve" as="click_reserve" template="Orange_Catalog::product/view/click_reserve.phtml"/>
+                        </block>
+                        
+                    </container>
+                    
+                    <referenceBlock name="product.info.options.wrapper">            
+                        <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle" name="product.info.bundle.options" as="type_bundle_options" template="Magento_Bundle::catalog/product/view/type/bundle/options.phtml" before="-">                      
+                            <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Checkbox" name="product.info.bundle.options.checkbox" as="checkbox"/>
+                        </block>
+                    </referenceBlock> 
+                </container>
+               
+            </container>
+            
+        
+        
+            <container htmlClass="container" htmlTag="div" label="Product info auxiliary container" name="product.detail.bottom.container">
+                <container htmlClass="row" htmlTag="div" label="Product info auxiliary container" name="product.detail.row.container">
+                    <container htmlClass="col-xs-12" htmlTag="div" label="Product info auxiliary container" name="product.detail.tab.container">
+                        <!-- <block class="Orange\Catalog\Block\Product\CustomView" name="product.detail.section" template="Orange_Catalog::product/view/product_device_details.phtml" />						 -->
+                    </container>
+                </container>
+            </container>
+            <block after="-" class="Orange\Catalog\Block\Product\CustomView" name="product.buy.section" template="Orange_Catalog::product/view/product_device_buy.phtml"/>
+      
+        </referenceContainer>
+       
+        
+        <move after="product.info.review" destination="product.info.media.name" element="product.info.media"/>
+        <move destination="product.detail.tab.container" element="product.info.details"/>
+        
+        
+        <referenceContainer name="product.info.media" htmlTag="div" htmlClass="" after="product.info.main" />
+        <referenceBlock name="product.info.media.image">		
+            <block class="Orange\Catalog\Block\Product\CustomView" name="product.color.swatch" template="Magento_Bundle::catalog/product/view/type/bundle/product_color_swatch.phtml"/>
+        </referenceBlock>
+       
+        <referenceContainer name="content">
+            <container name="bundle.options.container" htmlTag="div" htmlClass="bundle-options-container" after="product.info.media"/>
+        </referenceContainer>
+    </body>
+</page>

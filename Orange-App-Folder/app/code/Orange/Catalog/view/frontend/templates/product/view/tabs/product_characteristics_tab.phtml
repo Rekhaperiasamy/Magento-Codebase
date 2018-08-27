@@ -1,0 +1,343 @@
+﻿<?php 
+if ($this->getAttributeSetName() != "Accessories") {
+    ?> 
+<div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <div id="mob_specs">
+            <div class="box open">
+                <h3 class="block-title padding-xs-v-n"><?php /* @escapeNotVerified */ echo __('Général') ?></h3>
+                </h3>
+                <table>
+                    <thead></thead>
+                    <tbody>
+                        <?php if($block->getProduct()->getScreenSize()!=''): ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __("Taille de l'écran") ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($block->getProduct()->getScreenSize()) ?></td>
+                        </tr>
+                        <?php endif; ?>
+						<?php if($block->getProduct()->getScreenResolution()!=''): ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __("Résolution de l'écran") ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($block->getProduct()->getScreenResolution()) ?></td>
+                        </tr>
+						<?php endif; ?>	
+						<tr class="odd">
+							<th><?php /* @escapeNotVerified */ echo __('Ecran tactile') ?></th>							
+							<?php if($block->getProduct()->getTouchsreen() == 1): ?>                                                    
+							<td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>                        
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+						<?php if($block->getProduct()->getLength() !='' && $block->getProduct()->getWidth()!='' && $block->getProduct()->getThicknessHeight()!=''): ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Dimensions') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __(floatval($block->getProduct()->getLength())." x ".floatval($block->getProduct()->getWidth())." x ".floatval($block->getProduct()->getThicknessHeight()).' mm') ?></td>
+                        </tr>
+						<?php endif; ?>
+						<?php if($block->getProduct()->getWeight()!=''): ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Poids') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __(floatval($block->getProduct()->getWeight())." g")  ?></td>
+                        </tr>
+						<?php endif; ?>
+						<?php if($block->getProduct()->getBatteryCharge()!=''): ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Capacité de la batterie') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($block->getProduct()->getBatteryCharge()) ?></td>
+                        </tr>
+						<?php endif; ?>						
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Batterie amovible') ?></th>
+							<?php if($block->getProduct()->getRemovableBattery() == 1): ?>
+								<td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+                            <td>-</td>
+							<?php endif; ?>
+                        </tr>						
+                        <?php $internalMemory = $block->getProduct()->getResource()->getAttribute('internal_memory')->getFrontend()->getValue($block->getProduct()); ?>
+						<?php if($internalMemory!=''):?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Mémoire interne') ?></th>
+                            <td>						
+                                <?php /* @escapeNotVerified */ echo __($internalMemory) ?>
+                            </td>
+                        </tr>
+						<?php endif; ?>
+						 <?php $expandableMemory = $block->getProduct()->getResource()->getAttribute('expandable_memory')->getFrontend()->getValue($block->getProduct()); ?>
+						<?php if($expandableMemory!=''):?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Mémoire extensible') ?></th>
+                            <td>						
+                                <?php /* @escapeNotVerified */ echo __($expandableMemory) ?>
+                            </td>
+                        </tr>
+						<?php endif; ?>
+                        <?php $simType = $block->getProduct()->getResource()->getAttribute('sim_type')->getFrontend()->getValue($block->getProduct()); ?>
+						<?php if($simType!=''): ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Format de carte SIM') ?></th>
+                            <td>
+                                <?php if($block->getProduct()->getDualSim()): ?>
+                                <?php /* @escapeNotVerified */ echo __($simType) ?>
+                                <?php else: ?>
+                                <?php /* @escapeNotVerified */ echo __($simType) ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+						<?php endif; ?>
+						<?php if($block->getProduct()->getAccessoriesInBox()!=''):?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Accessoires inclus') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($block->getProduct()->getAccessoriesInBox()) ?></td>
+                        </tr>
+						<?php endif; ?>
+						
+						
+                    </tbody>
+                </table>
+            </div>
+            <div class="box">
+                <h3 class="block-title"><?php /* @escapeNotVerified */ echo __('Système') ?></h3>
+                <table>
+                    <thead></thead>
+                    <tbody>
+                        <?php $osType = $block->getProduct()->getResource()->getAttribute('os_details')->getFrontend()->getValue($block->getProduct()); ?>
+						<?php if($osType!=''): ?> 
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __("Système d'exploitation") ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($osType) ?></td>
+                        </tr>
+						<?php endif; ?>
+                        <?php 
+                            //$processorType = $block->getProduct()->getResource()->getAttribute('processor')->getFrontend()->getValue($block->getProduct());
+                            $processorType = $block->getProduct()->getProcessor();
+                            //$processorSpeed = $block->getProduct()->getResource()->getAttribute('processor_speed')->getFrontend()->getValue($block->getProduct()); 
+                        ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Processeur') ?></th>
+                            <td>
+                                <?php /* @escapeNotVerified */ echo __($processorType) ?>						
+                            </td>
+                        </tr>
+                        <?php $ram = $block->getProduct()->getResource()->getAttribute('ram')->getFrontend()->getValue($block->getProduct());?>
+						<?php if($ram!=''): ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('RAM') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($ram) ?></td>
+                        </tr>
+						<?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box">
+                <h3 class="block-title"><?php /* @escapeNotVerified */ echo __('Connectivité') ?></h3>
+                <table>
+                    <thead></thead>
+                    <tbody>
+                        <?php $mobileNetwork = $block->getProduct()->getResource()->getAttribute('mobile_network_type')->getFrontend()->getValue($block->getProduct());?>
+						<?php if($mobileNetwork!=''): ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Accès internet mobile') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($mobileNetwork) ?></td>
+                        </tr>
+						<?php endif; ?>
+                        <?php 
+                            $twoGband = $block->getProduct()->getResource()->getAttribute('bands_2g')->getFrontend()->getValue($block->getProduct());
+                            $threeGband = $block->getProduct()->getResource()->getAttribute('bands_3g')->getFrontend()->getValue($block->getProduct());
+                            //$fourGband = $block->getProduct()->getResource()->getAttribute('bands_4g')->getFrontend()->getValue($block->getProduct());
+                            $fourGband = $block->getProduct()->getBands4g();
+                            ?>
+						<?php if($twoGband!=''): ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Frequences') ?><?php /* @escapeNotVerified */ echo __('2G (MHz)') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($twoGband) ?></td>
+                        </tr>
+						<?php endif; ?>
+						<?php if($threeGband!=''): ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Frequences') ?><?php /* @escapeNotVerified */ echo __('3G (MHz)') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($threeGband) ?></td>
+                        </tr>
+						<?php endif; ?>
+						<?php if($fourGband!=''): ?>
+                        <tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Frequences') ?><?php /* @escapeNotVerified */ echo __('4G (MHz)') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($fourGband) ?></td>
+                        </tr>
+						<?php endif; ?>						
+                        <?php $bluetooth = $block->getProduct()->getBluetooth(); ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Bluetooth') ?></th>
+                        <?php if($bluetooth == 1): ?>                        
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+						<?php else:?>
+                            <td>-</td>
+						<?php endif; ?>
+                        </tr>                        
+                        <?php $wifi = $block->getProduct()->getWifi(); ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('WIFI') ?></th>
+                        <?php if($wifi == 1): ?>                        
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+						<?php else:?>
+                            <td>-</td>
+						<?php endif; ?>
+                        </tr>                        
+                        <?php $gps = $block->getProduct()->getGps(); ?>
+						 <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('GPS') ?></th>
+							<?php if($gps == 1): ?>                       
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+                        </tr> 
+                        <?php $usb = $block->getProduct()->getUsbPort();//5489 attributename changed. ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('USB') ?></th>
+							<?php if($usb == 1): ?>                        
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                        <?php $wireless = $block->getProduct()->getWirelessCharging(); ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Recharge sans fil') ?></th>
+							<?php if($wireless == 1): ?>                        
+								<td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                        <?php $nfc = $block->getProduct()->getNfc(); ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('NFC') ?></th>
+							<?php if($nfc == 1): ?>
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                        <?php $hdVoice = $block->getProduct()->getHdVoice(); ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('HD Voice') ?></th>
+							<?php if($hdVoice == 1): ?>                        
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box">
+                <h3 class="block-title"><?php /* @escapeNotVerified */ echo __('Multimédia') ?></h3>
+                <table>
+                    <thead></thead>
+                    <tbody>
+                        <?php 
+                            $primaryCamera = $block->getProduct()->getResource()->getAttribute('primary_camera_resolution')->getFrontend()->getValue($block->getProduct());
+                            ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Appareil photo') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($primaryCamera) ?></td>
+                        </tr>
+                        <?php $flash = $block->getProduct()->getFlash(); ?>
+						<tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Flash') ?></th>
+							<?php if($flash == 1): ?>                        
+								<td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="check"></td>
+							<?php else:?>
+								<td>-</td>
+							<?php endif; ?>
+						</tr>
+                        <?php 
+                            $secondaryCamera = $block->getProduct()->getResource()->getAttribute('secondary_camera_resolution')->getFrontend()->getValue($block->getProduct());
+                            ?>
+                        <tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('Appareil photo avant') ?></th>
+                            <td><?php /* @escapeNotVerified */ echo __($secondaryCamera) ?></td>
+                        </tr>
+                        <?php $video = $block->getProduct()->getVideoCapture(); ?>
+						<tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Video') ?><?php /* @escapeNotVerified */ echo __('HD') ?></th>
+							<?php if($video == 1): ?>
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="included"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                        <?php $mplayer = $block->getProduct()->getData('mp3_player'); ?>
+						<tr class="odd">
+                            <th><?php /* @escapeNotVerified */ echo __('MP3') ?></th>
+							<?php if($mplayer == 1): ?>                        
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="included"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                        <?php $fmRadio = $block->getProduct()->getFmRadio(); ?>
+						<tr class="even">
+                            <th><?php /* @escapeNotVerified */ echo __('Radio FM') ?></th>
+							<?php if($fmRadio == 1): ?>
+                            <td><img src="<?php echo $this->getViewFileUrl('images/check.png'); ?>" alt="included"></td>
+							<?php else:?>
+							<td>-</td>
+							<?php endif; ?>
+						</tr>
+                    </tbody>
+                </table>
+            </div>
+			<div class="box">
+		         <h3 class="block-title padding-xs-v-n"><?php /* @escapeNotVerified */ echo __('Environment and Health') ?></h3>
+                <table>
+					<?php if($block->getProduct()->getSarDarDetails()!=''):?>
+										<tr class="even">
+											<th><?php /* @escapeNotVerified */ echo __('SAR/DAS') ?></th>
+											<td><?php /* @escapeNotVerified */ echo __($block->getProduct()->getSarDarDetails()) ?>&nbsp;<label for="SAT"><a type="button" data-toggle="tooltip" data-placement="right" data-html= "true" title="" data-original-title="<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('sat')->toHtml(); ?>" class="orange visible-md visible-sm">?</a>
+											<a type="button" data-toggle="tooltip" data-placement="left" data-html= "true" title="" data-original-title="<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('sat')->toHtml(); ?>" class="orange visible-xs">?</a>
+											</label></td>
+											
+										</tr>
+					 <?php else:?>
+										<tr class="even">
+											<th><?php /* @escapeNotVerified */ echo __('SAR/DAS') ?></th>
+											<td>-&nbsp;<label for="SAT"><a type="button" data-toggle="tooltip" data-placement="right" data-html= "true" title="" data-original-title="<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('sat')->toHtml(); ?>" class="orange visible-md visible-sm">?</a>
+											<a type="button" data-toggle="tooltip" data-placement="left" data-html= "true" title="" data-original-title="<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('sat')->toHtml(); ?>" class="orange visible-xs">?</a></label></td>
+										</tr>
+					<?php endif; ?>
+				</table>
+		    </div>	
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery','js/tooltipform'], function ($) {
+$(document).ready(function(){
+//$('[data-toggle="tooltip"]').tooltip(); 
+var timeout;
+var finishTimeout = false;
+$('.orange').on("mouseover", function () {
+   var el = $(this);
+    timeout = setTimeout(function(){
+       finishTimeout = true;
+       el.tooltip( "open" );
+       finishTimeout = false;
+    },1000);
+});
+
+$('.orange').mouseout(function(){
+    clearTimeout(timeout);
+}); 
+
+if ('ontouchstart' in document.documentElement){ 
+  $('body').css('cursor', 'pointer');
+} 
+
+});
+});
+</script>
+<?php } ?>

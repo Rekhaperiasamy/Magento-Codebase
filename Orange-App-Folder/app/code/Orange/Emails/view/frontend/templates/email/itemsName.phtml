@@ -1,0 +1,885 @@
+<?php $_order = $block->getOrder(); 
+	$items = $_order->getAllItems(); 
+	$TypeId = '';
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$model = $objectManager->create('Orange\Abandonexport\Model\Items');
+	$abandonexport = $model->getCollection()->addFieldToFilter('quote_id',$_order->getQuoteId());
+	$gender = unserialize($abandonexport->getFirstItem()->getStepsecond());
+	$successBlock= $block->getLayout()->createBlock('Orange\Checkout\Block\Onepage\Success');
+	$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+    $store = $storeManager->getStore();
+    $storeId = $store->getStoreId();
+	$postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+	$customerType = $successBlock->getCustomerGroup($_order->getCustomerGroupId());
+	$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+	$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+	$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+	$discountSohoPrice = $productViewblock->getSohoDiscountAmount();
+	if($customerType == 'SOHO'):
+		$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy_soho', $storeScope);
+	else:
+		$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy', $storeScope);
+	endif;
+	$iewTelephone = "";
+	$iewContract = "";
+	$iewFirstname = "";
+	$iewLastname = "";
+	$iewDob = "";
+	$isTeneuroYes = "";
+	if ((isset($gender['iew_items'])) && $gender['iew_items']) {
+	    $isTeneuroYes = $gender['is_teneuro_'.$gender['iew_items']];
+		$iewTelephone = $gender['iew_telephone_'.$gender['iew_items']];
+		$iewContract = $gender['iew_contract_'.$gender['iew_items']];
+		$iewFirstname = $gender['iew_first_name_'.$gender['iew_items']];
+		$iewLastname = $gender['iew_last_name_'.$gender['iew_items']];
+		$iewDob = $gender['iew_dob_'.$gender['iew_items']];
+	}
+?>
+ <?php foreach ($items as $item) {
+		$postpaidModelCollections = $postpaidModel->getCollection()
+		->addFieldToFilter('quote_id',$_order->getQuoteId())
+		->addFieldToFilter('item_id',$item->getData('quote_item_id'));
+		$_product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getProduct()->getId());
+        if ($item->getProduct()->getTypeId() == 'virtual' && $item->getParentItemId() == '') {
+		$i = 1;
+		foreach ($postpaidModelCollections as $postpaidCollection) {
+			echo '<tr><td>'; 
+			echo 'Product name';
+			echo '</td><td>:</td><td>';
+			if($postpaidModelCollections->count() >1 ){
+				echo  '<b>'.$item->getName().' ('.$i.')</b>';
+			} else {
+				echo  '<b>'.$item->getName().'</b>';
+			}
+			echo '</td></tr>';
+			$attr = $_product->getSubscriptionAmount();
+			echo '<tr><td>'; 
+			echo 'Monthly price';
+			echo '</td><td>:</td><td>';
+			if($customerType == 'SOHO') {
+				$sohoPrice = $attr / (1+($discountSohoPrice/100));
+				if ($storeId == '2') {
+					echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($attr,2)).' TVA incl.)</b>';
+				} else {
+					echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($attr,2)).' Incl. BTW)</b>';
+				}
+			} else {
+				echo  '<b>€'.str_replace('.',',',number_format($attr,2)).'</b>';
+			}
+			echo '</td></tr>';
+			$webpromo =  strip_tags($_product->getWebPromo());
+			if($webpromo != '') {
+				echo '<tr><td>'; 
+				echo 'Web promo';
+				echo '</td><td>:</td><td>';
+				echo  '<b>'.$webpromo.'</b>';
+				echo '</td></tr>';
+			}
+			if($postpaidCollection->getProPacks()) {
+				echo '<tr><td>'; 
+				echo 'ProPacks';
+				echo '</td><td>:</td><td>';
+				echo  '<b>'.$postpaidCollection->getProPacks().'</b>';
+				echo '</td></tr>';
+			}
+			// if($_product->getSubsidyDuration() == 12) {
+				// echo '<tr><td>'; 
+				// echo 'Attribute';
+				// echo '</td><td>:</td><td>';
+				// echo  '<b>Loyalty Advantage</b>';
+				// echo '</td></tr>';
+			// } else if($_product->getSubsidyDuration() == 24) {
+				// echo '<tr><td>'; 
+				// echo 'Attribute';
+				// echo '</td><td>:</td><td>';
+				// echo  '<b>Phone Advantage</b>';
+				// echo '</td></tr>';
+			// }
+			$attributeSetChild = $successBlock->getAttributeSetName($item->getProduct()->getAttributeSetId());
+			if($postpaidCollection->getDesignSimNumber()==1) {
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==1) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Migration</b>';
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Operator';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Orange</b>';
+					echo '</td></tr>';
+				} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==3) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>MNP</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+					  echo  '<b>nouveau numéro</b>';
+					} else {
+						echo  '<b>nieuw nummer</b>';
+					}
+					echo '</td></tr>';
+				}
+				echo '<tr><td>'; 
+				echo 'Number configuration';
+				echo '</td><td>:</td><td>';
+				if ($storeId == '2') {
+					echo  '<b>Garder votre numéro</b>';
+				} else {
+					echo  '<b>Je nummer behouden</b>';
+				}
+				echo '</td></tr>';
+				echo '<tr><td>'; 
+				if ($storeId == '2') {
+					echo 'Number';
+				} else {
+					echo 'Number';
+				}
+				echo '</td><td>:</td><td>';
+				if ($storeId == '2') {
+					echo  '<b>'.$postpaidCollection->getDesignTeExistingNumber().'</b>';
+				} else {
+					echo  '<b>'.$postpaidCollection->getDesignTeExistingNumber().'</b>';
+				}
+				echo '</td></tr>';
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !="1") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Type of card';
+					} else {
+						echo 'Type of card';
+					}
+					echo '</td><td>:</td><td>';
+					if($postpaidCollection->getCurrentOperator()==1) {
+						echo  '<b>Abonnement</b>';
+					} else {
+						if ($storeId == '2') {
+							echo '<b>Carte prépayée</b>';
+						} else {
+							echo '<b>Herlaadkaart</b>'; 
+						}						
+					}
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getSubscriptionType() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Current Operator';
+					} else {
+						echo 'Current Operator';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getSubscriptionType().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getNetworkCustomerNumber() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Current customer number';
+					} else {
+						echo 'Current customer number';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getNetworkCustomerNumber().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getSimcardNumber() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Current SIM card number';
+					} else {
+						echo 'Current SIM card number';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getSimcardNumber().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !="1") {
+					if($postpaidCollection->getBillInName() =="1") {
+						echo '<tr><td>'; 
+						if ($storeId == '2') {
+							echo 'The invoice is on your name';
+						} else {
+							echo 'The invoice is on your name';
+						}
+						echo '</td><td>:</td><td>';
+						if ($storeId == '2') {
+							echo  '<b>Oui</b>';
+						} else {
+							echo  '<b>Ja</b>';
+						}
+						echo '</td></tr>';
+					}
+					if($postpaidCollection->getBillInName() =="0") {
+						echo '<tr><td>'; 
+						if ($storeId == '2') {
+							echo 'The invoice is on your name';
+						} else {
+							echo 'The invoice is on your name';
+						}
+						echo '</td><td>:</td><td>';
+						if ($storeId == '2') {
+							echo  '<b>Non</b>';
+						} else {
+							echo  '<b>Neen</b>';
+						}
+						echo '</td></tr>';
+					}
+				}
+				if($postpaidCollection->getHoldersName() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Card holder name';
+					} else {
+						echo 'Card holder name';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getHoldersName().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getHolderFirstname() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'First name of the holder';
+					} else {
+						echo 'First name of the holder';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getHolderFirstname().'</b>';
+					echo '</td></tr>';
+				}
+			}
+			if($postpaidCollection->getDesignSimNumber()==2){
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==1) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Migration</b>';
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Operator';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Orange</b>';
+					echo '</td></tr>';
+				} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==3) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>MNP</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+					  echo  '<b>nouveau numéro</b>';
+					} else {
+						echo  '<b>nieuw nummer</b>';
+					}
+					echo '</td></tr>';
+				}
+				
+			}
+			if($attributeSetChild != 'IEW') {
+				if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!="" && isset($gender['ex_invoice']) && $gender['ex_invoice']=="yes") {
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Customer number';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$gender['cu_ex_invoice_cust_number'].'</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+				}
+				if(isset($gender['cu_ex_invoice_cust_firstname']) &&  $gender['cu_ex_invoice_cust_firstname']!="" && isset($gender['ex_invoice']) && $gender['ex_invoice']=="yes" && isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name']=="0") {
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Contract owner first name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$gender['cu_ex_invoice_cust_firstname'].'</b>';
+					echo '</td></tr>';
+				} else if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!="" && isset($gender['ex_invoice']) && $gender['ex_invoice']=="yes") {
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+				}
+				if(isset($gender['cu_ex_invoice_cust_surname']) &&  $gender['cu_ex_invoice_cust_surname']!="" && isset($gender['ex_invoice']) && $gender['ex_invoice']=="yes" && isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name']=="0") {
+					echo '<tr><td>'; 
+					echo 'Contract owner last name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$gender['cu_ex_invoice_cust_surname'].'</b>';
+					echo '</td></tr>';
+				}
+				if(isset($gender['cu_ex_invoice_cust_dob']) &&  $gender['cu_ex_invoice_cust_dob']!="" && $gender['ex_invoice']=="yes" && isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name']=="0") {
+					echo '<tr><td>'; 
+					echo 'Contract owner birth date';
+					echo '</td><td>:</td><td>';
+					$dob = str_replace('/', '-', $gender['cu_ex_invoice_cust_dob']); $dobIew = date("Y-m-d H:i:s", strtotime($dob));$date = date_create($dobIew);
+					echo '<b>'.date_format($date,"d/m/Y").'</b>';
+					echo '</td></tr>';
+				}
+			}
+			if($attributeSetChild == 'IEW') {
+				if($iewTelephone !="" && $isTeneuroYes=="yes"){
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Customer number';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$iewTelephone.'</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+				}
+				if($iewFirstname !="" && $isTeneuroYes=="yes" && $iewContract=='0'){
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Contract owner first name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$iewFirstname.'</b>';
+					echo '</td></tr>';
+				} else if($iewTelephone !="" && $isTeneuroYes=="yes") {
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+				}
+				if($iewLastname !="" && $isTeneuroYes=="yes" && $iewContract=='0'){
+					echo '<tr><td>'; 
+					echo 'Contract owner last name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$iewLastname.'</b>';
+					echo '</td></tr>';
+				} 
+				if($iewDob !="" && $isTeneuroYes=="yes" && $iewContract=='0'){
+					echo '<tr><td>'; 
+					echo 'Contract owner birth date';
+					echo '</td><td>:</td><td>';
+					$dob = str_replace('/', '-', $iewDob); $dobIew = date("Y-m-d H:i:s", strtotime($dob));$date = date_create($dobIew);
+					echo '<b>'.date_format($date,"d/m/Y").'</b>';
+					echo '</td></tr>';
+				}
+				
+			}
+			echo '<tr><td></td><td></td><td></td></tr>';
+			echo '<tr><td><p>--------------------------------------------------------------------------------------</p></td><td></td><td></td></tr>';
+			echo '<tr><td></td><td></td><td></td></tr>';
+			$i++;
+		}
+		}
+		if($item->getProduct()->getTypeId() == 'bundle'){
+		$i = 1;
+		foreach ($postpaidModelCollections as $postpaidCollection) {
+			$childItems = $item->getChildrenItems();
+			$virtName = '';
+			$simpName = '';
+			foreach ($childItems as $childs){
+				$productChild = $childs->getProduct();
+				if($productChild->getTypeId() == 'virtual') {
+					$virtName = $productChild->getName();
+				} else if ($productChild->getTypeId() == 'simple') {
+					$simpName = $productChild->getName();
+				}
+				if($virtName!='' && $simpName!='') {
+					echo '<tr><td>'; 
+					echo 'Product name';
+					echo '</td><td>:</td><td>';
+					if($postpaidModelCollections->count() >1 ){
+						echo  '<b>'.$virtName.' + '.$simpName.' ('.$i.')</b>';
+					} else {
+						echo  '<b>'.$virtName.' + '.$simpName.'</b>';
+					}
+					echo '</td></tr>';
+				}
+			}
+			foreach ($childItems as $childs){
+				$productChild = $childs->getProduct();
+				$attributeSetChild = $successBlock->getAttributeSetName($productChild->getAttributeSetId());
+				if($productChild->getTypeId() == 'virtual') {
+					if($item->getPrice() < $discountFullTotalPrice && $attributeSetChild != 'IEW') {
+						echo '<tr><td>'; 
+						echo 'pay on next bill';
+						echo '</td><td>:</td><td>';
+						if($customerType == 'SOHO') {
+							$sohoPrice = $item->getPrice() / (1+($discountSohoPrice/100));
+							if ($storeId == '2') {
+								echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($item->getPrice(),2)).' TVA incl.)</b>';
+							} else {
+								echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($item->getPrice(),2)).' Incl. BTW)</b>';
+							}
+						} else {
+							echo  '<b>€'.str_replace('.',',',number_format($item->getPrice(),2)).'</b>';
+						}
+						echo '</td></tr>';
+					} else {
+						echo '<tr><td>'; 
+						echo 'Pay now';
+						echo '</td><td>:</td><td>';
+						if($customerType == 'SOHO') {
+							$sohoPrice = $item->getPrice() / (1+($discountSohoPrice/100));
+							if ($storeId == '2') {
+								echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($item->getPrice(),2)).' TVA incl.)</b>';
+							} else {
+								echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($item->getPrice(),2)).' Incl. BTW)</b>';
+							}
+						} else {
+							echo  '<b>€'.str_replace('.',',',number_format($item->getPrice(),2)).'</b>';
+						}
+						echo '</td></tr>';
+					}
+					$attr = $productChild->getSubscriptionAmount();
+					echo '<tr><td>'; 
+					echo 'Monthly price';
+					echo '</td><td>:</td><td>';
+					if($customerType == 'SOHO') {
+						$sohoPrice = $attr / (1+($discountSohoPrice/100));
+						if ($storeId == '2') {
+							echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($attr,2)).' TVA incl.)</b>';
+						} else {
+							echo  '<b>€'.str_replace('.',',',number_format($sohoPrice,2)).' (€'.str_replace('.',',',number_format($attr,2)).' Incl. BTW)</b>';
+						}
+					} else {
+						echo  '<b>€'.str_replace('.',',',number_format($attr,2)).'</b>';
+					}
+					echo '</td></tr>';
+					$webpromo =  strip_tags($productChild->getWebPromo());
+					if($webpromo != '' && $productChild->getSubsidyDuration() != 12) {
+						echo '<tr><td>'; 
+						echo 'Web promo';
+						echo '</td><td>:</td><td>';
+						echo  '<b>'.$webpromo.'</b>';
+						echo '</td></tr>';
+					}
+					if($postpaidCollection->getProPacks()) {
+						echo '<tr><td>'; 
+						echo 'ProPacks';
+						echo '</td><td>:</td><td>';
+						echo  '<b>'.$postpaidCollection->getProPacks().'</b>';
+						echo '</td></tr>';
+					}
+					if($productChild->getSubsidyDuration() == 12) {
+						echo '<tr><td>'; 
+						echo 'Attribute';
+						echo '</td><td>:</td><td>';
+						echo  '<b>Loyalty Advantage</b>';
+						echo '</td></tr>';
+					} else if($productChild->getSubsidyDuration() == 24) {
+						echo '<tr><td>'; 
+						echo 'Attribute';
+						echo '</td><td>:</td><td>';
+						echo  '<b>Phone Advantage</b>';
+						echo '</td></tr>';
+					}
+					if($attributeSetChild == 'IEW') {
+						echo '<tr><td>'; 
+						echo 'Attribute';
+						echo '</td><td>:</td><td>';
+						echo  '<b>Modem Advantage</b>';
+						echo '</td></tr>';
+					}
+				}
+			}
+			if($postpaidCollection->getDesignSimNumber()==1) {
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==1) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Migration</b>';
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Operator';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Orange</b>';
+					echo '</td></tr>';
+				} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==3) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>MNP</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+					  echo  '<b>nouveau numéro</b>';
+					} else {
+						echo  '<b>nieuw nummer</b>';
+					}
+					echo '</td></tr>';
+				}
+				echo '<tr><td>'; 
+				echo 'Number configuration';
+				echo '</td><td>:</td><td>';
+				if ($storeId == '2') {
+					echo  '<b>Garder votre numéro</b>';
+				} else {
+					echo  '<b>Je nummer behouden</b>';
+				}
+				echo '</td></tr>';
+				echo '<tr><td>'; 
+				if ($storeId == '2') {
+					echo 'Numéro';
+				} else {
+					echo 'Nummer';
+				}
+				echo '</td><td>:</td><td>';
+				if ($storeId == '2') {
+					echo  '<b>'.$postpaidCollection->getDesignTeExistingNumber().'</b>';
+				} else {
+					echo  '<b>'.$postpaidCollection->getDesignTeExistingNumber().'</b>';
+				}
+				echo '</td></tr>';
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !="1") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Type of card';
+					} else {
+						echo 'Type of card';
+					}
+					echo '</td><td>:</td><td>';
+					if($postpaidCollection->getCurrentOperator()==1) {
+						echo  '<b>Abonnement</b>';
+					} else {
+						if ($storeId == '2') {
+							echo '<b>Carte prépayée</b>';
+						} else {
+							echo '<b>Herlaadkaart</b>'; 
+						}						
+					}
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getSubscriptionType() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Current Operator';
+					} else {
+						echo 'Current Operator';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getSubscriptionType().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getNetworkCustomerNumber() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Customer number';
+					} else {
+						echo 'Customer number';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getNetworkCustomerNumber().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getSimcardNumber() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Current SIM card number';
+					} else {
+						echo 'Current SIM card number';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getSimcardNumber().'</b>';
+					echo '</td></tr>'; 
+				}
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() !="1") {
+					if($postpaidCollection->getBillInName() =="1") {
+						echo '<tr><td>'; 
+						if ($storeId == '2') {
+							echo 'The invoice is on your name';
+						} else {
+							echo 'The invoice is on your name';
+						}
+						echo '</td><td>:</td><td>';
+						if ($storeId == '2') {
+							echo  '<b>Oui</b>';
+						} else {
+							echo  '<b>Ja</b>';
+						}
+						echo '</td></tr>';
+					}
+					if($postpaidCollection->getBillInName() =="0") {
+						echo '<tr><td>'; 
+						if ($storeId == '2') {
+							echo 'The invoice is on your name';
+						} else {
+							echo 'The invoice is on your name';
+						}
+						echo '</td><td>:</td><td>';
+						if ($storeId == '2') {
+							echo  '<b>Non</b>';
+						} else {
+							echo  '<b>Neen</b>';
+						}
+						echo '</td></tr>';
+					}
+				}
+				if($postpaidCollection->getHoldersName() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'Card holder name';
+					} else {
+						echo 'Card holder name';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getHoldersName().'</b>';
+					echo '</td></tr>';
+				}
+				if($postpaidCollection->getHolderFirstname() !="") {
+					echo '<tr><td>'; 
+					if ($storeId == '2') {
+						echo 'First name of the holder';
+					} else {
+						echo 'First name of the holder';
+					}
+					echo '</td><td>:</td><td>';
+					echo  '<b>'.$postpaidCollection->getHolderFirstname().'</b>';
+					echo '</td></tr>';
+				}
+			}
+			if($postpaidCollection->getDesignSimNumber()==2){
+				if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==1) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Migration</b>';
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Operator';
+					echo '</td><td>:</td><td>';
+					echo  '<b>Orange</b>';
+					echo '</td></tr>';
+				} else if($postpaidCollection->getDesignTeExistingNumberFinalValidation() ==3) {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					echo  '<b>MNP</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Client Type';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+					  echo  '<b>nouveau numéro</b>';
+					} else {
+						echo  '<b>nieuw nummer</b>';
+					}
+					echo '</td></tr>';
+				}
+				
+			}
+			$childItems = $item->getChildrenItems();
+			foreach ($childItems as $childs) {
+			$productChild = $childs->getProduct();
+			$attributeSetChild = $successBlock->getAttributeSetName($productChild->getAttributeSetId());
+			if($productChild->getTypeId() == 'virtual') {
+			if($attributeSetChild != 'IEW') {
+				if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!="") {
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Customer number';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$gender['cu_ex_invoice_cust_number'].'</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+				}
+				if(isset($gender['cu_ex_invoice_cust_firstname']) &&  $gender['cu_ex_invoice_cust_firstname']!="") {
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Contract owner first name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$gender['cu_ex_invoice_cust_firstname'].'</b>';
+					echo '</td></tr>';
+				} else if(isset($gender['cu_ex_invoice_cust_number']) &&  $gender['cu_ex_invoice_cust_number']!=""){
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+				}
+				if(isset($gender['cu_ex_invoice_cust_surname']) &&  $gender['cu_ex_invoice_cust_surname']!="") { 
+					echo '<tr><td>'; 
+					echo 'Contract owner last name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$gender['cu_ex_invoice_cust_surname'].'</b>';
+					echo '</td></tr>';
+				}
+				if(isset($gender['cu_ex_invoice_cust_dob']) &&  $gender['cu_ex_invoice_cust_dob']!="") {
+					echo '<tr><td>'; 
+					echo 'Contract owner birth date';
+					echo '</td><td>:</td><td>';
+					$dob = str_replace('/', '-', $gender['cu_ex_invoice_cust_dob']); $dobIew = date("Y-m-d H:i:s", strtotime($dob));$date = date_create($dobIew);
+					echo '<b>'.date_format($date,"d/m/Y").'</b>';
+					echo '</td></tr>';
+				}
+			}
+			if($attributeSetChild == 'IEW') {
+				if($iewTelephone !=""){
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Customer number';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$iewTelephone.'</b>';
+					echo '</td></tr>';
+				} else {
+					echo '<tr><td>'; 
+					echo 'Associate to existing contract?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+				}
+				if($iewFirstname !=""){
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Non</b>';
+					} else {
+						echo  '<b>Neen</b>';
+					}
+					echo '</td></tr>';
+					echo '<tr><td>'; 
+					echo 'Contract owner first name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$iewFirstname.'</b>';
+					echo '</td></tr>';
+				} else if($iewTelephone !=""){
+					echo '<tr><td>'; 
+					echo 'Are you contract owner?';
+					echo '</td><td>:</td><td>';
+					if ($storeId == '2') {
+						echo  '<b>Oui</b>';
+					} else {
+						echo  '<b>Ja</b>';
+					}
+					echo '</td></tr>';
+				}
+				if($iewLastname !=""){
+					echo '<tr><td>'; 
+					echo 'Contract owner last name';
+					echo '</td><td>:</td><td>';
+					echo '<b>'.$iewLastname.'</b>';
+					echo '</td></tr>';
+				} 
+				if($iewDob !=""){
+					echo '<tr><td>'; 
+					echo 'Contract owner birth date';
+					echo '</td><td>:</td><td>';
+					$dob = str_replace('/', '-', $iewDob); $dobIew = date("Y-m-d H:i:s", strtotime($dob));$date = date_create($dobIew);
+					echo '<b>'.date_format($date,"d/m/Y").'</b>';
+					echo '</td></tr>';
+				}
+			}
+			}
+			}
+			echo '<tr><td></td><td></td><td></td></tr>';
+			echo '<tr><td><p>--------------------------------------------------------------------------------------</p></td><td></td><td></td></tr>';
+			echo '<tr><td></td><td></td><td></td></tr>';
+			$i++;
+		}
+		}
+ } ?>

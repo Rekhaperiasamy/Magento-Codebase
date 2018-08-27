@@ -1,0 +1,236 @@
+<?php
+/**
+* Copyright © 2016 Magento. All rights reserved.
+* See COPYING.txt for license details.
+*/
+ 
+// @codingStandardsIgnoreFile
+ 
+/**
+* Product media data template
+*
+* @var $block \Magento\Catalog\Block\Product\View\Gallery
+*/
+?>
+<?php
+$galleryImages = $block->getGalleryImages();
+$productcol = $block->getProductName();
+$productName = $productcol->getName();
+$mainImageMicrodata="";
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+if($block->getProduct()->getTypeId() == 'bundle')
+{
+	$product = $objectManager->create('Magento\Catalog\Model\Product')->load($block->getProduct()->getId());
+	$sku=$product->getSku();
+	$currency=$storeManager->getStore()->getCurrentCurrencyCode();
+	$currentStore = $storeManager->getStore();
+	$typeInstance = $product->getTypeInstance();
+	$requiredChildrenIds = $typeInstance->getChildrenIds($block->getProduct()->getId(), true);
+	$brandValue="";
+	foreach ($requiredChildrenIds as $ids) {
+		foreach($ids as $id){
+			$pro = $objectManager->create('Magento\Catalog\Model\Product')->load($id);
+			
+			if($pro->getTypeId() == 'simple')
+			{
+			    $brandValuebundle=$pro->getResource()->getAttribute('brand')->getFrontend()->getValue($pro);
+				$color = $pro->getColor();
+			}
+		}
+	}
+
+}else{
+	$color  = $productcol->getColor();
+}
+$colorName  = $block->getColorOption($color);
+$alt_tag = __('Orange Belgique').' - '.trim($productName).' - '.$colorName;
+$catalogView = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+//$om = \Magento\Framework\App\ObjectManager::getInstance();
+$attributeSet = $objectManager->create('\Magento\Eav\Api\AttributeSetRepositoryInterface');
+$attributeSetRepository = $attributeSet->get($block->getProduct()->getAttributeSetId());
+$attributeSetName = $attributeSetRepository->getAttributeSetName();
+?>
+
+<div class="media phone-item margin-xs-t-n" style="border-bottom:0">
+                <div class="media-left pull-left <?php if($attributeSetName == 'Accessories'):?>accessories_left<?php else: ?>smartphone_left<?php endif;?>">
+                                <div class="margin-xs-t-s margin-xs-b-n tab-content">                                    									
+                                    <?php foreach($galleryImages as $galleryImage): ?>											
+                                        <?php if($block->isMainImage($galleryImage)): 
+										$mainImageMicrodata=$galleryImage->getData('medium_image_url');
+										?>
+												<?php if(!empty($galleryImage->getData('medium_image_url'))): ?>
+                                                    <div id="product-image-1" class="tab-pane fade in active">
+                                                        <img  src="<?php echo $galleryImage->getData('medium_image_url') ?>" alt = "<?php echo $alt_tag; ?>" class="js-zoom" data-magnify-src="<?php echo $galleryImage->getData('large_image_url') ?>">
+                                                    </div>
+												<?php endif; ?>
+                                        <?php endif; ?>					
+                                    <?php endforeach; ?>
+                                    <?php $i=2; ?>
+                                    <?php foreach($galleryImages as $galleryImage): ?>											
+                                        <?php if(!$block->isMainImage($galleryImage)): ?>
+											<?php if(!empty($galleryImage->getData('medium_image_url'))): ?>
+                                            <div id="product-image-<?php echo $i ?>" class="tab-pane fade">
+                                                <img src="<?php echo $galleryImage->getData('medium_image_url') ?>" alt = "<?php echo $alt_tag; ?>" class="js-zoom" data-magnify-src="<?php echo $galleryImage->getData('large_image_url') ?>">
+                                            </div>
+											<?php endif; ?>
+                                        <?php endif; ?>
+                                        <?php $i++; ?>																
+                                    <?php endforeach; ?>
+                                </div>
+                </div>
+				<?php if ($block->getProduct()->getTypeId() == 'bundle') {
+				?>
+                <div class="media-body">                                                          
+					<?php
+						try{
+							$mobCollection = $catalogView->getMobileDeviceProduct($block->getProduct());
+							$mobilePrds = $mobCollection->getFirstItem();
+							$handsetDes = $mobilePrds->getHandsetDescription();
+						}
+						catch(exception $e)
+						{}
+					?>		
+					<div class="product-bullet">
+						<ul>
+							<?php if($handsetDes): echo __($handsetDes); endif; ?>
+						</ul>
+					</div>
+					<?php if($mobilePrds->getIsInStock()):?>
+									<p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+					<?php else: ?>
+									<p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+					<?php endif; ?>                               
+					<?php echo $block->getChildHtml('product.color.swatch'); ?>                   
+                </div>
+				<?php } else { ?>
+				<div class="media-body"> 
+				                <?php
+										try{											
+											$handsetDes = $block->getProduct()->getHandsetDescription();
+											$product = $objectManager->create('Magento\Catalog\Model\Product')->load($block->getProduct()->getId());
+											$sku=$product->getSku();
+											$brand=$product->getResource()->getAttribute('brand')->getFrontend()->getValue($product);
+											$stockStatus = $product['quantity_and_stock_status']['is_in_stock'];
+										}
+										catch(exception $e)
+										{}
+									?>
+								<?php if($handsetDes): ?>
+									<div class="product-bullet">
+											<?php if($handsetDes): echo __($handsetDes); endif; ?>
+									</div>
+								<?php endif; ?>
+								<?php if($block->getProduct()->getObsoleteDevice() == 1): ?>
+									 <p class="red"><?php /* @escapeNotVerified */ echo __('Epuisé') ?></p>
+								<?php else: ?>
+									<?php if($stockStatus):?>
+                                        <p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+									<?php else: ?>
+										<p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+									<?php endif; ?> 
+                                <?php endif; ?>                                     
+                                <?php echo $block->getChildHtml('product.color.swatch'); ?>                   
+                </div>
+				<?php } ?>
+</div>
+<div class="row-fluid">
+                <div class="col-xs-12">
+                                <ul class="phone-thumbs">
+                                				<?php foreach($galleryImages as $galleryImage): ?>      
+                                                        <?php if($block->isMainImage($galleryImage)): ?>
+															<?php if(!empty($galleryImage->getData('small_image_url'))): ?>
+                                                                <li class="active">
+                                                                    <a href="#product-image-1" data-toggle="tab">
+                                                                        <img src="<?php echo $galleryImage->getData('small_image_url') ?>" alt = "<?php echo $alt_tag; ?>">
+                                                                    </a>
+                                                                </li>
+															<?php endif; ?>                                                                
+                                                        <?php endif; ?>                                                
+                                                <?php endforeach; ?>
+                                                <?php $j=2; ?>
+                                                <?php foreach($galleryImages as $galleryImage): ?>      
+                                                        <?php if(!$block->isMainImage($galleryImage)): ?>
+															<?php if(!empty($galleryImage->getData('small_image_url'))): ?>
+                                                                <li>
+                                                                    <a href="#product-image-<?php echo $j ?>" data-toggle="tab">
+                                                                        <img src="<?php echo $galleryImage->getData('small_image_url') ?>" alt = "<?php echo $alt_tag; ?>">
+                                                                    </a>
+                                                                </li>
+																<?php endif; ?>
+                                                        <?php endif; ?>
+                                                <?php $j++; ?>
+                                                <?php endforeach; ?>
+                                </ul>
+                </div>
+</div>
+ 
+<script>// <![CDATA[
+                require([
+                                'jquery',
+                                'Orange_Catalog/js/tab',
+                                'Orange_Catalog/js/responsive-tabs',
+                                'Orange_Catalog/js/jquery.magnify',
+                                'Orange_Catalog/js/jquery.magnify-mobile'                      
+                ], function ($) {
+                                $(document).ready(function() {
+								if($(window).width() >= 768){
+									// initialize the zoom when a tab is shown
+									$('.phone-thumbs a[data-toggle="tab"]').on('shown.bs.tab',function(){
+										$($(this).attr('href')).find('.js-zoom').magnify();
+									});
+									// initialize default open active tab
+									$('.phone-item .tab-pane.in .js-zoom').magnify();
+								}
+							});
+                });
+                // ]]>
+</script>
+<?php
+$currency=$storeManager->getStore()->getCurrentCurrencyCode();
+$stockStatus="";
+if($block->getProduct()->getTypeId() == 'bundle')
+{
+  $product = $objectManager->create('Magento\Catalog\Model\Product')->load($block->getProduct()->getId());
+  $sku=$product->getSku();
+  $brand=$brandValuebundle;
+  $stockStatus = $product['quantity_and_stock_status']['is_in_stock'];
+ }else{
+  $product = $objectManager->create('Magento\Catalog\Model\Product')->load($block->getProduct()->getId());
+  $sku=$product->getSku();
+  $brand=$product->getResource()->getAttribute('brand')->getFrontend()->getValue($product);
+  $stockStatus = $product['quantity_and_stock_status']['is_in_stock'];
+}
+?>
+<div itemscope itemtype="http://schema.org/Product">
+<?php
+if(isset($brand) && $brand!="" && $brand!="No" && $brand!="Non"){
+?>
+  <span itemprop="brand" style="display:none;"><?php  echo $brand; ?></span>
+<?php
+  }
+  ?>
+
+<img itemprop="image" src="<?php echo $mainImageMicrodata;?>" alt="<?php echo $product->getName(); ?>"  style="display:none;"/>
+<?php if($product->getMarketingDescription()):?>
+<span itemprop="description" style="display:none;"><?php echo $product->getMarketingDescription(); ?>	</span>
+<?php else:?>
+<span itemprop="description" style="display:none;"><?php echo $product->getMetaDescription(); ?>	</span>
+<?php endif;?>
+<span itemprop="sku" style="display:none;"><?php echo $product->getSku(); ?></span>
+<span itemprop="offers" itemscope itemtype="http://schema.org/Offer" style="display:none;">
+ <meta itemprop="priceCurrency" content="<?php echo $currency;?>" />
+ <span itemprop="price" style="display:none;">
+ <?php echo $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();?>	
+ </span>
+ <link itemprop="itemCondition" href="http://schema.org/UsedCondition"/><?php echo __('New');?>
+
+<?php
+ if ($stockStatus) {
+ ?>
+ <link itemprop="availability" href="http://schema.org/InStock"/><?php /* @escapeNotVerified */ echo __('Commander') ?>
+ <?php
+ }
+?> 
+</span>
+</div>

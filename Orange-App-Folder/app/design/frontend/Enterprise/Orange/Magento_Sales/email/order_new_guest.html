@@ -1,0 +1,87 @@
+<!--@subject {{trans "Confirmation de votre commande : #%order" order=$order.getIncrementId()}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var order.getEmailCustomerNote()":"Email Order Note",
+"var order.increment_id":"Order Id",
+"layout handle=\"sales_email_order_items\" order=$order area=\"frontend\"":"Order Items Grid",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.getShippingDescription()":"Shipping Description"
+"var shipping_msg":"Shipping message"
+} @-->
+
+<!doctype html public "-//w3c//dtd xhtml 1.0 transitional//en"
+"http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Bienvenue chez Orange</title>
+  <style type="text/css">
+
+   /* force hotmail to display emails at full width */
+   body { width:100% !important; }
+   .readmsgbody { width:100%; }
+   .externalclass { width:100%; }
+
+   /* force hotmail to display normal line spacing */
+   .externalclass,
+   .externalclass p,
+   .externalclass span,
+   .externalclass font,
+   .externalclass td,
+   .externalclass div,
+   .externalclass *   { line-height: 100%; }
+
+
+   /* fix paragraph margins for yahoo */
+   p { margin-bottom:1em; }
+
+
+   /* fix  for outlook */
+   /*table tr td { mso-line-height-rule: exactly; }*/
+   table tr td { border-collapse:collapse; }
+
+   /* style link colors for ios */
+   .linksblack a { color:#000000 !important; text-decoration:none; }
+
+   @media only screen and (max-width: 480px){
+    .break-responsive{
+      display:block !important;
+      width:100% !important;
+    }
+   }
+
+   /* fix for mobile */
+   @media only screen and (min-device-width : 320px) and (max-device-width :
+    480px)
+   {
+     body
+     {
+       -webkit-text-size-adjust:100%;
+       -ms-text-size-adjust:100%;
+     }
+   }
+   @media only screen and (min-device-width: 768px) and (max-device-width:
+    1024px)
+   {
+     body
+     {
+       -webkit-text-size-adjust:100%;
+       -ms-text-size-adjust:100%;
+     }
+   }
+   @media only screen and (-webkit-min-device-pixel-ratio : 1.5),
+   only screen and (min-device-pixel-ratio : 1.5)
+   {
+     body
+     {
+       -webkit-text-size-adjust:100%;
+       -ms-text-size-adjust:100%;
+     }
+   }
+ </style>
+</head>
+
+                                  {{layout handle="sales_email_order_items" order=$order area="frontend"}}
+                              <!-- conditional based will load from items.phtml-->                              
+                          

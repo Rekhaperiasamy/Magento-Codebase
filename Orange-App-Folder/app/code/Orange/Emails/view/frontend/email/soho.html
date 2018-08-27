@@ -1,0 +1,101 @@
+<!--@subject Online Shop - New SOHO Postpaid/IEW order - Order ID:{{var OrderId}} @-->
+<br><span>Dear </span>
+<p style="height:0px;">Please encode this new SOHO Postpaid / IEW order in MyPartner</p>
+<p style="height:0px;">--------------------------------------------------------------------------------------</p>
+<span>OrderId : </span><span>{{var OrderId}}</span>
+<p style="height:0px;">--------------------------------------------------------------------------------------</p>
+<span>Order Created  : </span><span>{{var OrderTime}}</span>
+<p>--------------------------------------------------------------------------------------</p>
+<table>
+<tr><td><b>Customer Data:</b></td></tr>
+{{layout handle="orange_emails_entra_items_name" order=$order area="frontend"}}
+{{depend profile}}
+<tr><td><b>{{var tYourProfile}}:</b></td></tr>
+<tr><td>{{var tisprofile}}</td><td>:</td><td><b>{{var profile}}</b></td></tr>
+<tr><td>{{var tprofile}}</td><td>:</td><td><b>{{var isprofile}}</b></td></tr>
+{{/depend}}
+{{depend legal}}
+<tr><td>{{var tlegal}}</td><td>:</td><td><b>{{var legal}}</b></td></tr>
+{{/depend}}
+{{depend companyname}}
+<tr><td>{{var tcompanyName}}</td><td>:</td><td><b>{{var companyname}}</b></td></tr>
+{{/depend}}
+{{depend vat}}
+<tr><td>{{var tVatNumber}}</td><td>:</td><td><b>{{var vat}}</b></td></tr>
+{{/depend}}
+<tr><td></td><td></td><td></td></tr>
+<tr><td><b>{{var tYourPersonalData}}:</b></td></tr>
+<tr><td>{{var tTitle}}</td><td>:</td><td><b>{{var prefix}}</b></td></tr>
+<tr><td>{{var tFirstName}}</td><td>:</td><td><b>{{var custFirstName}}</b></td></tr>
+<tr><td>{{var tName}}</td><td>:</td><td><b>{{var CustLastName}}</b></td></tr> 
+<tr><td>{{var tEmailAddress}}</td><td>:</td><td><b> <a href="" onclick="return false;" style="color:black;text-decoration:none;">{{var email}}</a> </b></td></tr> 
+{{depend phone}}
+<tr><td>{{var tPhoneNumber}}</td><td>:</td><td><b>{{var phone}}</b></td></tr> 
+{{/depend}}
+<tr><td>{{var tDob}}</td><td>:</td><td><b>{{var dob}}</b></td></tr>
+<tr><td>{{var tNationality}} </td><td>:</td><td><b>{{var nationality}}</b></td></tr>
+<tr><td>{{var tIdentityCardno}}</td><td>:</td><td><b>{{var id_number}}</b></td></tr>
+<tr><td>{{var tNationalIdentityCardno}}</td><td>:</td><td><b>{{var national_id}}</b></td></tr>
+<tr><td>{{var tCodePostal}} </td><td>:</td><td><b>{{var PostCode}}</b></td></tr>
+<tr><td>{{var tStreet}}</td><td>:</td><td><b>{{var street}}</b></td></tr>
+<tr><td>{{var tNumber}}</td><td>:</td><td><b>{{var b_number}}</b></td></tr>
+{{depend box}}
+<tr><td>{{var tBox}}</td><td>:</td><td><b>{{var box}}</b></td></tr>
+{{/depend}}
+<tr><td>{{var tCountry}}</td><td>:</td><td><b>{{var Country}}</b></td></tr>
+<tr><td></td><td></td><td></td></tr>
+{{depend hasShipping}}
+<tr><td><b>{{var tshippingMethod}}:</b></td></tr>
+<tr><td>{{var sAddress}} </td><td>:</td><td><b>{{var shippingMethod}}</b></td></tr>
+{{/depend}}
+{{depend s_firstname}}
+<tr><td>{{var tFirstName}} </td><td>:</td><td><b>{{var s_firstname}}</b></td></tr>
+{{/depend}}
+{{depend s_name}}
+<tr><td>{{var tName}} </td><td>:</td><td><b>{{var s_name}}</b></td></tr>
+{{/depend}}
+{{depend s_attention_n}}
+<tr><td>{{var tAttention}}</td><td>:</td><td><b>{{var s_attention_n}}</b></td></tr>
+{{/depend}}
+{{depend s_postcode_city}}
+<tr><td>{{var tCodePostal}} </td><td>:</td><td><b>{{var s_postcode_city}}</b></td></tr>
+{{/depend}}
+{{depend s_street}}
+<tr><td>{{var tStreet}} </td><td>:</td><td><b>{{var s_street}}</b></td></tr>
+{{/depend}}
+{{depend s_number}}
+<tr><td>{{var tNumber}}</td><td>:</td><td><b>{{var s_number}}</b></td></tr>
+{{/depend}}
+{{depend s_box}}
+<tr><td>{{var tBox}}</td><td>:</td><td><b>{{var s_box}}</b></td></tr>
+{{/depend}}
+{{depend hasShipping}}
+<tr><td></td><td></td><td></td></tr>
+{{/depend}}
+{{depend ispaid}}
+<tr><td><b>{{var torderPayment}}:</b></td></tr>
+<tr><td>{{var tPaymentMethod}} </td><td>:</td><td><b>{{var cardmethod}}</b></td></tr>
+<tr><td>{{var tcardDetails}}</td><td>:</td><td><b>{{var cardDetails}}</b></td></tr>
+<tr><td>{{var tgrandTotal}}</td><td>:</td><td><b>{{var grandTotal}}</b></td></tr>
+<tr><td></td><td></td><td></td></tr>
+{{/depend}}
+{{depend iscoupon}}
+<tr><td><b>Your coupons:</b></td></tr>
+<tr><td>Code Promo</td><td>:</td><td><b>{{var couponcode}}</b></td></tr>
+<tr><td></td><td></td><td></td></tr>
+{{/depend}}
+<tr><td><b>{{var tsubsPayment}}:</b></td></tr>
+<tr><td>{{var tPaymentMethod}} </td><td>:</td><td><b>{{var domiciliatoinVirment}}</b></td></tr>
+{{depend  domiciliatoin}}
+<tr><td>{{var tdomicilationnumber}}</td><td>:</td><td><b>{{var domiciliatoin}}</b></td></tr>
+{{/depend}}
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td>{{var tYouWantToRecieveMobiNews}}</td><td>:</td><td><b>{{var newsletter_subscription}}</b></td></tr>
+<tr><td>Scoring result</td><td>:</td><td><b>{{var score}}</b></td></tr>
+</table>
+<span>--------------------------------------------------------------------------------------</span><br><br>
+<span>For any further questions, please contact us at mobile_shop@orange.be</span><br><br>
+<span>Best regards,</span> <br>
+<span>Orange Online Sales</span>

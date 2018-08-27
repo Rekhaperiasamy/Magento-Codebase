@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Orange. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Orange_Catalogversion::catalogversion"
+             title="Versions"
+             module="Orange_Catalogversion"
+             sortOrder="9999"
+             resource="Orange_Catalogversion::catalogversion" />
+			 <add id="Orange_Catalogversion::first"
+             title="Product versions"
+             module="Orange_Catalogversion"
+             sortOrder="0"
+             action="catalogversion/catalogversionproduct/index"
+             parent="Orange_Catalogversion::catalogversion"
+             resource="Orange_Catalogversion::price" />
+			 <add id="Orange_Catalogversion::second"
+             title="Standalone Price versions"
+             module="Orange_Catalogversion"
+             sortOrder="0"
+             action="catalogversion/price/index"
+             parent="Orange_Catalogversion::catalogversion"
+             resource="Orange_Catalogversion::catalogversion" />
+			  <add id="Orange_Catalogversion::fourth"
+             title="New products Drafts"
+             module="Orange_Catalogversion"
+             sortOrder="0"
+             action="catalogversion/draft/index"
+             parent="Orange_Catalogversion::catalogversion"
+             resource="Orange_Catalogversion::draft" />
+			 
+			 <add id="Orange_Catalogversion::third"
+             title="Drafts"
+             module="Orange_Catalogversion"
+             sortOrder="0"
+             action="staging/update/index"
+             parent="Orange_Catalogversion::catalogversion"
+             resource="Orange_Catalogversion::catalogversion" />
+			 
+    </menu>
+	 
+</config>

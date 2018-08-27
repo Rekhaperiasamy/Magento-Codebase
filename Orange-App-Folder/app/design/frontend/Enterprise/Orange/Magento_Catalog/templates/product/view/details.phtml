@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');
+
+/* code fix for product detail page tab */
+
+$attributeSet = $objectManager->create('Magento\Eav\Api\AttributeSetRepositoryInterface');
+$attributeSetRepository = $attributeSet->get($product->getAttributeSetId());
+$attribute_set_name = $attributeSetRepository->getAttributeSetName();
+
+/* end */
+
+$categoryname = '';
+$characteristics = '';
+foreach ($product->getCategoryIds() as $categoryid) {
+    if (strtolower($categoryname) == "modems" ) {
+		continue;
+	}
+	$cat = $objectManager->create('Magento\Catalog\Model\Category')->load($categoryid);
+	$categoryname = $cat->getName();
+	$characteristics = $cat->getCharacteristics();
+}
+?>
+
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):?>    
+    <?php $layout = $block->getLayout(); ?> 
+
+	<div class="content-collapsable no-final-border">		
+		<ul class="nav nav-tabs responsive" id="main-tabs" role="tablist">
+			<?php $i=0; ?>
+			<?php 
+			
+				
+			?>
+			<?php foreach ($detailedInfoGroup as $name):?>
+				<?php
+					$html = $layout->renderElement($name);
+				 	if (!trim($html)) {
+						continue;
+					} 
+					$alias = $layout->getElementAlias($name);
+			/* 		if ($alias == 'conditions_nintendo' || $alias == 'amortissement') {
+					   if (!$product->getCustomBundle()) {
+							continue;
+					   }
+					} */					
+					
+					if ((strtolower($categoryname) == "modems" || strtolower($characteristics) =="modems" || (strtolower($attribute_set_name) == "accessories")) && $alias=="tab2") {
+						continue;
+					}
+					$label = $block->getChildData($alias, 'title');
+					$i++;
+				?>		
+				<li role="presentation" class="<?php if($i == 1):?>active<?php endif;?>"><a href="#<?php /* @escapeNotVerified */ echo $alias; ?>" aria-controls="<?php /* @escapeNotVerified */ echo $alias; ?>" role="tab" data-toggle="tab"><?php /* @escapeNotVerified */ echo $label; ?></a></li>					
+			<?php endforeach ;?>
+			
+		</ul>		
+		<div class="tab-content responsive">
+		<?php $j=0; ?>
+		<?php foreach ($detailedInfoGroup as $name):?>
+			 <?php
+			 
+			 	$html = $layout->renderElement($name);
+				if (!trim($html)) {
+					continue;
+				}
+				$alias = $layout->getElementAlias($name);
+			/* 	if ($alias == 'conditions_nintendo' || $alias == 'amortissement') {
+				   if (!$product->getCustomBundle()) {
+						continue;
+				   }
+				} */
+				
+				if ((strtolower($categoryname) == "modems" || strtolower($characteristics) =="modems" || (strtolower($attribute_set_name) == "accessories")) && $alias=="tab2") {
+					continue;
+				}
+				$label = $block->getChildData($alias, 'title');
+				$j++;
+			?>
+			<div role="tabpanel" class="tab-pane<?php if($j == 1):?> active<?php endif;?>" id="<?php /* @escapeNotVerified */ echo $alias; ?>"><?php echo $html ?></div>			
+		<?php endforeach ;?>
+		</div>
+	</div>
+<?php endif; ?> 
+<div id="device-steps-collapse">
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('device-step-by-step')->toHtml();?>
+</div>

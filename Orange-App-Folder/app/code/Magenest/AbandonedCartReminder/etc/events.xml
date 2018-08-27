@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magenest. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+
+    <event name="customer_register_success">
+        <observer name="abandonedcartreminder_customer_register" instance="Magenest\AbandonedCartReminder\Model\Observer\Customer\Register" />
+    </event>
+
+    <event name="sales_order_item_save_commit_after">
+        <observer name="abandonedcartreminder_order_change" instance="Magenest\AbandonedCartReminder\Model\Observer\Order\StatusChange"  />
+    </event>
+
+    <event name="wishlist_share">
+        <observer name="abandonedcartreminder_wishlist_share" instance="Magenest\AbandonedCartReminder\Model\Observer\Wishlist\Shared"  />
+
+    </event>
+
+    <event name="newsletter_subscriber_save_commit_after">
+        <observer name="abandonedcartreminder_newsletter" instance="Magenest\AbandonedCartReminder\Model\Observer\Newsletter\Subscribe" />
+    </event>
+
+</config>

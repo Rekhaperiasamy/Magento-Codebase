@@ -1,0 +1,26 @@
+<!-- ko if: isPrice() -->
+<div class="row margin-xs-b-s subscription-cart-total-iwd">
+	<div class="col-xs-5 col-sm-12 col-md-5" data-bind="text: title">
+	</div>
+	<div class="col-xs-7 col-sm-12 col-md-7 text-right ">
+	<!-- ko if: isDecimal() -->
+		<div class="pdp total-pricee new-price orange">
+		<span id="new-pricee" class="new-pricee sub-decimal" data-bind="text: getSubscriptionValue1()"></span>
+		<span class="new-price-desimal sub-float" data-bind="text: getSubscriptionValue2()"></span>
+		<span id="new-price-symbol-desimal" class="new-price-symbol-desimal new-price-symbol " data-bind="text: getCurrencySymbol()">€</span>
+		<span class="new-price-period" data-bind="text: getSuffix()"></span>
+		<!-- <span class="new-price-soho" data-bind="text: getPriceLabel()" ></span>  -->
+		</div>
+	<!-- /ko -->
+	<!-- ko ifnot: isDecimal() -->
+		<div class="pdp total-pricee new-price orange">
+		<span id="new-pricee" class="new-pricee sub-decimal" data-bind="text: getSubscriptionValue1()"></span>
+		<span id="new-price-symbol" class="new-price-symbol" data-bind="text: getCurrencySymbol()"></span>
+		<span class="new-price-period-margin0" data-bind="text: getSuffix()"></span>
+		<!-- <span class="new-price-soho" data-bind="text: getPriceLabel()" ></span>  -->
+		</div>
+	<!-- /ko -->
+		<span class="orange line-100percent" data-bind="text: getSubsidyValue()"></span>
+	</div>
+</div>
+<!-- /ko -->

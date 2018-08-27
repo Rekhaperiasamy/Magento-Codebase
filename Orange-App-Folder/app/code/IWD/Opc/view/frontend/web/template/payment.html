@@ -1,0 +1,112 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<li id="payment" style='display:none;margin-top:15px;' role="presentation" class="iwd-checkout-payment-method checkout-payment-method" data-bind="blockLoader: isLoading">
+    <div class="step-title" data-bind="i18n: 'Paiement'" data-role="title"></div>
+	<!-- ko if: subsidybank == '1' -->
+        <!-- ko if: paymentBasedContent != '0' -->
+	<h4 class="margin-xs-b-m"><!-- ko i18n: "Methode de paiement pour votre abonnement" --><!-- /ko --> *</h4>
+	<div class="row margin-xs-t-s margin-xs-b-m">
+		<!-- ko if: paymentBasedContent != '1' -->
+		<div class="col-xs-12">						
+			<div class="form-item form-item-gender form-type-radio radio"> 
+				<label for="edit-nationality"><input type="radio" id="edit-nationality-virement" name="transfer_type" value="Virement" class="form-radio"><!-- ko i18n: "Virement" --><!-- /ko --></label>
+			</div>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: paymentBasedContent == '1' ||  paymentBasedContent == '2' -->	
+		<div class="col-xs-12">	
+			<div class="row">
+				<!-- ko if: paymentBasedContent != '1' -->
+				<div class="col-xs-12 col-sm-12 col-md-4">	
+					<div class="form-item form-item-gender form-type-radio radio margin-xs-t-s margin-xs-b-s margin-xs-r-m"> 
+						<label for="edit-nationality"><input type="radio" id="bank_transfer_type" name="transfer_type" value="Domiciliation" class="form-radio" ><!-- ko i18n: "Domiciliation" --><!-- /ko --></label>
+					</div>
+				</div>
+				<div id="domiciliation_textbox_content" style="display:none;">
+				<div class="col-xs-12 col-sm-6 col-md-4">
+					<p class="pull-left margin-xs-t-s margin-xs-b-s margin-xs-r-m"><!-- ko i18n: "N de compte" --><!-- /ko --> <?php echo "&nbsp;"?> <span class="form-required" title="Ce champ est requis.">*</span></p>	
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4">		
+					<input class="form-control pull-left" type="text" id="first-accountnumber" autocomplete="account_number" name="account_number"  value="BE" size="60" maxlength="19" data-validate="{'custom-required':true}" >
+					<div  generated="true" class="mage-error" id="first-accountnumber-error" style="display:none"><!-- ko i18n: "This is a required fields." --><!-- /ko --></div>
+					<div generated="true" class="mage-error" id="first-accountnumber-error-data" style="display:none"><!-- ko i18n: "Please enter your account number in the following format: BEXX XXXX XXXX XXXX" --><!-- /ko --></div>
+				</div>
+				</div>
+				<!-- /ko -->
+				<!-- ko if: paymentBasedContent == '1' -->
+				<div class="col-xs-12">
+					<p style="margin-bottom:10px"><!-- ko i18n: "Pour les abonnements avec smartphone, la domiciliation est obligatoire." --><!-- /ko --></p>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-4">	
+					<div class="form-item form-item-gender form-type-radio radio margin-xs-t-s margin-xs-b-s margin-xs-r-m"> 
+						<label for="edit-nationality"><input type="radio" id="bank_transfer_type" name="transfer_type" value="Domiciliation" checked class="form-radio" ><!-- ko i18n: "Domiciliation" --><!-- /ko --> </label>
+					</div>
+				</div>
+				<div id="domiciliation_textbox_content">
+				<div class="col-xs-12 col-sm-6 col-md-4">
+					<p class="pull-left margin-xs-t-s margin-xs-b-s margin-xs-r-m"><!-- ko i18n: "N de compte" --><!-- /ko --> <?php echo "&nbsp;"?> <span class="form-required" title="Ce champ est requis.">*</span></p>	
+				</div> 
+				<div class="col-xs-12 col-sm-6 col-md-4">		
+					<input class="form-control pull-left" type="text" id="first-accountnumber" autocomplete="first-accountnumber" name="account_number"   value="BE" size="60" maxlength="19" data-validate="{'custom-required':true}">
+					<div generated="true" class="mage-error" id="first-accountnumber-error" style="display:none"><!-- ko i18n: "This is a required fields." --><!-- /ko --></div>
+					<div generated="true" class="mage-error" id="first-accountnumber-error-data" style="display:none"><!-- ko i18n: "Please enter your account number in the following format: BEXX XXXX XXXX XXXX" --><!-- /ko --></div>
+				</div>
+				</div>
+				<!-- /ko -->
+			</div>
+			<div class="row domiciliation-message">
+				<div class="col-xs-12">
+					<p><!-- ko i18n: "J autorise Orange Belgium SA a faire la demande de paiement de mes factures via domiciliation aupres de ma banque." --><!-- /ko --> </p>
+					<p><!-- ko i18n: "Je peux facilement arreter cette domiciliation ou modifier mon numero de compte bancaire par mail dans mon Espace client." --><!-- /ko --> </p>
+				</div>
+			</div>
+			<!-- <div class="clearfix"></div> -->
+		</div>
+		<!-- /ko -->
+	</div>
+	<!-- /ko -->
+        <!-- /ko -->
+    <div id="checkout-step-payment"
+         class="step-content"
+         data-role="content"
+         role="tabpanel"
+         aria-hidden="false">
+        <!-- ko if: (quoteIsVirtual) -->
+            <!-- ko foreach: getRegion('customer-email') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        <!--/ko-->
+        <form id="co-payment-form" class="iwd-opc-form-for-payments form payments" novalidate="novalidate">
+            <input data-bind='attr: {value: getFormKey()}' type="hidden" name="form_key"/>
+            <fieldset class="fieldset">
+                <legend class="legend">
+                    <span data-bind="i18n: 'Payment Information'"></span>
+                </legend> <!-- <br /> -->
+                <!-- ko foreach: getRegion('beforeMethods') -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- /ko -->
+                <div id="checkout-payment-method-load" class="opc-payment" data-bind="visible: isPaymentMethodsAvailable">
+                    <!-- ko foreach: getRegion('payment-methods-list') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- /ko -->
+                </div>
+                <div style="display:none" class="iwd-no-quotes-block no-quotes-block" data-bind="visible: isPaymentMethodsAvailable() == false">
+                </div>
+                <!-- ko foreach: getRegion('afterMethods') -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- /ko -->
+				
+				<div class="actions-toolbar">
+					<div class="primary">
+					    <p id="error-message-payment-bottom" style="color:red; display:none" data-bind="i18n: 'Please select any one of the payment method'"> </p>
+						<input class="action primary checkout" type="button" id="place_order_btn" data-bind="attr: {value: buttonName()}" />
+					</div>
+        </div>
+            </fieldset>
+        </form>
+    </div>
+</li>

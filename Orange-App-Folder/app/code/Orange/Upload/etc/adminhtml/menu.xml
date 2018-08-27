@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Orange_Upload::upload" title="Orange" module="Orange_Upload" sortOrder="15" dependsOnModule="Orange_Upload" resource="Orange_Upload::upload"/>
+        <add id="Orange_Upload::upload_header" title="Configuration" module="Orange_Upload" sortOrder="10" parent="Orange_Upload::upload" resource="Orange_Upload::upload" />
+        <add id="Orange_Upload::upload_header_test1" title="Header And Footer Uploader" module="Orange_Upload" sortOrder="10" parent="Orange_Upload::upload_header" action="upload/header" resource="Orange_Upload::upload_header_test1"/>
+        <add id="Orange_Priority::orange_priority_index" title="Priority Management" module="Orange_Priority"  sortOrder="20" parent="Orange_Upload::upload_header" action="priority/priority/index" resource="Orange_Priority::orange_priority_index"/>
+        
+        <add id="Orange_Upload::upload_header_subsidyprice" title="Subsidy Import" module="Orange_Upload" sortOrder="21" parent="Orange_Upload::upload_header" action="upload/header/subsidyprice" resource="Orange_Upload::upload_subsidyprice"/>     
+        <add id="Orange_Promo::orange_promo_index" title="Promo Description" module="Orange_Promo"  sortOrder="35"  action="promo/promo/index" resource="Orange_Promo::orange_promo_index" parent="Orange_Upload::upload_header"/>
+        <add id="Orange_Errormessage::orange_errormessage_index" title="Error Management" module="Orange_Errormessage"  sortOrder="35"  action="errormessage/errormessage/index" resource="Orange_Errormessage::orange_errormessage_index" parent="Orange_Upload::upload_header"/>
+        <add id="Orange_Reserve::orange_reserve_index" title="Click And Reserve Management" module="Orange_Reserve" sortOrder="36"  action="reserve/reserve/index" resource="Orange_Reserve::orange_index" parent="Orange_Upload::upload_header"/>
+        <add id="Orange_Reserve::orange_blacklist_index" title="Click And Reserve Blacklist Management" module="Orange_Reserve" sortOrder="37"  action="reserve/blacklist/index" resource="Orange_Reserve::orange_blacklist" parent="Orange_Upload::upload_header"/>
+        <add id="Orange_OutofstockReminder::orange_outofstockreminderproduct_index" title="Outofstock Reminder" module="Orange_OutofstockReminder"  sortOrder="40" parent="Orange_Upload::upload_header"  action="outofstockreminder/outofstockreminderproduct/index" resource="Orange_OutofstockReminder::orange_outofstockreminderproduct_index"/>	 
+        <add id="Orange_Limitqty::orange_limitqty_index" title="Manage LOB Qty" module="Orange_Limitqty"  sortOrder="40" parent="Orange_Upload::upload_header"  action="limitqty/limitqty/index" resource="Orange_Limitqty::orange_limitqty_index"/>	 
+	<add id="Orange_StockManagement::orange_stock_index" title="Stock Management" module="Orange_StockManagement"  sortOrder="41" parent="Orange_Upload::upload_header"  action="stockmanagement/stock/index" resource="Orange_StockManagement::orange_stock_index"/>                  
+		<add id="Orange_Reevoofeed::orange_reevoofeedreevoofeed" title="Reevoo Feeds" module="Orange_Reevoofeed"  sortOrder="20" dependsOnModule="Orange_Reevoofeed" parent="Orange_Upload::upload_header" action="reevoofeed/reevoofeed/reevoofeed" resource="Orange_Reevoofeed::orange_reevoofeedreevoofeed"/>
+		<add id="Orange::Scoringfield" title="Scoring Response Content" module="Orange_Scoringfield" sortOrder="120"  parent="Orange_Upload::upload_header" action="scoringfield/scoringresponse/" resource="Orange_Scoringfield::scoringresponse" />
+    </menu>
+</config>

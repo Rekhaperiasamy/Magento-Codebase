@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aw_csblock_grid_data_source" xsi:type="string">Aheadworks\Csblock\Model\ResourceModel\Csblock\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Csblock\Model\ResourceModel\Csblock\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">aw_csblock_block</argument>
+            <argument name="eventPrefix" xsi:type="string">aw_csblock_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">csblock_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Aheadworks\Csblock\Model\ResourceModel\Csblock</argument>
+        </arguments>
+    </type>
+</config>

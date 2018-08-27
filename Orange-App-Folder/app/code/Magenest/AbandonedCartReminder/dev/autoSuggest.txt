@@ -1,0 +1,8 @@
+Happy birthday Alex.
+We gift you a coupon $50 .Please use the code rT566Qwe.
+The coupon expires in 5 days.
+
+Regards,
+Magenest
+
+14:48:53] luu thanh thuy: curl "https://rest.nexmo.com/sms/json?api_key=6451aa3c&api_secret=b3127193aa9b4ad3&from=NEXMO&to=84985986898&text=Thank+you+for+buying"

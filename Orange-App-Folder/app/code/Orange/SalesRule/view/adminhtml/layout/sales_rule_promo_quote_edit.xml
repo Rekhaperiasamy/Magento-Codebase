@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <referenceBlock name="sales_rule_form">
+				<block class="Orange\SalesRule\Block\Adminhtml\Promo\Quote\Edit\Tab\ImportCoupons" name="orange_promo_sales_rule_edit_tab_importcoupons" as="orange_promo_sales_rule_edit_tab_importcoupons" template="Orange_SalesRule::tab/importcoupons.phtml">
+					<arguments>
+                        <argument name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Import Coupon Codes</item>
+                            <item name="collapsible" xsi:type="boolean">true</item>
+                            <item name="opened" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="string">50</item>
+                            <item name="canShow" xsi:type="boolean">false</item>
+                            <item name="componentType" xsi:type="string">fieldset</item>
+                            <item name="component" xsi:type="string">Orange_SalesRule/js/form/element/import-coupon-codes</item>
+                        </argument>
+                    </arguments>
+					<block class="Orange\SalesRule\Block\Adminhtml\Promo\Quote\Edit\Tab\Coupons\Import\Form" name="promo_quote_edit_tab_coupons_import_form"/>
+				</block>
+			</referenceBlock>
+		</referenceContainer>
+		<referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="orange_sales_rule_form_page_head_components" template="Orange_SalesRule::promo/importcouponjs.phtml"/>
+        </referenceBlock>
+		<referenceBlock name="sales_rule_form_page_head_components">
+			<action method="setTemplate">
+				<argument name="template" xsi:type="string">Orange_SalesRule::promo/salesrulejs.phtml</argument>
+			</action>            
+        </referenceBlock>
+	</body>
+</page>

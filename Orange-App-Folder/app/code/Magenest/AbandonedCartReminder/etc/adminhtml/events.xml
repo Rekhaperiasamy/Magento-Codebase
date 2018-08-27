@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+
+    <event name="layout_load_before"> <!-- triggered right after layout is loaded -->
+        <observer name="abandonedcartreminder_layout_condition" instance="Magenest\AbandonedCartReminder\Model\Observer\Layout\Condition" />
+    </event>
+    <event name="followup_email_cancel_trigger"> <!-- triggered right after layout is loaded -->
+        <observer name="abandonedcartreminder_add_cancel_condition" instance="Magenest\AbandonedCartReminder\Model\Observer\Layout\Cancel" />
+    </event>
+    
+    <event name="config_data_save_commit_after">
+        <observer name="abandonedcartreminder_config_save_after" instance="Magenest\AbandonedCartReminder\Model\Observer\Config\Save"/>
+    </event>
+</config>

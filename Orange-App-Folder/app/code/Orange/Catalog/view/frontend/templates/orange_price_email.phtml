@@ -1,0 +1,45 @@
+<?php 
+    $commonColorEmail = "common-color-email";
+	$fontColor = "color:#ff7900;font-weight:bold;";
+	$topParentPrice = "top-parent-price email-section2";
+    if($block->getProductPrice() > 0):?>
+	<?php
+	$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+	$discountSohoPrice = $productViewblock->getSohoDiscountAmount();
+	$order = $block->getOrder();
+	$customerType = $order->getCustomerGroupId();
+	if($customerType == '4' && !$block->getIsSohoDiscount()) {
+		$sohoPrice = $block->getProductPrice() / (1+($discountSohoPrice/100));
+		$price = number_format($sohoPrice,2,",","");
+	} else {
+		$price = number_format($block->getProductPrice(),2,",","");
+	}
+	$floatSeperator = ",";
+	$fullPrice = explode(",",$price);
+	$decimalVal = $fullPrice[0];
+	$floatVal = 0;
+	if(count($fullPrice) > 1):
+		$floatVal = $fullPrice[1];	
+	endif;
+	$priceColor = $block->getPriceColor();
+	$strikePrice = '';
+	if(strpos($priceColor,'new-price')!==false){
+		$strikePrice = 'new-price';
+	} else {
+		$strikePrice = 'old-price';
+	}
+	?>
+<?php 
+$topParentPrice = "top-parent-price email-section2";
+$commonColorEmail = "common-color-email";
+$fontValue = "font-weight:bold;line-height:2em;";
+$fontColor = "color:#ff7900;font-weight:bold;";
+if(strpos($priceColor,'ban-contact')!==false){
+	$topParentPrice = '';
+	$commonColorEmail = '';
+	$fontColor = "font-weight:normal;font-family: Arial,Helvetica,sans-serif;";
+	$fontValue = "font-weight:normal; font-size:8pt;line-height:1.2em;font-family: Arial,Helvetica,sans-serif;";
+}
+?>
+<table border="0" cellspacing="0" class="break-responsive<?php if(strpos($priceColor,'marg-price')!==false): ?> marg-price<?php endif; ?>" cellpadding="0" style="<?php if(strpos($priceColor,'price-marg')!==false):?>margin-top:20px;<?php endif; ?>"><tbody><tr><?php if($block->getIsNegative()): ?><td class="amount-negate email-left <?php echo $topParentPrice; ?>" style="<?php echo $fontColor;?> font-size:30pt;font-weight:bold; text-align:left; color:#ff7900;">-</td><?php endif; ?><td class="<?php echo $topParentPrice; ?> <?php if($strikePrice!='old-price'): ?> new-pricee <?php endif;?> email-left" style="<?php echo $fontColor;?>"><?php echo $decimalVal; ?></td><?php if($floatVal > 0): ?><td class="<?php echo $topParentPrice; ?> <?php if($strikePrice=='old-price'): ?>old-price-desimal<?php else: ?>new-price-desimal<?php endif; ?> <?php if(strpos($priceColor,'ban-contact')!==false):?>email-left<?php else:?> email-section2<?php endif; ?>" style="<?php echo $fontColor;?>"><?php echo $floatSeperator; ?><?php echo $floatVal; ?></td><?php endif;?><td id="<?php if($floatVal > 0): echo $strikePrice; ?>-symbol-desimal<?php else: ?><?php echo $strikePrice; ?>-symbol<?php endif; ?>" class="<?php echo $commonColorEmail ?> <?php if($floatVal > 0): ?>new-price-symbol-desimal<?php endif; ?><?php if($strikePrice!='old-price'): ?> new-price-symbol <?php endif;?> <?php if(strpos($priceColor,'ban-contact')!==false):?> email-section5<?php elseif($floatVal > 0): ?> email-section4<?php else: ?> email-section3<?php endif; ?>" style="margin-left:4px;<?php echo $fontColor;?><?php echo $fontValue; ?>"><?php echo " €"; ?></td><?php if(strpos($priceColor,'simcard-cnt')!==false):?><td class="<?php echo $commonColorEmail; ?>" style="<?php echo $fontColor;?>line-height:1.5em; margin-left:2px;"><small class="orange decharge-txt email-decharge-txt"> <?php echo __('de recharge'); ?></small></td><?php endif;?><?php if($block->getIsSubscription()): ?><td class="<?php echo $commonColorEmail; ?> <?php if($floatVal > 0): ?>new-price-period-desimal<?php else: ?>new-price-period<?php endif;?> email-new-price-period" style="<?php echo $fontColor;?>line-height:2em;margin-left:3px"><?php echo __('/mois') ?></td><?php endif; ?><div class="clearfix"></div></tr></tbody></table><?php if($block->getIsPriceLabelVisible() && $block->getShowPriceLabel()):?><?php if(strpos($priceColor,'ban-contact')!==false):?><br/><?php endif; ?><span class="new-price-soho" style="<?php echo $fontColor;?>float:left; font-size:10px; line-height:0em"><?php echo $block->getPriceLabel("SOHO"); ?></span><?php endif; ?><?php else:?><table border="0" cellspacing="0" class="break-responsive" cellpadding="0"><tbody><tr><?php $decimalVal = 0;?><td class="<?php echo $topParentPrice ?> new-pricee  email-left" style="<?php echo $fontColor;?>float:left;" ><?php echo $decimalVal; ?></td><td id="new-price-symbol" class="<?php echo $commonColorEmail; ?> new-price-symbol ban-contact email-currency-symbol email-section3" style="margin-left:4px;color:#ff7900;font-weight:bold;line-height:2em;"><?php echo " €"; ?></td></tr></tbody></table>
+ <?php endif; ?>

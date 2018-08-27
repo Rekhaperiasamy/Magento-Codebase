@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="quote_convert_item">
+            <field name="design_sim_number">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="design_te_existing_number">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="subscription_type">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="current_operator">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="network_customer_number">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="simcard_number">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="bill_in_name">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="holders_name">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="holder_firstname">
+                <aspect name="to_order_item" />
+            </field>
+			<field name="design_te_existing_number_final_validation">
+                <aspect name="to_order_item" />
+            </field>
+			
+			
+        </fieldset>
+		
+		<fieldset id="sales_convert_order_item">
+            <field name="design_sim_number">
+                <aspect name="to_quote_item" />
+            </field>
+			<field name="design_te_existing_number">
+                <aspect name="to_quote_item" />
+            </field>
+			<field name="subscription_type">
+                <aspect name="to_quote_item" />
+            </field>
+			<field name="current_operator">
+                <aspect name="to_quote_item" />
+            </field>
+			<field name="network_customer_number">
+                <aspect name="to_quote_item" />
+            </field>
+			
+			<field name="bill_in_name">
+                <aspect name="to_quote_item" />
+            </field>
+			
+			<field name="holders_name">
+                <aspect name="to_quote_item" />
+            </field>
+			
+			<field name="holder_firstname">
+                <aspect name="to_quote_item" />
+            </field>
+			
+			<field name="design_te_existing_number_final_validation">
+                <aspect name="to_quote_item" />
+            </field>
+			
+        </fieldset>
+				
+    </scope>
+</config>

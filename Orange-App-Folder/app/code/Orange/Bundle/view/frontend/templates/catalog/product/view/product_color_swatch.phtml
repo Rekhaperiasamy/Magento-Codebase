@@ -1,0 +1,65 @@
+<?php
+$productId =  $block->getProduct()->getId() ;
+$bundleId = $this->getBundleId();
+$intermediateId = $this->getIntermediateId();
+$storeUrl = $this->getStoreUrl();
+$customerTypeId = $this->getCustomerTypeId();
+$storeCode = $this->getStoreCode();
+$familyId = $block->getProduct()->getHandsetFamily();
+$availableColors = $this->getBundledAvailableColors($familyId);
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$urlInterface = $objectManager->get('Magento\Framework\UrlInterface');
+$swatchHelper=$objectManager->get("Magento\Swatches\Helper\Media");
+$helperData=$objectManager->get("Magento\Swatches\Helper\Data");
+$virtProduct = $objectManager->create('Magento\Catalog\Model\Product')->load($intermediateId);
+$_catalogHelper = $objectManager->get('Orange\Catalog\Helper\CatalogUrl');
+$nintendoUrl = $virtProduct->getCustomUrlVirtual();
+  $colorCount = count($availableColors);
+?>
+<?php if(count($availableColors) > 0): ?>
+<?php if($colorCount >1){ ?>
+<p class="color_para"><?php /* @escapeNotVerified */ echo __('Couleurs disponibles') ?></p>
+<?php } ?>
+<?php $optionIds = array(); ?>
+ <?php foreach($availableColors as $availalblecolor):  
+ unset($optionIds);
+ $color_active=($bundleId == $availalblecolor->getId() ? "active" : "") ?> 
+ <?php
+$availId = $availalblecolor->getId();
+$results = $this->getUrlRewrite($availId,$nintendoUrl);
+$bundProduct = $objectManager->create('Magento\Catalog\Model\Product')->load($availId);
+//echo "<pre>";print_r($results);
+if(count($results)!=0) {
+	foreach($results as $result){
+	   if(strpos($result['request_path'],$nintendoUrl)!==false){
+			$urlKey = $bundProduct->getUrlKey();			
+				$formattedUrl = $storeUrl.$nintendoUrl."/".$urlKey;
+		} else {
+			$formattedUrl = $availalblecolor->getProductUrl();
+		}
+	}
+} else {
+	$formattedUrl = $availalblecolor->getProductUrl();
+}
+$formattedUrl = $_catalogHelper->getFormattedUrl($formattedUrl);
+//echo $result['request_path']."-->".$bundProduct->getUrlKey().'-->'.$storeUrl.'-->'.$nintendoUrl;
+$simpleProductDetails = $this->simpleProductDetails($availId);
+$deviceColor = $simpleProductDetails->getResource()->getAttribute('color')->getFrontend()->getValue($simpleProductDetails); 
+$optionIds[] = $simpleProductDetails->getColor(); 
+$swatchCollection = $helperData->getSwatchesByOptionsId($optionIds);?>
+	<?php foreach($swatchCollection as $swatch): ?>
+<?php $imagePath = $swatchHelper->getSwatchAttributeImage('swatch_image', $swatch['value']);
+$productTitle = str_replace($deviceColor,"",$simpleProductDetails->getName()); 
+//$imageTitle =  __('Orange Belgique').' - '.$productTitle.' - '.$deviceColor;
+$imageTitle = $deviceColor;
+?>
+<?php if(!empty($imagePath) && $colorCount>1 ){?>
+<a id="<?php echo $availalblecolor->getId() ?>" href="<?php echo $formattedUrl ?>" class="<?php echo $color_active; ?> colour-circle <?php echo strtolower($deviceColor) ?>" title="<?php echo $imageTitle; ?>"><img src= "<?php echo $imagePath;?>" /></a>&nbsp;
+<?php }elseif($colorCount>1 ){?>
+<a id="<?php echo $availalblecolor->getId() ?>" href="<?php echo $formattedUrl ?>" class="<?php echo $color_active; ?> colour-circle <?php echo strtolower($deviceColor) ?>" title="<?php echo $imageTitle; ?>"></a>&nbsp;
+<?php } ?>
+<?php endforeach; ?>
+<?php endforeach; ?>	
+<?php endif;
+
+?>

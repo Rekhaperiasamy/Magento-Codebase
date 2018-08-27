@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+   <virtualType name="RuleGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">FME\Geoipultimatelock\Model\ResourceModel\Rule\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RuleGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="RuleGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="geoipultimatelock_rule_listing_data_source" xsi:type="string">FME\Geoipultimatelock\Model\ResourceModel\Grid\Rule\Collection</item>
+                <item name="geoipultimatelock_restrict_listing_data_source" xsi:type="string">FME\Geoipultimatelock\Model\ResourceModel\Grid\Restrict\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="FME\Geoipultimatelock\Model\ResourceModel\Grid\Rule\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">fme_geoipultimatelock</argument>
+            <argument name="eventPrefix" xsi:type="string">geoipultimatelock_rule_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">geoipultimatelock_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">FME\Geoipultimatelock\Model\ResourceModel\Rule</argument>
+        </arguments>
+    </type>
+    
+    
+    <!-- restrict listing -->
+    
+    <virtualType name="FME\Geoipultimatelock\Model\ResourceModel\Grid\Restrict\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">fme_geoipultimatelock_restrict</argument>
+<!--            <argument name="eventPrefixRestrict" xsi:type="string">geoipultimatelock_restrict_grid_collection</argument>
+            <argument name="eventObjectRestrict" xsi:type="string">geoipultimatelock_grid_restrict_collection</argument>-->
+            <argument name="resourceModel" xsi:type="string">FME\Geoipultimatelock\Model\ResourceModel\Restrict</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="GeoipultimatelockGirdRestrictFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GeoipultimatelockGridRestrictDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">FME\Geoipultimatelock\Model\ResourceModel\Restrict\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">GeoipultimatelockGirdRestrictFilterPool</argument>
+        </arguments>
+    </virtualType>
+</config>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <common>
+            <report_exception_configuration>				
+				<report_exception_notification_email>test@test.com;test@testers.com</report_exception_notification_email>
+            </report_exception_configuration>
+        </common>
+    </default>
+</config>

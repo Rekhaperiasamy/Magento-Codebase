@@ -1,0 +1,114 @@
+<?php
+
+use Magento\Framework\App\TemplateTypesInterface;
+
+$staus = $block->statusData();
+unset($staus['fraud'],$staus['holded'],$staus['paypal_canceled_reversal'],$staus['paypal_reversed'],$staus['pending_paypal'],$staus['closed'],$staus['pending']);
+$url = $block->getSaveUrl();
+
+?>
+<form enctype="multipart/form-data" id="order_export" name="order_export" method="post" action="<?php echo $url; ?>">
+    <br />
+
+    <div class="entry-edit form-inline" data-bind="scope: 'customer_form.areas'">
+        <fieldset id="segment_base_fieldset" class="fieldset admin__fieldset ">
+            <div>
+                <div class="field overview required" data-role="filter-form" id="date_range">
+                    <legend class="admin__legend legend"><span>Order Export</span></legend>
+                    <br>
+                    <div style="float:left; width:20%;" class="admin__field field field-name  required _required" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-form-field-name"> 
+                        <label for="date_from" class="label admin__field-label" for="segment_name" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-text-name-label">
+                            <span><?php echo __('From') ?>:</span>
+                        </label>
+                        <div class="admin__field-control control">
+                            <input class="input-text required-entry admin__control-text"
+                                   type="text"
+                                   id="date_from"
+                                   name="date_from"
+                                   />
+                        </div>
+                    </div>
+                    <div style="float:left; width:20%; margin-top:0px;" class="admin__field field field-name  required _required" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-form-field-name"> 
+                        <label class="label admin__field-label" for="segment_name1" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-text-name-label">
+                            <span><?php echo __('To') ?>:</span>
+                        </label>
+                        <div class="admin__field-control control">
+                            <input class="input-text required-entry admin__control-text"
+                                   type="text"
+                                   id="date_to"
+                                   name="date_to"
+                                   />
+                        </div>
+                    </div>
+                    <br>
+                    
+                </div>
+            </div>
+            <div class="field overview required" data-role="filter-form" id="date_range" style="margin-top:-4px; float:left;">
+                 <label class="label admin__field-label" data-ui-id="adminhtml-customersegment-edit-tab-general-0-fieldset-element-text-name-label">
+                            <span><?php echo 'Order Status' ?> </span>
+                    </label>
+                <div class="admin__field-control control">
+                <select name="status1[]" id="status" class="admin__control-select" multiple>  
+                    <?php foreach ($staus as $key => $name) { ?>
+                        <option value="<?php echo $key; ?>"><?php echo $name; ?></option>
+                    <?php }
+                    ?>
+                </select> 
+                    </div>
+            </div>
+
+            <input class="action-default scalable task" style="float:right; margin-top:13px;" type="submit" name="submit" value="Generate" />
+        </fieldset>
+
+    </div>
+	<div class="entry-edit form-inline" data-bind="scope: 'customer_form.areas'">
+		<fieldset id="segment_base_fieldset" class="fieldset admin__fieldset ">
+		<div>
+			<div class="field overview required" data-role="filter-form" id="date_range">
+				<legend class="admin__legend legend"><span>Monthly Report's</span></legend>
+				<br>
+			</div>    
+				<?php 
+				$outputFile 	= BP . "/common-header/ordersreport";
+				$files 			= array_diff(scandir($outputFile), array('.', '..'));
+				rsort($files);
+				foreach($files as $file){
+					$filename 	= explode('.',$file);
+					$filename 	= $filename[0];
+					echo '<span><a href="'.$block->getDownloadUrl($filename).'">'.$filename.'</a></span></br>';
+				}  
+				?>
+		</div>                                
+		</fieldset>
+	</div>
+</form>
+
+<script type="text/x-magento-init">
+    {
+    "#order_export": { "validation": {}
+    }
+    }
+</script>
+
+<script>
+    require([
+        "jquery",
+        "mage/calendar",
+        'jquery/validate',
+        'mage/validation'
+    ], function ($) {
+        $("#date_range").dateRange({
+            buttonText: "<?php echo __('Select Date') ?>",
+            from: {
+                id: "date_from"
+
+            },
+            to: {
+                id: "date_to"
+            }
+        });
+
+    });
+</script>
+

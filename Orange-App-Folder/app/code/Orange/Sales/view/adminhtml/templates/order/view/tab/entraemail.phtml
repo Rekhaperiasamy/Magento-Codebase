@@ -1,0 +1,1027 @@
+<section class="admin__page-section entra-status-content">
+    <div class="admin__page-section-title"><span class="title">Entra Email Status</span></div>
+    <div class="admin__page-section-item-content">
+        <table class="admin__table-secondary order-information-table">
+            <tbody>
+            <tr>
+                <th>Entra Status</th>
+                <td><?php echo $this->getEntraStatus(); ?></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="admin__page-section entra-mail-content">
+    <div class="admin__page-section-title"><span class="title">Entra Email</span></div>
+    <?php
+    $order = $this->getOrder();
+    $status = false;
+    $orderCreated = $this->getTimeAccordingToTimeZone($order->getCreatedAt());
+    $items = $order->getAllItems();
+    foreach ($items as $item) {
+        $productType = $item->getProductType();
+        if (($productType == 'virtual')) {
+            $status = true;
+        }
+    }
+    ?>
+    <?php if (!$status) { ?>
+        <div class="admin__page-section-item-content">
+            <table class="admin__table-secondary order-information-table">
+                <tbody>
+                <tr>
+                    <th>No Entra Email for this order</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <?php } else { ?>
+        <table>
+            <tr>
+                <td>Dear</td>
+            </tr>
+            <tr>
+                <td>Please encode this new Postpaid / IEW order in MyPartner</td>
+            </tr>
+            <tr>
+                <td>--------------------------------------------------------------------------------------</td>
+            </tr>
+            <tr>
+                <td>OrderId : <?php echo $order->getIncrementId(); ?></td>
+            </tr>
+            <tr>
+                <td>--------------------------------------------------------------------------------------</td>
+            </tr>
+            <tr>
+                <td>Order Created : <?php echo $orderCreated; ?></td>
+            </tr>
+            <tr>
+                <td>--------------------------------------------------------------------------------------</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Customer Data:</b></td>
+            </tr>
+            <?php
+            $items = $order->getAllItems();
+            $TypeId = '';
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $model = $objectManager->create('Orange\Abandonexport\Model\Items');
+            $abandonexport = $model->getCollection()->addFieldToFilter('quote_id', $order->getQuoteId());
+            $gender = unserialize($abandonexport->getFirstItem()->getStepsecond());
+            $successBlock = $block->getLayout()->createBlock('Orange\Checkout\Block\Onepage\Success');
+            $storeId = $order->getStoreId();
+            $postpaidModel = $objectManager->create('Orange\Checkout\Model\Postpaid');
+            $customerType = $successBlock->getCustomerGroup($order->getCustomerGroupId());
+            $scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+            $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+            $productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+            $discountSohoPrice = $productViewblock->getSohoDiscountAmount();
+            if ($customerType == 'SOHO'):
+                $discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy_soho', $storeScope);
+            else:
+                $discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy', $storeScope);
+            endif;
+            $iewTelephone = "";
+            $iewContract = "";
+            $iewFirstname = "";
+            $iewLastname = "";
+            $iewDob = "";
+            $isTeneuroYes = "";
+            if ((isset($gender['iew_items'])) && $gender['iew_items']) {
+                $isTeneuroYes = $gender['is_teneuro_' . $gender['iew_items']];
+                $iewTelephone = $gender['iew_telephone_' . $gender['iew_items']];
+                $iewContract = $gender['iew_contract_' . $gender['iew_items']];
+                $iewFirstname = $gender['iew_first_name_' . $gender['iew_items']];
+                $iewLastname = $gender['iew_last_name_' . $gender['iew_items']];
+                $iewDob = $gender['iew_dob_' . $gender['iew_items']];
+            }
+            ?>
+            <?php foreach ($items as $item) {
+                $postpaidModelCollections = $postpaidModel->getCollection()
+                    ->addFieldToFilter('quote_id', $order->getQuoteId())
+                    ->addFieldToFilter('item_id', $item->getData('quote_item_id'));
+
+                $_product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getData("product_id"));
+                $attr = $_product->getSubscriptionAmount();
+                $webpromo = strip_tags($_product->getWebPromo());
+
+                if ($item->getData("is_virtual") == '1' && $item->getData("parent_item_id") == '') {
+                    $i = 1;
+                    foreach ($postpaidModelCollections as $postpaidCollection) {
+                        echo '<tr><td>';
+                        echo 'Product name';
+                        echo '</td><td>:</td><td>';
+                        if ($postpaidModelCollections->count() > 1) {
+                            echo '<b>' . $item->getName() . ' (' . $i . ')</b>';
+                        } else {
+                            echo '<b>' . $item->getName() . '</b>';
+                        }
+                        echo '</td></tr>';
+                        echo '<tr><td>';
+                        echo 'Monthly price';
+                        echo '</td><td>:</td><td>';
+                        if ($customerType == 'SOHO') {
+                            $sohoPrice = $attr / (1 + ($discountSohoPrice / 100));
+                            if ($storeId == '2') {
+                                echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($attr, 2)) . ' TVA incl.)</b>';
+                            } else {
+                                echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($attr, 2)) . ' Incl. BTW)</b>';
+                            }
+                        } else {
+                            echo '<b>€' . str_replace('.', ',', number_format($attr, 2)) . '</b>';
+                        }
+                        echo '</td></tr>';
+                        if ($webpromo != '') {
+                            echo '<tr><td>';
+                            echo 'Web promo';
+                            echo '</td><td>:</td><td>';
+                            echo '<b>' . $webpromo . '</b>';
+                            echo '</td></tr>';
+                        }
+                        if ($postpaidCollection->getProPacks()) {
+                            echo '<tr><td>';
+                            echo 'ProPacks';
+                            echo '</td><td>:</td><td>';
+                            echo '<b>' . $postpaidCollection->getProPacks() . '</b>';
+                            echo '</td></tr>';
+                        }
+                        if ($postpaidCollection->getDesignSimNumber() == 1) {
+                            if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                echo '<tr><td>';
+                                echo 'Client Type';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Migration</b>';
+                                echo '</td></tr>';
+                                echo '<tr><td>';
+                                echo 'Operator';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Orange</b>';
+                                echo '</td></tr>';
+                            } else if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 3) {
+                                echo '<tr><td>';
+                                echo 'Client Type';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>MNP</b>';
+                                echo '</td></tr>';
+                            } else {
+                                echo '<tr><td>';
+                                echo 'Client Type';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>new number</b>';
+                                echo '</td></tr>';
+                            }
+                            echo '<tr><td>';
+                            echo 'Number configuration';
+                            echo '</td><td>:</td><td>';
+                            echo '<b>Keep your number</b>';
+                            echo '</td></tr>';
+                            echo '<tr><td>';
+                            echo 'Number';
+                            echo '</td><td>:</td><td>';
+                            echo '<b>' . $postpaidCollection->getDesignTeExistingNumber() . '</b>';
+                            echo '</td></tr>';
+                            if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() != "1") {
+                                echo '<tr><td>';
+                                echo 'Type of card';
+                                echo '</td><td>:</td><td>';
+                                if ($postpaidCollection->getCurrentOperator() == 1) {
+                                    echo '<b>Subscription</b>';
+                                } else {
+                                    echo '<b>Prepaid card</b>';
+                                }
+                                echo '</td></tr>';
+                            }
+                            if ($postpaidCollection->getSubscriptionType() != "") {
+                                echo '<tr><td>';
+                                echo 'Current Operator';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $postpaidCollection->getSubscriptionType() . '</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($postpaidCollection->getNetworkCustomerNumber() != "") {
+                                echo '<tr><td>';
+                                echo 'Current customer number';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $postpaidCollection->getNetworkCustomerNumber() . '</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($postpaidCollection->getSimcardNumber() != "") {
+                                echo '<tr><td>';
+                                echo 'Current SIM card number';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $postpaidCollection->getSimcardNumber() . '</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() != "1") {
+                                echo '<tr><td>';
+                                echo 'The invoice is on your name';
+                                echo '</td><td>:</td><td>';
+                                if ($postpaidCollection->getBillInName() == "1") {
+                                    echo '<b>Yes</b>';
+                                } else if ($postpaidCollection->getBillInName() == "0") {
+                                    echo '<b>No</b>';
+                                }
+                                echo '</td></tr>';
+                            }
+                            if ($postpaidCollection->getHoldersName() != "") {
+                                echo '<tr><td>';
+                                echo 'Card holder name';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $postpaidCollection->getHoldersName() . '</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($postpaidCollection->getHolderFirstname() != "") {
+                                echo '<tr><td>';
+                                echo 'First name of the holder';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $postpaidCollection->getHolderFirstname() . '</b>';
+                                echo '</td></tr>';
+                            }
+                        }
+                        if ($postpaidCollection->getDesignSimNumber() == 2) {
+                            echo '<tr><td>';
+                            echo 'Client Type';
+                            echo '</td><td>:</td><td>';
+                            if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 3) {
+                                echo '<b>MNP</b>';
+                            } elseif ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                echo '<b>Migration</b>';
+                            } else {
+                                echo 'new number';
+                            }
+                            echo '</td></tr>';
+
+                            if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                echo '<tr><td>';
+                                echo 'Operator';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Orange</b>';
+                                echo '</td></tr>';
+                            }
+                        }
+
+                        if (is_object($item->getProduct())) {
+                            //if product is deleted from system then there will no product object
+                            $attributeSetChild = $successBlock->getAttributeSetName($item->getProduct()->getAttributeSetId());
+                        } else {
+                            $attributeSetChild = "";
+                        }
+
+                        if ($attributeSetChild == 'IEW') {
+                            if ($iewTelephone != "" && $isTeneuroYes == "yes") {
+                                echo '<tr><td>';
+                                echo 'Associate to existing contract?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Yes</b>';
+                                echo '</td></tr>';
+                                echo '<tr><td>';
+                                echo 'Customer number';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $iewTelephone . '</b>';
+                                echo '</td></tr>';
+                            } else {
+                                echo '<tr><td>';
+                                echo 'Associate to existing contract?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>No</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($iewFirstname != "" && $isTeneuroYes == "yes" && $iewContract == '0') {
+                                echo '<tr><td>';
+                                echo 'Are you contract owner?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>No</b>';
+                                echo '</td></tr>';
+                                echo '<tr><td>';
+                                echo 'Contract owner first name';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $iewFirstname . '</b>';
+                                echo '</td></tr>';
+                            } else if ($iewTelephone != "" && $isTeneuroYes == "yes") {
+                                echo '<tr><td>';
+                                echo 'Are you contract owner?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Yes</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($iewLastname != "" && $isTeneuroYes == "yes" && $iewContract == '0') {
+                                echo '<tr><td>';
+                                echo 'Contract owner last name';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $iewLastname . '</b>';
+                                echo '</td></tr>';
+                            }
+                            if ($iewDob != "" && $isTeneuroYes == "yes" && $iewContract == '0') {
+                                echo '<tr><td>';
+                                echo 'Contract owner birth date';
+                                echo '</td><td>:</td><td>';
+                                $dob = str_replace('/', '-', $iewDob);
+                                $dobIew = date("Y-m-d H:i:s", strtotime($dob));
+                                $date = date_create($dobIew);
+                                echo '<b>' . date_format($date, "d/m/Y") . '</b>';
+                                echo '</td></tr>';
+                            }
+                        } else {
+                            if (isset($gender['cu_ex_invoice_cust_number']) && $gender['cu_ex_invoice_cust_number'] != "" && isset($gender['ex_invoice']) && $gender['ex_invoice'] == "yes") {
+                                echo '<tr><td>';
+                                echo 'Associate to existing contract?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Yes</b>';
+                                echo '</td></tr>';
+                                echo '<tr><td>';
+                                echo 'Customer number';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $gender['cu_ex_invoice_cust_number'] . '</b>';
+                                echo '</td></tr>';
+                            } else {
+                                echo '<tr><td>';
+                                echo 'Associate to existing contract?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>No</b>';
+                                echo '</td></tr>';
+                            }
+                            if (isset($gender['cu_ex_invoice_cust_firstname']) && $gender['cu_ex_invoice_cust_firstname'] != "" && isset($gender['ex_invoice']) && $gender['ex_invoice'] == "yes" && isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name'] == "0") {
+                                echo '<tr><td>';
+                                echo 'Are you contract owner?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>No</b>';
+                                echo '</td></tr>';
+                                echo '<tr><td>';
+                                echo 'Contract owner first name';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $gender['cu_ex_invoice_cust_firstname'] . '</b>';
+                                echo '</td></tr>';
+                            } else if (isset($gender['cu_ex_invoice_cust_number']) && $gender['cu_ex_invoice_cust_number'] != "" && isset($gender['ex_invoice']) && $gender['ex_invoice'] == "yes") {
+                                echo '<tr><td>';
+                                echo 'Are you contract owner?';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Yes</b>';
+                                echo '</td></tr>';
+                            }
+                            if (isset($gender['cu_ex_invoice_cust_surname']) && $gender['cu_ex_invoice_cust_surname'] != "" && isset($gender['ex_invoice']) && $gender['ex_invoice'] == "yes" && isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name'] == "0") {
+                                echo '<tr><td>';
+                                echo 'Contract owner last name';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $gender['cu_ex_invoice_cust_surname'] . '</b>';
+                                echo '</td></tr>';
+                            }
+                            if (isset($gender['cu_ex_invoice_cust_dob']) && $gender['cu_ex_invoice_cust_dob'] != "" && $gender['ex_invoice'] == "yes" && isset($gender['cu_ex_invoice_bill_in_name']) && $gender['cu_ex_invoice_bill_in_name'] == "0") {
+                                echo '<tr><td>';
+                                echo 'Contract owner birth date';
+                                echo '</td><td>:</td><td>';
+                                $dob = str_replace('/', '-', $gender['cu_ex_invoice_cust_dob']);
+                                $dobIew = date("Y-m-d H:i:s", strtotime($dob));
+                                $date = date_create($dobIew);
+                                echo '<b>' . date_format($date, "d/m/Y") . '</b>';
+                                echo '</td></tr>';
+                            }
+                        }
+                        echo '<tr><td></td><td></td><td></td></tr>';
+                        echo '<tr><td><p>--------------------------------------------------------------------------------------</p></td><td></td><td></td></tr>';
+                        echo '<tr><td></td><td></td><td></td></tr>';
+                        $i++;
+                    }
+                }
+                if (is_object($item->getProduct())) {
+                    if ($item->getProduct()->getTypeId() == 'bundle') {
+                        $i = 1;
+                        foreach ($postpaidModelCollections as $postpaidCollection) {
+                            $childItems = $item->getChildrenItems();
+                            $virtName = '';
+                            $simpName = '';
+                            foreach ($childItems as $childs) {
+                                $productChild = $childs->getProduct();
+
+                                if ($productChild->getTypeId() == 'virtual') {
+                                    $virtName = $productChild->getName();
+                                } else if ($productChild->getTypeId() == 'simple') {
+                                    $simpName = $productChild->getName();
+                                }
+
+                                if ($virtName != '' && $simpName != '') {
+                                    if ($postpaidModelCollections->count() > 1) {
+                                        echo '<b>' . $virtName . ' + ' . $simpName . ' (' . $i . ')</b>';
+                                    } else {
+                                        echo '<b>' . $virtName . ' + ' . $simpName . '</b>';
+                                    }
+                                    echo '</td></tr>';
+                                }
+                            }
+                            foreach ($childItems as $childs) {
+                                $productChild = $childs->getProduct();
+                                $attributeSetChild = $successBlock->getAttributeSetName($productChild->getAttributeSetId());
+                                if ($productChild->getTypeId() == 'virtual') {
+                                    if ($item->getPrice() < $discountFullTotalPrice && $attributeSetChild != 'IEW') {
+                                        echo '<tr><td>';
+                                        echo 'pay on next bill';
+                                        echo '</td><td>:</td><td>';
+                                        if ($customerType == 'SOHO') {
+                                            $sohoPrice = $item->getPrice() / (1 + ($discountSohoPrice / 100));
+                                            if ($storeId == '2') {
+                                                echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($item->getPrice(), 2)) . ' TVA incl.)</b>';
+                                            } else {
+                                                echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($item->getPrice(), 2)) . ' Incl. BTW)</b>';
+                                            }
+                                        } else {
+                                            echo '<b>€' . str_replace('.', ',', number_format($item->getPrice(), 2)) . '</b>';
+                                        }
+                                        echo '</td></tr>';
+                                    } else {
+                                        echo '<tr><td>';
+                                        echo 'Pay now';
+                                        echo '</td><td>:</td><td>';
+                                        if ($customerType == 'SOHO') {
+                                            $sohoPrice = $item->getPrice() / (1 + ($discountSohoPrice / 100));
+                                            if ($storeId == '2') {
+                                                echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($item->getPrice(), 2)) . ' TVA incl.)</b>';
+                                            } else {
+                                                echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($item->getPrice(), 2)) . ' Incl. BTW)</b>';
+                                            }
+                                        } else {
+                                            echo '<b>€' . str_replace('.', ',', number_format($item->getPrice(), 2)) . '</b>';
+                                        }
+                                        echo '</td></tr>';
+                                    }
+                                    $attr = $productChild->getSubscriptionAmount();
+                                    echo '<tr><td>';
+                                    echo 'Monthly price';
+                                    echo '</td><td>:</td><td>';
+                                    if ($customerType == 'SOHO') {
+                                        $sohoPrice = $attr / (1 + ($discountSohoPrice / 100));
+                                        if ($storeId == '2') {
+                                            echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($attr, 2)) . ' TVA incl.)</b>';
+                                        } else {
+                                            echo '<b>€' . str_replace('.', ',', number_format($sohoPrice, 2)) . ' (€' . str_replace('.', ',', number_format($attr, 2)) . ' Incl. BTW)</b>';
+                                        }
+                                    } else {
+                                        echo '<b>€' . str_replace('.', ',', number_format($attr, 2)) . '</b>';
+                                    }
+                                    echo '</td></tr>';
+                                    $webpromo = strip_tags($productChild->getWebPromo());
+                                    if ($webpromo != '' && $productChild->getSubsidyDuration() != 12) {
+                                        echo '<tr><td>';
+                                        echo 'Web promo';
+                                        echo '</td><td>:</td><td>';
+                                        echo '<b>' . $webpromo . '</b>';
+                                        echo '</td></tr>';
+                                    }
+                                    if ($postpaidCollection->getProPacks()) {
+                                        echo '<tr><td>';
+                                        echo 'ProPacks';
+                                        echo '</td><td>:</td><td>';
+                                        echo '<b>' . $postpaidCollection->getProPacks() . '</b>';
+                                        echo '</td></tr>';
+                                    }
+                                    if ($productChild->getSubsidyDuration() == 12) {
+                                        echo '<tr><td>';
+                                        echo 'Attribute';
+                                        echo '</td><td>:</td><td>';
+                                        echo '<b>Loyalty Advantage</b>';
+                                        echo '</td></tr>';
+                                    } else if ($productChild->getSubsidyDuration() == 24) {
+                                        echo '<tr><td>';
+                                        echo 'Attribute';
+                                        echo '</td><td>:</td><td>';
+                                        echo '<b>Phone Advantage</b>';
+                                        echo '</td></tr>';
+                                    }
+                                    if ($attributeSetChild == 'IEW') {
+                                        echo '<tr><td>';
+                                        echo 'Attribute';
+                                        echo '</td><td>:</td><td>';
+                                        echo '<b>Modem Advantage</b>';
+                                        echo '</td></tr>';
+                                    }
+                                }
+                            }
+                            if ($postpaidCollection->getDesignSimNumber() == 1) {
+                                echo '<tr><td>';
+                                echo 'Client Type';
+                                echo '</td><td>:</td><td>';
+                                if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 3) {
+                                    echo '<b>MNP</b>';
+                                } elseif ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                    echo '<b>Migration</b>';
+                                } else {
+                                    echo '<b>new number</b>';
+                                }
+                                echo '</td></tr>';
+
+                                if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                    echo '<tr><td>';
+                                    echo 'Operator';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>Orange</b>';
+                                    echo '</td></tr>';
+                                }
+                                echo '<tr><td>';
+                                echo 'Number configuration';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>Keep your number</b>';
+                                echo '</td></tr>';
+                                echo '<tr><td>';
+                                echo 'Number';
+                                echo '</td><td>:</td><td>';
+                                echo '<b>' . $postpaidCollection->getDesignTeExistingNumber() . '</b>';
+                                echo '</td></tr>';
+                                if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() != "1") {
+                                    echo '<tr><td>';
+                                    echo 'Type of card';
+                                    echo '</td><td>:</td><td>';
+                                    if ($postpaidCollection->getCurrentOperator() == 1) {
+                                        echo '<b>Subscription</b>';
+                                    } else {
+                                        echo '<b>Prepaid card</b>';
+                                    }
+                                    echo '</td></tr>';
+                                }
+                                if ($postpaidCollection->getSubscriptionType() != "") {
+                                    echo '<tr><td>';
+                                    echo 'Current Operator';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>' . $postpaidCollection->getSubscriptionType() . '</b>';
+                                    echo '</td></tr>';
+                                }
+                                if ($postpaidCollection->getNetworkCustomerNumber() != "") {
+                                    echo '<tr><td>';
+                                    echo 'Customer number';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>' . $postpaidCollection->getNetworkCustomerNumber() . '</b>';
+                                    echo '</td></tr>';
+                                }
+                                if ($postpaidCollection->getSimcardNumber() != "") {
+                                    echo '<tr><td>';
+                                    echo 'Current SIM card number';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>' . $postpaidCollection->getSimcardNumber() . '</b>';
+                                    echo '</td></tr>';
+                                }
+                                if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() != "1") {
+                                    echo '<tr><td>';
+                                    echo 'The invoice is on your name';
+                                    echo '</td><td>:</td><td>';
+                                    if ($postpaidCollection->getBillInName() == "1") {
+                                        echo '<b>Yes</b>';
+                                    } elseif ($postpaidCollection->getBillInName() == "0") {
+                                        echo '<b>No</b>';
+                                    }
+                                    echo '</td></tr>';
+                                }
+                                if ($postpaidCollection->getHoldersName() != "") {
+                                    echo '<tr><td>';
+                                    echo 'Card holder name';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>' . $postpaidCollection->getHoldersName() . '</b>';
+                                    echo '</td></tr>';
+                                }
+                                if ($postpaidCollection->getHolderFirstname() != "") {
+                                    echo '<tr><td>';
+                                    echo 'First name of the holder';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>' . $postpaidCollection->getHolderFirstname() . '</b>';
+                                    echo '</td></tr>';
+                                }
+                            }
+                            if ($postpaidCollection->getDesignSimNumber() == 2) {
+                                echo '<tr><td>';
+                                echo 'Client Type';
+                                echo '</td><td>:</td><td>';
+                                if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 3) {
+                                    echo '<b>MNP</b>';
+                                } elseif ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                    echo '<b>Migration</b>';
+                                } else {
+                                    echo '<b>new number</b>';
+                                }
+                                echo '</td></tr>';
+                                if ($postpaidCollection->getDesignTeExistingNumberFinalValidation() == 1) {
+                                    echo '<tr><td>';
+                                    echo 'Operator';
+                                    echo '</td><td>:</td><td>';
+                                    echo '<b>Orange</b>';
+                                    echo '</td></tr>';
+                                }
+                            }
+                            $childItems = $item->getChildrenItems();
+                            foreach ($childItems as $childs) {
+                                $productChild = $childs->getProduct();
+                                $attributeSetChild = $successBlock->getAttributeSetName($productChild->getAttributeSetId());
+                                if ($productChild->getTypeId() == 'virtual') {
+                                    if ($attributeSetChild != 'IEW') {
+                                        if (isset($gender['cu_ex_invoice_cust_number']) && $gender['cu_ex_invoice_cust_number'] != "") {
+                                            echo '<tr><td>';
+                                            echo 'Associate to existing contract?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>Yes</b>';
+                                            echo '</td></tr>';
+                                            echo '<tr><td>';
+                                            echo 'Customer number';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>' . $gender['cu_ex_invoice_cust_number'] . '</b>';
+                                            echo '</td></tr>';
+                                        } else {
+                                            echo '<tr><td>';
+                                            echo 'Associate to existing contract?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>No</b>';
+                                            echo '</td></tr>';
+                                        }
+                                        if (isset($gender['cu_ex_invoice_cust_firstname']) && $gender['cu_ex_invoice_cust_firstname'] != "") {
+                                            echo '<tr><td>';
+                                            echo 'Are you contract owner?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>No</b>';
+                                            echo '</td></tr>';
+                                            echo '<tr><td>';
+                                            echo 'Contract owner first name';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>' . $gender['cu_ex_invoice_cust_firstname'] . '</b>';
+                                            echo '</td></tr>';
+                                        } else if (isset($gender['cu_ex_invoice_cust_number']) && $gender['cu_ex_invoice_cust_number'] != "") {
+                                            echo '<tr><td>';
+                                            echo 'Are you contract owner?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>Yes</b>';
+                                            echo '</td></tr>';
+                                        }
+                                        if (isset($gender['cu_ex_invoice_cust_surname']) && $gender['cu_ex_invoice_cust_surname'] != "") {
+                                            echo '<tr><td>';
+                                            echo 'Contract owner last name';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>' . $gender['cu_ex_invoice_cust_surname'] . '</b>';
+                                            echo '</td></tr>';
+                                        }
+                                        if (isset($gender['cu_ex_invoice_cust_dob']) && $gender['cu_ex_invoice_cust_dob'] != "") {
+                                            echo '<tr><td>';
+                                            echo 'Contract owner birth date';
+                                            echo '</td><td>:</td><td>';
+                                            $dob = str_replace('/', '-', $gender['cu_ex_invoice_cust_dob']);
+                                            $dobIew = date("Y-m-d H:i:s", strtotime($dob));
+                                            $date = date_create($dobIew);
+                                            echo '<b>' . date_format($date, "d/m/Y") . '</b>';
+                                            echo '</td></tr>';
+                                        }
+                                    }
+                                    if ($attributeSetChild == 'IEW') {
+                                        if ($iewTelephone != "") {
+                                            echo '<tr><td>';
+                                            echo 'Associate to existing contract?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>Yes</b>';
+                                            echo '</td></tr>';
+                                            echo '<tr><td>';
+                                            echo 'Customer number';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>' . $iewTelephone . '</b>';
+                                            echo '</td></tr>';
+                                        } else {
+                                            echo '<tr><td>';
+                                            echo 'Associate to existing contract?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>No</b>';
+                                            echo '</td></tr>';
+                                        }
+                                        if ($iewFirstname != "") {
+                                            echo '<tr><td>';
+                                            echo 'Are you contract owner?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>No</b>';
+                                            echo '</td></tr>';
+                                            echo '<tr><td>';
+                                            echo 'Contract owner first name';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>' . $iewFirstname . '</b>';
+                                            echo '</td></tr>';
+                                        } else if ($iewTelephone != "") {
+                                            echo '<tr><td>';
+                                            echo 'Are you contract owner?';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>Yes</b>';
+                                            echo '</td></tr>';
+                                        }
+                                        if ($iewLastname != "") {
+                                            echo '<tr><td>';
+                                            echo 'Contract owner last name';
+                                            echo '</td><td>:</td><td>';
+                                            echo '<b>' . $iewLastname . '</b>';
+                                            echo '</td></tr>';
+                                        }
+                                        if ($iewDob != "") {
+                                            echo '<tr><td>';
+                                            echo 'Contract owner birth date';
+                                            echo '</td><td>:</td><td>';
+                                            $dob = str_replace('/', '-', $iewDob);
+                                            $dobIew = date("Y-m-d H:i:s", strtotime($dob));
+                                            $date = date_create($dobIew);
+                                            echo '<b>' . date_format($date, "d/m/Y") . '</b>';
+                                            echo '</td></tr>';
+                                        }
+                                    }
+                                }
+                            }
+                            echo '<tr><td></td><td></td><td></td></tr>';
+                            echo '<tr><td><p>--------------------------------------------------------------------------------------</p></td><td></td><td></td></tr>';
+                            echo '<tr><td></td><td></td><td></td></tr>';
+                            $i++;
+                        }
+                    }
+                }
+            }
+
+            ?>
+            <?php
+            $data = $this->getEntraEmailData();
+            ?>
+            <?php if (isset($data['profile'])) { ?>
+                <tr>
+                    <td><b><?php echo $data['tYourProfile']; ?></b></td>
+                </tr>
+                <tr>
+                    <td><?php echo $data['tisprofile']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['isprofile']; ?></b></td>
+                </tr>
+                <tr>
+                    <td><?php echo $data['tprofile']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['profile']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['legal'])) { ?>
+                <tr>
+                    <td><?php echo $data['tlegal']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['legal']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['companyname'])) { ?>
+                <tr>
+                    <td><?php echo $data['tcompanyName']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['companyname']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['vat'])) { ?>
+                <tr>
+                    <td><?php echo $data['tVatNumber']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['vat']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b><?php echo $data['tYourPersonalData']; ?>:</b></td>
+            </tr>
+            <tr>
+                <td><?php echo $data['tTitle']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['prefix']; ?></b></td>
+            </tr>
+            <tr>
+                <td><?php echo $data['tFirstName']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['custFirstName']; ?></b></td>
+            </tr>
+            <tr>
+                <td><?php echo $data['tName']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['CustLastName']; ?></b></td>
+            </tr>
+            <tr>
+                <td><?php echo $data['tEmailAddress']; ?></td>
+                <td>:</td>
+                <td><b> <a href="" onclick="return false;"
+                           style="color:black;text-decoration:none;"><?php echo $data['email']; ?></a> </b></td>
+            </tr>
+            <?php if (isset($data['phone'])) { ?>
+                <tr>
+                    <td><?php echo $data['tPhoneNumber']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['phone']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td><?php echo $data['tDob']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['dob']; ?></b></td>
+            </tr>
+            <?php if (isset($data['nationality'])) { ?>
+            <tr>
+                <td><?php echo $data['tNationality']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['nationality']; ?></b></td>
+            </tr>
+            <?php }?>
+            <?php if (isset($data['id_number'])) { ?>
+            <tr>
+                <td><?php echo $data['tIdentityCardno']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['id_number']; ?></b></td>
+            </tr>
+            <?php } ?>
+            <?php if (isset ($data['national_id'])) { ?>
+            <tr>
+                <td><?php echo $data['tNationalIdentityCardno']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['national_id']; ?></b></td>
+            </tr>
+            <?php } ?>
+            <?php if (isset ($data['PostCode'])) { ?>
+            <tr>
+                <td><?php echo $data['tCodePostal']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['PostCode']; ?></b></td>
+            </tr>
+            <?php } ?>
+            <?php if (isset($data['street'])) { ?>
+            <tr>
+                <td><?php echo $data['tStreet']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['street']; ?></b></td>
+            </tr>
+            <?php } ?>
+            <?php if (isset($data['b_number'])) { ?>
+            <tr>
+                <td><?php echo $data['tNumber']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['b_number']; ?></b></td>
+            </tr>
+            <?php } ?>
+            <?php if (isset($data['box'])) { ?>
+                <tr>
+                    <td><?php echo $data['tBox']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['box']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td><?php echo $data['tCountry']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['Country']; ?></b></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <?php if (isset($data['hasShipping'])) { ?>
+                <tr>
+                    <td><b><?php echo $data['tshippingMethod']; ?>:</b></td>
+                </tr>
+                <tr>
+                    <td><?php echo $data['sAddress']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['shippingMethod']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_firstname'])) { ?>
+                <tr>
+                    <td><?php echo $data['tFirstName']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_firstname']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_name'])) { ?>
+                <tr>
+                    <td><?php echo $data['tName']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_name']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_attention_n'])) { ?>
+                <tr>
+                    <td><?php echo $data['tAttention']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_attention_n']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_postcode_city'])) { ?>
+                <tr>
+                    <td><?php echo $data['tCodePostal']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_postcode_city']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_street'])) { ?>
+                <tr>
+                    <td><?php echo $data['tStreet']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_street']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_number'])) { ?>
+                <tr>
+                    <td><?php echo $data['tNumber']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_number']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['s_box'])) { ?>
+                <tr>
+                    <td><?php echo $data['tBox']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['s_box']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['hasShipping'])) { ?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['ispaid'])) { ?>
+                <tr>
+                    <td><b><?php echo $data['torderPayment']; ?>:</b></td>
+                </tr>
+                <tr>
+                    <td><?php echo $data['tPaymentMethod']; ?> </td>
+                    <td>:</td>
+                    <td><b><?php echo $data['cardmethod']; ?></b></td>
+                </tr>
+                <?php if (isset($data['cardDetails'])) { ?>
+                    <tr>
+                        <td><?php echo $data['tcardDetails']; ?></td>
+                        <td>:</td>
+                        <td><b><?php echo $data['cardDetails']; ?></b></td>
+                    </tr>
+                <?php } ?>
+                <tr>
+                    <td><?php echo $data['tgrandTotal']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['grandTotal']; ?></b></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php } ?>
+            <?php if (isset($data['iscoupon'])) { ?>
+                <tr>
+                    <td><b>Your coupons:</b></td>
+                </tr>
+                <tr>
+                    <td>Code Promo</td>
+                    <td>:</td>
+                    <td><b><?php echo $data['couponcode']; ?></b></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td><b><?php echo $data['tsubsPayment']; ?>:</b></td>
+            </tr>
+            <tr>
+                <td><?php echo $data['tPaymentMethod']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['domiciliatoinVirment']; ?></b></td>
+            </tr>
+            <?php if (isset($data['domiciliatoin'])) { ?>
+                <tr>
+                    <td><?php echo $data['tdomicilationnumber']; ?></td>
+                    <td>:</td>
+                    <td><b><?php echo $data['domiciliatoin']; ?></b></td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><?php echo $data['tYouWantToRecieveMobiNews']; ?></td>
+                <td>:</td>
+                <td><b><?php echo $data['newsletter_subscription']; ?></b></td>
+            </tr>
+            <tr>
+                <td>Scoring result</td>
+                <td>:</td>
+                <td><b><?php echo $data['score']; ?></b></td>
+            </tr>
+        </table>
+        <span>--------------------------------------------------------------------------------------</span><br><br>
+        <span>For any further questions, please contact us at mobile_shop@orange.be</span><br><br>
+        <span>Best regards,</span> <br>
+        <span>Orange Online Sales</span>
+    <?php } ?>
+</section>

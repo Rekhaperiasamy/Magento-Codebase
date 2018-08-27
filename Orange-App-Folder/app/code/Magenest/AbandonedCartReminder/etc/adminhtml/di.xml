@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magenest. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Email\Block\Adminhtml\Template\Edit\Form">
+        <plugin name="abandonedcartreminder" type="\Magenest\AbandonedCartReminder\Block\Plugin\Adminhtml\Template\Edit\Form"/>
+    </type>
+    <type name="Magento\Framework\View\Result\Page">
+        <arguments>
+            <argument name="layoutReaderPool" xsi:type="object">pageConfigRenderPool</argument>
+            <argument name="generatorPool" xsi:type="object">Magento\Backend\Model\View\Layout\GeneratorPool</argument>
+            <argument name="template" xsi:type="string">Magenest_AbandonedCartReminder::root.phtml</argument>
+        </arguments>
+    </type>
+</config>

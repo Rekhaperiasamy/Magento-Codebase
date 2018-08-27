@@ -1,0 +1,48 @@
+<?php 
+	$availableColors = $this->getAvailableColors(); 
+	$productId =  $block->getProduct()->getId() ;
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$swatchHelper=$objectManager->get("Magento\Swatches\Helper\Media");
+	$helperData=$objectManager->get("Magento\Swatches\Helper\Data");
+	$_catalogHelper = $objectManager->get('Orange\Catalog\Helper\CatalogUrl');
+	$colorCount = count($availableColors);
+?>
+<?php if(count($availableColors) > 0): ?>
+	<?php if($colorCount >1){ ?>
+<p class="color_para"><?php /* @escapeNotVerified */ echo __('Couleurs disponibles') ?></p>
+<?php } ?>
+<?php $optionIds = array();
+foreach($availableColors as $availalblecolor): 
+?>
+<?php unset($optionIds);
+$color_active=($productId == $availalblecolor->getId() ? "active" : "") ?>
+<?php $deviceColor = $availalblecolor->getResource()->getAttribute('color')->getFrontend()->getValue($availalblecolor); 
+$optionIds[] = $availalblecolor->getColor(); 
+$swatchCollection = $helperData->getSwatchesByOptionsId($optionIds);?>
+<?php foreach($swatchCollection as $swatch): ?>
+<?php
+/* handling swatch image file along with swatch color code */
+try{
+	$imagePath = $swatchHelper->getSwatchAttributeImage('swatch_image', $swatch['value']);
+}catch(Exception $e){
+	$imagePath = '';	
+	$overlay_color = $swatch['value'];
+}
+$productTitle = str_replace($deviceColor,"",$availalblecolor->getName()); 
+//$imageTitle =  __('Orange Belgique').' - '.$productTitle.' - '.$deviceColor;
+$imageTitle =  $deviceColor;
+?>
+<?php if(!empty($imagePath) && $colorCount>1 ){
+$productUrlSwatch=$_catalogHelper->getFormattedUrl($availalblecolor->getProductUrl());
+?> 
+<a id="<?php echo $availalblecolor->getId() ?>" href="<?php echo $productUrlSwatch; ?>" class="<?php echo $color_active; ?> colour-circle <?php echo $deviceColor; ?>" title="<?php echo $imageTitle; ?>"><img src= "<?php echo $imagePath;?>" /></a>&nbsp;
+<?php } elseif($colorCount>1  && !empty($overlay_color) ){ 
+$productUrlSwatch=$_catalogHelper->getFormattedUrl($availalblecolor->getProductUrl());
+?>
+<a id="<?php echo $availalblecolor->getId() ?>" href="<?php echo $productUrlSwatch; ?>" class="<?php echo $color_active; ?> colour-circle <?php echo $deviceColor; ?>" title="<?php echo $imageTitle; ?>"><span style= "background:<?php echo $overlay_color; ?>;Width:25px; height:25px; float: left;"/></a>&nbsp;
+<?php } elseif($colorCount>1){ ?>
+<a id="<?php echo $availalblecolor->getId() ?>" href="<?php echo $productUrlSwatch; ?>" class="<?php echo $color_active; ?> colour-circle <?php echo $deviceColor; ?>" title="<?php echo $imageTitle; ?>"></a>&nbsp;	
+<?php }?>
+<?php endforeach; ?>
+<?php endforeach; ?>
+<?php endif;?>

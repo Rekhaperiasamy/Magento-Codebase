@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Orange. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Backend/etc/menu.xsd">
+    <menu>        
+        <add id="orange_coupon::activate" title="Coupon Reactivation" module="Orange_Coupon" sortOrder="110" parent="Orange_Upload::upload_header" action="orange_coupon/reactivate/new/" resource="Orange_Coupon::reactivate"/>
+		<add id="orange_coupon::import" title="Coupon Import" module="Orange_Coupon" sortOrder="111" parent="Orange_Upload::upload_header" action="orange_coupon/import/new/" resource="Orange_Coupon::import"/>
+    </menu>
+</config>

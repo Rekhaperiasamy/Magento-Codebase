@@ -1,0 +1,655 @@
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$sortVal = $this->getRequest()->getParam('sort');
+$familyVal = $this->getRequest()->getParam('family');
+$sortdirVal = $this->getRequest()->getParam('dir');
+$searchVal = $this->getRequest()->getParam('acc_family');
+$currentcategory = $block->getCurrentCategory();
+$childCategories = ($currentcategory->getChildren() != '')?explode(",",$currentcategory->getChildren()):array();
+$selected = "background-color: #ffffff;color:black";
+$priceLabel = $block->getPriceLabel();
+$_catalogHelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+$currentStoreId = $block->getCurrentStoreId();
+
+// Check Tealium Module output status //
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$tealiumStatus = $scopeConfig->getValue('tags/general/enabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+if($tealiumStatus){
+	$udoBlock = $block->getLayout()->createBlock('Tealium\Tags\Block\DefaultUdo');
+	$utagProductData = array();
+	$udodata = $udoBlock->getUTagData();
+}
+
+?>
+<?php echo $block->getToolbarHtml() ?>
+<?php echo $block->getAdditionalHtml() ?>
+<span id="productlist-count" style="display:none"><?php echo $block->GetListingCount(); ?></span><!-- Required to get pagination correctly while grouping-->
+<?php if (!$_productCollection->count()): ?>
+	<div style="background-color:#fdf0d5;"><div class="container">
+    <div class="message info empty" style="margin: 0px 0px 0px -10px;"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+	</div></div>
+	<section>
+        <div class="region region-content">
+            <section id="block-system-main" class="block block-system clearfix">
+				 <article class="node node-landing-page style-layer-style--blue clearfix">
+
+                    <div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-n">
+                        <div class="container landing-page-top">
+                            <div class="field field-name-field-display-title field-type-text field-label-hidden" style="margin-top:20px;">
+                                <div class="field-items">
+                                    <div class="field-item even">
+                                        <h1>
+                                            <?php echo $currentcategory->getName(); ?>
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row margin-xs-v-m accessories_hero product-item">
+                                <?php
+                                $heroItems = $block->getHeroAccessories();
+                                $i = 1;
+								$bannerOffset = 0;
+
+                                foreach ($heroItems as $bannerItem):
+                                    $family = $bannerItem->getAccessoryFamily();
+                                    $familyType = 'accessories';
+                                    $stockProduct = $block->getHighStockProduct($family, $familyType);
+                                    if (!$stockProduct->getId()) {
+                                        $stockProduct = $bannerItem;
+                                    }
+                                    $availableColors = $block->getAvailableColors($family);
+									$bannerOffset++;
+                                    $colorName  = $_catalogHelper->getColorOption($stockProduct);
+                                    $productTitle = str_replace($colorName,"",$stockProduct->getName());
+                                    $alt_tag = __('Orange Belgique').' - '.$productTitle.' - '.$colorName;
+                                    ?>
+                                    <div class="col-xs-12 col-sm-5 <?php if ($bannerOffset % 2 == 0):?> col-sm-offset-2<?php endif;?>">
+                                        <div class="media phone-item no-border margin-xs-t-n">
+                                            <div class="media-left pull-left accessories_list">
+                                                <div class="margin-xs-v-s">
+                                                    <?php
+                                                    $imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+                                                            ->init($stockProduct, 'intermediate_page_image_medium')
+                                                            ->setImageFile($stockProduct->getFile())
+                                                            ->getUrl();
+                                                    ?>
+                                                    <img src="<?php echo $imageUrl; ?>" alt = "<?php echo trim($alt_tag); ?>">
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <?php $handsetName = $stockProduct->getAccessoryFamily();?>
+												<?php if (str_word_count($handsetName)>1):?>
+													<?php $arr = explode(' ',trim($handsetName));?>
+													<h3 class="js-matchBoxHeight margin-xs-t-s accessories-matchBoxHeight">
+													<?php echo nl2br($arr[0]."\n".substr(strstr($handsetName," "), 1));?>
+													</h3>
+												<?php else:?>
+													<h3 class="js-matchBoxHeight margin-xs-t-s accessories-matchBoxHeight"><?php /* @escapeNotVerified */ echo __($stockProduct->getAccessoryFamily()); ?></h3>
+												<?php endif?>
+												<?php echo $block->getOrangePricingHtml($stockProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(),true,true,false,'lob new-price white'); ?>
+                                               <!-- <span class="white"><?php echo $priceLabel; ?></span>-->
+												<div class="clearfix"></div>
+                                            </div>
+                                        </div>
+										<?php $formattedUrl = $_catalogHelper->getFormattedUrl($stockProduct->getProductUrl()); ?>
+										<div class="<?php if($this->getCustomerTypeName()=='SOHO'):?>acc-blue-bar-bttn-soho<?php else:?>acc-blue-bar-bttn<?php endif;?>">
+											<a class="btn btn-default margin-xs-b-l <?php if($currentStoreId == 2): ?>caddy-cta-fr<?php else:?>caddy-cta<?php endif;?>" href="<?php echo $formattedUrl; ?>"><?php /* @escapeNotVerified */ echo __("Plus d'infos") ?></a>
+										</div>
+                                    </div>
+                                    <?php $i++; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+				 <article class="layer-style--gray search-box clearfix">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 padding-xs-b-s padding-sm-b-s padding-md-b-n">
+                                <span class="font-24"><?php echo __('Rechercher') ?>
+                                </span>
+                            </div>
+                            <div class="col-sm-12 col-md-4 padding-xs-b-s padding-sm-b-s padding-md-b-n">
+                                <input class="form-control search-device" autocomplete="off" type="text" name="USER" value="<?php echo $searchVal ?>" id="sso-email" placeholder="<?php echo __('Par mots-clés') ?>">
+                            </div>
+                            <div class="col-sm-12 col-md-3 padding-xs-b-s padding-sm-b-s padding-md-b-n">
+							<?php if(count($childCategories) > 0): ?>
+                                <div>
+                                    <select class="dropdown-menu-1" name="filterby" id="filterby" >
+                                        <option value=""  ><?php echo __('Par catégorie') ?></option>
+										<?php
+										foreach ($childCategories as $categoryId):
+											$subCategory = $this->getCategory($categoryId);
+										?>
+                                        <option  value="<?php echo $subCategory->getId() ?>" <?php if ($familyVal == $subCategory->getId()): ?> selected<?php endif; ?>><?php /* @escapeNotVerified */ echo $subCategory->getName() ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+							<?php endif; ?>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="">
+                                    <select class="dropdown-menu-1" name="sortby" id="sortby">
+                                        <option value="" ><?php echo __('Par prix') ?></option>
+                                        <option  value="sort=price&dir=asc" <?php if ($sortVal == 'price' && $sortdirVal == 'asc'): ?> selected<?php endif; ?> ><?php echo __('Prix croissants') ?></option>
+                                        <option  value="sort=price&dir=desc" <?php if ($sortVal == 'price' && $sortdirVal == 'desc'): ?> selected<?php endif; ?> ><?php echo __('Prix décroissants') ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+			</section>
+		</div>
+	</section>
+	<?php else: ?>
+    <section>
+        <div class="region region-content">
+            <section id="block-system-main" class="block block-system clearfix">
+			   <?php $currentpage = $this->getRequest()->getParam('p'); ?>
+			    <?php if (!$currentpage): ?>
+                <article class="node node-landing-page style-layer-style--blue clearfix">
+
+                    <div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-n">
+                        <div class="container landing-page-top">
+                            <div class="field field-name-field-display-title field-type-text field-label-hidden" style="margin-top:20px;">
+                                <div class="field-items">
+                                    <div class="field-item even">
+                                        <h1>
+                                            <?php echo $currentcategory->getName(); ?>
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row margin-xs-v-m accessories_hero product-item">
+                                <?php
+                                $heroItems = $block->getHeroAccessories();
+                                $i = 1;
+								$bannerOffset = 0;
+                                foreach ($heroItems as $bannerItem):
+                                    $family = $bannerItem->getAccessoryFamily();
+                                    $familyType = 'accessories';
+                                    $stockProduct = $block->getHighStockProduct($family, $familyType);
+                                    if (!$stockProduct->getId()) {
+                                        $stockProduct = $bannerItem;
+                                    }
+                                    /** Tealium Tag Data of hero product *********/
+                                  if($tealiumStatus){
+                                    $udodata['product_category'][]  = strtolower($udoBlock->getAttributesValue($stockProduct,'tealium_product_category'));
+                                    $udodata['product_type'][]      = strtolower($udoBlock->getAttributesValue($stockProduct,'tealium_product_type'));
+                                    $udodata['product_brand'][]     = strtolower($udoBlock->getAttributesValue($stockProduct,'brand'));
+                                    $udodata['product_sku'][]       = $stockProduct->getSku();
+                                    $udodata['product_name'][]      = strtolower($stockProduct->getTealiumPageName());
+                                    $udodata['product_unit_price'][]= str_replace(",","",number_format($stockProduct->getPrice('final_price'),2));
+                                  }
+                                    $availableColors = $block->getAvailableColors($family);
+									$bannerOffset++;
+									$colorName  = $_catalogHelper->getColorOption($stockProduct);
+                                    $productTitle = str_replace($colorName,"",$stockProduct->getName());
+                                    $alt_tag = __('Orange Belgique').' - '.$productTitle.' - '.$colorName;
+
+                                    ?>
+                                    <div class="col-xs-12 col-sm-5 <?php if ($bannerOffset % 2 == 0):?> col-sm-offset-2<?php endif;?>">
+                                        <div class="media phone-item no-border margin-xs-t-n">
+                                            <div class="media-left pull-left accessories_list">
+                                                <div class="margin-xs-v-s">
+                                                    <?php
+                                                    $imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+                                                            ->init($stockProduct, 'intermediate_page_image_medium')
+                                                            ->setImageFile($stockProduct->getFile())
+                                                            ->getUrl();
+                                                    ?>
+                                                    <img src="<?php echo $imageUrl; ?>" alt = "<?php echo trim($alt_tag); ?>">
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <?php $handsetName = $stockProduct->getAccessoryFamily();?>
+												<?php if (str_word_count($handsetName)>1):?>
+													<?php $arr = explode(' ',trim($handsetName));?>
+													<h3 class="js-matchBoxHeight margin-xs-t-s">
+													<?php echo nl2br($arr[0]."\n".substr(strstr($handsetName," "), 1));?>
+													</h3>
+												<?php else:?>
+													<h3 class="js-matchBoxHeight margin-xs-t-s"><?php /* @escapeNotVerified */ echo __($stockProduct->getAccessoryFamily()); ?></h3>
+												<?php endif?>
+												<?php if ($stockProduct->isAvailable()): ?>
+                                                <p class="white"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+                                            <?php else: ?>
+                                                <p class="white"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+                                            <?php endif; ?>
+											<div class="clearfix"></div>
+												<?php echo $block->getOrangePricingHtml($stockProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(),true,true,false,'lob new-price white'); ?>
+                                               <!-- <span class="white"><?php echo $priceLabel; ?></span>-->
+												<div class="clearfix"></div>
+                                            </div>
+                                        </div>
+										<?php $formattedUrl = $_catalogHelper->getFormattedUrl($stockProduct->getProductUrl()); ?>
+										<div class="<?php if($this->getCustomerTypeName()=='SOHO'):?>acc-blue-bar-bttn-soho<?php else:?>acc-blue-bar-bttn<?php endif;?>">
+											<a class="btn btn-default margin-xs-b-l <?php if($currentStoreId == 2): ?>caddy-cta-fr<?php else:?>caddy-cta<?php endif;?>" href="<?php echo $formattedUrl; ?>"><?php /* @escapeNotVerified */ echo __("Plus d'infos") ?></a>
+										</div>
+                                    </div>
+                                    <?php $i++; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+				<?php endif; ?>
+				<div data-aw-csblock-block-name="csblock_category_before_tab"></div>
+                <article class="layer-style--gray search-box clearfix">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 padding-xs-b-s padding-sm-b-s padding-md-b-n">
+                                <span class="font-24"><?php echo __('Rechercher') ?>
+                                </span>
+                            </div>
+                            <div class="col-sm-12 col-md-4 padding-xs-b-s padding-sm-b-s padding-md-b-n">
+                                <input class="form-control search-device" autocomplete="off" type="text" name="USER" value="<?php echo $searchVal ?>" id="sso-email" placeholder="<?php echo __('Par mots-clés') ?>">
+                            </div>
+
+                            <div class="col-sm-12 col-md-3 padding-xs-b-s padding-sm-b-s padding-md-b-n">
+							<?php if(count($childCategories) > 0): ?>
+                                <div>
+                                    <select class="dropdown-menu-1" name="filterby" id="filterby" >
+                                        <option value=""><?php echo __('Par catégorie') ?></option>
+										<?php
+										foreach ($childCategories as $categoryId):
+											$subCategory = $this->getCategory($categoryId);
+										?>
+                                        <option  value="<?php echo $subCategory->getId() ?>" <?php if ($familyVal == $subCategory->getId()): ?> selected<?php endif; ?>><?php /* @escapeNotVerified */ echo $subCategory->getName() ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+							<?php endif; ?>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="">
+                                    <select class="dropdown-menu-1" name="sortby" id="sortby">
+                                        <option value="" ><?php echo __('Par prix') ?></option>
+                                        <option  value="sort=price&dir=asc" <?php if ($sortVal == 'price' && $sortdirVal == 'asc'): ?> selected<?php endif; ?> ><?php echo __('Prix croissants') ?></option>
+                                        <option  value="sort=price&dir=desc" <?php if ($sortVal == 'price' && $sortdirVal == 'desc'): ?> selected<?php endif; ?> ><?php echo __('Prix décroissants') ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <div class="container">
+                    <?php
+                    $i = 0;
+					$j = 0;
+                    $_productCount = count($_productCollection);
+                    $_productCount = $_productCount - 1;
+                    ?>
+					<?php if ($this->getRequest()->getParam('p')):?>
+					<?php
+						  $cur = $this->getRequest()->getParam('p') - 1;
+						  $j = $cur * 3;
+					?>
+					<?php endif;?>
+					<?php
+						$coloffsetdiv = 0;
+						$column = 0;
+					?>
+                    <?php foreach ($_productCollection as $_product): ?>
+                        <?php
+						$column++;
+                        //$stockProduct = $block->getAccessoryFamilyProduct($_product->getAccessoryFamily());
+                        $family = $_product->getAccessoryFamily();
+                        $obsolete_device_val = $_product->getObsoleteDevice();
+                        $familyType = 'accessories';
+                        $stockProduct = $block->getHighStockProduct($family, $familyType);
+                        if (!$stockProduct->getId()) {
+                            $stockProduct = $bannerItem;
+                        }
+                        $alt_tag = __('Orange Belgique').' - '.$stockProduct->getName();
+                        $availableColors = $block->getAvailableColors($family);
+                        ?>
+                        <?php if ($i % 2 == 0) : ?>
+						<?php $j++; ?>
+						    <?php $coloffsetdiv++;?>
+                            <div class="row margin-xs-v-m product-item">
+                                <div class="col-xs-12 col-sm-5 <?php if ($coloffsetdiv % 2 == 0):?> col-sm-offset-2<?php endif;?> item product product-container <?php echo 'custom-row'.$j; ?>">
+                                <?php else : ?>
+								    <?php $coloffsetdiv++;?>
+                                    <div class="col-xs-12 col-sm-5 <?php if ($coloffsetdiv % 2 == 0):?> col-sm-offset-2<?php endif;?> item product product-container <?php echo 'custom-row'.$j; ?>">
+                                    <?php endif; ?>
+                                    <div class="media phone-item margin-xs-t-n smartphone_hgt">
+									   <?php
+                                        $standAloneCashBack = $this->getStandAloneCashBack($stockProduct);
+                                        if ($standAloneCashBack) {
+                                    ?>
+                                        <i class="oi oi-tag"></i>&nbsp; <?php echo __('Cashback %1', $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($standAloneCashBack, 0), true, false)) ?><br>
+                                    <?php } else{
+                                            $promotionSticker = $this->getPromotionSticker($stockProduct);
+                                            if ($promotionSticker && $promotionSticker != "") { ?>
+                                                <i class="oi oi-tag"></i>&nbsp;<?php echo $promotionSticker; ?><br>
+                                            <?php } ?>
+                                        <?php } ?>
+                                        <div class="media-left pull-left accessories_list">
+                                            <div class="margin-xs-v-s">
+                                                <?php
+												$colorName  = $_catalogHelper->getColorOption($stockProduct);
+												$productTitle = str_replace($colorName,"",$stockProduct->getName());
+												$alt_tag = __('Orange Belgique').' - '.$productTitle.' - '.$colorName;
+
+                                                $imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+                                                        ->init($stockProduct, 'intermediate_page_image_medium')
+                                                        ->setImageFile($stockProduct->getFile())
+                                                        ->getUrl();
+                                                if(isset($_GET['p'])){?>
+											<img src="<?php echo $imageUrl; ?>" alt = "<?php echo trim($alt_tag); ?>">
+											<?php }else{
+											?>
+										<div id="lazy" class="lazy-load">
+										<img class="lof-lazy" data-src="<?php echo $imageUrl; ?>"  alt="<?php echo trim($alt_tag); ?>"
+										<?php
+										$image = 'category_page_grid';
+										$productImage = $block->getImage($_product, $image);
+										echo $productImage->toHtml();
+										?>
+										</div>
+										<?php	}
+										?>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <?php $handsetName = $stockProduct->getAccessoryFamily();?>
+											<?php if (str_word_count($handsetName)>1):?>
+											<?php $arr = explode(' ',trim($handsetName));?>
+											<h3 class="js-matchBoxHeight margin-xs-t-s accessories-matchBoxHeight">
+											<?php echo nl2br($arr[0]."\n".substr(strstr($handsetName," "), 1));?>
+											</h3>
+											<?php else:?>
+											<h3 class="js-matchBoxHeight margin-xs-t-s accessories-matchBoxHeight"><?php /* @escapeNotVerified */ echo __($stockProduct->getAccessoryFamily()); ?></h3>
+											<?php endif?>
+                                            <?php if ($stockProduct->isAvailable()): ?>
+                                                <p class="green"><?php /* @escapeNotVerified */ echo __('En stock') ?></p>
+                                            <?php else: ?>
+                                                <p class="red"><?php /* @escapeNotVerified */ echo __('Indisponible') ?></p>
+                                            <?php endif; ?>
+                                            <?php if (count($availableColors) > 1): ?>
+                                                <p class="margin-xs-b-n"><?php /* @escapeNotVerified */ echo __('Disponibles en %1 couleurs', count($availableColors)) ?></p>
+                                            <?php endif; ?>
+                                                <?php if($obsolete_device_val!=1): ?>
+											<?php echo $block->getOrangePricingHtml($stockProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(),true,true,false,'lob new-price orange'); ?>
+                                            <!--<span class="orange"><?php echo $priceLabel; ?></span>-->
+                                                <?php endif; ?>
+                                            <?php $formattedUrl = $_catalogHelper->getFormattedUrl($stockProduct->getProductUrl()); ?>
+											<div class="clearfix"></div>
+                                        </div>
+                                    </div>
+									<div class="order-bttn">
+										<a class="btn btn-primary margin-xs-t-m margin-xs-b-m <?php if($currentStoreId == 2): ?>caddy-cta-fr<?php else:?>caddy-cta<?php endif;?>"  href="<?php echo $formattedUrl; ?>"><?php /* @escapeNotVerified */ echo __("Plus d'infos") ?></a>
+									</div>
+                                </div>
+								<?php
+								/** Tealium Tag Data *********/
+								if($tealiumStatus){
+									$udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($stockProduct,'tealium_product_category'));
+									$udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($stockProduct,'tealium_product_type'));
+									$udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($stockProduct,'brand'));
+									$udodata['product_sku'][] = $stockProduct->getSku();
+									$udodata['product_name'][] = strtolower($stockProduct->getTealiumPageName());
+									$udodata['product_unit_price'][] = str_replace(",","",number_format($stockProduct->getPrice('final_price'),2));
+
+									if ($this->getRequest()->getParam('p') &&  $column == 6): ?>
+									<script type="text/javascript">
+										// Tealium Data Capture for Ajax Pages //
+										var ajax_utag_data = <?php echo str_replace("}", "\n}",str_replace("{", "{\n    ",str_replace(",", ",\n    ", json_encode($udodata, JSON_UNESCAPED_UNICODE)))); ?>;
+                                        var utag_keys = ['product_category', 'product_type', 'product_brand', 'product_sku', 'product_name', 'product_engagement_period', 'product_monthly_price', 'product_unit_price'];
+                                        if (typeof ajax_utag_data == "object" && typeof utag_data == "object"){
+                                          for (key in ajax_utag_data) {
+                                            if (utag_keys.indexOf(key) >= 0) {
+                                              var data = temp_udo_data[key].concat(ajax_utag_data[key]);
+                                              temp_udo_data[key] = data;
+                                            }
+                                          }
+                                          utag.view(temp_udo_data);
+                                        };
+									  </script>
+									<?php
+									endif;
+								}
+								/*****************************/
+								?>
+
+                                <?php if ($i % 2 != 0) : ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($_productCount == $i && $i % 2 == 0): ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+					<?php if($tealiumStatus && !isset($_GET['p'])){ ?>
+							<script type="text/javascript">
+                                var temp_udo_data = {};
+								// Tealium Data Call for Landing Page //
+								var utag_data = <?php echo str_replace("}", "\n}",str_replace("{", "{\n    ",str_replace(",", ",\n    ", json_encode($udodata, JSON_UNESCAPED_UNICODE)))); ?>;
+                                temp_udo_data = utag_data;
+							</script>
+					<?php } ?>
+                </div>
+            </section>
+        </div>
+    </section>
+    <div class="ias-noneleft-list" style="text-align: center;"></div>
+<?php endif; ?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'js/dropdown'
+    ], function ($) {
+        //<![CDATA[
+        $(document).on("keypress", "#sso-email", function (e) {
+            if (e.which == 13) {
+                processParams($(this));
+            }
+        });
+        $('#sortby').change(function () {
+            //processParams($(this));
+            var sort_by = $('#sortby').val();
+            var filterby = $('#filterby').val();
+            var searchQuery = $('#sso-email').val();
+            if ($('#sso-email').val() != '')
+            {
+                //has search
+                var searchQuery = $('#sso-email').val();
+                if(sort_by!='') {
+                    var params = "?acc_family=" + searchQuery + "&"+sort_by;
+                    if(filterby != "" && filterby !== undefined) {
+                        var params = "?acc_family=" + searchQuery +"&family=" + filterby +"&"+sort_by;
+                    }
+                }
+                else if(filterby != "" && filterby !== undefined) {
+                    var params = "?acc_family=" + searchQuery + "&family=" + filterby;
+                }
+                else {
+                    var params = "?acc_family=" + searchQuery;
+                }
+
+            }
+            else if (filterby != "" && filterby !== undefined)
+            {
+                var params = "?family=" + filterby + "&" + sort_by;
+            }
+            else
+            {
+                if(sort_by!=""){
+				   var params = "?" + sort_by;
+				}else{
+				   var params =window.location.href.split('?')[0];
+				}
+            }
+            window.location.href = params;
+        });
+        $('#filterby').change(function () {
+            processParams($(this));
+        });
+		function equalheight(container){
+
+			var currentTallest = 0,
+						currentRowStart = 0,
+						rowDivs = new Array(),
+						$el,
+						topPosition = 0;
+
+			$(container).each(function() {
+
+				$el = $(this);
+				$($el).height('auto')
+				topPostion = $el.position().top;
+
+				if (currentRowStart != topPostion) {
+							for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+										rowDivs[currentDiv].height(currentTallest);
+							}
+							rowDivs.length = 0; // empty the array
+							currentRowStart = topPostion;
+							currentTallest = $el.height();
+							rowDivs.push($el);
+				} else {
+							rowDivs.push($el);
+							currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+				}
+				for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+							rowDivs[currentDiv].height(currentTallest);
+				}
+			});
+        }
+		$(window).load(function() {
+			$('.product-item').each(function(index){
+						position = index + 1;
+						equalheight('.custom-row'+position+' .smartphone_hgt');
+			});
+		});
+		$(window).resize(function(){
+			$('.product-item').each(function(index){
+						position = index + 1;
+						equalheight('.custom-row'+position+' .smartphone_hgt');
+			});
+		});
+		$(window).scroll(function () {
+			$('.product-item').each(function(index){
+				position = index + 1;
+				equalheight('.custom-row'+position+' .smartphone_hgt');
+			});
+		});
+		$(window).load(function() {
+			$('.accessories_hero').each(function(index){
+						equalheight('.accessories_hero .phone-item');
+			});
+		});
+
+        function processParams(element)
+        {
+		    var params = '';
+            var sort_by = $('#sortby').val();
+            if ($('#sso-email').val() != '')
+            {
+                var searchQuery = $('#sso-email').val();
+                var filterby = $('#filterby').val();
+                if (filterby != '' && filterby !== undefined)
+                {
+                    if(sort_by!=""){
+                        var params = "?acc_family=" + searchQuery+ "&family=" + filterby+"&"+sort_by;
+                    }
+                    else {
+                        var params = "?acc_family=" + searchQuery+ "&family=" + filterby;
+                    }
+                }
+                else
+                {
+                    if(sort_by!=""){
+                        var params = "?acc_family="+ searchQuery+"&"+sort_by;
+                    }
+                    else {
+                        var params = "?acc_family="+ searchQuery;
+                    }
+                }
+            }
+            else if($('#filterby').val() != "" && $('#filterby').val() !== undefined)
+            {
+                var filterby = $('#filterby').val();
+                if ($('#sso-email').val() != '')
+                {
+                    //has search
+                    var searchQuery = $('#sso-email').val();
+                    if(sort_by!=""){
+                        var params = "?acc_family=" + searchQuery + "&family=" + filterby+"&"+sort_by;
+                    }
+                    else {
+                        var params = "?acc_family=" + searchQuery + "&family=" + filterby;
+                    }
+                }
+                else
+                {
+                    if(sort_by!=""){
+                        var params = "?family=" + filterby+"&"+sort_by;
+                    }
+                    else {
+                        var params = "?family=" + filterby;
+                    }
+                }
+            }
+            else if(sort_by != "")
+            {
+                var params = "?" + sort_by;
+            }
+			else {
+					params = window.location.href.split('?')[0];
+			}
+            window.location.href = params;
+        }
+
+		//Filter select on browser using back button
+		function getParameter(theParameter) {
+			var params = window.location.search.substr(1).split('&');
+
+			for (var i = 0; i < params.length; i++) {
+				var p=params[i].split('=');
+				if (p[0] == theParameter) {
+					return decodeURIComponent(p[1]);
+				}
+			}
+			return false;
+		}
+		var familyVal = getParameter('family');
+		if(familyVal) {
+			$('#filterby').val(familyVal);
+		}
+		else {
+			$("#filterby option:first").attr('selected','selected');
+		}
+
+		var sortVal = getParameter('sort');
+		var dirVal = getParameter('dir');
+		if(sortVal) {
+			var formatVal = 'sort='+sortVal+'&dir='+dirVal;
+			$('#sortby').val(formatVal);
+		}
+		else {
+			$("#sortby option:first").attr('selected','selected');
+		}
+
+        //]]>
+    });
+    require(['jquery'], function ($) {
+        function tog(v) {
+            return v ? 'addClass' : 'removeClass';
+        }
+        $(document).on('input', '.search-device', function () {
+            $(this)[tog(this.value)]('x');
+        }).on('mousemove', '.x', function (e) {
+            $(this)[tog(this.offsetWidth - 18 < e.clientX - this.getBoundingClientRect().left)]('onX');
+        }).on('touchstart click', '.onX', function (ev) {
+            ev.preventDefault();
+            $(this).removeClass('x onX').val('').change();
+        });
+    });
+</script>

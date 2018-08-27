@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * http://landofcoder.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_LazyLoad
+ * @copyright  Copyright (c) 2017 Landofcoder (http://www.landofcoder.com/)
+ * @license    http://www.landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<loflazyload>
+			<general>
+				<enable>1</enable>
+				<loadingIcon>default/AjaxLoader.gif</loadingIcon>
+				<threshold>500</threshold>
+				<delay>-1</delay>
+				<combined>0</combined>
+				<effect>show</effect>
+				<effectTime>0</effectTime>
+				<enableThrottle>1</enableThrottle>
+				<throttle>250</throttle>
+				<enable_homepage>1</enable_homepage>
+				<enable_categorypage>1</enable_categorypage>
+				<enable_searchpage>1</enable_searchpage>
+				<enable_cartpage>1</enable_cartpage>
+			</general>
+		</loflazyload>
+	</default>
+</config>

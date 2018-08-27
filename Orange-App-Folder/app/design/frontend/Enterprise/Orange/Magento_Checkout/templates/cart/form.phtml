@@ -1,0 +1,141 @@
+<?php
+/**  @var $block \Magento\Checkout\Block\Cart */
+?>
+<?php 
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$couponBlock = $block->getLayout()->createBlock('Amasty\Coupons\Block\Coupon'); 
+$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$store = $om->get('Magento\Store\Model\StoreManagerInterface');
+?>
+<?php $mergedCells = ($this->helper('Magento\Tax\Helper\Data')->displayCartBothPrices() ? 2 : 1); ?>
+<?php echo $block->getChildHtml('form_before'); ?>
+<div id ="cartmessage"></div>
+<div  class="col-xs-12 col-sm-8 col-md-8 padding-xs-b-m">
+<form action="<?php /* @escapeNotVerified */ echo $block->getUrl('checkout/cart/updatePost') ?>"
+          method="post"
+          id="form-validate"
+          data-mage-init='{"validation":{}}'>
+    <?php echo $block->getBlockHtml('formkey'); ?>
+    <div <?php echo $mergedCells == 2 ? ' detailed' : ''; ?>>
+        <table id="shopping-cart-table"
+               class="cart items data table"
+               data-mage-init='{"shoppingCart":{"emptyCartButton": "action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>           
+            <?php $firstProductMargin = 'well-grey well-grey-padded';
+                  $remainingProductMargin =   'well-grey well-grey-padded margin-xs-v-m';
+                  $marginFlag='true';
+                  foreach ($block->getItems() as $_item):
+					$firstProductMargin = 'well-grey well-grey-padded';
+					$remainingProductMargin =   'well-grey well-grey-padded margin-xs-v-m';
+                    if($marginFlag == 'true'){ 
+						$totalQty = $_item->getQty() * 1;
+						//if ($totalQty > 1) {
+						$firstProductMargin .= ' well-grey-padded-no-bottom';
+						//}
+					?>
+                        <div class="<?php echo $firstProductMargin?>">
+                        <?php $marginFlag = 'false';
+                         } else { 
+						   $totalQty = $_item->getQty() * 1;
+							//if ($totalQty > 1) {
+							$remainingProductMargin .= ' well-grey-padded-no-bottom';
+							//}
+						  ?>
+                        <div class="<?php echo $remainingProductMargin ?>">
+                    <?php }        
+                   echo $block->getItemHtml($_item) ?>
+				   </div>
+            <?php endforeach ?>
+        </table>
+    </div>
+	<?php   
+  $couponCodes = $couponBlock->getCouponsCode();
+  $orangeCouponHelper = $this->helper('Orange\Coupon\Helper\Data');        
+  $couponString = '';
+  if ($couponCodes):
+    $couponString = implode(',', $couponCodes);
+  ?>  
+    <?php foreach ($couponCodes as $couponCode):?>
+      <?php 
+      $coupon = $couponBlock->getCouponData($couponCode); 
+      $ruleId = $coupon->getRuleId();
+      $rule = $couponBlock->getRuleData($ruleId);
+	  $label = $couponBlock->getStoreLabel($ruleId,$store->getStore()->getId());
+      $ruleDiscount = $orangeCouponHelper->getRuleDiscountAmount($ruleId); 
+        $ruleDiscountAmount =0;
+        foreach($ruleDiscount as $ruleDsnt):            
+            $ruleDiscountAmount += $ruleDsnt->getTotalDiscountAmount() + $ruleDsnt->getTotalSubscriptionDiscountAmount(); 
+        endforeach;
+      ?>
+      <div class="well-grey well-grey-padded margin-xs-t-m">
+        <a href="#" title="<?php echo $block->escapeHtml(__('Remove Coupon')); ?>" class="action action-delete bin-icon" onclick="javascript: amCancelCoupon('<?php echo $couponCode ?>'); return false;">
+          <i class="oi oi-delete"></i>
+        </a>
+        <div class="row">       
+          <div class="col-xs-12 col-md-9">
+            <h2 class="pull-left margin-xs-b-n margin-xs-t-n margin-xs-r-s"><i class="oi oi-tag margin-xs-t-s"></i></h2>                
+            <h4 class="margin-xs-t-s margin-xs-b-n"><?php echo $couponCode?></h4>         
+            <small style="display: block;"><?php echo $label; ?></small>
+            <div class="clear"></div>
+          </div>
+          <div class="col-xs-12 col-md-3">            
+                <span class="new-price orange line-100percent"><?php echo $productViewblock->getOrangePricingHtml($ruleDiscountAmount, false, false, false, 'caddy caddy-pricee new-price orange',true); ?></span>            
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>  
+  <?php endif; ?>
+</form>
+</div>
+<?php echo $block->getChildHtml('checkout.cart.order.actions') ?>
+<?php echo $block->getChildHtml('shopping.cart.table.after'); ?>
+
+<script type="text/javascript">
+    require([
+        "jquery",
+        "mage/mage"
+    ], function ($) {
+            $(".update-qty-cart").change(function () {
+			    var id = $(this).attr('id');
+				$('#qty-'+id).val($(this).val());
+				$('body').loader('show'); 
+                $('#form-validate').submit();					
+            });
+        if(window.checkoutConfig.quoteData.applied_rule_ids == null || window.checkoutConfig.quoteData.applied_rule_ids == ""){
+            $('.coupon-message').addClass('disable_div');
+        } else {
+            $('.coupon-message').removeClass('disable_div');
+        }
+		//alert(qty);
+		var str = "";
+		var errormessage = [];
+		//var  result = [];
+		
+		//var cartmessage = $('.cart-message').contents();
+		$('.cart-message').each(function(){
+			errormessage.push($(this).text());
+		});
+		 var result = [];
+    $.each(errormessage, function(i, e) {
+        if ($.inArray(e, result) == -1) result.push(e);
+    });
+	$.each(result, function(i, e) {
+    str += "<div class='step-mage-error'><span><i class='glyphicon glyphicon-info-sign'></i> " + e + "</span></div><br>";
+	 });
+		 var qty = "";
+		 $(document).ready(function () {
+			 $(".qty-value-error").each(function () {
+				  if(this.value == 1)
+				  {
+				  qty = "1";
+				  }
+			});
+			if(qty == "1"){
+				//console.log(cartmessage);
+				$('#cartmessage').append(str);
+			}
+		});
+		
+    });
+    
+</script>

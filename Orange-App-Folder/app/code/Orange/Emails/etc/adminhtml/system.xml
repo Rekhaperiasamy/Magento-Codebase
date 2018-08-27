@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Location: magento2_root/app/code/Vendorname/Extensionname/etc/adminhtml/system.xml
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="orange" translate="label" sortOrder="1000">
+            <label>ORANGE</label>
+        </tab>
+        <section id="entra" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Entra Email</label>
+            <tab>orange</tab>
+            <resource>Magento_Checkout::checkout</resource>
+            <group id="entra_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Order Entra Email Configuration</label>
+                <field id="entra_sender" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                </field>
+				<field id="entra_sender_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender Name</label>
+                </field>
+				<field id="entra_reciever" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever</label>
+                </field>
+				<field id="entra_reciever_cc" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever in Cc</label>
+                </field>
+				<field id="promotion_block_entra" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Promotion Block in Mail</label>
+                </field>
+            </group>
+			<group id="mnp_entra_configuration" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>MNP Entra Email Configuration</label>
+                <field id="mnp_entra_sender" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                </field>
+				<field id="mnp_entra_sender_name" translate="label" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender Name</label>
+                </field>
+				<field id="mnp_entra_reciever" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever</label>
+                </field>
+				<field id="mnp_entra_receiver_name" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Receiver Name</label>
+                </field>
+				<field id="mnp_entra_reciever_cc" translate="label" type="text" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever in Cc</label>
+                </field>
+            </group>
+			<group id="activer_entra_configuration" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Activer Entra Email Configuration</label>
+                <field id="activer_entra_sender" translate="label" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                </field>
+				<field id="activer_entra_sender_name" translate="label" type="text" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender Name</label>
+                </field>
+				<field id="activer_entra_reciever" translate="label" type="text" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever</label>
+                </field>
+				<field id="activer_entra_reciever_name" translate="label" type="text" sortOrder="34" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever Name</label>
+                </field>
+				<field id="activer_entra_reciever_cc" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever in Cc</label>
+                </field>
+            </group>
+        </section>
+		<section id="oracle" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Oracle Email</label>
+            <tab>orange</tab>
+            <resource>Magento_Checkout::checkout</resource>
+            <group id="oracle_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Oracle Email Configuration</label>
+				 <field id="oracle_mode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <source_model>Orange\Emails\Model\Config\Source\Custom</source_model>
+                </field> 
+                <field id="oracle_sender" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                </field>				
+				<field id="oracle_reciever" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Reciever</label>
+                </field>
+				<field id="oracle_host" translate="label" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Oracle Host</label>
+                </field>
+				<field id="oracle_username" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Oracle Username</label>
+                </field>
+				<field id="oracle_key" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="25" showInDefault="1" showInWebsite="1" >
+					<label>Oracle Password</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir config="system">upload</upload_dir>
+				</field>
+				<field id="oracle_path" translate="label" type="text" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Oracle Path</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

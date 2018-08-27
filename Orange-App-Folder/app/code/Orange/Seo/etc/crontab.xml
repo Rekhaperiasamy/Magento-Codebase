@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default"> 
+        <job name="google_feed_french" instance="Orange\Seo\Helper\Data" method="getFeeds">
+            <schedule>0 2 * * *</schedule>
+        </job>
+        <job name="google_feed_dutch" instance="Orange\Seo\Helper\Data" method="getFeedsNL">
+            <schedule>0 2 * * *</schedule>
+        </job>
+		<job name="bireport" instance="Orange\Seo\Controller\Bireport\Report" method="execute">
+            <schedule>0 6 * * *</schedule>
+        </job>
+		<job name="salespadreport" instance="Orange\Seo\Helper\Salespad" method="generatesalsepad">
+            <schedule>0 1 * * *</schedule>
+        </job>
+		<job name="product_search_report" instance="Orange\Seo\Helper\SearchBtoc" method="getFeedsCron">
+            <schedule>0 5 * * *</schedule>
+        </job>
+		<job name="product_search_report_soho" instance="Orange\Seo\Helper\SearchSoho" method="getFeedsSohoCron">
+            <schedule>0 5 * * *</schedule>
+        </job>
+		<job name="Samsung_feed_nl" instance="Orange\Seo\Helper\SamsungData" method="getCronSamsungFeedsNL">
+            <schedule>0 2 * * *</schedule>
+        </job>
+		<job name="Samsung_feed_fr" instance="Orange\Seo\Helper\SamsungData" method="getCronSamsungFeedsFr">
+            <schedule>0 2 * * *</schedule>
+        </job>
+    </group>
+</config>

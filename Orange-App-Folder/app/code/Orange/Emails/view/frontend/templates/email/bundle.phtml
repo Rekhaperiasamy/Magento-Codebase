@@ -1,0 +1,39 @@
+<?php $_order = $block->getOrder(); ?>
+<?php $items = $_order->getAllItems(); ?>
+<?php $TypeId = ''; ?>
+<br>
+<span>
+    <?php foreach ($items as $item) { ?>        
+        <?php
+        if ($item->getProduct()->getTypeId() == 'virtual' && $item->getParentItemId() != "" ) {
+                  /*      foreach ($childrens as $childs) {
+                if ($childs->getProductType() == 'virtual') {
+                    echo $itemName = $childs->getName() . '<br>';					
+                    echo 'qty ' . $childs->getQtyOrdered() . '<br>';
+                    echo 'pay now  €0,00' . '<br>';
+					$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+					echo "productid". $item->getProduct()->getId();
+					
+					$_product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getProduct()->getId());
+					$attr = $_product->getResource()->getAttribute('subscription_amount')->getFrontend()->getValue($_product);
+                    echo 'pay monthly 1';
+                    echo $attr;											
+                }
+            } */
+			        echo $itemName = $item->getName() . '<br>';					
+                    echo 'qty ' . $item->getQtyOrdered() . '<br>';
+                    echo 'pay now  €0,00' . '<br>';
+					$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+					$_product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getProduct()->getId());
+					$attr = $_product->getResource()->getAttribute('subscription_amount')->getFrontend()->getValue($_product);
+				    echo 'pay monthly €';
+                    echo number_format($attr,0).'<br>';
+					$proPack = $item->getPropacks(); 
+					if($proPack != ''){
+						echo ' ProPack '.$proPack.'<br>';
+					}
+            ?>
+        <?php } ?>        
+    <?php } ?>    
+</span>
+

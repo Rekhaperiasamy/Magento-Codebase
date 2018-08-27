@@ -1,0 +1,23 @@
+<!-- ko if: isPayable() -->
+<div class="row margin-xs-b-s">
+	<div class="col-xs-5 col-sm-12 col-md-6" data-bind="i18n: title">
+	</div>
+	<div class="col-xs-7 col-sm-12 col-md-6 text-right " data-th="Order Total">
+		<!-- ko if: isDecimal() -->
+		<div class="pdp total-pricee new-price orange">
+		<span id="new-pricee" class="new-pricee" data-bind="text: getGrandValue1()"></span>
+		<span class="new-price-desimal" data-bind="text: getGrandValue2()"></span>
+		<span id="new-price-symbol-desimal" class="new-price-symbol-desimal new-price-symbol" data-bind="text: getCurrencySymbol()"></span>
+		</div>
+	<!-- /ko -->
+	<!-- ko ifnot: isDecimal() -->
+		<div class="pdp total-pricee new-price orange">
+		<span id="new-pricee" class="new-pricee" data-bind="text: getGrandValue1()"></span>
+		<span id="new-price-symbol" class="new-price-symbol" data-bind="text: getCurrencySymbol()"></span>				
+		</div>
+	<!-- /ko -->
+		<span class="new-price-smaller orange line-100percent" data-bind="text: getSubsidyValue()"></span>
+	</div>
+</div>
+<!-- /ko -->
+

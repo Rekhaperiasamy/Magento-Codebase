@@ -1,0 +1,92 @@
+<?php
+/**
+ * Created by Magenest
+ * User: Luu Thanh Thuy
+ * Date: 30/09/2015
+ * Time: 09:34
+ */
+
+
+$couponFeedUrl = $this->getUrl('abandonedcartreminder/rule/couponsearch', ['_current'=>false ]);
+$emailTemplateURL = $this->getUrl('abandonedcartreminder/mail/template', ['_current'=>false ]);
+$uploadAttachUrl = $this->getUrl('abandonedcartreminder/rule/upload', ['_current'=>false ]);
+
+?>
+<script>
+   require([
+       "jquery",
+       "jquery/ui",
+
+       "Magenest_AbandonedCartReminder/js/abandonedcartreminder",
+        "Magenest_AbandonedCartReminder/js/flexTable",
+        "Magenest_AbandonedCartReminder/js/sms/smsChain",
+       'Magento_Catalog/catalog/base-image-uploader',
+       'prototype',
+        'varien/js',
+       "domReady!"
+    ], function ($,jqueryui,Fue, Table,smsChain,fileupload,baseImage) {
+
+        var fue = new Fue({
+            mainElement : $('[data-action="followup-email-trigger"]') ,
+            nextButton : $('input[data-action="followup-email-next"]')
+        });
+
+       var table = new Table({table : $('[data-role="flex-table"]'),getEmailTemplateUrl:'<?php echo $emailTemplateURL ?>'});
+
+        jQuery("select.bind-value").each(function() {
+           jQuery(this) .val(jQuery(this).data("value"));
+        })
+
+
+       
+       jQuery("#promotion_rule").autocomplete({
+           source:function( request, response ) {
+               jQuery.ajax({
+                   url: '<?php echo  $couponFeedUrl ?>',
+
+                   data: {
+                       q: request.term
+                   },
+                   success: function( data ) {                       
+                       response(data );
+                   }
+               });
+           },
+           minLength: 3,
+           select: function(event, ui) {
+             
+              jQuery('#promotion_rule_id').val(ui.item.id);
+
+           }
+       });
+       var sms = new smsChain();
+
+       $(document).ready(function() {
+           $('select[data-role="attach-value"]').each(function() {
+               var realValue = $(this).data('action');
+
+               $(this).val(realValue);
+           });
+
+           $('#media_gallery_content').on('addItem', function (event, data) {
+
+              
+                 $dropPlaceholder = $('#media_gallery_content-container').find('.image-placeholder');
+               var IdSelector = '#' + data.label;
+               var prevInput = $(IdSelector);
+
+               if (prevInput.length < 1) {
+                   var htmlInput ='<input type="hidden" name="' + 'img[]"' + 'id="' + data.label + '"' +  'value="' + data.url + '" >';
+                   var atachInput= $(htmlInput);
+                    atachInput.insertBefore($dropPlaceholder);
+
+               }
+
+           });
+
+           
+
+           });
+
+    })
+</script>

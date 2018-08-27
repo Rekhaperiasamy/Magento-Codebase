@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="1column">
+	<head>       
+        <css src="Magento_Theme::css/base_style.css"/>
+        <css src="Magento_Catalog::css/p05.css"/>
+    </head>
+    <body>
+        <referenceBlock name="content">
+            <block class="Orange\Checkout\Block\Newstep" name="notification" template="Orange_Checkout::notification.phtml" cacheable="false"/>
+        </referenceBlock>
+    </body>
+</page>

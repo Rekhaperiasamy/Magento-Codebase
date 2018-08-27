@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="reevoofeed_cronjob" instance="Orange\Reevoofeed\Cron\Schedulerevoo" method="execute">
+             <!--<schedule>* * * * *</schedule>-->
+			 <schedule>0 2 * * *</schedule>
+			 
+        </job>
+    </group>
+</config>

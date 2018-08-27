@@ -1,0 +1,23 @@
+<!--@subject Report Exception Log  @-->
+ 
+{{template config_path="design/email/header_template"}}
+ 
+<table>
+    <tr class="email-summary">
+        <td>
+            <h1>{{trans 'Exception Log for <span class="no-link">%report_type</span>' report_type=$report_type |raw}}</h1>           
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            <table class="order-details">
+                <tr>
+                    <td class="address-details">
+                        <h3>{{var report_log|raw}}</h3> 
+						<p>{{var error_description|raw}}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

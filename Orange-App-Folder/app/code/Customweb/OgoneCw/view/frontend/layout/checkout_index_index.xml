@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Customweb_OgoneCw::css/ogonecw.css"/>
+	</head>
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="renders" xsi:type="array">
+                                                            <!-- merge payment method renders here -->
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="ogonecw-payments" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Customweb_OgoneCw/js/view/payment/ogonecw-payments</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                    	
+                                                                    	<item name="ogonecw_mastercard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_creditcard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_acceptgiro" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_airplus" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_americanexpress" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_aurore" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_cartebleue" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_cofinoga" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_dankort" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_diners" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_discovercard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_jcb" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_lasercard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_maestrouk" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_solocard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_uatp" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_visa" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_bcmc" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_uneurocom" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_maestro" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_postfinancecard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_amazoncheckout" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_belfiusdirectnet" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_cashticket" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_cbconline" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_centeaonline" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_edankort" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_eps" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_fidorpay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_giropay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_ideal" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_inghomepay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_kbconline" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_mpass" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_paysafecard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_postfinanceefinance" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_directdebits" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_intersolve" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_pingping" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_tunz" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_cashuprepaid" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_paypal" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_directebanking" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_openinvoice" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_masterpass" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_banktransfer" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_instalmentinvoice" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="ogonecw_threexcb" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

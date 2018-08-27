@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="page-product-bundle"/>
+        <referenceBlock name="product.info.media.image">		
+            <block class="Orange\Catalog\Block\Product\CustomView" name="product.color.swatch" template="Orange_Bundle::catalog/product/view/product_color_swatch.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

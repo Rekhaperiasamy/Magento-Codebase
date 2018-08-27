@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Block\Product\ListProduct" type="Orange\Catalog\Block\Rewrite\Product\ListProduct" />
+	<preference for="Magento\Catalog\Block\Category\View" type="Orange\Catalog\Block\Category\View" /> 	 	
+	<preference for="Magento\Catalog\Block\Product\ProductList\Toolbar" type="Orange\Catalog\Block\Rewrite\Product\ProductList\Toolbar" />
+	<preference for="Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Gallery\Content" type="Orange\Catalog\Block\Adminhtml\Product\Helper\Form\Gallery\Content" />
+        <type name="Magento\Catalog\Model\Product\Link\SaveHandler">
+        <plugin disabled="false" name="Orange_Catalog_Model_Product_Link_SaveHandler" sortOrder="10" type="Orange\Catalog\Model\Product\Link\SaveHandler"/>
+    </type>
+	<preference for="Magento\Catalog\Block\Product\View\Gallery" type="Orange\Catalog\Block\Product\View\Gallery" />
+	 
+</config>

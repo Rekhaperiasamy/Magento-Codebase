@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Customweb_OgoneCw::css/ogonecw.css"/>
+	</head>
+	<body>
+		<referenceContainer name="content">
+			<block class="Customweb\OgoneCw\Block\ExternalCheckout\Login" name="customweb_ogonecwexternalcheckout_login" />
+		</referenceContainer>
+	</body>
+</page>

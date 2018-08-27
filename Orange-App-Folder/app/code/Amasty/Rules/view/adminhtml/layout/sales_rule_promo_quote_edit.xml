@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_Rules
+ */
+-->
+<!--
+/**
+ * Copyright © 2015 Amasty. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="main.col">
+            <block class="Magento\Framework\View\Element\Template" template="Amasty_Rules::form_scripts.phtml" name="amrules_form_scripts" />
+        </referenceContainer>
+
+
+<!--            <referenceBlock  name="promo_quote_edit_tabs">
+                <block class="Amasty\Rules\Block\Adminhtml\Promo\Quote\Edit\Tab\Ytab" name="amrules_items_price"/>
+                <action method="addTabAfter">
+                    <argument name="name" xsi:type="string">rules_y_tab</argument>
+                    <argument name="block" xsi:type="string">amrules_items_price</argument>
+                    <argument name="after" xsi:type="string">actions_section</argument>
+                </action>
+            </referenceBlock>-->
+
+    </body>
+</page>

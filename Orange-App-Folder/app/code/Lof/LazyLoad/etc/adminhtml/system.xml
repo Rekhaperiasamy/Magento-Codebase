@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * http://landofcoder.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_LazyLoad
+ * @copyright  Copyright (c) 2017 Landofcoder (http://www.landofcoder.com/)
+ * @license    http://www.landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="loflazyload" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>Lazy Load</label>
+			<tab>landofcoder</tab>
+			<resource>Lof_LazyLoad::config</resource>
+			<group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="loadingIcon" translate="label" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Loading Icon</label>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">lof/lazyload</upload_dir>
+					<base_url type="media" scope_info="1">lof/lazyload</base_url>
+					<comment><![CDATA[Allowed file types: jpeg, gif, png.]]></comment>
+				</field>
+				<field id="threshold" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Threshold</label>
+					<validate>validate-number</validate>
+					<comment><![CDATA[Amount of pixels below the viewport, in which all images gets loaded before the user sees them.]]></comment>
+				</field>
+				<field id="delay" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Delay</label>
+					<validate>validate-number</validate>
+					<comment><![CDATA[If you want to load all elements at once after page load, then you can specify a delay time in milliseconds.]]></comment>
+				</field>
+				<field id="combined" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Combined</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[With this parameter, Lazy will combine the event driven and delayed element loading.]]></comment>
+				</field>
+				<field id="effect" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Effect</label>
+					<source_model>Lof\LazyLoad\Model\Config\Source\Effect</source_model>
+					<comment><![CDATA[Will automatically destroy the instance when no further elements are available to handle.]]></comment>
+				</field>
+				<field id="effectTime" translate="label comment" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Effect Time</label>
+					<validate>validate-number</validate>
+					<comment><![CDATA[Time in milliseconds the effect should use to view the image.]]></comment>
+				</field>
+				<field id="enableThrottle" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Throttle</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Throttle down the loading calls on scrolling event.]]></comment>
+				</field>
+				<field id="throttle" translate="label comment" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Throttle</label>
+					<validate>validate-number</validate>
+					<comment><![CDATA[Time in milliseconds the throttle will use to limit the loading calls.]]></comment>
+				</field>
+				<field id="enable_homepage" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Apply to Home Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_categorypage" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Apply to Category Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_searchpage" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Apply to Search Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_cartpage" translate="label comment" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Apply to Search Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Location: magento2_root/app/code/Vendorname/Extensionname/etc/adminhtml/system.xml
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="orange" translate="label" sortOrder="1000">
+            <label>ORANGE</label>
+        </tab>
+        <section id="selligent" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Selligent</label>
+            <tab>orange</tab>
+            <resource>Magento_Checkout::checkout</resource>
+            <group id="selligent_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Selligent Configuration</label>
+               
+                <field id="selligent_userid" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Selligent Username</label>
+                </field>
+				<field id="selligent_password" translate="label" type="password" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Selligent Password</label>
+                </field>
+				<field id="selligent_endpointurl" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Selligent EndPointURL</label>
+                </field>
+				<field id="brand" translate="label" type="text" sortOrder="22" showInDefault="1">
+                    <label>Selligent Brand Name</label>
+                </field>
+                <field id="msisdn" translate="label" type="text" sortOrder="22" showInDefault="1">
+                    <label>MSISDN Value</label>
+                </field>
+				<field id="selligent_list" translate="label" type="text" sortOrder="23" showInDefault="1">
+                    <label>List ID</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

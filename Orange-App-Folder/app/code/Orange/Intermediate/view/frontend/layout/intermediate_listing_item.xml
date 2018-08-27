@@ -1,0 +1,16 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="1column">
+    <head>       
+      <css src="Magento_Theme::css/base_style.css"/>
+		<css src="Orange_Intermediate::css/p09.css"/>	
+                <!--<script src="Orange_Intermediate::js/plugins.js"/>-->		
+<!--<link src="js/collapse.js"/>-->
+		<link src="Orange_Intermediate::js/responsive-tabs.js"/>				
+	   <title>Intermediate Listing </title>
+	</head>
+	<body>
+        <referenceContainer name="content">
+            <block class="Orange\Intermediate\Block\Item" name="intermediate" template="Orange_Intermediate::listing/items.phtml" />			
+        </referenceContainer>
+		<referenceBlock name="page.main.title" display="false"/>
+    </body>
+</page>

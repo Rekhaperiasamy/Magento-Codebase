@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="common" translate="label" type="text" sortOrder="501" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Orange Common Configuration</label>
+            <tab>orange</tab> 
+            <resource>Orange_AdmincontentUpload::tierpriceconfig</resource>         
+            <group id="common_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Common Configuration</label>
+                <field id="tier_price" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tier Price %</label>
+                </field>
+                 <field id="checkout_secondstep_showcase_simple" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout Product Information Showcase - Attribute Set Name</label>
+                   <comment><![CDATA[Checkout Information Tab Simple Product Showcase - Attribute Set Name]]></comment> 
+                </field>
+             </group>            
+            <group id="numbervalidation_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Number Validation Configuration</label> 
+                <field id="number_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number Validation Webservice call URL</label>
+                </field>             
+                <field id="number_pem_file" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number Validation Webservice call PEM File Path</label>
+                </field>
+                <field id="number_key_file" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number Validation Webservice call Key File Path</label>
+                </field>
+                <field id="number_cer_file" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number Validation Webservice call Certification File Path</label>
+                </field> 
+				<field id="pem_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="19" showInDefault="1">
+					<label>Upload PEM File</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir>common-header/scoring</upload_dir>
+				</field>		
+				<field id="key_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="20" showInDefault="1">
+					<label>Upload Key File</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir>common-header/scoring</upload_dir>
+				</field>
+				<field id="cerf_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="21" showInDefault="1">
+					<label>Upload Security Certificate File</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir>common-header/scoring</upload_dir>
+				</field>
+				<field id="scoring_url" translate="label" type="text" sortOrder="15" showInDefault="1">
+                    <label>Scoring Webservice Url</label>
+                </field>
+				<field id="scoring_customer_url" translate="label" type="text" sortOrder="15" showInDefault="1">
+                    <label>Scoring Customer Check Url</label>
+                </field>								
+            </group>
+			<group id="customernumbervalidation_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Number Validation Configuration (EX: x.xxxxxxx)</label> 
+                <field id="customer_number_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Number Validation Webservice call URL</label>
+                </field>
+                <field id="customer_pem_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="25" showInDefault="1" showInWebsite="1" >
+					<label>Upload PEM File</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir config="system">customernumberupload</upload_dir>
+				</field>
+                 <field id="customer_key_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="35" showInDefault="1" showInWebsite="1" >
+					<label>Upload Key File</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir config="system">customernumberupload</upload_dir>
+				</field>
+                <field id="customer_cerf_file" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="45" showInDefault="1" showInWebsite="1" >
+					<label>Upload Security Certificate File</label>
+					<backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+					<upload_dir config="system">customernumberupload</upload_dir>
+				</field>										
+            </group>
+			<group id="base64_configuration" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Base64 Credentials</label> 
+                <field id="secret_key" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+                </field>             
+                <field id="iv" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Initialization Vector (IV)</label>
+                </field>
+                <field id="method" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Method</label>
+                </field>
+            </group>
+			<group id="vatvalidation_configuration" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>VAT Number Validation Configuration</label> 
+                <field id="vatnumber_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Vat Number Validation Webservice call URL</label>
+                </field>             
+                <field id="vatnumber_username" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>VAT Number Validation Webservice Username</label>
+                </field>
+                <field id="vatnumber_password" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>VAT Number Validation Webservice Password</label>
+                </field>
+            </group>
+			<group id="road_sixtyfive_config" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Road 65 Configuration</label> 
+				<field id="url" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Road 65 Webservice Url</label>
+                </field>
+				<field id="road_sixty_five_uname" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Road 65 Webservice Username</label>
+                </field>
+                <field id="road_sixty_five_pd" translate="label" type="password" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Road 65 Webservice Password</label>
+                </field>
+            </group>
+			<group id="obsolete_device_config" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Obsolete Device Configuration</label> 
+                <field id="obsolete_device_period" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Number of days to make device disable</label>
+					<validate>validate-number validate-greater-than-zero</validate>
+                </field>
+            </group>
+			<group id="subsidy_config" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Subsidy Configuration</label> 
+                <field id="postpaid_subsidy_config" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label>Disable new number configuration for Postpaid Subsidy</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+            </group>
+        </section>
+    
+    </system>
+</config>

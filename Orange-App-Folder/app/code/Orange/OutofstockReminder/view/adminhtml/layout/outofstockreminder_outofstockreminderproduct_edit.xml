@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+     <update handle="editor"/>
+    <body>
+	   <referenceContainer name="content">
+            <block class="Orange\OutofstockReminder\Block\Adminhtml\OutofstockReminder\Edit" name="outofstockreminder_outofstockreminder_edit"/>
+        </referenceContainer>
+		 <referenceContainer name="left">
+            <block class="Orange\OutofstockReminder\Block\Adminhtml\OutofstockReminder\Edit\Tabs" name="outofstockreminder_outofstockreminder_edit_tabs">
+				<block class="Orange\OutofstockReminder\Block\Adminhtml\OutofstockReminder\Edit\Tab\OutofStockProductInformation" name="outofstockreminder_outofstockreminder_edit_tab_outofstockproductinformation"/>
+				 <action method="addTab">
+                    <argument name="name" xsi:type="string">outofstockproductinformation_section</argument>
+                    <argument name="block" xsi:type="string">outofstockreminder_outofstockreminder_edit_tab_outofstockproductinformation</argument>
+                </action>
+				<!--CedAddTab-->
+			</block>
+        </referenceContainer>
+    </body>
+</page>

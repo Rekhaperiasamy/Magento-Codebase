@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+     <update handle="editor"/>
+    <body>
+	   <referenceContainer name="content">
+            <block class="Orange\Limitqty\Block\Adminhtml\Limitqty\Edit" name="limiqty_limitqty_edit"/>
+        </referenceContainer>
+		 <referenceContainer name="left">
+            <block class="Orange\Limitqty\Block\Adminhtml\Limitqty\Edit\Tabs" name="limitqty_limitqty_edit_tabs">
+				<block class="Orange\Limitqty\Block\Adminhtml\Limitqty\Edit\Tab\LimitqtyConfiguration" name="limitqty_limitqty_edit_tab_limitqtyconfiguration"/>
+				 <action method="addTab">
+                    <argument name="name" xsi:type="string">limitqtyconfiguration_section</argument>
+                    <argument name="block" xsi:type="string">limitqty_limitqty_edit_tab_limitqtyconfiguration</argument>
+                </action>
+				<!--CedAddTab-->
+			</block>
+        </referenceContainer>
+    </body>
+</page>

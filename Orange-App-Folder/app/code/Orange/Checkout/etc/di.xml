@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+	<preference for="Magento\Checkout\Controller\Cart\Add" type="Orange\Checkout\Controller\Cart\ExtendAdd" /> 
+	<preference for="Magento\Checkout\Controller\Cart\Delete" type="Orange\Checkout\Controller\Cart\ExtendDelete" /> 
+	<preference for="Magento\Sales\Model\Order\Email\Sender\OrderSender" type="Orange\Checkout\Model\Order\Email\Sender\OrderSender"/>
+	<preference for="Magento\Checkout\Controller\Cart\Index" type="Orange\Checkout\Controller\Cart\ExtendIndex" />
+	<preference for="Magento\Checkout\Controller\Index\Index" type="Orange\Checkout\Controller\Index\Index" />
+	<preference for="Magento\Checkout\Model\Session" type="Orange\Checkout\Model\Session" /> 
+	<preference for="Magento\Checkout\Controller\Onepage\Success" type="Orange\Checkout\Controller\Index\Success" /> 
+	<preference for="Magento\Checkout\Block\Onepage\Success" type="Orange\Checkout\Block\Onepage\Success"/>
+	<preference for="Magento\Checkout\Controller\Cart\CouponPost" type="Orange\Checkout\Controller\Cart\ExtendCouponPost" />
+	<preference for="Magento\Checkout\Controller\Cart\UpdatePost" type="Orange\Checkout\Controller\Cart\UpdatePost" />
+	<preference for="Magento\Checkout\Block\Checkout\AttributeMerger" type="Orange\Checkout\Block\Checkout\AttributeMergers"/>
+	<type name="Magento\Checkout\Model\DefaultConfigProvider">
+		<plugin name="updateCheckoutConfig" type="\Orange\Checkout\Plugin\DefaultConfigProviderPlugin" sortOrder="1" disabled="false"/>
+	</type>
+	<type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+		<plugin name="DisableRenderersAndPaymentsJs" type="Orange\Checkout\Plugin\DisableRenderersAndPaymentsJs"/>
+	</type>
+	<type name="Magento\Checkout\Model\Cart">
+		<plugin name="updateCartTealiumEvent" type="\Orange\Checkout\Plugin\CartPlugin" sortOrder="1"/>
+	</type>
+</config>

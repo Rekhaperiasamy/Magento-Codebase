@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+       
+	      <add id="Orange_AdmincontentUpload::AdminContent" title="Translation File" translate="title" module="Orange_AdmincontentUpload" parent="Magento_Backend::content" sortOrder="50" dependsOnModule="Orange_AdmincontentUpload" resource="Orange_AdmincontentUpload::AdminContent"/>
+          <add id="Orange_AdmincontentUpload::AdminContent_ChangeContent" title="CSV Translation" translate="title" module="Orange_AdmincontentUpload" parent="Orange_AdmincontentUpload::AdminContent" sortOrder="10" dependsOnModule="Orange_AdmincontentUpload" action="contentupload/upload" resource="Orange_AdmincontentUpload::AdminContent"/>
+        
+		</menu>
+</config>

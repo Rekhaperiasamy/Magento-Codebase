@@ -1,0 +1,37 @@
+<?php /** * Copyright © 2016 Magento. All rights reserved. * See COPYING.txt for license details. */ ?>
+<div id="sales-rule-form-tab-importcoupons">
+<iframe sandbox id="uploadTrg" name="uploadTrg" height="0" width="0" frameborder="0" scrolling="yes"></iframe>
+<form id="import-coupons" name="import-coupon" action="<?php echo $block->getImportCouponUrl() ?>" method="post" enctype="multipart/form-data" target="uploadTrg">
+	<?php echo $this->getBlockHtml('formkey')?>
+	<div class="entry-edit form-inline">
+		<fieldset class="fieldset admin__fieldset  ignore-validate" id="importcoupons_import_information_fieldset">
+			<div class="messages"></div>
+			<input id="importcoupons_rule_id" name="rule_id" data-ui-id="store-view-labels-fieldset-element-hidden-rule-id" value="<?php echo $block->getRuleId() ?>" type="hidden">      
+			<div class="admin__field field field-select_csv " data-ui-id="store-view-labels-fieldset-element-form-field-select-csv">
+				<label class="label admin__field-label" for="importcoupons_select_csv" data-ui-id="store-view-labels-fieldset-element-file-select-csv-label"><span>Select CSV File</span></label>
+				<div class="admin__field-control control"><input id="importcoupons_select_csv" name="importcoupondata" data-ui-id="store-view-labels-fieldset-element-file-select-csv" value="" title="Select CSV File" type="file"> </div>
+			</div>
+			<div class="admin__field field field-import_button  no-label" data-ui-id="store-view-labels-fieldset-element-form-field-import-button">
+				<div class="admin__field-control control">
+					<div id="importcoupons_import_button" class="control-value admin__field-value"><button id="id_6cfad1c90eed8c191819e17a4b5dc65f" title="Import" type="submit" class="action-default scalable import" data-ui-id="widget-button-12"><span>Import</span></button> </div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</form>
+<div id="ajaxResultTest"></div>
+<?php //echo $block->getChildHtml('promo_quote_edit_tab_coupons_import_form') ?>
+</div>
+<script>
+require([
+    'jquery',
+    "uiRegistry",
+    'Magento_Ui/js/modal/alert',
+    'prototype'
+], function(jQuery, registry, alert) {
+	jQuery("iframe").load(function(){
+		jQuery("#ajaxResultTest").append("<h4>Coupons Imported Successfully</h4>");
+		couponCodesGridJsObject.reload();		
+	});
+});
+</script>

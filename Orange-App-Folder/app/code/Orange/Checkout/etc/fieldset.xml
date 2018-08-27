@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="quote_convert_item">
+            <field name="subscription_amount">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="ori_subscription_amount">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="eagle_type">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="propacks">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<!-- IEW Fields -->
+		<fieldset id="quote_convert_item">
+			<field name="iew_is_teneuro">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="iew_telephone">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="iew_contract">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="iew_firstname">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="iew_lastname">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<fieldset id="quote_convert_item">
+			<field name="iew_dob">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+		<!-- EOF IEW fields -->
+		<fieldset id="sales_convert_quote">
+			<field name="subscription_total">
+				<aspect name="to_order" />
+			</field>
+		</fieldset>
+		<fieldset id="sales_convert_quote">
+			<field name="subsidy_discount">
+				<aspect name="to_order" />
+			</field>
+		</fieldset>
+		<fieldset id="sales_convert_quote">
+			<field name="ori_subscription_total">
+				<aspect name="to_order" />
+			</field>
+		</fieldset>
+		<fieldset id="sales_convert_quote">
+            <field name="coupon_description">
+                <aspect name="to_order" />
+            </field>
+		</fieldset>
+		<fieldset id="sales_convert_order_item">
+            <field name="subscription_amount">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field>
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="ori_subscription_amount">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order">
+            <field name="subscription_total">
+                <aspect name="to_quote" />
+                <aspect name="to_invoice" />
+                <aspect name="to_shipment" />
+                <aspect name="to_cm" />
+            </field>
+        </fieldset> 
+		<fieldset id="sales_convert_order">
+            <field name="subsidy_discount">
+                <aspect name="to_quote" />
+                <aspect name="to_invoice" />
+                <aspect name="to_shipment" />
+                <aspect name="to_cm" />
+            </field>
+        </fieldset>
+		<fieldset id="sales_convert_order">
+            <field name="ori_subscription_total">
+                <aspect name="to_quote" />
+                <aspect name="to_invoice" />
+                <aspect name="to_shipment" />
+                <aspect name="to_cm" />
+            </field>
+        </fieldset>
+        <fieldset id="sales_convert_order">
+            <field name="coupon_description">
+                <aspect name="to_quote" />
+                <aspect name="to_invoice" />
+                <aspect name="to_shipment" />
+                <aspect name="to_cm" />
+            </field>
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="eagle_type">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="propacks">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>	
+		<!-- IEW fields -->
+		<fieldset id="sales_convert_order_item">
+			<field name="iew_is_teneuro">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="iew_telephone">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="iew_contract">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="iew_firstname">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="iew_lastname">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<fieldset id="sales_convert_order_item">
+			<field name="iew_dob">
+                <aspect name="to_quote_item" />
+                <aspect name="to_invoice_item" />
+                <aspect name="to_shipment_item" />
+                <aspect name="to_cm_item" />
+            </field> 
+        </fieldset>
+		<!-- EOF IEW fields -->
+		<fieldset id="sales_convert_quote">
+            <field name="account_number">
+                <aspect name="to_order" />
+            </field>
+		</fieldset>
+		<fieldset id="sales_convert_order">
+            <field name="account_number">
+                <aspect name="to_quote" />
+                <aspect name="to_invoice" />
+                <aspect name="to_shipment" />
+                <aspect name="to_cm" />
+            </field>
+        </fieldset>
+		<fieldset id="sales_convert_quote">
+			<field name="score_data">
+				<aspect name="to_order" />
+			</field>
+		</fieldset>
+		<fieldset id="sales_convert_order">
+            <field name="score_data">
+                <aspect name="to_quote" />
+            </field>
+        </fieldset>
+    </scope>
+</config>

@@ -1,0 +1,47 @@
+<?php
+/** @var  $block \Magenest\AbandonedCartReminder\Block\Link */
+
+$notifications = $block->getNotificationCollection();
+;
+?>
+<li class="link notification"  id="fueNotification" >
+    <a href="#"  onclick="{return false}" class="action link" >  <span class="notification-count"  data-role="toggle-notification"> <?php echo $block->getNotificationCount() ?></span></a>
+
+
+
+
+    <ul  class="notification-wrapper" data-role="notification-container">
+
+        <?php  if (is_object($notifications) && $notifications->getSize() > 0) { ?>
+
+            <?php  foreach ($notifications as $notification) {   ?>
+                <li class="notification-each">
+                    <strong> <?php  echo  $notification->getData('title') ?></strong>
+                    <p class="notification-des">
+                        <span class="notification-part-one"> <?php echo $notification->getFirstPart() ?></span>
+                        <span class="notification-part-two"> <?php echo $notification->getSecondPart() ?></span>
+                    </p>
+
+                    <span class="notification-time"> <?php echo  $notification->getTime()  ?></span>
+                    <button type="button" class="notifications-close" data-notifyid="<?php echo $notification->getId() ?>" data-action="close-notification" title="<?php echo __('Close')  ?>"></button>
+                </li>
+
+            <?php }  ?>
+        <?php }  ?>
+    </ul>
+</li>
+
+
+
+
+<script type="text/javascript" >
+    require([
+        "jquery",
+        'Magenest_AbandonedCartReminder/js/view/notificationHeader',
+        "domReady!"
+    ], function (jQuery,notificationHeader) {
+        var notiFrontend = new notificationHeader({closeUrl:'<?php echo $block->getCloseUrl() ?>'});
+
+
+    });
+    </script>

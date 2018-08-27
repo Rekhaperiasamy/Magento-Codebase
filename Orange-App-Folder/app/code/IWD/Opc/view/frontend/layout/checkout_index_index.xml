@@ -1,0 +1,608 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="IWD_Opc::css/iwd_onepage.css"/>
+        <css src="IWD_Opc::css/iwd_m_onepage.css"/>        
+		<css src="Magento_Theme::css/base_style.css"/>
+        <css src="Magento_Catalog::css/p14.css"/>
+		<css src="Magento_Catalog::css/jquery-ui.css"/>
+        <css src="IWD_Opc::css/jquery-ui.css"/>
+		<css src="IWD_Opc::css/p16.css"/>
+        <link src="IWD_Opc::js/shmclose.js"/>		
+		
+    </head>
+    <body>
+
+        <referenceBlock name="checkout.root" >
+            <action method="setTemplate" ifconfig="iwd_opc/general/enable_in_frontend">
+                <argument name="template" xsi:type="string">IWD_Opc::onepage.phtml</argument>
+            </action>
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="component" xsi:type="string">uiComponent</item>
+                            <item name="config" xsi:type="array">
+                                <item name="template" xsi:type="string">IWD_Opc/onepage</item>
+                            </item>
+                            <item name="children" xsi:type="array">
+                                <item name="progressBar" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                    </item>
+                                </item>
+                                <item name="authentication" xsi:type="array">
+                                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                                </item>
+                                <item name="sidebarIwd" xsi:type="array">
+                                    <item name="sortOrder" xsi:type="string">0</item>
+                                    <item name="component" xsi:type="string">IWD_Opc/js/view/sidebar</item>
+                                    <item name="displayArea" xsi:type="string">sidebar</item>
+                                    <item name="config" xsi:type="array">
+                                        <item name="template" xsi:type="string">IWD_Opc/sidebar</item>
+                                        <item name="deps" xsi:type="array">
+                                            <item name="0" xsi:type="string">checkout.steps</item>
+                                        </item>
+                                    </item>
+                                    <item name="children" xsi:type="array">
+                                        <item name="summary" xsi:type="array">
+                                            <item name="component" xsi:type="string">IWD_Opc/js/view/summary</item>
+                                            <item name="displayArea" xsi:type="string">summary</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="template" xsi:type="string">IWD_Opc/summary</item>
+                                            </item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="itemsBefore" xsi:type="array">
+                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <!-- merge your components here -->
+                                                    </item>
+                                                </item>
+                                                <item name="cart_items" xsi:type="array">
+                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/summary/cart-items</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="details" xsi:type="array">
+                                                            <item name="component" xsi:type="string">IWD_Opc/js/view/summary/item/details</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="thumbnail" xsi:type="array">
+                                                                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                                </item>
+                                                                <item name="subtotal" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/summary/item/details/subtotal</item>
+                                                                    <item name="displayArea" xsi:type="string">after_details</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+
+                                                    </item>
+                                                </item>
+                                                <item name="itemsAfter" xsi:type="array">
+                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <!-- merge your components here -->
+                                                    </item>
+                                                </item>
+                                                <item name="totals" xsi:type="array">
+                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/summary/totals</item>
+                                                    <item name="displayArea" xsi:type="string">totals</item>
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="template" xsi:type="string">IWD_Opc/summary/totals</item>
+                                                    </item>
+                                                    <item name="children" xsi:type="array">
+                                                        <!-- sort order for this totals is configured on admin panel-->
+                                                        <!-- Stores->Configuration->SALES->Sales->General->Checkout Totals Sort Order -->
+
+
+                                                        <item name="subtotal" xsi:type="array">
+                                                            <item name="component"  xsi:type="string">IWD_Opc/js/view/summary/subtotal</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="title" xsi:type="string" translate="true">Subtotal</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="shipping" xsi:type="array">
+                                                            <item name="component"  xsi:type="string">IWD_Opc/js/view/summary/shipping</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="title" xsi:type="string" translate="true">Shipping</item>
+                                                                <item name="notCalculatedMessage" xsi:type="string" translate="true">Not yet calculated</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="tax" xsi:type="array">
+                                                            <item name="component"  xsi:type="string">IWD_Opc/js/view/tax</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="title" xsi:type="string" translate="true">Tax</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="discount" xsi:type="array">
+                                                            <item name="component"  xsi:type="string">IWD_Opc/js/view/summary/discount</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="title" xsi:type="string" translate="true">Discount</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="grand-total" xsi:type="array">
+                                                            <!--<item name="config" xsi:type="array">-->
+                                                                <!--<item name="componentDisabled" xsi:type="boolean">true</item>-->
+                                                            <!--</item>-->
+                                                            <!--<item name="gran-total-tax" xsi:type="array">-->
+                                                                <item name="component"  xsi:type="string">Magento_Tax/js/view/checkout/summary/grand-total</item>
+                                                                <item name="config" xsi:type="array">
+                                                                    <item name="exclTaxLabel" xsi:type="string" translate="true">Order Total Excl. Tax</item>
+                                                                    <item name="inclTaxLabel" xsi:type="string" translate="true">Order Total Incl. Tax</item>
+                                                                    <item name="basicCurrencyMessage" xsi:type="string" translate="true">Your credit card will be charged for</item>
+                                                                    <item name="title" xsi:type="string" translate="true">Order Total</item>
+                                                                </item>
+                                                            <!--</item>-->
+                                                            <!--<item name="grand-total-summary" xsi:type="array">-->
+                                                                <!--<item name="component"  xsi:type="string">IWD_Opc/js/view/summary/grand-total</item>-->
+                                                                <!--<item name="config" xsi:type="array">-->
+                                                                    <!--<item name="title" xsi:type="string" translate="true">Order Total</item>-->
+                                                                <!--</item>-->
+                                                            <!--</item>-->
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="shipping-information" xsi:type="array">
+                                            <item name="config" xsi:type="array">
+                                                <item name="componentDisabled" xsi:type="boolean">true</item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+											
+											
+											<item name="itemsBefore" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="children" xsi:type="array">
+                                                            <!-- merge your components here -->
+                                                        </item>
+                                                    </item>
+                                                    <item name="cart_items" xsi:type="array">
+                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/summary/cart-items</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="details" xsi:type="array">
+                                                            <item name="component" xsi:type="string">IWD_Opc/js/view/summary/item/details</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="thumbnail" xsi:type="array">
+                                                                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                                </item>
+                                                                <item name="subtotal" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/summary/item/details/subtotal</item>
+                                                                    <item name="displayArea" xsi:type="string">after_details</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+
+                                                    </item>
+                                                </item>
+                                                    <!-- <item name="itemsAfter" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="children" xsi:type="array">
+                                                            
+															
+															<item  name="discountiwd" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/discount/discount</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <item name="errors" xsi:type="array">
+                                                                            <item name="sortOrder" xsi:type="string">0</item>
+                                                                            <item name="component" xsi:type="string">IWD_Opc/js/view/discount/discount-messages</item>
+                                                                            <item name="displayArea" xsi:type="string">messages</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                        </item>
+                                                    </item> -->
+
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                    </item>
+                                                </item>
+
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="deps" xsi:type="array">
+                                                            <item name="0" xsi:type="string">checkout.steps.shipping-step.step-config</item>
+                                                            <item name="1" xsi:type="string">checkoutProvider</item>
+                                                        </item>
+                                                        <item name="popUpForm" xsi:type="array">
+                                                            <item name="element" xsi:type="string">#opc-new-shipping-address</item>
+                                                            <item name="options" xsi:type="array">
+                                                                <item name="type" xsi:type="string">popup</item>
+                                                                <item name="responsive" xsi:type="boolean">true</item>
+                                                                <item name="innerScroll" xsi:type="boolean">true</item>
+                                                                <item name="title" xsi:type="string" translate="true">IWD Shipping Address</item>
+                                                                <item name="trigger" xsi:type="string">opc-new-shipping-address</item>
+                                                                <item name="buttons" xsi:type="array">
+                                                                    <item name="save" xsi:type="array">
+                                                                        <item name="text" xsi:type="string" translate="true">Save Address</item>
+                                                                        <item name="class" xsi:type="string">action primary action-save-address</item>
+                                                                    </item>
+                                                                    <item name="cancel" xsi:type="array">
+                                                                        <item name="text" xsi:type="string" translate="true">Cancel</item>
+                                                                        <item name="class" xsi:type="string">action secondary action-hide-popup</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="component" xsi:type="string">IWD_Opc/js/view/shipping</item>
+                                                    </item>
+
+                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                    <item name="sortOrder" xsi:type="string">1</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="customer-email" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magenest_AbandonedCartReminder/js/view/form/element/email</item>
+                                                            <item name="displayArea" xsi:type="string">customer-email</item>
+                                                            <item name="tooltip" xsi:type="array">
+                                                                <item name="description" xsi:type="string" translate="true">We'll send your order confirmation here.</item>
+                                                            </item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="before-login-form" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                                    <item name="displayArea" xsi:type="string">before-login-form</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <!-- before login form fields -->
+                                                                    </item>
+                                                                </item>
+                                                                <item name="additional-login-form-fields" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                                    <item name="displayArea" xsi:type="string">additional-login-form-fields</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <!-- additional login form fields -->
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="before-form" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">before-form</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="grand-total" xsi:type="array">
+                                                                    <item name="component"  xsi:type="string">IWD_Opc/js/view/summary/grand-total-button</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="title" xsi:type="string" translate="true">Order Total</item>
+                                                                    </item>
+                                                                </item>
+                                                                <!-- before form fields -->
+                                                            </item>
+                                                        </item>
+                                                        <item name="before-fields" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">before-fields</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!-- before fields -->
+                                                                <item name="grand-total" xsi:type="array">
+                                                                    <item name="component"  xsi:type="string">IWD_Opc/js/view/summary/grand-total-button</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="title" xsi:type="string" translate="true">Order Total</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="address-list" xsi:type="array">
+                                                            <!--<item name="component" xsi:type="string">Magento_Checkout/js/view/shipping-address/list</item>-->
+                                                            <!--<item name="displayArea" xsi:type="string">address-list</item>-->
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                            </item>
+                                                        </item>
+
+                                                        <item name="address-list" xsi:type="array">
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="component" xsi:type="string">IWD_Opc/js/view/shipping-address/list</item>
+                                                            </item>
+                                                        </item>
+
+                                                        <item name="address-list-additional-addresses" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">address-list-additional-addresses</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="grand-total" xsi:type="array">
+                                                                    <item name="component"  xsi:type="string">IWD_Opc/js/view/summary/grand-total-button</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="title" xsi:type="string" translate="true">Order Total</item>
+                                                                    </item>
+                                                                </item>
+                                                                <!-- address-list-additional-addresses -->
+                                                            </item>
+                                                        </item>
+                                                        <item name="before-shipping-method-form" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">before-shipping-method-form</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!-- address-list-additional-addresses -->
+                                                            </item>
+                                                        </item>
+                                                        <item name="after-shipping-method-form" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">after-shipping-method-form</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!--<item name="giftOptionsCart" xsi:type="array">-->
+                                                                    <!--<item name="component" xsi:type="string">Magento_GiftMessage/js/view/gift-message</item>-->
+                                                                    <!--<item name="config" xsi:type="array">-->
+                                                                        <!--<item name="template" xsi:type="string">Magento_GiftMessage/gift-message</item>-->
+                                                                        <!--<item name="formTemplate" xsi:type="string">Magento_GiftMessage/gift-message-form</item>-->
+                                                                    <!--</item>-->
+                                                                <!--</item>-->
+                                                                 <!--address-list-additional-addresses -->
+                                                                <!--<item  name="discountiwd" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/discount/discount</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <item name="errors" xsi:type="array">
+                                                                            <item name="sortOrder" xsi:type="string">0</item>
+                                                                            <item name="component" xsi:type="string">IWD_Opc/js/view/discount/discount-messages</item>
+                                                                            <item name="displayArea" xsi:type="string">messages</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item> -->
+                                                                <!--Additional field for comment-->
+                                                               <!-- <item  name="commentiwd" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/comment</item>
+                                                                </item> -->
+
+                                                            </item>
+                                                        </item>
+
+                                                        <item name="shipping-address-fieldset" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="deps" xsi:type="array">
+                                                                    <item name="0" xsi:type="string">checkoutProvider</item>
+                                                                </item>
+                                                            </item>
+                                                            <item name="displayArea" xsi:type="string">additional-fieldsets</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!-- The following items override configuration of corresponding address attributes -->
+                                                                <item name="region" xsi:type="array">
+                                                                    <!-- Make region attribute invisible on frontend. Corresponding input element is created by region_id field -->
+                                                                    <item name="visible" xsi:type="boolean">false</item>
+                                                                </item>
+                                                                <item name="region_id" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/region</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="template" xsi:type="string">ui/form/field</item>
+                                                                        <item name="elementTmpl" xsi:type="string">ui/form/element/select</item>
+                                                                        <item name="customEntry" xsi:type="string">shippingAddress.region</item>
+                                                                    </item>
+                                                                    <item name="validation" xsi:type="array">
+                                                                        <item name="validate-select" xsi:type="string">true</item>
+                                                                    </item>
+                                                                    <!-- Value of region_id field is filtered by the value of county_id attribute -->
+                                                                    <item name="filterBy" xsi:type="array">
+                                                                        <item name="target" xsi:type="string"><![CDATA[${ $.provider }:${ $.parentScope }.country_id]]></item>
+                                                                        <item name="field" xsi:type="string">country_id</item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="postcode" xsi:type="array">
+                                                                    <!-- post-code field has custom UI component -->
+                                                                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/post-code</item>
+                                                                    <item name="validation" xsi:type="array">
+                                                                        <item name="required-entry" xsi:type="string">true</item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="company" xsi:type="array">
+                                                                    <item name="validation" xsi:type="array">
+                                                                        <item name="min_text_length" xsi:type="number">0</item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="fax" xsi:type="array">
+                                                                    <item name="validation" xsi:type="array">
+                                                                        <item name="min_text_length" xsi:type="number">0</item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="country_id" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">115</item>
+                                                                </item>
+                                                                <item name="telephone" xsi:type="array">
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="tooltip" xsi:type="array">
+                                                                            <item name="description" xsi:type="string" translate="true">For delivery questions.</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+
+                                            </item>
+                                        </item>
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+												<!-- updated for multiple coupon -->
+												<item name="discount" xsi:type="array">
+													<item name="component" xsi:type="string">Amasty_Coupons/js/view/payment/discount</item>
+													<item name="children" xsi:type="array">
+														<item name="errors" xsi:type="array">
+															<item name="sortOrder" xsi:type="string">0</item>
+															<item name="component" xsi:type="string">Magento_SalesRule/js/view/payment/discount-messages</item>
+															<item name="displayArea" xsi:type="string">messages</item>
+														</item>
+													</item>
+												</item>
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                    </item>
+                                                </item> 
+                                                <item name="payment" xsi:type="array">
+                                                    <!--<item name="component" xsi:type="string">IWD_Opc/js/view/payment</item>-->
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="component" xsi:type="string">IWD_Opc/js/view/payment</item>
+                                                    </item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="renders" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!-- merge payment method renders here -->
+                                                            </item>
+                                                        </item>
+                                                        <item name="additional-payment-validators" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!-- merge payment validators here -->
+                                                                <item name="email-validator" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/email-validator</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+														<item name="customer-email" xsi:type="array">
+															<item name="config" xsi:type="array">
+																<item name="componentDisabled" xsi:type="boolean">true</item>
+															</item>
+														 </item>
+                                                        <item name="customer-email" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magenest_AbandonedCartReminder/js/view/form/element/email</item>
+                                                            <item name="displayArea" xsi:type="string">customer-email</item>
+                                                            <item name="tooltip" xsi:type="array">
+                                                                <item name="description" xsi:type="string" translate="true">We'll send your order confirmation here.</item>
+                                                            </item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="before-login-form" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                                    <item name="displayArea" xsi:type="string">before-login-form</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <!-- before login form fields -->
+                                                                    </item>
+                                                                </item>
+                                                                <item name="additional-login-form-fields" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                                    <item name="displayArea" xsi:type="string">additional-login-form-fields</item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <!-- additional login form fields -->
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="beforeMethods" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">beforeMethods</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <!-- merge additional data before payment methods here -->
+                                                            </item>
+                                                            <item name="validation" xsi:type="array">
+                                                                <item name="validate-select" xsi:type="string">true</item>
+                                                            </item>
+                                                            <!-- Value of region_id field is filtered by the value of county_id attribute -->
+                                                            <item name="filterBy" xsi:type="array">
+                                                                <item name="target" xsi:type="string">${ $.provider }:${ $.parentScope }.country_id</item>
+                                                                <item name="field" xsi:type="string">country_id</item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="payments-list" xsi:type="array">
+                                                             <item name="component" xsi:type="string">IWD_Opc/js/view/payment/list</item>
+                                                            <item name="displayArea" xsi:type="string">payment-methods-list</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="deps" xsi:type="array">
+                                                                    <item name="0" xsi:type="string">checkout.steps.billing-step.payment.renders</item>
+                                                                    <item name="1" xsi:type="string">checkout.steps.billing-step.payment.additional-payment-validators</item>
+                                                                </item>
+                                                            </item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="before-place-order" xsi:type="array">
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+
+                                                        <!-- merge your payment methods here -->
+                                                        <item name="afterMethods" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">afterMethods</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item  name="discount" xsi:type="array">
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                                    </item>
+                                                                </item>
+																
+																<item name="subscription" xsi:type="array">
+																	<item name="component"  xsi:type="string">Orange_Checkout/js/view/checkout/cart/totals/subscription</item>
+																	<item name="config" xsi:type="array">
+																		<item name="title" xsi:type="string" translate="true">À payer mensuellement</item>
+																		<item name="template" xsi:type="string">Orange_Checkout/checkout/cart/totals/subscription</item>
+																	</item>
+																</item>
+																<item name="subsidydiscount" xsi:type="array">
+																	<item name="component"  xsi:type="string">Orange_Checkout/js/view/checkout/summary/subsidy-discount</item>
+																	<item name="sortOrder" xsi:type="string">20</item>
+																	<item name="config" xsi:type="array">
+																		<item name="title" xsi:type="string" translate="true">À payer sur votre prochaine facture</item>
+																		<item name="template" xsi:type="string">Orange_Checkout/checkout/cart/totals/subsidy-discount</item>
+																	</item>
+																</item>
+                                                                <!-- merge additional data after payment methods here -->
+                                                                <item name="grand-total-item" xsi:type="array">
+                                                                    <item name="component"  xsi:type="string">IWD_Opc/js/view/grand-total-item</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="title" xsi:type="string" translate="true">Order Total</item>
+                                                                    </item>
+                                                                </item>
+																<item name="shipping" xsi:type="array">
+																	<item name="component"  xsi:type="string">IWD_Opc/js/view/summary/shipping</item>
+																	<item name="config" xsi:type="array">
+																		<item name="title" xsi:type="string" translate="true">Shipping</item>
+																		<item name="notCalculatedMessage" xsi:type="string" translate="true">Not yet calculated</item>
+																	</item>
+                                                                </item>
+                                                                <!--<item name="terms-and-conditions" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/checkout-agreements</item>
+                                                                    <item name="displayArea" xsi:type="string">before-place-order</item>
+                                                                    <item name="dataScope" xsi:type="string">checkoutAgreements</item>
+                                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                                </item> 
+																   <item name="iwd-brand-for-free" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">IWD_Opc/js/view/iwd-brand</item>
+                                                                    <item name="displayArea" xsi:type="string">before-place-order</item>
+                                                                    <item name="dataScope" xsi:type="string">checkoutAgreements</item>
+                                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                                </item> 
+                                                                <item name="additional-payment-validators" xsi:type="array">
+                                                                    <item name="children" xsi:type="array">
+                                                                        <item name="agreements-validator" xsi:type="array">
+                                                                            <item name="component" xsi:type="string">IWD_Opc/js/view/agreement-validation</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>-->
+                                                                <item name="config" xsi:type="array">
+                                                                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="before.body.end" as="before_body_end" label="Before Body End" after="-">
+            <!--<block class="Magento\GiftMessage\Block\Cart\GiftOptions" name="checkout.cart.order.actions.gift_options" template="cart/gift_options.phtml" cacheable="false"> </block>-->
+           <!-- <block class="IWD\Opc\Block\Account\Forgotpassword" name="forgotPassword" template="IWD_Opc::account/forgotpassword.phtml"> </block> -->
+            <block class="IWD\Opc\Block\Js\Components" name="jsComponents" template="IWD_Opc::js/components.phtml"> </block>
+        </referenceContainer>
+    </body>
+</page>

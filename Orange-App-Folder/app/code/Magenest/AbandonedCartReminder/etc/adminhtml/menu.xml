@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Magenest_AbandonedCartReminder:abandonedcartreminder" title="Ultimate FollowUp Emails" module="Magenest_AbandonedCartReminder" sortOrder="60" parent="Magento_Backend::marketing" resource="Magenest_AbandonedCartReminder::abandonedcartreminder"/>
+        <add id="Magenest_AbandonedCartReminder:abandonedcartreminder_mail" title="Mail Log" module="Magenest_AbandonedCartReminder" sortOrder="10" parent="Magenest_AbandonedCartReminder:abandonedcartreminder" action="abandonedcartreminder/mail/index" resource="Magenest_AbandonedCartReminder::mail"/>
+      <!--  <add id="Magenest_AbandonedCartReminder:abandonedcartreminder_sms" title="Sms Log" module="Magenest_AbandonedCartReminder" sortOrder="11" parent="Magenest_AbandonedCartReminder:abandonedcartreminder" action="abandonedcartreminder/sms/index" resource="Magenest_AbandonedCartReminder::sms"/> -->
+         <add id="Magenest_AbandonedCartReminder:abandonedcartreminder_rule" title="Rule" module="Magenest_AbandonedCartReminder" sortOrder="20" parent="Magenest_AbandonedCartReminder:abandonedcartreminder" action="abandonedcartreminder/rule/index" resource="Magenest_AbandonedCartReminder::rule"/>  
+        <add id="Magenest_AbandonedCartReminder:abandonedcartreminder_cart" title="Abandoned Carts" module="Magenest_AbandonedCartReminder" sortOrder="30" parent="Magenest_AbandonedCartReminder:abandonedcartreminder" action="abandonedcartreminder/cart/index" resource="Magenest_AbandonedCartReminder::cart"/>
+       <!-- <add id="Magenest_AbandonedCartReminder:abandonedcartreminder_birthday" title="Customer birthday" module="Magenest_AbandonedCartReminder" sortOrder="40" parent="Magenest_AbandonedCartReminder:abandonedcartreminder" action="abandonedcartreminder/birthday/index" resource="Magenest_AbandonedCartReminder::birthday"/> -->
+    </menu>
+</config>

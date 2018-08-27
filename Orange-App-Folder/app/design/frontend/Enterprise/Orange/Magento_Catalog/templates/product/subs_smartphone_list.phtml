@@ -1,0 +1,624 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+
+
+
+$_productCollection = $block->getLoadedProductCollection();
+$_productCollection->getSelect()->reset(Zend_Db_Select::ORDER);
+$customerType = $block->getCustomerTypeName();
+//$_productCollection->addAttributeToSort('subscription_amount', 'ASC');
+/* SOHO based product collection with Desc order*/
+if($customerType == 'SOHO'){
+    $_productCollection->getSelect()->order('soho_subscription_price DESC');
+}else{
+    $_productCollection->addAttributeToSort('subscription_amount', 'ASC');
+}
+/* end */
+$_productCollection->clear()->setPageSize(false)->load();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_catalogHelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$currentCategory = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+$currentId = $currentCategory->getId();
+$subsBlock = $objectManager->create('Magento\Catalog\Model\Category')->load(25);
+$mainBlock = $objectManager->create('Magento\Catalog\Model\Category')->load(12);
+//$subsBlockProudctcollection = $block->getCategoryProductCollection(25);
+$subsBlockProudctcollection = $block->getCategorySubProductCollection(25, $customerType);
+$subsBlockUrl = $subsBlock->getUrl();
+$parentCategory = $currentCategory->getParentCategory();
+$subCategories = $parentCategory->getChildrenCategories();
+$pricerange = $this->getRequest()->getParam('subsprice');
+$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$customerType = $productViewblock->getCustomerTypeName();
+$confPriceRange = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('subsidypricerange/subsidypricerange_configuration/pricerange');
+$confPriceRange = explode(",", $confPriceRange);
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+//getting current store id
+
+// Check Tealium Module output status //
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$tealiumStatus = $scopeConfig->getValue('tags/general/enabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+if($tealiumStatus){
+	$udoBlock = $block->getLayout()->createBlock('Tealium\Tags\Block\DefaultUdo');
+	$utagProductData = array();
+	$udodata = $udoBlock->getUTagData();
+}
+
+$storeCode = $storeManager->getStore()->getName();
+if($customerType == 'SOHO') {
+	if($storeCode == 'Dutch') {
+		$priceLabel = '(excl. BTW)';
+	} else {
+		$priceLabel = '(HTVA)';
+	}
+} else {
+	$priceLabel = '';
+}
+?>
+
+	<div class="main-container">
+	<div class="region region-content">
+		<section id="block-system-main" class="block block-system clearfix">
+			<article id="node-62461" class="node node-landing-page style-layer-style--blue clearfix">
+				<div class="landing-page-top-wrapper wrapper-with-image">
+					<div class="container landing-page-top quick-menu-wrapper">
+						<div class="field field-name-field-display-title field-type-text field-label-hidden margin-xs-t-n margin-sm-t-s">
+							<div class="field-items">
+								<div class="field-item even">
+									<section id="block-bean-produits-et-services-quick-menu-" class="block block-bean clearfix">
+										<div class="entity entity-bean bean-quick-menu clearfix">
+											<div class="content">
+												<div class="field field-name-field-quick-menu-body field-type-text-long field-label-hidden">
+													<div class="field-items">
+														<div class="field-item even">
+															<div>
+																<span class="quick-menu-prefix"><a href="<?php echo $parentCategory->getUrl(); ?>"><?php echo __($parentCategory->getName()); ?></a> > </span>
+																<div class="dropdown">
+																	<select class="dropdown-menu-1" onchange="javascript:location.href = this.value;">
+																		<option><?php echo __($currentCategory->getName()); ?></option>
+																		<?php
+																		foreach ($subCategories as $subCategory):
+																		    $subCategoryLoaded = $objectManager->create('Magento\Catalog\Model\Category')->load($subCategory->getId());
+																		    if ($subCategoryLoaded->getExcludesitemap()) {
+																				continue;
+																			}
+																			if ($currentCategory->getName() != $subCategory->getName()):
+																			$drupalUrl = $subCategoryLoaded->getDrupalUrl();
+																			?>
+																			<option value="<?php if($drupalUrl){echo $drupalUrl;}else{echo $subCategory->getUrl();} ?>" ><?php echo __($subCategory->getName()) ?></option >
+																			<?php
+																			endif;
+																		endforeach;
+																		?>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+									<h1 class="margin-xs-b-m"><?php echo $mainBlock->getName() ?></h1>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</section>
+	</div>
+	<div data-aw-csblock-block-name="csblock_category_before_tab"></div>
+	<div class="container gsm-list margin-xs-t-s">
+		<div class="row margin-xs-b-m">
+			<div class="col-xs-12">
+				<div class="content-collapsable no-final-border">
+
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs half-tabbed responsive" id="main-tabs" role="tablist">
+						<li role="presentation" id="tab1-head" class="active">
+							<a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">
+								<h3 class="margin-xs-b-s margin-xs-t-n margin-sm-t-s"-><?php echo __("Abonnements"); ?></h3>
+								<?php echo __($mainBlock->getDescription()); ?>
+							</a>
+						</li>
+						<li role="presentation" id="tab2-head">
+							<a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">
+								<h3 class="margin-xs-b-s margin-xs-t-n margin-sm-t-s"><?php echo __($subsBlock->getName()); ?></h3>
+								<?php echo __($subsBlock->getDescription()); ?>
+							</a>
+						</li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content responsive margin-xs-b-n">
+						<div role="tabpanel" class="tab-pane active" id="tab1">
+
+							<div class="row">
+								<div class="col-xs-12 padding-xs-v-n padding-sm-v-s">
+									<div class="well well-grey well-grey-padded padding-xs-v-s margin-xs-t-m">
+										<h5 class="font-24 margin-xs-t-m margin-xs-r-m pull-left"><?php echo __("Sélectionner votre abonnement en fonction de votre budget"); ?></h5>
+										<div class="dropdown margin-xs-t-s margin-xs-b-s">
+											<select class="dropdown-menu-1" id="pricerange" onchange="javascript:location.href = this.value;">
+												<option value="0-" ><?php echo __("Tous les plans"); ?></option>
+												<?php foreach($confPriceRange as $confprice): ?>
+												<?php $confp = explode("=", $confprice)?>
+												<option value="<?php echo $confp[0];?>" <?php if($pricerange == $confp[0]): ?> selected <?php endif; ?> ><?php echo __($confp[1]); ?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+									</div>
+								</div>
+							<?php if (!$_productCollection->count()): ?>
+							<div class="subsidy_no_cart"><div class="container">
+    <div class="message info empty" style="margin: 0px 0px 0px 0px; width: 95%;"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+	</div></div>
+	 <?php else: ?>
+								<div class="col-xs-12">
+									<?php
+									$handset_product = 0;
+									foreach ($_productCollection as $_product): ?>
+									<?php if(!$_product->getHandsetFamily()): ?>
+									<?php continue; ?>
+									<?php endif;?>
+									<?php
+										$imageType = 'category_page_list';
+
+										if($customerType == 'SOHO'):
+											$_product->load('media_gallery');
+											$productImageAttr = $_product->getCustomAttribute('soho_image');
+											if($productImageAttr):
+												$productImage = $this->helper('Magento\Catalog\Helper\Image')
+													->init($_product, 'soho_image')
+													->setImageFile($productImageAttr->getValue());
+												$subscriptionImg = $productImage->getUrl();
+											else:
+												$subscriptionImg = $block->getImage($_product, $imageType)->getImageUrl();
+											endif;
+																	$iconImage = "soho-".$_product->getAttributeText('product_icon_image');
+										else:
+											$subscriptionImg = $block->getImage($_product, $imageType)->getImageUrl();
+																	$iconImage = $_product->getAttributeText('product_icon_image');
+										endif;
+										$_handsetProduct = $block->getHandsetFamilyProduct($_product->getHandsetFamily());
+
+										if($_handsetProduct):
+										$handset_product = 1;
+											$image = $block->getImage($_handsetProduct, $imageType);
+											$colorName  = $_catalogHelper->getColorOption($_handsetProduct);
+											$productTitle = str_replace($colorName,"",$_handsetProduct->getName());
+											$alt_tag = __('Orange Belgique').' - '.$productTitle.' - '.$colorName;
+
+											$_handsetProductImg = $image->getImageUrl();
+											$_handsetProductName = $_handsetProduct->getHandsetFamily();
+											$_handsetProductPrice = $_handsetProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
+											$_bundleProductPrice = $block->getSimpleProductOfUpSellProducts($_product, $_handsetProduct->getId());
+											$_upsellProductCount = $block->getUpSellProductCount($_product);
+											$colorName  = $_catalogHelper->getColorOption($_handsetProduct);
+					                        $productTitle = str_replace($colorName,"",$_handsetProduct->getName());
+					                        $alt_tag = __('Orange Belgique').' - '.$productTitle.'- '.$colorName;
+
+
+											if($_upsellProductCount > 0){
+
+											/**** Tealium Tag Data ********/
+											if($tealiumStatus){
+												$udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($_product,'tealium_product_category'));
+												$udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($_product,'tealium_product_type'));
+												$udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($_product,'brand'));
+												$udodata['product_sku'][] = $_product->getSku();
+												$udodata['product_name'][] = strtolower($_product->getTealiumPageName());
+												$udodata['product_engagement_period'][] = $_product->getSubsidyDuration();
+												$udodata['product_monthly_price'][] = number_format($block->getSubscriptionByType($_product),2);
+												$udodata['product_unit_price'][] = "0.00";
+												$udodata['product_list_price'][] = "0.00";
+
+                        $udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($_handsetProduct,'tealium_product_category'));
+                        $udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($_handsetProduct,'tealium_product_type'));
+                        $udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($_handsetProduct,'brand'));
+												$udodata['product_sku'][] = $_handsetProduct->getSku();
+												$udodata['product_name'][] = strtolower($_handsetProduct->getTealiumPageName());
+												$udodata['product_engagement_period'][] = "";
+												$udodata['product_monthly_price'][] = 0;
+												$udodata['product_unit_price'][] = str_replace(",", "",number_format($_handsetProductPrice,2));
+												$udodata['product_list_price'][] = str_replace(",", "",number_format($_bundleProductPrice,2));
+											}
+											/*******************************/
+										?>
+
+										<div class="row black-bordered margin-xs-b-m margin-xs-h-n">
+											<div class="col-xs-12 col-sm-3 padding-xs-h-n">
+												<div class="price-box text-center">
+													<?php $subscriptionAmount = $block->getSubscriptionByType($_product); ?>
+													<h1 class="orange">
+													<?php echo $block->getOrangePricingHtml($subscriptionAmount,false,false,false,'lob new-price orange'); ?>
+													</h1>
+													<h2 class="text-center"><span><?php echo __('/mois') ?></span><span class="white soho-intermediate"><?php echo $priceLabel; ?></span></h2>
+												</div>
+											</div>
+											<div class="hidden-xs col-sm-3 padding-xs-l-m">
+												<i class="oi oi-<?php echo $iconImage; ?><?php if($customerType=='SOHO'){ echo '-pro ';} ?> font-40 padding-xs-t-s"></i>
+												<h3 class="margin-xs-t-n"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h3>
+												<?php if($customerType == 'SOHO'){ ?>
+												<p class="margin-xs-b-m"><?php if($_product->getPlanDescriptionSoho() =='') { echo $_product->getPlanDescription(); } else {echo $_product->getPlanDescriptionSoho();} ?></p>
+												<?php } else { ?>
+												<p class="margin-xs-b-m"><?php echo $_product->getPlanDescription(); ?></p>
+
+												<?php } ?>
+											</div>
+											<div class="col-xs-6 col-sm-2 padding-xs-h-n">
+												<div class="offer-phone margin-xs-t-m">
+													<img src="<?php echo $_handsetProductImg;?>" alt = "<?php echo trim($alt_tag); ?>">
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-2">
+												<div class="hidden-sm visible-xs-block">
+													<i class="oi oi-<?php echo $iconImage; ?> padding-xs-t-m padding-xs-b-s"></i>
+													<h3><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h3>
+													<p><?php echo __($_product->getPlanDescription()); ?></p>
+												</div>
+												<?php if (str_word_count($_handsetProductName)>1):?>
+													<?php $arr = explode(' ',trim($_handsetProductName));?>
+													<h3 class="margin-xs-t-s margin-sm-t-l">
+													<?php echo nl2br($arr[0]."\n".substr(strstr($_handsetProductName," "), 1));?>
+													</h3>
+												<?php else:?>
+													<h3 class="margin-xs-t-s margin-sm-t-l"><?php echo $_handsetProductName ?>
+										        <?php endif?>
+												<?php echo $block->getOrangePricingHtml($_handsetProductPrice,true,false,false,'lob old-price gray'); ?>
+												<?php echo $block->getOrangePricingHtml($_bundleProductPrice,true,true,false,'lob new-price orange'); ?>
+											</div>
+											<div class="col-xs-12 col-sm-2 padding-xs-t-s padding-sm-t-m">
+												<div class="cta-text margin-xs-t-s margin-sm-t-l">
+													<?php
+													if($_upsellProductCount == '1'):
+														echo $_upsellProductCount." ".__("modèle disponible avec cet abonnement");
+													else:
+														echo $_upsellProductCount." ". __("modèles disponibles avec cet abonnement");
+													endif;
+													?>
+												</div>
+
+												<?php
+													if ($_product->getCustomUrlVirtual()) {
+														$formattedUrl = $block->getUrl().$_product->getCustomUrlVirtual();
+													}
+													else {
+														$formattedUrl = $block->getUrl('intermediate/listing/item/id/'.$_product->getId());
+													}
+													$formattedUrl = $_catalogHelper->getFormattedUrl($formattedUrl);
+												?>
+												<a class="btn btn-primary margin-xs-v-m sub_detail_btn" href="<?php echo $formattedUrl; ?>"><?php echo __("Découvrir") ?></a>
+											</div>
+										</div>
+										<?php
+											}
+										endif; ?>
+									<?php endforeach; ?>
+								</div>
+							<?php if ($handset_product != 1): ?>
+    <div class="subsidy_no_cart"><div class="container">
+    <div class="message info empty" style="margin: 0px 0px 0px 0px; width: 95%;"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+	</div></div>	<?php endif; ?>
+								<?php endif; ?>
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="tab2">
+							<div class="row margin-xs-t-l">
+							<?php if (!$subsBlockProudctcollection->count()): ?>
+    <div class="subsidy_no_cart"><div class="container">
+    <div class="message info empty" style="margin: 0px 0px 0px 0px; width: 95%;"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+	</div></div>
+<?php else: ?>
+								<div class="col-xs-12">
+									<?php
+									$handset_product1 = 0;
+									foreach ($subsBlockProudctcollection as $_product): ?>
+									<?php if(!$_product->getHandsetFamily()): ?>
+									<?php continue; ?>
+									<?php endif;?>
+									<?php
+										$imageType = 'category_page_list';
+										if($customerType == 'SOHO'):
+											$_product->load('media_gallery');
+											$productImageAttr = $_product->getCustomAttribute('soho_image');
+											if($productImageAttr):
+												$productImage = $this->helper('Magento\Catalog\Helper\Image')
+													->init($_product, 'soho_image')
+													->setImageFile($productImageAttr->getValue());
+												$subscriptionImg = $productImage->getUrl();
+											else:
+												$subscriptionImg = $block->getImage($_product, $imageType)->getImageUrl();
+											endif;
+																	$iconImage = "soho-".$_product->getAttributeText('product_icon_image');
+										else:
+											$subscriptionImg = $block->getImage($_product, $imageType)->getImageUrl();
+																	$iconImage = $_product->getAttributeText('product_icon_image');
+										endif;
+
+										$_handsetProduct = $block->getHandsetFamilyProduct($_product->getHandsetFamily());
+
+
+
+										if($_handsetProduct):
+										$handset_product1 = 1;
+											$image = $block->getImage($_handsetProduct, $imageType);
+											$_handsetProductImg = $image->getImageUrl();
+											$_handsetProductName = $_handsetProduct->getHandsetFamily();
+											$_handsetProductPrice = $_handsetProduct->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
+											$_bundleProductPrice = $block->getSimpleProductOfUpSellProducts($_product, $_handsetProduct->getId());
+											$_upsellProductCount = $block->getUpSellProductCount($_product);
+											$colorName  = $_catalogHelper->getColorOption($_handsetProduct);
+					                        $productTitle = str_replace($colorName,"",$_handsetProduct->getName());
+					                        $alt_tag = __('Orange Belgique').' - '.$productTitle.'- '.$colorName;
+
+											if($_upsellProductCount > 0){
+
+											/**** Tealium Tag Data ********/
+											if($tealiumStatus){
+												$udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($_product,'tealium_product_category'));
+												$udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($_product,'tealium_product_type'));
+												$udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($_product,'brand'));
+												$udodata['product_sku'][] = $_product->getSku();
+												$udodata['product_name'][] = strtolower($_product->getTealiumPageName());
+												$udodata['product_engagement_period'][] = $_product->getSubsidyDuration();
+												$udodata['product_monthly_price'][] = number_format($block->getSubscriptionByType($_product),2);
+												$udodata['product_unit_price'][] = "0.00";
+												$udodata['product_list_price'][] = "0.00";
+
+												$udodata['product_category'][] = strtolower($udoBlock->getAttributesValue($_handsetProduct,'tealium_product_category'));
+												$udodata['product_type'][] = strtolower($udoBlock->getAttributesValue($_handsetProduct,'tealium_product_type'));
+												$udodata['product_brand'][] = strtolower($udoBlock->getAttributesValue($_handsetProduct,'brand'));
+												$udodata['product_sku'][] = $_handsetProduct->getSku();
+												$udodata['product_name'][] = strtolower($_handsetProduct->getTealiumPageName());
+												$udodata['product_engagement_period'][] = "";
+												$udodata['product_monthly_price'][] = 0;
+												$udodata['product_unit_price'][] = str_replace(",", "",number_format($_handsetProductPrice,2));
+												$udodata['product_list_price'][] = str_replace(",", "",number_format($_bundleProductPrice,2));
+											}
+											/*******************************/
+										?>
+										<div class="row black-bordered margin-xs-b-m margin-xs-h-n">
+											<div class="col-xs-12 col-sm-3 padding-xs-h-n">
+												<div class="price-box text-center">
+													<?php $subscriptionAmount = $block->getSubscriptionByType($_product); ?>
+													<h1 class="orange">
+													<?php echo $block->getOrangePricingHtml($subscriptionAmount,false,false,false,'lob new-price orange'); ?>
+													</h1>
+													<h2 class="text-center"><span><?php echo __('/mois') ?></span><span class="white soho-intermediate"><?php echo $priceLabel; ?></span></h2>
+												</div>
+											</div>
+											<div class="hidden-xs col-sm-3 padding-xs-l-m">
+												<i class="oi oi-<?php echo $iconImage; ?> font-40 padding-xs-t-s"></i>
+												<h3 class="margin-xs-t-n"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h3>
+												<p class="margin-xs-b-m"><?php echo __($_product->getPlanDescription()); ?></p>
+											</div>
+											<div class="col-xs-6 col-sm-2 padding-xs-h-n">
+												<div class="offer-phone margin-xs-t-m">
+													<img src="<?php echo $_handsetProductImg;?>" alt = "<?php echo trim($alt_tag); ?>">
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-2">
+												<div class="hidden-sm visible-xs-block">
+													<i class="oi oi-<?php echo $iconImage; ?> padding-xs-t-m padding-xs-b-s"></i>
+													<h3><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h3>
+													<p><?php echo __($_product->getPlanDescription()); ?></p>
+												</div>
+												<?php if (str_word_count($_handsetProductName)>1):?>
+													<?php $arr = explode(' ',trim($_handsetProductName));?>
+													<h3 class="margin-xs-t-s margin-sm-t-l">
+													<?php echo nl2br($arr[0]."\n".substr(strstr($_handsetProductName," "), 1));?>
+													</h3>
+												<?php else:?>
+													<h3 class="margin-xs-t-s margin-sm-t-l"><?php echo $_handsetProductName ?>
+										        <?php endif?>
+												<?php echo $block->getOrangePricingHtml($_handsetProductPrice,true,false,false,'lob old-price gray'); ?>
+												<?php echo $block->getOrangePricingHtml($_bundleProductPrice,true,true,false,'lob new-price orange'); ?>
+											</div>
+											<div class="col-xs-12 col-sm-2 padding-xs-t-s padding-sm-t-m">
+												<div class="cta-text margin-xs-t-s margin-sm-t-l">
+													<?php
+													if($_upsellProductCount == '1'):
+														echo $_upsellProductCount." ".__("modèle disponible avec cet abonnement");
+													else:
+														echo $_upsellProductCount." ". __("modèles disponibles avec cet abonnement");
+													endif;
+													?>
+												</div>
+												<?php
+													if ($_product->getCustomUrlVirtual()) {
+														$formattedUrl = $block->getUrl().$_product->getCustomUrlVirtual();
+													}
+													else {
+														$formattedUrl = $block->getUrl('intermediate/listing/item/id/'.$_product->getId());
+													}
+													$formattedUrl = $_catalogHelper->getFormattedUrl($formattedUrl);
+
+												?>
+												<a class="btn btn-primary margin-xs-v-m sub_detail_btn" href="<?php echo $formattedUrl; ?>"><?php echo __("Découvrir") ?></a>
+											</div>
+										</div>
+										<?php
+											}
+										endif; ?>
+									<?php endforeach; ?>
+								</div>
+								<?php if ($handset_product1 != 1): ?>
+    <div class="subsidy_no_cart"><div class="container">
+    <div class="message info empty" style="margin: 0px 0px 0px 0px; width: 95%;"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+	</div></div>	<?php endif; ?>
+								<?php endif; ?>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('all-our-plans')->toHtml();?>
+	<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('order_online')->toHtml();?>
+</div>
+
+<script>
+var reqprice='<?php  echo $pricerange; ?>';
+  (function($) {
+    fakewaffle.responsiveTabs(['xs', 'sm']);
+  }
+  )(jQuery);
+  require(['jquery','Magento_Catalog/js/tab'], function($) {
+    $(window).load(function() {
+	 if(reqprice!=""){
+	    jQuery('#head-collapse-tab1 h4.panel-title').trigger('click');
+		jQuery('#head-collapse-tab1 h4.panel-title').addClass('open');
+		jQuery('#head-collapse-tab1 .panel-collapse').addClass('open');
+	 }else{
+	   jQuery('#head-collapse-tab1 h4.panel-title').addClass('closed');
+	   jQuery('#head-collapse-tab1 .panel-collapse').addClass('closed');
+
+	 }
+	 /*var deviceAgent = navigator.userAgent.toLowerCase();
+     var agentID = deviceAgent.match(/(iPad|iPhone|iPod)/i);
+     if(agentID==null){
+        jQuery('#head-collapse-tab1').find('h4.panel-title').addClass('open');
+	 }else{
+       jQuery('#head-collapse-tab1').find('h4.panel-title').addClass('open');
+	 }*/
+
+	});
+      jQuery('.panel-heading').on('click',function(e){
+	   jQuery(this).find('h4.panel-title').toggleClass('open');
+        $(this).next(".panel-collapse").slideToggle('fast').toggleClass('open');
+
+        e.preventDefault();
+        e.stopPropagation();
+      }) ;
+
+		$('#pricerange').change(function () {
+			var pricerange = $(this).val();
+			var params = "?subsprice=" + pricerange;
+			window.location.href = params;
+		});
+
+		function getParameter(theParameter) {
+			var params = window.location.search.substr(1).split('&');
+
+			for (var i = 0; i < params.length; i++) {
+				var p=params[i].split('=');
+				if (p[0] == theParameter) {
+					return decodeURIComponent(p[1]);
+				}
+			}
+			return false;
+		}
+		$(document).ready(function() {
+			$('#head-collapse-tab1').click(function() {
+				window.location.hash='<?php echo strtolower(__("Abonnements")); ?>';
+			});
+			$('#head-collapse-tab2').click(function() {
+				window.location.hash='<?php echo strtolower(str_replace(' ', '-', __($subsBlock->getName()))); ?>';
+			});
+			$('#tab1-head').click(function() {
+				window.location.hash='<?php echo strtolower(__("Abonnements")); ?>';
+			});
+			$('#tab2-head').click(function() {
+				window.location.hash='<?php echo strtolower(str_replace(' ', '-', __($subsBlock->getName()))); ?>';
+			});
+			if(window.location.hash.indexOf("<?php echo strtolower(str_replace(' ', '-', __($subsBlock->getName()))); ?>") > -1) {
+				$("#tab1-head").removeClass("active");
+				$("#tab1").removeClass("active");
+				$("#tab2-head").addClass("active");
+				$("#tab2").addClass("active");
+				$("#collapse-tab2").show();
+				$("#collapse-tab1").hide();
+			} else if(window.location.hash.indexOf("<?php echo strtolower(__("Abonnements")); ?>") > -1) {
+				$("#tab1-head").addClass("active");
+				$("#tab1").addClass("active");
+				$("#tab2-head").removeClass("active");
+				$("#tab2").removeClass("active");
+				$("#collapse-tab1").show();
+				$("#collapse-tab2").hide();
+			} else {
+				$("#tab1-head").addClass("active");
+				$("#tab1").addClass("active");
+				$("#tab2-head").removeClass("active");
+				$("#tab2").removeClass("active");
+				$("#collapse-tab1").hide();
+			}
+		});
+
+		//Filter select on browser using back button
+		var subsPrice = getParameter('subsprice');
+		if(subsPrice) {
+			$('#pricerange').val(subsPrice);
+		}
+		else {
+			$('#pricerange').val('0-');
+		}
+
+
+
+		(function($,window,document,undefined){
+
+				var boxes = $('.js-matchBoxHeight');
+				//console.log(boxes)
+				var length = boxes.length;
+
+				function doMatchHeights(){
+					var i = 0;
+					while ( i < length) {
+						var list = [];
+						var mybox = $(boxes[i])
+						var top = mybox.offset().top;
+						var height = 0;
+
+						do{
+							list.push(boxes[i]);
+							$(boxes[i]).css('min-height','0');
+							var myHeight = $(boxes[i]).outerHeight();
+							height = (height > myHeight)? height : myHeight;
+							i++;
+						}
+						while(i < length && top === $(boxes[i]).offset().top);
+
+						if(list.length > 1){
+							for(var j=0;j < list.length;j++){
+								var thisBox = $(list[j]),
+										paddingDiff = thisBox.outerHeight() - thisBox.height();
+								//console.log(thisBox,paddingDiff,height)
+								thisBox.css({
+														"-webkit-box-sizing": "content-box",
+														"-moz-box-sizing": "content-box",
+														"box-sizing": "content-box",
+														"min-height": height - paddingDiff
+														});
+							}
+						}
+					};
+				}
+				//setInterval(doMatchHeights,1000);
+
+				doMatchHeights();
+				return boxes;
+
+
+		})(jQuery,window,document);
+
+	});
+	<?php if($tealiumStatus){ ?>
+	// Tealium Data Call for Landing Page //
+	var utag_data = <?php echo str_replace("\n", "\n    ", json_encode($udodata, JSON_PRETTY_PRINT)); ?>;
+	<?php } ?>
+
+</script>

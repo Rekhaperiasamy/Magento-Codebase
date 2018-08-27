@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Orange\CouponReport\Model\Resource\Coupons\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">orange_coupon_report</argument>
+            <argument name="eventPrefix" xsi:type="string">orange_couponreport_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">orange_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Orange\CouponReport\Model\Resource\Coupons</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="couponreport_coupons_data_source" xsi:type="string">Orange\CouponReport\Model\Resource\Coupons\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="couponimport" xsi:type="object">Orange\CouponReport\Model\Importcoupons</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

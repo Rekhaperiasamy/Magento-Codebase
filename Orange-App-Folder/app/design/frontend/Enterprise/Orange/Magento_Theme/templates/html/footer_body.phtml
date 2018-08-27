@@ -1,0 +1,17 @@
+<?php
+
+$helper = $this->helper('Orange\Upload\Helper\Data')->storeInfo();
+$storeCode = $helper->getStore()->getCode();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerGroupName = $objectManager->create('Orange\Customer\Model\Session')->getCustomerTypeName();
+$identifier ='';
+if($storeCode == 'nl' && $customerGroupName == 'B2C') {
+	$identifier = "footer_static_" . $storeCode;
+} else if($storeCode == 'fr' && $customerGroupName == 'B2C') {
+	$identifier = "footer_static_" . $storeCode;
+} else if($storeCode == 'nl' && $customerGroupName == 'SOHO') {
+	$identifier = "footer_static_" . $storeCode . "_soho";
+} else if($storeCode == 'fr' && $customerGroupName == 'SOHO') {
+	$identifier = "footer_static_" . $storeCode . "_soho";
+}
+echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($identifier)->toHtml();

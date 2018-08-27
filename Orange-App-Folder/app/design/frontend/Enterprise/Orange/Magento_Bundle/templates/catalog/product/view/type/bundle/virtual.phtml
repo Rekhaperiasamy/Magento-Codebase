@@ -1,0 +1,45 @@
+<?php
+$currentProductId = $this->getProduct()->getId();
+$virtualData = $this->helper('Orange\Bundle\Helper\Data')->VirtualProductInfo($currentProductId);
+$checkoutSession = $this->helper('Orange\Bundle\Helper\Data')->SessionInt();
+$customerGroup = $this->helper('Orange\Bundle\Helper\Data')->getCustomerTypeName();
+$checkoutSession->setVirtualProductId($currentProductId);
+
+$data = $this->helper('Orange\Bundle\Helper\Data')->productDetails($virtualData['entity_id']);
+if($customerGroup == 'SOHO')
+{
+	$checkoutSession->setVirtualProductMonthlyPrice($data['subscription_amount']);
+	$imageType = 'intermediate_thumbnail';
+	$data->load('media_gallery');
+	$productImageAttr = $data->getCustomAttribute('soho_image');
+	if($productImageAttr):
+		$productImage = $this->helper('Magento\Catalog\Helper\Image')
+			->init($data, $imageType)
+			->setImageFile($productImageAttr->getValue());					
+		$subscriptionImg = $productImage->getUrl();
+	else:
+		$subscriptionImg = $block->getImage($data,'intermediate_other_thumbnail')->getImageUrl();
+	endif;
+}
+else
+{
+	$checkoutSession->setVirtualProductMonthlyPrice($data['subscription_amount']);
+	$subscriptionImg = $block->getImage($data,'intermediate_other_thumbnail')->getImageUrl();
+}
+$checkoutSession->setVirtualProductName($data['name']);
+?>
+<!--<div class="row">
+    <div class="col-xs-12 col-sm-12 price-box">
+        <h2><i class="oi"><img src="<?php echo $subscriptionImg ?>"/></i><?php echo $data->getName(); ?></h2>
+    </div>
+</div>
+<div class="row grey-bordered">
+	<div class="col-xs-12 col-sm-12 padding-xs-h-m">
+<?php echo $data->getDescription(); ?>
+	</div>
+</div>-->
+
+
+
+
+

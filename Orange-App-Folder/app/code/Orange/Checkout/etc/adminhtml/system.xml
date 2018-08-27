@@ -1,0 +1,448 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Location: magento2_root/app/code/Vendorname/Extensionname/etc/adminhtml/system.xml
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system> <section id="cancel_order_test" 
+            translate="label" 
+            type="text" 
+            sortOrder="1" 
+            showInDefault="1" 
+            showInWebsite="1" 
+            showInStore="1">
+            <label>Cancel Orders Cron</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::config</resource>
+            <group id="test" 
+            translate="label" 
+            type="text" 
+            sortOrder="1" 
+            showInDefault="1" 
+            showInWebsite="1" 
+            showInStore="1">
+                <label>Source model test</label>
+                <field id="yesno_source_model" 
+                    translate="label" 
+                    type="select" 
+                    sortOrder="1" 
+                    showInDefault="1" 
+                    showInWebsite="1" 
+                    showInStore="1">
+                    <label>Yes/no source model</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+		<section id="cancelcrontime" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Cancel Cron Time</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::cancelcrontime</resource>
+            <group id="cancelcrontime_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cancel Cron Time</label>
+                <field id="crontime" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron Time</label>
+                </field>
+            </group>
+        </section>
+		<section id="subsidypricerange" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Subsidy Price Filter</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::subsidypricerange</resource>
+            <group id="subsidypricerange_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Subsidy Price Filter</label>
+                <field id="pricerange" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Range</label>
+                </field>
+            </group>
+        </section>
+        <section id="subsidy" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Subsidy Device Amount</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::subsidydiscount</resource>
+            <group id="subsidy_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Subsidy</label>
+                <field id="amount_subsidy" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Subsidy Device Amount B2C</label>
+                </field>
+				<field id="amount_subsidy_soho" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Subsidy Device Amount SOHO</label>
+                </field>
+            </group>
+        </section>
+		<section id="soho" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Soho Discount Amount (VAT)</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::sohodiscount</resource>
+            <group id="soho_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Soho Discount</label>
+                <field id="soho_discount" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Soho Discount Amount (VAT %)</label>
+                </field>
+            </group>
+        </section>
+		<section id="customerzone" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Postpaid Customer Zone</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::customerzone</resource>
+            <group id="customerzone_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Zone</label>
+                <field id="customerzone_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Zone URL</label>
+                </field>
+            </group>
+        </section>
+		  <section id="simcard_sku" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Onepage Simcard Sku</label>
+            <tab>orange</tab>
+            <resource>Orange_Checkout::simcardsku</resource>
+            <group id="simcardsku_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Simcard SKU</label>
+                <field id="simcardsku_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Simcard SKU</label>
+                </field>
+            </group>
+        </section>
+		<section id="payment">
+		
+			<group id="ogonecw_mastercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_creditcard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_acceptgiro" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_airplus" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_americanexpress" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_aurore" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_cartebleue" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_cofinoga" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_dankort" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_diners" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_discovercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_jcb" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="110" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_lasercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="120" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_maestrouk" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="130" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_solocard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="140" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_uatp" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_visa" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_bcmc" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_uneurocom" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_maestro" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_postfinancecard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_amazoncheckout" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_belfiusdirectnet" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="220" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_cashticket" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="230" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_cbconline" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="240" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_centeaonline" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="250" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_edankort" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="260" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_eps" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="270" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_fidorpay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="280" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_giropay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="290" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_ideal" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="300" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_inghomepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="310" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_kbconline" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="320" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_mpass" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="330" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_paysafecard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="340" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_postfinanceefinance" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="350" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_directdebits" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="360" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_intersolve" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="370" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_pingping" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="380" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_tunz" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="390" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_cashuprepaid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="400" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_paypal" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="410" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_directebanking" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="420" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_openinvoice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="430" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_masterpass" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="440" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_banktransfer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="450" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_instalmentinvoice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="460" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+			<group id="ogonecw_threexcb" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="470" translate="label">
+				<field id="payment_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="31" translate="label" type="select">
+					<label><![CDATA[Select Payment Type]]></label>
+					<source_model>Orange\Checkout\Model\Config\Source\Paymenttype</source_model>
+					<comment><![CDATA[Select Payment type to categorize in frontend]]></comment> 
+				</field>
+			</group>
+		</section>
+                
+	</system>
+</config>

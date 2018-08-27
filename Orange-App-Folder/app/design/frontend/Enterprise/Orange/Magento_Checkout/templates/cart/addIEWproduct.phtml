@@ -1,0 +1,23 @@
+<form enctype="multipart/form-data" id="add_iew_subscription" name="add_iew_subscription" method="get" action="<?php echo $block->getUrl('customcatalog/cart/add'); ?>">    
+    <label class="label" data-validate="{required:true}"> Enter SKU: </label>
+    <input type="text" name="sku" id="sku" class="sku_data"data-validate="{required:true}"><br>
+
+    <input class="action-default scalable task" type="submit" value="submit"/>
+</form>
+
+
+
+<script type="text/x-magento-init">
+    {
+    "#add_iew_subscription": { "validation": {}
+    }
+    }
+</script>
+
+<style>
+    .sku_data{
+        width: 20% !important;
+    }
+
+</style>
+

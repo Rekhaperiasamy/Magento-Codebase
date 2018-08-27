@@ -1,0 +1,426 @@
+<?php
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
+$totalQty = $block->getQty();
+$_item = $block->getItem();
+$childrenItems = $_item->getChildren();
+foreach ($childrenItems as $childrenItem):
+    if ($childrenItem->getProductType() == 'virtual'):
+        $quoteSubscriptionAmount = $childrenItem->getOriSubscriptionAmount();
+    endif;
+endforeach;
+$product = $_item->getProduct();
+$TypeId = $product->getTypeId();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+$blockObj = $block->getLayout()->createBlock('Orange\Crossellorange\Block\Crossellorange');
+$crosSellCollection = $_item->getProduct()->getCrossSellProductCollection();
+$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+$priceLabel = $productViewblock->getPriceLabel();
+$customerType = $productViewblock->getCustomerTypeName();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+if($customerType == 'SOHO'):
+	$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy_soho', $storeScope);
+else:
+	$discountFullTotalPrice = $scopeConfig->getValue('subsidy/subsidy_configuration/amount_subsidy', $storeScope);
+endif;
+$storeCode   = $storeManager->getStore()->getCode();
+$spaceColon = ":";
+if ($storeCode == "fr") {
+	$spaceColon = " :";
+}
+/** Get cart item collection */
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$items = $cart->getQuote()->getAllVisibleItems();
+
+/** total Qty based on Attribute set ID */
+$attr = array();
+foreach($items as $item):
+$attributeSetid = $item->getProduct()->getAttributeSetId();
+$productType = $item->getProduct()->getTypeId();
+   if($productType=="bundle"):
+    foreach ($item->getChildren() as $childrenItem):
+	   $childAttributesetId = $childrenItem->getProduct()->getAttributeSetId();
+      if (($childrenItem->getProductType() == 'virtual')&&($childAttributesetId==11)):
+			 $attributeSetid = 17; 
+			 if (array_key_exists($attributeSetid, $attr)) {
+				 $attr[$attributeSetid] = $attr[$attributeSetid] + $item->getQty(); 
+				 }
+			  else{
+				  $attr[$attributeSetid] = $item->getQty();
+				  }
+	  elseif (($childrenItem->getProductType() == 'virtual')&&($childAttributesetId==15)):
+		       $attributeSetid = 16;
+			   if (array_key_exists($attributeSetid, $attr)){
+				 $attr[$attributeSetid] = $attr[$attributeSetid] + $item->getQty();
+				 }
+			   else{
+				  $attr[$attributeSetid] = $item->getQty();				  
+				}				  
+	 endif;
+    endforeach;
+
+	else:
+		if (array_key_exists($attributeSetid, $attr)) {
+			$attr[$attributeSetid] = $attr[$attributeSetid] + $item->getQty();
+		}
+		else{
+			$attr[$attributeSetid] = $item->getQty();
+		}
+   endif;
+endforeach;
+
+$attributesetId = $product->getAttributeSetId();
+if($TypeId=="bundle"):
+	foreach ($childrenItems as $childrenItem):
+	   $childAttributesetId = $childrenItem->getProduct()->getAttributeSetId();
+		   if (($childrenItem->getProductType() == 'virtual')&&($childAttributesetId==11)):
+		     $attributesetId = 17;
+			 $collections = $objectManager->create('Orange\Limitqty\Model\Limitqty')->getCollection()->addFieldToFilter('customer_group',17)->getFirstItem();
+			 $qty = $collections->getLimitquantity();
+			 $totalCadycount = $attr[$attributesetId];
+		   elseif (($childrenItem->getProductType() == 'virtual')&&($childAttributesetId==15)):
+		     $attributesetId = 16;
+			 $collections = $objectManager->create('Orange\Limitqty\Model\Limitqty')->getCollection()->addFieldToFilter('customer_group',16)->getFirstItem();
+			 $qty = $collections->getLimitquantity();
+			 $totalCadycount = $attr[$attributesetId];
+		   endif;
+	  endforeach;	
+else:
+$collections = $objectManager->create('Orange\Limitqty\Model\Limitqty')->getCollection()->addFieldToFilter('customer_group',$attributesetId)->getFirstItem();
+$qty = $collections->getLimitquantity();
+$totalCadycount = $attr[$attributesetId];
+endif;
+
+$qtyerror = '';
+if($qty=="")
+{
+$qtyerror = '';
+}
+$limittotalQty = ($totalQty * 1) + 11;
+?>
+<?php /* @escapeNotVerified */echo $block->getActions($_item) ?>
+<div class="row quantity-box-1">
+<input type="hidden" class="qty-value-error" name="" value="<?php echo $qtyerror; ?>" >
+<input type="hidden" id ='qty-<?php echo $_item->getId() ?>' name="cart[<?php echo $_item->getId(); ?>][qty]" value="<?php echo $totalQty; ?>" >
+<div class="col-xs-12 col-md-2 quantity-box-2 hidden-xs hidden-sm">
+	<div class="grey-background">
+		<small class="quantity-label"><?php echo __("Quantité").$spaceColon; ?></small>
+		<?php /* ?><div class="dropdown">
+			<a class="btn btn-default dropdown-toggle padding-xs-h-s" data-toggle="dropdown" id="dropdownMenu2" type="button">
+				<?php echo $totalQty;?> <i class="oi oi-arrow_down"></i>
+			</a>
+			<ul aria-labelledby="dropdownMenu2" class="dropdown-menu">
+				<li><a href="">2</a></li>
+				<li><a href="">3</a></li>
+				<li><a href="">4</a></li>
+				<li><a href="">5</a></li>
+			</ul>
+		</div><?php */ ?>
+		<select id="<?php echo $_item->getId() ?>" name="qty" class="update-qty-cart dropdown-menu-1">
+				<?php for($i=1;$i<$limittotalQty;$i++){ ?>
+					<option value="<?php echo $i; ?>" <?php if ($i == $totalQty){ echo "selected"; } ?> ><?php echo $i; ?></option>
+				<?php } ?>
+			</select>
+	</div>
+</div>
+<div class="col-xs-12 col-md-10 quantity-box-3">
+<div class="row">
+    <div class="col-xs-12 col-md-7">
+        <h2 class="pull-left margin-xs-v-n margin-xs-t-s margin-xs-r-s">
+            <?php if ($TypeId != 'bundle') { 
+               $_productIcon = $objectManager->get('Magento\Catalog\Model\Product')->load($product->getId()); ?>
+               <?php if ($customerType == 'SOHO') :
+			   $prodImage = "soho-" .$_productIcon->getAttributeText('product_icon_image');
+			   ?>
+			   <?php else:
+			   $prodImage = $_productIcon->getAttributeText('product_icon_image');
+			   ?>  
+               <?php endif;?>
+   			   <p class="oi oi-<?php echo $prodImage; ?>"></p>
+            <?php } else { ?>
+                <?php $bundleSimpleImage = $block->getLayout()->createBlock('Orange\Crossellorange\Block\Crossellorange');
+                $crossChildren = $bundleSimpleImage->getVirtualChildrenProduct($product);
+                ?>
+                <?php foreach ($crossChildren as $childs) { ?>
+                    <?php
+                    $imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+                    if ($customerType == 'SOHO') {
+                        $childs->load('media_gallery');
+                        $productImageAttr = $childs->getCustomAttribute('soho_image');
+                        if ($productImageAttr):
+                            $productImage = $this->helper('Magento\Catalog\Helper\Image')
+                                    ->init($childs, 'soho_image')
+                                    ->setImageFile($productImageAttr->getValue());
+
+                            $bundleSimpleImage = $productImage->getUrl();
+                        else:
+                            $bundleSimpleImage = $imageBlock->getImage($childs, 'cart_page_product_thumbnail')->getImageUrl();
+                        endif;
+                        $iconImage = "soho-" . $childs->getAttributeText('product_icon_image');
+                    }
+                    else {
+                        $iconImage = $childs->getAttributeText('product_icon_image');
+                        $bundleSimpleImage = $imageBlock->getImage($childs, 'cart_page_product_thumbnail')->getImageUrl();
+                    }
+                    //$bundleSimpleImage = $imageBlock->getImage($childs, 'cart_page_product_thumbnail'); 
+                    ?>
+                    <?php //echo $bundleSimpleImage->toHtml()  ?>
+                    <p class="oi oi-<?php echo $iconImage; ?>"></p> 
+                <?php } ?>
+        <?php } ?>
+        </h2>                    
+        <?php if ($block->hasProductUrl()): ?>
+            <?php $_product = $objectManager->get('Magento\Catalog\Model\Product')->load($product->getId()); ?>
+			<?php if ($customerType == 'SOHO'): ?>
+                <?php $description = $_product->getShortDescriptionSoho();
+					if($description ==''){
+						$description = $_product->getShortDescription(); 
+					}
+				?>
+			<?php else: ?>
+                <?php $description = $_product->getShortDescription(); ?>
+			<?php endif; ?>
+    <?php if ($TypeId != 'bundle'): ?>
+	         <?php $om =   \Magento\Framework\App\ObjectManager::getInstance();
+               $pdata = $om->create('Magento\Catalog\Model\Product')->load($_product->getId()); ?>
+                <h4 <?php if($description==''):?>class="caddy-subscription"<?php else: ?> class="caddy-subscription"<?php endif;?>>
+                   <div class="head_desc"> <?php echo $block->escapeHtml($pdata->getName()) ?></div>
+                    <div class="short-desc">
+                        <?php if ($customerType == 'SOHO'): ?>
+                            <?php 
+							if($pdata->getShortDescriptionSoho() ==''){
+								echo $pdata->getShortDescription();
+							} else {
+								echo $pdata->getShortDescriptionSoho();
+							}
+							?>
+                        <?php else: ?>
+                            <?php echo $pdata->getShortDescription(); ?>
+        <?php endif; ?>
+                    </div>	
+                </h4>		
+            <?php else: ?>
+                <?php $bundleVirtualChildName = $block->getLayout()->createBlock('Orange\Crossellorange\Block\Crossellorange');
+                $virtualChildren = $bundleVirtualChildName->getVirtualChildrenProduct($product);
+                ?>
+        <?php foreach ($virtualChildren as $vChilds): ?>
+				<?php if ($customerType == 'SOHO'): ?>
+                <?php $description = $vChilds->getShortDescriptionSoho();
+					if($description =='') {
+						$description = $vChilds->getShortDescription();
+					}
+				?>
+				<?php else: ?>
+                <?php $description = $vChilds->getShortDescription(); ?>
+				<?php endif; ?>
+                    <h4 <?php if($description==''):?>class="caddy-subscription" <?php else: ?> class="caddy-subscription"<?php endif;?>>
+                       <div class="head_desc"> <?php echo $block->escapeHtml($vChilds->getName()); ?></div>
+                        <div class="short-desc">
+                            <?php if ($customerType == 'SOHO'): ?>
+                                <?php 
+								if($vChilds->getShortDescriptionSoho() ==''){
+									echo $vChilds->getShortDescription();
+								} else {
+									echo $vChilds->getShortDescriptionSoho();
+								}
+								?>
+                            <?php else: ?>
+                <?php echo $vChilds->getShortDescription(); ?>
+                    <?php endif; ?>
+                        </div>
+                    </h4>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            <?php else: ?>
+				<?php if ($customerType == 'SOHO'): ?>
+                <?php $description = $_product->getShortDescriptionSoho();
+					if($description =='') {
+						$description = $_product->getShortDescription();
+					}
+				?>
+				<?php else: ?>
+                <?php $description = $_product->getShortDescription(); ?>
+				<?php endif; ?>
+            <h4 <?php if($description==''):?>class="caddy-subscription"<?php else: ?>class="caddy-subscription"<?php endif;?>>
+               <div class="head_desc">     <?php echo $block->escapeHtml($block->getProductName()) ?></div>
+                <div class="short-desc">						
+                    <?php if ($customerType == 'SOHO'): ?>
+                        <?php
+							if($_product->getShortDescriptionSoho() =='') {
+								echo $_product->getShortDescription();
+							} else {
+								echo $_product->getShortDescriptionSoho();
+							}
+						 ?>
+                    <?php else: ?>
+        <?php echo $_product->getShortDescription(); ?>
+            <?php endif; ?>
+                </div>	
+            </h4>
+<?php endif; ?>                                
+        <div class="clear"></div>
+    </div>
+    <div class="col-xs-12 col-md-5 padding-xs-b-s">
+	    <?php $attributeSetid = $_item->getProduct()->getAttributeSetId();?>
+        <span class="new-price orange line-100percent">
+            <?php if ($TypeId == 'virtual'): ?>
+                <?php
+                $_product = $objectManager->get('Magento\Catalog\Model\Product')->load($product->getId());
+                $virtualProPrice = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_item->getOriSubscriptionAmount(), true, false);
+                //echo $block->escapeHtml($virtualProPrice);
+                echo $productViewblock->getOrangePricingHtml($_item->getOriSubscriptionAmount(), true, true, true, 'caddy caddy-pricee new-price orange');
+                ?>
+            <?php elseif (($TypeId != 'bundle')&&($attributeSetid!=14)):?>
+				<?php echo $productViewblock->getOrangePricingHtml($_item->getPrice(), true, true, false, 'caddy caddy-pricee new-price orange');?>
+            
+			<?php elseif (($TypeId != 'bundle')&&($attributeSetid==14)):?>
+				<?php echo $productViewblock->getOrangePricingHtml($_item->getPrice(), true, true, false, 'caddy caddy-pricee new-price orange simcard-cnt');?>
+			<?php else:?>
+                <?php foreach ($virtualChildren as $vChilds) : ?>
+                    <?php $virtualProPrice = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quoteSubscriptionAmount, true, false); ?>                                               											   
+                    <?php echo $productViewblock->getOrangePricingHtml($quoteSubscriptionAmount, true, true, true, 'caddy caddy-pricee new-price orange'); ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </span>												
+    </div>
+    <div class="clear"></div>
+</div>
+
+<?php if ($TypeId == 'simple' and count($crosSellCollection) > 0): ?>
+    <div class="row">
+        <div class="col-xs-12 padding-xs-b-s">
+            <p> <?php echo $block->escapeHtml(__('Besoin accessoires pour vous?')); ?></p>
+        </div>
+    <?php
+    foreach ($crosSellCollection as $crossItems):
+        $sku = $crossItems->getSku();
+		$product = $objectManager->get('Magento\Catalog\Model\Product')->load($crossItems->getId());
+		$productIcon = $product->getAttributeText('product_icon_image');
+        $procollect = $blockObj->crossCollection($sku);
+        $imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+        ?>
+            <div class="col-xs-12 col-md-7">
+                <div class="pull-left margin-xs-r-s">
+                    <a href="<?php echo $procollect->getProductUrl(); ?>">
+						<h2 class="pull-left margin-xs-v-n"><p class="oi oi-<?php echo $productIcon; ?>"></p></h2>
+					</a>
+                </div>
+                <a href="<?php echo $procollect->getProductUrl() ?>"><?php echo $block->escapeHtml($procollect->getName()); ?></a>
+                <div class="clear margin-xs-b-m"></div>
+            </div>
+            <div class="col-xs-12 col-md-5 text-right padding-xs-t-s">
+                <h3>
+                    <?php
+                    $price = $procollect->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
+                    echo $productViewblock->getOrangePricingHtml($price, true, true, false, 'caddy caddy-pricee new-price orange upsell-price');
+                    //$cPrice = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($price, true, false);
+                    //echo $block->escapeHtml($cPrice); 
+                    ?>
+                </h3>														
+            </div>
+    <?php endforeach; ?>
+	
+    </div>
+    <?php
+    $accessoryCategory = $productViewblock->getAccessoryCategory();
+    ?>
+    <?php if ($accessoryCategory): ?>
+        <button type="button" class="btn btn-default" onclick="window.location.href = '<?php echo $accessoryCategory->getUrl(); ?>'">
+        <?php echo __('Tous les accessoires'); ?>
+        </button>
+    <?php endif; ?>												
+<?php endif; ?>
+<?php if ($TypeId == 'bundle'): ?>
+    <div class="separator">
+        <div class="plus-box-grey">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="row">                                                        
+        <?php
+        $bundleBlock = $block->getLayout()->createBlock('Orange\Crossellorange\Block\Crossellorange');
+        $children = $bundleBlock->getChildrenProduct($product);
+        ?>                                                            
+        <?php foreach ($children as $childs): ?>
+            <?php
+            $producImageUrl = $block->getUrl('pub/media/catalog') . 'product' . $childs->getImage();
+            $imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+            $productImage = $imageBlock->getImage($childs, 'cart_page_product_thumbnail');
+            $iconImage = $childs->getAttributeText('product_icon_image');
+            ?>
+			<?php if ($customerType == 'SOHO'): ?>
+			<?php $description = $childs->getShortDescriptionSoho();
+				if($description =='') {
+					$description = $childs->getShortDescription();
+				}
+			?>
+			<?php else: ?>
+			<?php $description = $childs->getShortDescription(); ?>
+			<?php endif; ?>
+            <div class="col-xs-12 col-md-7">
+                <h2 class="pull-left margin-xs-v-n margin-xs-t-s margin-xs-r-s">
+                    <p class="oi oi-<?php echo $iconImage; ?>"></p></h2>
+                <h4 <?php if($description==''):?>class="caddy-subscription"<?php else: ?> class="caddy-subscription" <?php endif;?>>
+				<div class="head_desc">
+                    <?php echo $block->escapeHtml($childs->getName()); ?></div>
+                    <?php if(($childs->getShortDescriptionSoho() != '') || ($childs->getShortDescription() != '')){ ?>
+                        <div class="short-desc">																	
+                            <?php if ($customerType == 'SOHO'): ?>
+                                <?php 
+								if($childs->getShortDescriptionSoho() ==''){
+									echo $childs->getShortDescription();
+								} else {
+									echo $childs->getShortDescriptionSoho();
+								}
+								?>
+                            <?php else: ?>
+                                <?php echo $childs->getShortDescription(); ?>
+                            <?php endif; ?>
+                        </div>	
+                    <?php } ?>
+                </h4>																																
+                <div class="clear"></div>
+            </div>
+            <div class="col-xs-12 col-md-5 padding-xs-b-s">
+                <span class="new-price orange line-100percent">																																
+				<?php if($_item->getCustomPrice()): ?>
+				<?php echo $productViewblock->getOrangePricingHtml($_item->getCustomPrice(), true, true, false, 'caddy caddy-pricee new-price orange'); ?>
+				<?php else: ?>
+				<?php echo $productViewblock->getOrangePricingHtml($_item->getPrice(), true, true, false, 'caddy caddy-pricee new-price orange'); ?>
+				<?php endif; ?>
+                </span>	
+               <?php if($item->getPrice() < $discountFullTotalPrice): ?>
+				<div class="short-descc"><p><?php echo __('à payer sur votre première facture') ?></p></div>
+			<?php endif; ?>				
+            </div>
+    <?php endforeach; ?>
+        <div class="clear"></div>
+		
+    </div>
+<?php endif; ?>
+</div>
+
+	<div class="col-xs-12 quantity-box-2 hidden-md">
+		<div class="grey-background margin-xs-b-n margin-xs-t-s">
+		<small class="quantity-label"><?php echo __("Quantité").$spaceColon; ?></small>
+			<select id="<?php echo $_item->getId() ?>" name="qty" class="update-qty-cart dropdown-menu-1">
+			<?php for($i=1;$i<$limittotalQty;$i++){ ?>
+			<option value="<?php echo $i; ?>" <?php if ($i == $totalQty){ echo "selected"; } ?> ><?php echo $i; ?></option>
+			<?php } ?>
+			</select>
+		</div>
+	</div>
+
+</div>
+<?php if(($qty!="")&&($totalCadycount > $qty)):?>
+<div id="<?php echo $collections->getProductType(); ?>" class="cart-message margin-xs-t-m margin-xs-l-m padding-xs-b-m" style="display:none;"><?php echo __($collections->getErrormessage());?></div>
+<?php $qtyerror = 1;?>
+<?php endif; ?>
+<input type="hidden" class="qty-value-error qty-value-update" name="" value="<?php echo $qtyerror; ?>" >
+<input type="hidden" class="cart-qty" name="" value="<?php echo $qtyerror; ?>" >

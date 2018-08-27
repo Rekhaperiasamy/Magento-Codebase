@@ -1,0 +1,18 @@
+<?php
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+
+/** @var $block \Aheadworks\Csblock\Block\Csblock */
+$canShow = true;
+if (!$block->isAjax()): ?>
+    <?php $canShow = false; ?>
+    <div data-aw-csblock-block-name="<?php /* @noEscape */ echo $block->getNameInLayout() ?>"></div>
+<?php endif; ?>
+
+<?php if ($canShow && $blockContent = $block->getBlocks()): ?>
+<div>
+    <?php echo $blockContent ?>
+</div>
+<?php endif; ?>

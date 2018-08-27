@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Location: magento2_root/app/code/Vendorname/Extensionname/etc/adminhtml/system.xml
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <!--<system>
+        <section id="require_js" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Js Version</label>
+            <tab>orange</tab>
+            <resource>Orange_RequireJs::require_js</resource>
+            <group id="require_js_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Add Js Version Number</label>
+                <field id="jsversion_number" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Js version Number</label>
+                </field>
+			</group>
+        </section>
+    </system>-->
+</config>

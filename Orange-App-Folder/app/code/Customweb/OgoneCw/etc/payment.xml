@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    <groups>
+        <group id="ogonecw">
+            <label>Ogone</label>
+        </group>
+    </groups>
+    <methods>
+        <method name="ogonecw_mastercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_creditcard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_acceptgiro">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_airplus">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_americanexpress">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_aurore">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_cartebleue">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_cofinoga">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_dankort">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_diners">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_discovercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_jcb">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_lasercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_maestrouk">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_solocard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_uatp">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_visa">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_bcmc">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_uneurocom">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_maestro">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_postfinancecard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_amazoncheckout">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_belfiusdirectnet">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_cashticket">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_cbconline">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_centeaonline">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_edankort">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_eps">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_fidorpay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_giropay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_ideal">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_inghomepay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_kbconline">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_mpass">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_paysafecard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_postfinanceefinance">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_directdebits">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_intersolve">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_pingping">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_tunz">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_cashuprepaid">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_paypal">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_directebanking">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_openinvoice">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_masterpass">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_banktransfer">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_instalmentinvoice">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="ogonecw_threexcb">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method>
+    </methods>
+</payment>

@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart'); 
+$items = $cart->getQuote()->getItemsCollection()->getFirstItem();
+$product = $items->getProduct();
+$collections = $objectManager->create('Orange\Limitqty\Model\Limitqty')->getCollection()->addFieldToFilter('customer_group',$product->getAttributeSetId())->getFirstItem();
+$qty = $collections->getLimitquantity();
+$_cataloghelper = $this->helper('Orange\Catalog\Helper\CatalogUrl');
+$formattedCheckoutURL = $_cataloghelper->getFormattedUrl($block->getCheckoutUrl());//Format Category URL as per SOHO
+?>
+<?php if ($block->isPossibleOnepageCheckout()):?>
+<div class="col-xs-12">														
+    <button type="button" id="proceed-to-checkout"
+            data-role="proceed-to-checkout"
+            title="<?php /* @escapeNotVerified */ echo __('Commander') ?>"
+            data-mage-init='{"Magento_Checkout/js/proceed-to-checkout":{"checkoutUrl":"<?php /* @escapeNotVerified */ echo $formattedCheckoutURL; ?>"}}'
+            class="btn btn-primary-inverse"<?php echo($block->isDisabled()) ? ' disabled' : ''; ?>"
+            <?php if ($block->isDisabled()):?>disabled="disabled"<?php endif; ?>>
+        <span><?php /* @escapeNotVerified */ echo __('Commander') ?></span>
+    </button>
+</div>	
+<?php endif?>
+
+<script type="text/javascript">
+    require([
+        "jquery",
+        "mage/mage"
+    ], function ($) {
+              $(".qty-value-error").each(function () {
+			  if(this.value == 1)
+			  {
+			    $('#proceed-to-checkout').prop('disabled',true);
+			  }					
+            });
+    });
+	</script>

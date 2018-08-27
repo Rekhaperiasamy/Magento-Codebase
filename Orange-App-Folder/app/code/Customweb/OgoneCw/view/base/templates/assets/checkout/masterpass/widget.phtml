@@ -1,0 +1,24 @@
+<div class="ogone-masterpass-widget">
+	<a href="<?php echo $redirectUrl; ?>"> 
+	<img src="https://www.mastercard.com/mc_us/wallet/img/<?php echo $languageCode; ?>/<?php echo $countryCode; ?>/mcpp_wllt_btn_chk_180x042px.png"
+		alt="<?php echo $altText; ?>" />
+	</a>
+	<div clsss="learn-more-text" style="margin-top: 5px;">
+		<a target="_blank" href="https://www.mastercard.com/mc_us/wallet/learnmore/<?php echo $languageCode; ?>/<?php echo $countryCode; ?>" data-toggle="cw-modal" data-modal-dismiss="true" data-modal-css="ogone-modal-masterpass-learnmore"><?php echo $learnMoreText; ?></a>
+	</div>
+</div>
+
+<style type="text/css">
+<?php echo $modalCss ?>
+
+@media (min-width: 774px) {
+	.ogone-modal-masterpass-learnmore {
+		width: 704px;
+		left: 50%;
+		margin-left: -351px;
+	}
+}
+</style>
+<script type="text/javascript">
+<?php echo $modalJavascript ?>
+</script>

@@ -1,0 +1,37 @@
+<div class="main-container">
+	<section>
+		<article id="node-62461" class="node node-landing-page style-layer-style--green clearfix">
+			<div class="landing-page-top-wrapper wrapper-with-image margin-xs-b-m padding-xs-b-m">
+				<div class="container landing-page-top">
+					<div class="row">
+						<div class="field field-name-field-display-title field-type-text field-label-hidden" style="width:100%;">
+							<div class="field-items">
+								<div class="field-item even padding-xs-h-s">
+								    <?php  $om = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+									<?php $request =  $om->create('\Magento\Framework\App\Request\Http'); ?>
+									<?php $data = $this->getRequest()->getPostValue();?>
+									<h2><?php echo __('Merci '); echo ucfirst(strtolower(trim($data['firstname']))).', '; echo __('votre demande est enregistrée'); ?></h2>	
+									<h4><?php echo __('Nous vous confirmons que la demande de transfert de votre numéro de téléphone a bien été enregistrée.'); ?></h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<div class="container">		
+			<div class="row">	
+				<div class="col-xs-12">
+					<h3><?php echo __('Prochaines étapes :'); ?></h3>
+					<p class="lowercase"><?php echo __("1. Le transfert de votre numéro de téléphone est en cours (délai maximum : 48h). En attendant, continuez à utiliser la carte SIM de votre opérateur actuel."); ?></p><br>
+					<p class="lowercase"><?php echo __("2. Vous recevrez un SMS dès que votre numéro sera transféré. Vous pourrez alors éteindre votre GSM et y insérer votre nouvelle carte SIM Orange."); ?></p><br>
+					<p class="lowercase"><?php echo __("3. Attendez environ 30 min. que le réseau Orange vous reconnaisse et rallumez ensuite votre GSM."); ?></p><br>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</div>
+</section>
+</div>

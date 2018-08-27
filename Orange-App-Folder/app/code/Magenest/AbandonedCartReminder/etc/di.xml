@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magenest\AbandonedCartReminder\Model\Aggregator\AbandonedCart">
+       <arguments>
+           <argument name="logger" xsi:type="object">Magento\Framework\Logger\Monolog</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\AbandonedCartReminder\Model\Observer\Wishlist\Shared">
+       <arguments>
+           <argument name="_customerFactory" xsi:type="object">Magento\Customer\Model\CustomerFactory</argument>
+        </arguments>
+    </type>
+
+
+    <type name="Magenest\AbandonedCartReminder\Controller\Adminhtml\Mail\Template">
+        <arguments>
+            <argument name="s" xsi:type="object">Magento\Email\Model\ResourceModel\Template\Collection</argument>
+        </arguments>
+    </type>
+
+    <type name="Magenest\AbandonedCartReminder\Model\Observer\Newsletter\Subscribe">
+        <arguments>
+            <argument name="_customerFactory" xsi:type="object">Magento\Customer\Model\CustomerFactory</argument>
+        </arguments>
+    </type>
+
+</config>

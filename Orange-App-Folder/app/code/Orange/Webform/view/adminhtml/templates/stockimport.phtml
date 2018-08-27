@@ -1,0 +1,25 @@
+<?php
+
+use Magento\Framework\App\TemplateTypesInterface;
+
+$url = $block->getSaveUrl();
+?>
+
+<form enctype="multipart/form-data" id="subsidy_price" name="subsidy_price-footer" method="post" action="<?php echo $url; ?>">
+    <br />
+    <div id="uploader"> 
+        <label class="label admin__field-label" for="csv_file" data-validate="{required:true}"> 
+            <span>Upload CSV: </span>
+        </label>
+        <input type="file" name="csv_file" data-validate="{required:true}"/>
+    </div>
+    <br />
+    <input class="action-default scalable task" type="submit" name="submit" value="Import" />
+</form>
+
+<script type="text/x-magento-init">
+    {
+    "#subsidy_price": { "validation": {}
+    }
+    }
+</script>

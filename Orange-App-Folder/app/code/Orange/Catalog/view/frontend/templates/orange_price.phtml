@@ -1,0 +1,59 @@
+<?php if($block->getProductPrice() > 0):?>
+	<?php
+	$productViewblock = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+	$discountSohoPrice = $productViewblock->getSohoDiscountAmount();
+	$customerType = $productViewblock->getCustomerTypeName();
+	if($customerType == 'SOHO' && !$block->getIsSohoDiscount() && !$block->getIsNegative()) {
+		$sohoPrice = $block->getProductPrice() / (1+($discountSohoPrice/100));
+		$price = number_format($sohoPrice,2,",","");
+	} else {
+		$price = number_format($block->getProductPrice(),2,",","");
+	}
+	$floatSeperator = ",";
+	$fullPrice = explode(",",$price);
+	$decimalVal = $fullPrice[0];
+	$floatVal = 0;
+	if(count($fullPrice) > 1):
+		$floatVal = $fullPrice[1];	
+	endif;
+	$priceColor = $block->getPriceColor();
+	$strikePrice = '';
+	if(strpos($priceColor,'new-price')!==false){
+		$strikePrice = 'new-price';
+	} else {
+		$strikePrice = 'old-price';
+	}
+	?>
+	<div class="<?php echo $priceColor ?>">
+		<?php if($block->getIsNegative()): ?>
+			<span class="amount-negate">-</span>	
+		<?php endif; ?>
+		<span id="<?php echo $strikePrice; ?>e" class="<?php if($strikePrice!='old-price'): ?> new-pricee <?php endif;?>"><?php echo $decimalVal; ?></span>
+		<?php if($floatVal > 0): ?>
+			<span class="<?php if($strikePrice=='old-price'): ?>old-price-desimal<?php else: ?>new-price-desimal<?php endif; ?>"><?php echo $floatSeperator; ?><?php echo $floatVal; ?> </span>
+		<?php endif;?>
+		<span id="<?php if($floatVal > 0): echo $strikePrice; ?>-symbol-desimal<?php else: ?><?php echo $strikePrice; ?>-symbol<?php endif; ?>" class="<?php if($floatVal > 0): ?>new-price-symbol-desimal<?php endif; ?><?php if($strikePrice!='old-price'): ?> new-price-symbol <?php endif;?>"><?php echo $block->getCurrency(); ?></span>
+		<?php if($block->getIsSubscription()): ?>
+		<span class="<?php if($floatVal > 0): ?>new-price-period-desimal<?php else: ?>new-price-period<?php endif;?>"><?php echo __('/mois') ?></span>
+		<?php endif; ?>
+		<?php if(strpos($priceColor,'simcard-cnt')!==false):?><small class="orange decharge-txt"> <?php echo __('de recharge'); ?></small><?php endif;?>
+		<?php if($block->getIsPriceLabelVisible() && $block->getShowPriceLabel()):?>
+		<span class="new-price-soho"><?php echo $block->getPriceLabel(); ?></span>
+		<?php endif; ?>
+	</div>	
+	<div class="clearfix"> </div>
+<?php else:?>
+<?php 
+	$decimalVal = 0;
+	$priceColor = $block->getPriceColor();
+?>
+	<?php if($block->getIsSubscription()): ?>
+		<div class="<?php echo $priceColor ?>">
+			<span id="new-pricee" class="new-pricee sub-decimal"><?php echo $decimalVal; ?></span>
+			<span id="new-price-symbol" class="new-price-symbol">&nbsp;€</span>
+			<span class="new-price-period-margin0" data-bind="text: getSuffix()"><?php echo __('/mois') ?></span>
+		</div>
+	<?php else: ?>
+		<div class="<?php echo $priceColor; ?>"><span id="new-pricee" class="new-pricee"><?php echo $decimalVal; ?></span>  <span id="new-price-symbol" class="new-price-symbol"><?php echo $block->getCurrency(); ?></span> </div>
+	<?php endif; ?>
+<?php endif; ?>

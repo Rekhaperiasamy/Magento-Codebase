@@ -1,0 +1,403 @@
+<?php $specialCharacter = "A-Za-zA-ÿŒŸœĲ'._\s-"; ?>
+<!--<div class="modal-header modal-header-top" style="padding:0px;">
+    <div class="row">
+        <div class="col-xs-12 margin-xs-b-m">   
+            <h3 style="margin:0px;">         
+                <?php echo __('Où puis-je trouver ce produit ?'); ?></h3>
+        </div>
+    </div>
+</div> -->
+<div class="modal-body" id="click_resever_full">
+    <div class="row">
+        <div class="col-xs-12 margin-xs-b-m">   
+            <h3 style="margin:0px;">         
+                <?php echo __('Où puis-je trouver ce produit ?'); ?></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+			<div class="zip_code_form" id="zip_code_form">
+            <h4> <?php echo __('Chercher par code postal'); ?> </h4>
+            <form action="" method="post" id="pop_up">
+                <div class="row margin-xs-v-m">
+                    <div class="col-xs-6 col-sm-5">
+                        <input autocomplete="off" type="text" name="post_code_data" id="post_code_data" class="form-control margin-xs-b-s" data-validate="{'custom-required':true}" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="4">
+                        <input type="hidden" name="sku" id="sku" value="<?php echo $block->getProduct()->getSku(); ?>">
+                        <input type="hidden" name="name" id="name" value="<?php echo $block->getProduct()->getName(); ?>">
+                        <input type="hidden" name="clickndres" id="clickndres" value="<?php echo $block->getClickandReserve(); ?>">                         
+                    </div>
+                    <div class="col-xs-6 col-sm-5">
+                        <a class="btn btn-primary" id="post_code"><?php echo __('Chercher'); ?> </a>                 
+                    </div>
+                </div>
+            </form>
+			</div>
+            <div class="daily_quota1" id="daily_quota1" style="display:none">
+                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('daily_quota')->toHtml(); ?>
+            </div>
+            <div class="available-wrapper append_stock_data"> 
+            </div>
+        </div>  
+    </div>
+</div>
+
+<div class="modal-body" id="after_reservecall_success" style="display:none;">
+
+</div>
+<div id="after_reserve_container" style="display:none;">
+    <div id="append_value_after_reserve" style="display:none;">
+
+        <form method="post" action="" id="pop_up_reservee" name="pop_up_reservee">
+            <div class="col-xs-12 padding-xs-t-s padding-md-t-n curl_reserve_product" id="curl_reserve_product_">
+                <span class="green"><i class="oi oi-tick"></i> &nbsp;<?php echo __('En stock'); ?></span>
+                <br>                        
+                <p><?php echo __('Réservez et récupérez votre appareil dès maintenant. La réservation est valable jusquà la fin du prochain jour ouvrable.'); ?></p>
+
+                <div class = "form-item form-item-gender form-type-radio radio pull-left">
+                    <label for = "edit-gender-mr">
+                        <input type = "radio"  id = "edit-gender-mr" name = "gender" value = "mr" checked class = "form-radio"><?php echo __('Mr.') ?>&nbsp;&nbsp;</label>
+                </div>
+                <div class = "form-item form-item-gender form-type-radio radio pull-left">
+                    <label for = "edit-gender-mme">
+                        <input type = "radio" id = "edit-gender-mme" name = "gender" value = "mme" class = "form-radio"><?php echo __('Mme.') ?></label>
+                </div>
+                <div class="clearfix"></div>
+                <div class = "row">
+                    <div class = "col-sm-12 col-md-6">
+                        <label for = "edit-first-name"><?php echo __('Prénom'); ?><span class = "form-required" title = "Ce champ est requis.">*</span></label>
+                        <input class="form-control validation_check margin-xs-b-s" data-validate="{'custom-required':true,'min-lenth-validation':true,'first-name':true}"
+                               type="text" id="edit-first-name-reserve" 
+                               name="first_name" size="60" value="" maxlength="35" onkeyup="this.value=this.value.replace(/[^<?php echo $specialCharacter; ?>]/g,'');">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label for="edit-name"><?php echo __('Nom'); ?> <span class="form-required" title="Ce champ est requis.">*</span></label>
+                        <input class="form-control validation_check margin-xs-b-s" type="text" data-validate="{'custom-required':true,'min-lenth-validation':true,'last-name':true}"
+                               id="edit-name-reserve" name="edit-name"  value="" size="60" maxlength="35" onkeyup="this.value=this.value.replace(/[^<?php echo $specialCharacter; ?>]/g,'');">
+                    </div>
+    				<div class="clearfix"></div>
+                    <div class="col-sm-12 col-md-6">
+                        <label for="edit-email"><?php echo __('E-mail'); ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="<?php echo __('Vous recevrez votre numéro de réservation unique à cette adresse email. Vous en avez besoin pour retirer votre appareil dans le magasin.')?>"  class="orange">?</a></label>
+                        <input class="form-control validation_check margin-xs-b-s" data-validate="{'custom-required':true,'validate-new-email':true}"
+                               type="text" id="edit-email-reserve" name="edit-email" value="" size="60" maxlength="40">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label for="edit-phone"><?php echo __('Numéro de téléphone'); ?> <span class="form-required" title="Ce champ est requis.">*</span> <a type="button" data-toggle="tooltip" data-placement="right" title="<?php echo __('Si nous avons une question par rapport à votre réservation, nous vous contacterons à ce numéro.')?>"  class="orange">?</a></label>
+                        <input class="form-control validation_check margin-xs-b-s" type="text" data-validate="{'custom-required':true,'validate-orangecontactnumber':true,'validate-contactno':true}"
+                               id="edit-phone-reserve" name="edit-phone" value="" size="60" maxlength="15">
+                    </div>
+                </div>
+                <a class="btn btn-primary btn-sm margin-xs-t-s reserve_call_curl_return" id="reserve_call"><?php echo __('Réservez dans ce magasin'); ?> </a> 
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+require(['jquery',
+	  'mage/mage',
+      'mage/translate',
+	  'js/maskedinput'], function ($) {
+	  $('#edit-phone-reserve').mask("0000/00 00 00", {placeholder: "____/__ __ __"});
+	  //<![CDATA[	
+		var translates = <?php
+		echo \Zend_Json::encode(
+				array(
+					"This is a required field." => __("This is a required field."),
+
+				)
+		);?>;
+		$.mage.translate.add(translates);
+		
+//]]>
+ 
+});
+</script>
+
+<script>
+    require([
+        'jquery',
+        'Magento_Ui/js/modal/modal',
+        'mage/template',
+        'mage/mage',
+        'js/dropdown',
+        'jquery/validate',
+        'jquery/ui',
+        'mage/translate',
+        'mage/validation'
+    ], function ($) {
+	    var translates = <?php
+		echo \Zend_Json::encode(
+				array(
+					"This is a required field." => __("This is a required field."),
+					"This is a required fields." => __("This is a required fields."),
+					"Please enter only 35 characters in first name and last name."=>__("Please enter only 35 characters in first name and last name."),
+					"Please enters a valid email address (Ex: johndoe@domain.com)."=>__("Please enters a valid email address (Ex: johndoe@domain.com)."),
+					"Please enter a valid 10 digit mobile phone number."=>__("Please enter a valid 10 digit mobile phone number."),
+					"Please enter at least 2 characters."=>__("Please enter at least 2 characters."),
+								)
+		);?>;
+		$.mage.translate.add(translates);
+		$.validator.addMethod(
+		'custom-required', function (value) {
+			return !$.mage.isEmpty(value);
+		 }, $.mage.__('This is a required fields.'));
+		 
+		 
+		$.validator.addMethod(
+		'first-name', function (value) {
+		 var fname = parseInt(value.length);
+		 var lname = parseInt($('#edit-name-reserve').val().length);
+		 var count = fname + lname;
+			if (count > 35) {
+				return false;
+			}
+		return true;
+		}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+
+		$.validator.addMethod(
+		'last-name', function (value) {
+		 var fname = parseInt(value.length);
+		 var lname = parseInt($('#edit-first-name-reserve').val().length);
+		 var count = fname + lname;
+			if (count > 35) {
+				return false;
+			}
+		return true;
+		}, $.mage.__('Please enter only 35 characters in first name and last name.'));
+		
+		
+		$.validator.addMethod(
+		'validate-new-email', function (value) { 
+			return $.mage.isEmptyNoTrim(value) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test($.trim(value));
+		}, $.mage.__('Please enters a valid email address (Ex: johndoe@domain.com).'));
+		
+		$.validator.addMethod(
+		'validate-contactno', function (value) { 
+			var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+			if (replacedValue.length < 10) {
+				return false;
+			}
+		return true;
+		}, $.mage.__('Please enter a valid 10 digit mobile phone number.'));
+
+		$.validator.addMethod(
+		'validate-orangecontactnumber', function (value) { 
+			var slicevalue = value.slice(0,3);
+			var orangeFrontNumber = ["045", "046", "047", "048","049"];
+			var finalVlaue = orangeFrontNumber.indexOf(slicevalue);
+			if (finalVlaue < 0) {
+				return false;
+			}
+		return true;
+		}, $.mage.__('Please enter a valid 10 digit mobile phone number.'));
+		
+		$.validator.addMethod(
+		'min-lenth-validation', function (value) {
+			var replacedValue = value.replace(/[\. ,:_/]+/g, "");
+			if (replacedValue.length < 2) {
+				return false;
+			}
+		return true;
+		}, $.mage.__('Please enter at least 2 characters.'));
+		 
+		$(document).on("blur", ".validation_check", function (e) {
+			var first_name = $("#edit-first-name-reserve").val();
+			var last_name = $("#edit-name-reserve").val();
+            var id = "#"+this.id;
+			if (id == "#edit-first-name-reserve" && first_name != '' && last_name != '') {
+				$.validator.validateElement($("#edit-name-reserve"));
+				$.validator.validateElement($("#edit-first-name-reserve"));
+			} else if (id == "#edit-name-reserve" && first_name != '' && last_name != '') {
+				$.validator.validateElement($("#edit-name-reserve"));
+				$.validator.validateElement($("#edit-first-name-reserve"));
+			} else {
+				$.validator.validateElement($(id));
+			}
+        });
+	$('#pop_up').submit(function(){
+            $('#post_code').trigger('click'); 
+            return false;
+        });
+        $("#post_code").on("click", function () {
+            $('#append_value_after_reserve').find('input:text').val('');
+            $('#after_reserve_container').html("<div id='append_value_after_reserve'>"+$("#append_value_after_reserve").html()+"</div>");
+		    $("#daily_quota1").css("display", "none");
+            $(pop_up).validation();
+            var zip_code = $.validator.validateElement($("#post_code_data"));
+
+            if (zip_code == false) {
+                /* empty exisiting message */
+                if($(".append_stock_data").length){
+                    $(".append_stock_data").empty();
+                }
+                /* end */
+                return false;
+            }
+
+            if ($('#post_code_data').val() != '') {
+                $(".append_stock_data").empty();
+                var data = {
+                    zip_code: $('#post_code_data').val(),
+                    sku: $('#sku').val(),
+                    name: $('#name').val(),
+					clickndres: $('#clickndres').val(),
+                    ip: $('#ip_address').val()
+                };
+                $.ajax({
+                    url: "<?php echo $this->getBaseUrl() . 'reserve/index/index' ?>",
+                    dataType: 'json',
+                    showLoader: true,
+                    method: 'post',
+                    data: data
+				}).done(function( data ) {
+					if (data == 'static') {
+						$(".append_stock_data").empty();
+						$("#daily_quota1").css("display", "block");
+					} else {
+						$("#zip_code_form").css("display", "block");
+						$('.append_stock_data').html(data);
+					}
+				});
+            }
+        });
+        
+		/* Prevent the form submission due to ajax behaviour */
+		$("#pop_up").submit(function(e){
+			e.preventDefault();
+		});
+			
+			 
+		/* empty existing message backspace without click button */
+        $("#post_code_data").keyup(function(event) {
+            if (!this.value) {
+                if($(".append_stock_data").length){
+                    $(".append_stock_data").empty();
+                }
+            }
+			
+			/* Verify customer pressed enter button or not */
+			if ( event.which == 13 ) {
+				/* Triggering Ajax Call to get the Store List */
+				$("#post_code").trigger('click');
+			}
+
+        });
+        /* end */
+        
+        $(document).on("click", ".reserve_product", function (e) {
+		
+		    if ($("#edit-first-name-reserve").hasClass("mage-error")) {
+				$("#edit-first-name-reserve").removeClass("mage-error");
+				$("#edit-first-name-reserve-error").hide("");
+			}
+			if ($("#edit-name-reserve").hasClass("mage-error")) {
+				$("#edit-name-reserve").removeClass("mage-error");
+				$("#edit-name-reserve-error").hide("");
+			}
+			if ($("#edit-email-reserve").hasClass("mage-error")) {
+				$("#edit-email-reserve").removeClass("mage-error");
+				$("#edit-email-reserve-error").hide("");
+			}
+			if ($("#edit-phone-reserve").hasClass("mage-error")) {
+				$("#edit-phone-reserve").removeClass("mage-error");
+				$("#edit-phone-reserve-error").hide("");
+			}
+            var parent = '';
+            parent = $(this).parents();
+            var idValue1 = '';
+            idValue1 = this.id;
+            var str_array1 = '';
+            str_array1 = idValue1.split('reserve_product_');
+            $(".curl_first_reserve_product").removeClass('selected');
+            $("#append_value_after_reserve").insertAfter("#curl_first_reserve_product_" + str_array1[1]);
+            $("#append_value_after_reserve").css("display", "block");
+            $("#curl_first_reserve_product_" + str_array1[1]).addClass('selected');
+
+            if ($("div.modal-open-dialog").length > 0) {
+                $("div.modal-open-dialog").find(".curl_reserve_product").hide();
+                $("div.modal-open-dialog").find(".reserve_product").parent().show();
+                $("div.modal-open-dialog").removeClass("modal-open-dialog");
+            }
+            $(this).parent().hide();
+            $("#curl_" + this.id).css("display", "block");
+            $(parent[5]).addClass("modal-open-dialog");
+			$(pop_up_reservee).validation();
+        });
+
+
+
+        $(document).on("click", "#reserve_call", function (e) {
+
+            var idValueFromSelectedClass = '';
+            idValueFromSelectedClass = $(".selected").attr('id');
+            var strId = '';
+            strId = idValueFromSelectedClass.split('curl_first_reserve_product_');
+            $(pop_up_reservee).validation();
+
+            var fname = $.validator.validateElement($("#edit-first-name-reserve"));
+            var name = $.validator.validateElement($("#edit-name-reserve"));
+            var email = $.validator.validateElement($("#edit-email-reserve"));
+            var phone = $.validator.validateElement($("#edit-phone-reserve"));
+
+            if (fname == false || name == false || email == false || phone == false) {
+                return false;
+            }
+
+            var data = {
+                fname: $('#edit-first-name-reserve').val(),
+                name: $('#edit-name-reserve').val(),
+                email: $('#edit-email-reserve').val(),
+                phone: $('#edit-phone-reserve').val(),
+                sku: $('#device_id' + strId[1]).val(),
+                shop: $('#shop_id' + strId[1]).val(),
+                pname: $('#product_name' + strId[1]).val(),
+                saddress: $('#shop_address' + strId[1]).val(),
+				shop_url: $('#shop_url' + strId[1]).val(),
+                ip: $('#ip_address').val()
+
+            };
+
+            $.ajax({
+                url: "<?php echo $this->getBaseUrl() . 'reserve/index/reserve' ?>",
+                dataType: 'text',
+                showLoader: true,
+                type: 'post',
+                data: data,
+                success: function (data) {
+                    if (data == 'static') {
+                        $("#append_value_after_reserve").insertAfter("#after_reservecall_success");
+                        $("#append_value_after_reserve").hide();
+                        $(".append_stock_data").empty();
+                        $("#daily_quota1").css("display", "block");
+                    } else {
+                        $("#click_resever_full").hide();
+                        $("#after_reservecall_success").html(data);
+                        $("#after_reservecall_success").css("display", "block");
+                    }
+
+                }
+            });
+
+            return false;
+        });
+        
+        /* mouse over tooltip fix */
+        var timeout;
+        var finishTimeout = false;
+        //$('.orange').mouseover(function(){
+        $('.orange').on("mouseover", function () {
+                //alert("gfgh");
+           var el = $(this);
+            timeout = setTimeout(function(){
+               finishTimeout = true;
+               el.tooltip( "open" );
+               finishTimeout = false;
+            },1000);
+        });
+        $('.orange').mouseout(function(){
+            clearTimeout(timeout);
+        });
+        /* mouse over tooltip fix end */
+    });
+</script>

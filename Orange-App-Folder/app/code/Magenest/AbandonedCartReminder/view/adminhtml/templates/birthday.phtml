@@ -1,0 +1,10 @@
+
+<h3> <?php echo __('Birthday Search')  ?></h3>
+
+<form method="get" action="<?php echo         $this->getUrl("abandonedcartreminder/birthday/index", ['current'=>true]);
+?>" >
+
+    <input type="text" placeholder="mm-dd" name="birthday-search" />
+
+    <input type="submit" value="<?php echo __('Filter birthday')  ?>">
+</form>

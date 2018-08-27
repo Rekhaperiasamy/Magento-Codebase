@@ -1,0 +1,116 @@
+dong 139 file setup them google analytics
+source
+
+
+http://cyrillschumacher.com/2015/01/02/magento2---search-parameters-for-the-rest-api/
+sudo cp -r /var/www/html/magen2/rc1/app/code/Magenest/FollowupEmail/* /home/luuthanhthuy/work2/Job/mage2/fue_branch/fue_dev/m2.followupemail/app/code/Magenest/FollowupEmail
+scp -r /home/luuthanhthuy/work2/Job/mage2/fue_branch/fue_dev/m2.followupemail/app/* ss:/home/hungname/public_html/test/app/
+id3$ unslept calycle SupP
+ALTER TABLE `magen2book`.`magenest_followupemail_rule`
+ADD COLUMN `ga_source` VARCHAR(255) NULL AFTER `created_at`,
+ADD COLUMN `ga_medium` VARCHAR(255) NULL AFTER `ga_source`,
+ADD COLUMN `ga_name` VARCHAR(255) NULL AFTER `ga_medium`,
+ADD COLUMN `ga_term` VARCHAR(255) NULL AFTER `ga_name`,
+ADD COLUMN `ga_content` VARCHAR(255) NULL AFTER `ga_term`;
+
+
+scp -r /var/www/html/magen2/book/magento2/app/code/Magenest/FollowupEmail/* root@198.1.101.84:/home/hungname/public_html/stage/demo/fue/app/code/Magenest/FollowupEmail
+Head@Ache72
+
+ scp -r /var/www/html/magen2/book/magento2/app/code/Magenest/Pin/* root@198.1.101.84:/home/hungname/public_html/stage/demo/pin/app/code/Magenest/Pin
+
+sudo cp -r /home/luuthanhthuy/work2/Job/mage2/book/m2.appbook/app/code/Magenest/Booking/* /var/www/html/mage16/app/code/Magenest/Booking
+
+sudo cp -r /var/www/html/mage16/app/code/Magenest/Booking/* /home/luuthanhthuy/work2/Job/mage2/book/m2.appbook/app/code/Magenest/Booking/
+
+14:33:06] Trọng Huấn Đào: test.izysync.com
+[14:33:16] Trọng Huấn Đào: test.izysync.com/admin
+[14:33:25] Trọng Huấn Đào: password demo@123
+[14:33:27] Trọng Huấn Đào: FTP
+[14:33:44] Trọng Huấn Đào: izysync.com
+test@izysync.com
+id3$ unslept calycle SupP
+[14:33:54] Trọng Huấn Đào: chi vao day de test nhe
+[14:33:59] Trọng Huấn Đào: gio em moi cai xong ak
+[14:34:23] Trọng Huấn Đào: ma em cai ban moi ra sang ngay cua Magento (Magento 2.0.0-rc2)
+[14:34:29] luu thanh thuy: okie
+[14:34:35] luu thanh thuy: user password  nua?
+[14:35:15] Trọng Huấn Đào: user password theo quy tac anh Nam dat do chi:
+User : test
+Password: demo@123
+[16:30:58] luu thanh thuy: Huan oi, ssh toi cai host moi ntn?
+[16:31:07] luu thanh thuy: password hay la private key?
+[16:31:29] Trọng Huấn Đào: ssh root@198.1.101.84
+[16:31:42] Trọng Huấn Đào: Pass:
+id3$ unslept calycle SupP
+[16:33:34] luu thanh thuy: cai confluence len tren hosting moi chua em?
+[16:33:42] Trọng Huấn Đào: chua chi oi
+[16:34:27] luu thanh thuy: mai em co toi cty khong?
+[16:34:33] Trọng Huấn Đào: Mai em co
+ Thứ bảy, ngày 14 tháng mười một năm 2015
+[08:36:06] luu thanh thuy: Huan oi
+[08:36:14] luu thanh thuy: FTP account cua cai hosting moi la j nhi?
+[09:02:09] luu thanh thuy: co phai test.izysync no o folder nay khong ?
+[09:02:10] luu thanh thuy: /home/hungname/public_html/test
+[09:02:20] Trọng Huấn Đào: vang dung roi ak
+[09:02:38] Trọng Huấn Đào: hungname@izysync.com la vao toan bo chi ak
+[09:02:43] Trọng Huấn Đào: pass van nhu the
+[09:02:58] luu thanh thuy: hosting la id hay la izysync nhi?
+[09:03:22] Trọng Huấn Đào: izysync.com
+hungname@izysync.com
+
+
+--13/November/2015 :
+* the validate rule is wrong in  rc1 . Need improve it
+
+
+http://www.xaprb.com/blog/2008/08/19/how-to-unit-test-code-that-interacts-with-a-database/
+
+http://127.0.0.1/magen2/rc1/admin
+
+---------------------------------------------------------
+
+ALTER TABLE magenest_followupemail_rule
+ADD duplicated_key INT
+
+ALTER TABLE magenest_followupemail_rule
+ADD is_test smallint
+
+
+ALTER TABLE `mage16`.`magenest_followupemail_mail_log`
+ADD COLUMN `duplicated_key` VARCHAR(255) NULL AFTER `updated_at`,
+ADD COLUMN `is_test` SMALLINT(6) NULL AFTER `duplicated_key`;
+/home/luuthanhthuy/work2/Job/mage2/fue_branch/fue_dev/m2.followupemail
+
+2015-10-15 15:46:23
+
+2015-10-15 16:30:34
+
+--------------------------------------
+tao ra email ok
+--------------------------------------
+tao ra resume link de customer click vao do se ra restore duoc quote
+
+
+   * tao ra mot tracking code tu id cua queue --> object -id --> dung base 64 tao ra key code
+   utc= base-64() ;
+
+
+---------------------------------------
+
+SELECT
+    `m`.`entity_id`, `a`.*
+FROM
+    `quote` AS `m`
+        LEFT JOIN
+    `magenest_followupemail_guest_abandoned_cart` AS `a` ON m.entity_id = a.quote_id
+WHERE
+    (a.quote_id IS NULL AND m.is_active = 1
+        AND m.customer_id IS NOT NULL
+        AND m.items_count != 0)
+        AND (m.updated_at < '2016-01-20 04:54:35'
+        OR (m.created_at < '2016-01-20 04:54:35'
+        AND m.updated_at < '0000-00-00 00:00:00'))
+
+
+        scp -r /var/www/html/magen2/book/magento2/app/code/Magenest/FollowupEmail/* root@198.1.101.84:/home/hungname/public_html/stage/demo/fue/app/code/Magenest/FollowupEmail/

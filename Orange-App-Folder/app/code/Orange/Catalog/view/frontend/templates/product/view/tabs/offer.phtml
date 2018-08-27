@@ -1,0 +1,4 @@
+<?php
+if ($block->getAttributeSetName() == "Accessories") {
+    echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('offer_tab')->toHtml();
+}

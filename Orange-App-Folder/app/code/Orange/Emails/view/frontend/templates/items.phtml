@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_order = $block->getOrder() ?>
+<?php if ($_order) { ?>
+    <?php $items = $_order->getAllItems(); ?>
+    
+        
+		<?php  foreach ($items as $item) {            
+                            echo  $item->getProductId();                     
+                             echo $item->getName();
+                            echo $item->getSku();
+                             echo $item->getQtyOrdered();     
+                            echo $item->getPrice();                            
+                           //now $csv varaible has csv data as string
+                    } ?>
+		<?php } ?>
+		
+		
+    

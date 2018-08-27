@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+* BSS Commerce Co.
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the EULA
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://bsscommerce.com/Bss-Commerce-License.txt
+*
+* =================================================================
+*                 MAGENTO EDITION USAGE NOTICE
+* =================================================================
+* This package designed for Magento COMMUNITY edition
+* BSS Commerce does not guarantee correct work of this extension
+* on any other Magento edition except Magento COMMUNITY edition.
+* BSS Commerce does not provide extension support in case of
+* incorrect edition usage.
+* =================================================================
+*
+* @category   BSS
+* @package    Bss_InfiniteScroll
+* @author     Extension Team
+* @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
+* @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <infinitescroll>
+            <settings>
+                <active>0</active>
+                <triggerpage_threshold>2</triggerpage_threshold>
+            </settings>
+            <gototop>
+                <enabled_gototop>1</enabled_gototop>
+                <trigger>500</trigger>
+                <location_offset>20</location_offset>
+                <bottom_offset>10</bottom_offset>
+                <container_size>40</container_size>
+                <container_radius>10</container_radius>
+                <hide_under_width>500</hide_under_width>
+                <container_color>000</container_color>
+                <arrow_color>fff</arrow_color>
+                <text_hover>Go To Top</text_hover>
+                <zindex>1</zindex>
+                <location>right</location>
+                <goup_speed>slow</goup_speed>
+            </gototop>
+            <btn_loadmore>
+                <text_btn_loadmore>Load more items</text_btn_loadmore>
+                <text_btn_prev>Load previous items</text_btn_prev>
+                <text_end_load>There are no more pages left to load.</text_end_load>
+                <background_btn_loadmore>eeeeee</background_btn_loadmore>
+                <color_btn_loadmore>333333</color_btn_loadmore>
+                <!-- <hover_btn_loadmore>#e1e1e1</hover_btn_loadmore> -->
+            </btn_loadmore>
+        </infinitescroll>
+    </default>
+</config>

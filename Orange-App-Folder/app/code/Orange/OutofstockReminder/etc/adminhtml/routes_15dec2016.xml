@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/App/etc/routes.xsd">
+    <router id="admin"> <!-- This part is different from frontend -->
+        <route id="Orange_OutofstockReminder" frontName="Orange_OutofstockReminder">
+            <module name="Orange_OutofstockReminder" />
+        </route>
+    </router>
+</config> 

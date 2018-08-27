@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="click_reserve_nl" label="click and reserve nl" file="click_reserve_nl.html" type="html" module="Orange_Reserve" area="frontend"/>
+	<template id="click_reserve_fr" label="click and reserve fr" file="click_reserve_fr.html" type="html" module="Orange_Reserve" area="frontend"/>
+</config>

@@ -1,0 +1,24 @@
+<?php
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+$catalogSession = $objectManager->create('\Magento\Catalog\Model\Session');
+$pageTitle= $catalogSession->getCustomTitle();
+$title = $this->getTitleDetails($pageTitle);
+$udodata=$this->getUdoData();
+if(isset($title) && $title!=""){
+	if(isset($udodata['page_type']) && ($udodata['page_type'] != "checkout" && $udodata['page_type']!="category" && $udodata['page_type']!="product")) {
+			$udodata['page_name']=$title;
+	}
+}
+$catalogSession->unsCustomTitle();
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$tealiumStatus = $scopeConfig->getValue('tags/general/enabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+if(is_array($udodata)  && isset($udodata['site_section']) && !empty($tealiumStatus)){
+?>
+<span id="utag_values">
+  <input type='hidden' id='tealium_values' name='tealium_values' value='<?php echo str_replace("\n", "\n    ", json_encode($udodata, JSON_PRETTY_PRINT)); ?>' />
+</span>
+<script type="text/javascript">
+    var utag_data = <?php echo str_replace("\n", "\n    ", json_encode($udodata, JSON_PRETTY_PRINT)); ?>
+</script>
+<?php
+} ?>

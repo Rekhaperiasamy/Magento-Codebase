@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Orange\Priority\Block\Adminhtml\Priority\Edit" name="priority_priority_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Orange\Priority\Block\Adminhtml\Priority\Edit\Tabs" name="priority_priority_edit_tabs">
+                <block class="Orange\Priority\Block\Adminhtml\Priority\Edit\Tab\Orange" name="priority_priority_edit_tab_orange"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">orange_section</argument>
+                    <argument name="block" xsi:type="string">priority_priority_edit_tab_orange</argument>
+                </action>
+                <!--CedAddTab-->
+            </block>
+        </referenceContainer>
+    </body>
+</page>

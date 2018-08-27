@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>        
+        <add id="OrangeSeo::orange_telecom_reports" title="Orange Reports" translate="title" module="Orange_Seo" sortOrder="80" 
+             parent="Magento_Reports::report" resource="Magento_Reports::statistics"/>
+        <!--<add id="Magento_Reports::report_statisticss_refreshs" title="Orange Statistics" translate="title" 
+             module="Orange_Seo" sortOrder="10" parent="OrangeSeo::orange_telecom_reports" action="reports/report_statistics"
+             resource="Magento_Reports::statistics_refresh"/>   
+        <add id="OrangeSeo::orange_telecom_reports" title="Orange Reports" translate="title" module="Orange_Seo" sortOrder="80" 
+             parent="Magento_Reports::report" resource="Magento_Reports::statistics"/>-->
+        <add id="Orange_Seo::google_feed_nl" title="Google Feed NL" module="Orange_Seo" sortOrder="6"
+            parent="OrangeSeo::orange_telecom_reports" action="seo/GoogleFeed/GoogleFeedNl"  resource="Magento_Backend::content" />			
+        <add id="Orange_Seo::google_feed_fr" title="Google Feed Fr" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/GoogleFeed/GoogleFeedFr"  resource="Magento_Backend::content"/>	 
+        <add id="Orange_Seo::samsung_report_nl" title="Samsung Report NL" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/Samsung/ReportNl"  resource="Magento_Backend::content"/>	 
+        <add id="Orange_Seo::samsung_report_fr" title="Samsung Report Fr" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/Samsung/ReportFr"  resource="Magento_Backend::content"/>	
+		 <!--<add id="Orange_Seo::salespad_report_nl" title="Salespad Report NL" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/salespad/salespadnl"  resource="Magento_Backend::content"/>	 
+        <add id="Orange_Seo::salespad_report_fr" title="Salespad Report Fr" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/salespad/salespadfr"  resource="Magento_Backend::content"/>-->
+		<add id="Orange_Seo::fraud_report" title="Fraud Report" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/fraud/report"  resource="Magento_Backend::content"/>	
+		
+		<!--<add id="Orange_Seo::search_report_b2c_nl" title="Search Report B2C Nl" module="Orange_Seo" sortOrder="6"
+            parent="OrangeSeo::orange_telecom_reports" action="seo/SearchReport/SearchReportBtocNl"  resource="Magento_Backend::content" />-->			
+        <add id="Orange_Seo::search_report_b2c_fr" title="Search Report B2C" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/SearchReport/SearchReportBtocFr"  resource="Magento_Backend::content"/>
+		<!--<add id="Orange_Seo::search_report_soho_nl" title="Search Report SOHO Nl" module="Orange_Seo" sortOrder="6"
+            parent="OrangeSeo::orange_telecom_reports" action="seo/SearchReport/SearchReportSohoNl"  resource="Magento_Backend::content" />-->			
+        <add id="Orange_Seo::search_report_soho_fr" title="Search Report SOHO" module="Orange_Seo" sortOrder="6"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/SearchReport/SearchReportSohoFr"  resource="Magento_Backend::content"/>
+		<!-- <add id="orange_abandonexport::abandonexport" title="Abandon Order Export" module="Orange_Seo" sortOrder="7"
+        parent="OrangeSeo::orange_telecom_reports" action="abandonexport/items/"  resource="Magento_Backend::content"/> -->
+       <add id="Orange_Seo::translation_file_fr" title="Translation FR File" module="Orange_Seo" sortOrder="8"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/salespad/downloadfr"  resource="Magento_Backend::content"/>
+		
+		<add id="orange_admincontentUpload::orange_admincontentUpload_nl" title="Translation NL File" module="Orange_AdmincontentUpload" sortOrder="9"
+        parent="OrangeSeo::orange_telecom_reports" action="contentupload/upload/downloadnl"  resource="Magento_Backend::content"/>
+		
+		<!-- <add id="Orange_Seo::order_export" title="Order Export" module="Orange_Seo" sortOrder="10"
+        parent="OrangeSeo::orange_telecom_reports" action="seo/Order/Export"  resource="Magento_Backend::content"/> -->
+		    </menu>
+</config>

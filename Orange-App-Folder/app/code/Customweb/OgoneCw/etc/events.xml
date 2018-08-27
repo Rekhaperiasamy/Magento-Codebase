@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="sales_order_place_after">
+		<observer name="ogonecw_order_place_after" instance="Customweb\OgoneCw\Observer\OrderPlaceAfter" />
+	</event>
+	<event name="checkout_submit_all_after">
+		<observer name="ogonecwcheckout_submit_after" instance="Customweb\OgoneCw\Observer\CheckoutSubmitAfter" />
+	</event>
+	<event name="sales_order_payment_capture">
+		<observer name="ogonecw_order_payment_capture" instance="Customweb\OgoneCw\Observer\OrderPaymentCapture" />
+	</event>
+	
+	<event name="customweb_ogonecw_transaction_save_after">
+        <observer name="customweb_ogonecw_transaction_grid_sync_insert" instance="CustomwebOgoneCwIndexGridSyncInsert" />
+    </event>
+    <event name="customweb_ogonecw_transaction_delete_after">
+        <observer name="customweb_ogonecw_transaction_grid_sync_remove" instance="CustomwebOgoneCwIndexGridSyncRemove" />
+    </event>
+    <event name="config_data_dev_grid_async_indexing_disabled">
+        <observer name="customweb_ogonecw_transaction_grid_async_insert" instance="CustomwebOgoneCwIndexGridAsyncInsertObserver" />
+    </event>
+</config>

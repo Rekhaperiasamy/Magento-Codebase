@@ -1,0 +1,29 @@
+<?php
+$tempSession    =  $block->getCheckoutTempSession();
+
+    if(isset($tempSession ))
+    {
+		$previousStep = $tempSession['step'];
+		$step3DivClass = "disable_div";
+		
+		if(!isset($previousStep) || $previousStep == 'step2')
+		{
+			$step3DivClass = "disable_div";
+		}  
+		else if($previousStep == 'step3')
+		{
+			$step3DivClass = "";
+		}
+	}
+	else
+	{
+		$step3DivClass = "disable_div";
+	}
+?>
+<div id="step3_payment" class="row <?php if(isset($step3DivClass)) {  echo $step3DivClass; }?>">	
+
+		<div style="width:800px; margin:0 auto;">	<label for="edit-prepaid"><input type="radio" name="payment_type" id="payment_type" value="cashondelivery" checked>Cash On Delivery</label>
+		<input type="submit" class="btn btn-primary" value="Continuer"></div>
+</div>
+
+	

@@ -1,0 +1,7 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/App/etc/routes.xsd">
+    <router id="standard">
+        <route id="orange_sales_order_field" frontName="scoringfield">
+            <module name="Orange_Scoringfield" />
+        </route>
+    </router>
+</config>

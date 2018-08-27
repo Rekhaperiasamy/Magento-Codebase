@@ -1,0 +1,7 @@
+<?php $_order = $block->getOrder() ?>
+<?php $items = $_order->getAllItems(); ?>
+<?php $TypeId = ''; ?>
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+       $items =  $objectManager->get('Magento\Checkout\Model\Session');       
+       print_r($items); exit;
+?>

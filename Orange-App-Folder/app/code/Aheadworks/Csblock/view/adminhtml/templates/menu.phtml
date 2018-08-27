@@ -1,0 +1,24 @@
+<?php
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+?>
+<div class="aw-extensions-menu admin__action-dropdown-wrap">
+    <button class="admin__action-dropdown" title="Menu" data-toggle="dropdown" data-mage-init='{"dropdown":{}}'>
+        <span class="admin__action-dropdown-text"><?php echo $this->getCurrentItemTitle();?></span>
+    </button>
+    <ul class="admin__action-dropdown-menu">
+        <?php foreach($this->getItems() as $key => $item):?>
+            <?php $class = array_key_exists('class', $item)? $item['class']: '';?>
+        <li class="action-dropdown-menu-action<?php echo ($key==$this->getCurrentItemKey()?' current disabled':'');?> <?php echo array_key_exists('class', $item)? $item['class']: '';?>">
+            <?php if ($key == $this->getCurrentItemKey()):?>
+                <span><?php echo $item['title'];?></span>
+            <?php else:?>
+                <a href="<?php echo $item['url'];?>" data-ui-id="aw-extensions-<?php echo $key;?>" title="<?php echo $item['title'];?>"
+                    <?php echo array_key_exists('target', $item)?'target="' . $item['target'] . '"':'';?>><?php echo $item['title'];?></a>
+            <?php endif;?>
+        </li>
+        <?php endforeach;?>
+    </ul>
+</div>

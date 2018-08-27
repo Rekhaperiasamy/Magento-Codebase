@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+	<preference for="Magento\Quote\Model\QuoteManagement" type="Orange\Quote\Model\QuoteManagement" />
+	<preference for="Magento\Quote\Model\Quote\Item\ToOrderItem" type="Orange\Quote\Model\Quote\Item\ToOrderItem" />
+</config>

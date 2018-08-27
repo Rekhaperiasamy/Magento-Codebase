@@ -1,0 +1,25 @@
+<?php
+
+use Magento\Framework\App\TemplateTypesInterface;
+
+$url = $block->getSaveUrl();
+?>
+
+<form enctype="multipart/form-data" id="header-footer" name="header-footer" method="post" action="<?php echo $url; ?>">
+    <br />
+    <div id="uploader"> 
+        <label class="label admin__field-label" for="zip_file" data-validate="{required:true}"> 
+            <span>Choose a zip file to upload: </span>
+        </label>
+        <input type="file" name="zip_file" data-validate="{required:true}"/>
+    </div>
+    <br />
+    <input class="action-default scalable task" type="submit" name="submit" value="Upload" />
+</form>
+
+<script type="text/x-magento-init">
+    {
+    "#header-footer": { "validation": {}
+    }
+    }
+</script>

@@ -1,0 +1,18 @@
+{
+  "name": "orange/language-nl_be",
+  "description": "orange Dutch Language Pack for Magento 2 (CE)",
+  "version": "1.2.2",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "magento/framework": "^100.0.0"
+  },
+  "type": "magento2-language",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ]
+  }
+}

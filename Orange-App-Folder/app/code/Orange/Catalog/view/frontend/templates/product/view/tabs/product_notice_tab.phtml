@@ -1,0 +1,40 @@
+<?php
+$product = $block->getProduct();
+if ($block->getAttributeSetName() != "Accessories") {        
+    $storeCode = $block->getStoreName();    
+    if($storeCode == 'Dutch'){
+    $reevooId = 'MBD';    
+	
+    }else{
+    $reevooId = 'MBF';      
+    }                                                                             
+    ?> 
+    <div id="mobile-revoo"> </div>
+	<div class="row"><div class="col-xs-12 col-sm-12 col-md-12">
+	<div class="revoo-parent">
+		<div class="reviews-description">		
+		<div class="margin-xs-b-s"><?php echo __('reviews verzameld door');?></div>
+		<reevoo-embedded-product-reviews  trkref="<?php echo $reevooId ?>" sku="<?php echo $product->getSku() ?>" per-page="5" variant="category_page"></reevoo-embedded-product-reviews> 
+		</div>	
+		<div class="button_container margin-xs-t-m text-center reevoo-more-button">
+				<a href="https://www.reevoo.com/partner/<?php echo $reevooId ?>/<?php echo $product->getSku() ?>" class="btn btn-primary undecorated reevoomark button read-more-review" target="_blank">
+				<span class="titl"><?php if($storeCode=='Dutch'){ echo __('Meer reviews'); } else { echo __('Plus davis ici');} ?></span>
+				</a>
+				<div class="clearfix"></div>
+				<a href="https://www.reevoo.com/partner/<?php echo $reevooId ?>/<?php echo $product->getSku() ?>#about-reevoo" class="undecorated reevoomark about-reevoo btn" target="_blank"><?php if($storeCode=='Dutch'){ echo __('Over Reevoo'); } else { echo __('A propos de Reevoo'); }?></a>
+		</div>		
+	</div>
+	</div>
+	</div>
+	<script>
+        require(['jquery'], function ($) {
+            $(document).ready(function ($) {
+				if($.trim($(".reviews-description").html())==''){
+					$("#embedded_product_reviews_gtw").hide();						 
+					$('.nav-tabs a[href="#' + 'tab3' + '"]').tab('hide');
+					$('.nav-tabs a[href="#' + 'tab3' + '"]').style.display = null;			
+				}
+			});
+		});
+	</script>		
+<?php } ?>

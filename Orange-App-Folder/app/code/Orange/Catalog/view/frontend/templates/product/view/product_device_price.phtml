@@ -1,0 +1,545 @@
+<?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+<?php
+$img = array();
+$_product = $block->getProduct();
+$galleryImages = $block->getGalleryImages();
+foreach ($galleryImages as $galleryImage) {
+    if($_product->getImage() == $galleryImage->getFile()) {
+        $img[] = $galleryImage->getData('url');        
+    } 
+}
+$specialCharacter = "A-Za-zA-ÿŒŸœĲ'._\s-";
+$priceLabel = $block->getPriceLabel();
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface');
+//$currency = $storeManager->getStore()->getCurrentCurrencyCode();
+$currentStore = $storeManager->getStore();
+//$mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+//$stockStatus  = $_product->isAvailable();
+$stockStatus = $_product['quantity_and_stock_status']['is_in_stock'];
+/* obsolete device */
+$obsolete_device_val = $_product->getObsoleteDevice();
+if(isset($img[0])){
+	$image_url = $img[0];	
+}else{
+	$image_url = '';
+}
+$upsellProducts = $this->getUpsellProducts();
+$upsellProductSubscriptionAmountArray = array();
+$showShopContent = false;
+if ($upsellProducts) {
+    foreach ($upsellProducts as $upsellProduct) {
+        $subscription = $this->getSubscriptionProduct($upsellProduct);
+        $subscriptionItem = $subscription->getFirstItem();
+        $subscriptionAmount = $this->getDeviceSubscriptionAmount($subscriptionItem);
+        $upsellProductSubscriptionAmountArray[$upsellProduct->getId()] = $subscriptionAmount;
+        if ($subscriptionItem->getSubsidyDuration() == 12) {
+            $showShopContent = true;
+        }
+    }
+}
+$productId = $block->getProduct()->getId();
+$productName = $_product->getName();
+$productSku = $_product->getSku();
+$productPrice = $_product->getPrice();
+if ($this->getAttributeSetName() != "Accessories") {
+    if (!$obsolete_device_val) {
+        ?>
+        <div class="row">
+            <div class="col-xs-12 grey-strip margin-xs-b-s price-small">
+                <form action="<?php /* @escapeNotVerified */ echo $block->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                    <?php
+                    if ($stockStatus) {
+                        ?>
+                        <a class="btn btn-primary pull-right hidden-sm hidden-xs margintop4 device-cart" href="<?php echo $block->getAddCartUrl($_product->getSku()) ?>"><?php /* @escapeNotVerified */ echo __('Commander') ?></a>
+                    <?php } ?>
+                    <h5 class=""><?php /* @escapeNotVerified */ echo __('Prix sans abonnement') ?></h5>
+                    <?php echo $block->getOrangePricingHtml($_product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(), true, true, false, 'pdp new-price orange'); ?>			
+                    <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+                    <input type="hidden" name="selected_configurable_option" value="" />
+                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+                    <?php echo $block->getBlockHtml('formkey') ?>
+                    <?php echo $block->getChildHtml('form_top'); ?>
+                    <?php
+                    echo $block->getChildHtml('form_bottom');
+                    if ($stockStatus) {
+                        ?>
+                        <a class="btn btn-primary visible-sm-block visible-xs-block margin-xs-b-s device-cart mobile-width" href="<?php echo $block->getAddCartUrl($_product->getSku()) ?>"><?php /* @escapeNotVerified */ echo __('Commander') ?></a>
+        <?php } ?>
+                </form>		
+            </div>
+        </div>
+    <?php } ?>
+    <?php if (!$stockStatus && $obsolete_device_val) { ?>
+        <div class="row">            
+            <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+            <input type="hidden" name="selected_configurable_option" value="" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />	
+        </div>
+    <?php }
+}
+?>
+<!--outofstock-->
+<?php
+//url
+/** @var \Magento\Framework\UrlInterface $urlInterface */
+$urlInterface = $_objectManager->get('Magento\Framework\UrlInterface');
+$product_url = $urlInterface->getCurrentUrl();
+//$url = $this->getBaseUrl();
+$customerSession = $_objectManager->create('Magento\Customer\Model\Session');
+$logedinvalue = '';
+if ($customerSession->isLoggedIn()) {
+    $logedinvalue = 1;
+} else {
+    $logedinvalue = 0;
+}
+
+if (!$stockStatus && $block->getProduct()->getObsoleteDevice() == 0) {
+    ?>
+    <div class="row">
+        <div class="col-xs-12 grey-strip margin-xs-b-s">
+
+            <a class="btn btn-inverse btn-inverse-ongrey pull-right hidden-sm hidden-xs margin-xs-t-m" id="openModel1"><?php echo __('Etre informé') ?></a>
+            <h5 class="out_stock_txt"><big><?php echo __('Actuellement indisponible') ?></big></h5>
+            <p class="margin-xs-v-s pull-left"><small><?php echo __('Voulez-vous être informé dès que') ?> <br class="hidden-xs"><?php echo __('ce produit est de nouveau en stock') ?>&nbsp;?</small></p>
+            <a class="btn btn-inverse btn-inverse-ongrey visible-sm visible-xs margin-xs-b-s mobile-width" id="openModel2" ><?php echo __('Etre informé') ?> </a>
+            <div id="etre-popup" style="display:none">
+                <div class="myModel "id="myModel"  width="100%" >
+                    <div class="" role="document">
+                        <div id="reminderdiv">
+                            <div class="">
+                                <div class="modal-header" style="padding-top:0px; padding-left:17px;">
+                                    <div class="row">
+                                        <h3 class="no_margin"><?php echo __('Prévenez-moi quand ce produit sera à nouveau disponible') ?></h3>
+                                    </div>
+                                </div>
+                                <!---form-->
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+                                            <p class="margin-xs-b-m"><?php echo __('Nous vous préviendrons par e-mail dès que le'); ?>
+                                                <?php echo $productName; ?>
+                                                <?php echo __('sera disponible.'); ?><br class="hidden-xs">
+                                                <?php
+                                                $currentStoreName = $storeManager->getStore()->getName();
+                                                if ($currentStoreName == 'Dutch') {
+                                                    echo __('Vos informations personnelles ne seront pas utilisées à dautres effets. Consultez notre <a href=https://corporate.orange.be/nl/privacy-policy>politique de confidentialité.</a>');
+                                                } else {
+                                                    echo __('Vos informations personnelles ne seront pas utilisées à dautres effets. Consultez notre <a href=https://corporate.orange.be/fr/vie-privee>politique de confidentialité.</a>');
+                                                }
+                                                ?>												
+                                            <form action="" method="post" id="pop_up_model">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="form-item form-item-gender form-type-radio radio pull-left margin-xs-r-s"> 
+                                                            <label for="edit-gender-mr"><input type="radio" id="edit-gender-mr" name="gender" value="mr" class="form-radio" checked ><?php echo __('Mr.') ?> </label> 
+                                                        </div>
+                                                        <div class="form-item form-item-gender form-type-radio radio pull-left"> 
+                                                            <label for="edit-gender-mme"><input type="radio" id="edit-gender-mme" name="gender" value="mme" class="form-radio"><?php echo __('Mme.') ?> </label> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-4">
+                                                        <label for="edit-first-name"><?php echo __('Prénom') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>			 
+                                                        <input class="form-control validation_check margin-xs-b-s" type="text" id="edit-first-name" name="first_name" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-novalidation':true}">
+                                                        <span class="pull-left margin-xs-b-s" id="errmsg" style="color:#e02b27; font-size: 1.2rem;" ></span>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-4">
+                                                        <label for="edit-name"><?php echo __('Nom') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>		 
+                                                        <input class="form-control validation_check margin-xs-b-s" type="text" id="edit-name" name="name" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-novalidation':true}">
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-4">
+                                                        <label for="edit-email"><?php echo __('Mail') ?> <span class="form-required" title="Ce champ est requis.">*</span></label>			 
+                                                        <input class="form-control validation_check margin-xs-b-s" type="text" id="edit-email" name="edit-email" value="" size="60" maxlength="35" data-validate="{'custom-required':true, 'validate-new-email':true}">
+                                                    </div>
+
+
+
+                                                    <div class="col-xs-12">
+                                                        <a class="btn btn-primary margin-xs-v-s" id="btn1"><?php echo __('Me prévenir') ?></a>
+                                                    </div>
+
+                                                    <!--<div style='clear:both;'>&nbsp;</div>
+                                                    <div id="newslettersubscribe">
+                                                    <input type="checkbox" id="subscribenewsletter" value="notsubscribed"/>Subscribe for Newsletter
+                                            </div>
+                                                    <div class="col-xs-12 padding-xs-r-m padding-sm-r-n margin-xs-t-s">
+                                                            <label class="" for="edit-offer"><input type="checkbox" id="edit-offer" name="submitted[test_checkbox][a]" value="a" class="form-checkbox pull-left margin-xs-b-m"> <span class="">Voulez vous recevoir les offres intéressantes et les denières nouvelles mobistar</span></label>
+                                                    </div> -->
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---form-->
+                    </div>
+
+                    <div id="confirmmsg" style="margin-top:10px;margin-bottom:45px;"></div>
+                </div><!---my model-->
+            </div>
+		</div>
+        </div>
+        <script>
+            require(
+                    [
+                        'jquery',
+                        'Magento_Ui/js/modal/modal',
+                        'mage/template',
+                        'mage/mage',
+                        'js/dropdown',
+                        'jquery/validate',
+                        'jquery/ui',
+                        'mage/translate',
+                        'js/checkout_new',
+                        'mage/validation'
+                    ],
+                    function ($) {
+                        //<![CDATA[	
+                        var translates = <?php
+                                                echo \Zend_Json::encode(
+                                                        array(
+                                                            "This is a required fields." => __("This is a required fields."),
+                                                            "Please enters a valid email address (Ex: johndoe@domain.com)." => __('Please enters a valid email address (Ex: johndoe@domain.com).'),
+                                                            "Please use letters only in this field." => __('Please use letters only in this field.'),
+                                                            "Vous recevrez un mail dès que ce produit sera à nouveau disponible." => __('Vous recevrez un mail dès que ce produit sera à nouveau disponible.'),
+                                                            "Veuillez remplir le prénom." => __('Veuillez remplir le prénom.'),
+                                                            "Veuillez remplir le nom." => __('Veuillez remplir le nom.'),
+                                                            "Veuillez remplir le courriel." => __('Veuillez remplir le courriel.'),
+                                                            "Quelque chose a mal tourné. Veuillez réessayer." => __('Quelque chose a mal tourné. Veuillez réessayer.'),
+                                                        )
+                                                );
+                                                ?>;
+                        $.mage.translate.add(translates);
+
+                        $.validator.addMethod(
+                                'validate-namefiled', function (value) {
+                                    return /^[ A-Za-z_'.-]*$/.test(value);
+                                }, $.mage.__('Please use letters only in this field.'));
+						$.validator.addMethod(
+								'validate-novalidation', function (value) { 
+								 return /^[ <?php echo $specialCharacter; ?>]*$/.test(value);
+								}, $.mage.__('Please use letters only in this field.'));
+                        $.validator.addMethod(
+                                'validate-new-email', function (value) {
+                                    return $.mage.isEmptyNoTrim(value) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test(value);
+                                }, $.mage.__('Please enters a valid email address (Ex: johndoe@domain.com).'));
+
+                        $.validator.addMethod(
+                                'custom-required', function (value) {
+                                    return !$.mage.isEmpty(value);
+                                }, $.mage.__('This is a required fields.'));
+                    });
+        </script>
+        <script>
+            require(
+                    [
+                        'jquery',
+                        'Magento_Ui/js/modal/modal',
+                        'mage/template',
+                        'mage/mage',
+                        'js/dropdown',
+                        'jquery/validate',
+                        'jquery/ui',
+                        'mage/translate',
+                        'js/checkout_new',
+                        'mage/validation'
+                    ],
+                    function ($, modal) {
+
+                        var options = {
+                            type: 'popup',
+                            responsive: true,
+                            innerScroll: false,
+                            //title: 'popup mpdal title',
+                            /* buttons: [{
+                             
+                             text: $.mage.__('Close'),
+                             class: 'btn btn-primary',
+                             click: function () {
+                             this.closeModal();
+                             
+                             
+                             }
+                             }]*/
+
+                        };
+
+                        var popup = modal(options, $('#myModel'));
+                        $("#openModel1").on("click", function () {
+                            $('#myModel').modal('openModal');
+                            $('#reminderdiv').show();
+                            $('#confirmmsg').hide();
+                            $('#edit-first-name').val('');
+                            $('#edit-name').val('');
+                            $('#edit-email').val('');
+                            $('#myModel').show();
+
+                        });
+                        $("#openModel2").on("click", function () {
+                            $('#myModel').modal('openModal');
+                            $('#reminderdiv').show();
+                            $('#confirmmsg').hide();
+                            $('#edit-first-name').val('');
+                            $('#edit-name').val('');
+                            $('#edit-email').val('');
+                            $('#myModel').show();
+
+                        });
+
+                        $(".validation_check").blur(function () {
+                            var id = "#" + this.id;
+                            $(pop_up_model).validation();
+                            $.validator.validateElement($(id));
+                        });
+                        $("#btn1").on("click", function () {
+                            $('#confirmmsg').empty();
+                            var gender_val = $('input[name=gender]:checked').val();
+
+                            $(pop_up_model).validation();
+                            var first_name = $.validator.validateElement($("#edit-first-name"));
+                            var last_name = $.validator.validateElement($("#edit-name"));
+                            var email = $.validator.validateElement($("#edit-email"));
+                            if (first_name == false || last_name == false || email == false)
+                            {
+                                return false;
+                            }
+
+                            $('#reminderdiv').hide();
+
+                            $('#reminderappend').hide();
+
+                            var data = {
+                                name: $('#edit-name').val(),
+                                id: "<?php echo $productId; ?>",
+                                firstname: $('#edit-first-name').val(),
+                                email: $('#edit-email').val(),
+                                //newsletterval: newslettervalue,
+                                title: gender_val,
+                                url: "<?php echo $product_url; ?>",
+                                productname: "<?php echo $productName; ?>",
+                                sku: "<?php echo $productSku; ?>",
+                                price: "<?php echo $productPrice; ?>",
+                                product_image: "<?php echo $image_url; ?>",
+                            };
+
+                            $.ajax({
+                                url: "<?php echo $this->getBaseUrl() . 'outofstockreminder/index/index/' ?>",
+                                dataType: 'text',
+                                type: 'post',
+                                data: data,
+                                success: function (data) {
+                                    if (data == 'fname') {
+                                        $("#confirmmsg").append($.mage.__('Veuillez remplir le prénom.'));
+                                        $("#confirmmsg").show();
+                                    } else if (data == 'lastname') {
+                                        $("#confirmmsg").append($.mage.__('Veuillez remplir le nom.'));
+                                    } else if (data == 'email') {
+                                        $("#confirmmsg").append($.mage.__('Veuillez remplir le courriel.'));
+                                        $("#confirmmsg").show();
+                                    } else if (data == 'succ') {
+                                        $("#confirmmsg").append($.mage.__('Vous recevrez un mail dès que ce produit sera à nouveau disponible.'));
+                                        $("#confirmmsg").show();
+                                    } else {
+                                        $("#confirmmsg").append($.mage.__('Quelque chose a mal tourné. Veuillez réessayer.'));
+                                        $("#confirmmsg").show();
+                                    }
+                                }
+
+                            });
+                        });//close
+
+                        /* mouseover for email tooltip */
+                        var timeout;
+                        var finishTimeout = false;
+                        $('.orange').on("mouseover", function () {
+                            var el = $(this);
+                            timeout = setTimeout(function () {
+                                finishTimeout = true;
+                                el.tooltip("open");
+                                finishTimeout = false;
+                            }, 1000);
+                        });
+                        $('.orange').mouseout(function () {
+                            clearTimeout(timeout);
+                        });
+                        /* end */
+                    });
+
+        </script>
+
+<?php } ?>
+
+
+
+    <!--outofstock-->
+
+    <?php
+    if ($this->getAttributeSetName() != "Accessories") {
+
+		//commented below line for P3 – 39146639 – Click and Reserve fixes
+        //$helperClickReserve = $this->helper('Orange\Reserve\Helper\Data')->clickAndReserveEnable();
+        $productReserve = $_product->getData('click_and_reserve');
+   
+        if (!$obsolete_device_val && $showShopContent): ?>
+                    <?php $helper = $this->helper('Orange\Upload\Helper\Data')->storeInfo();
+                    $storeCode = $helper->getStore()->getCode();
+                    ?>
+            <div class="<?php if($stockStatus):?>row<?php endif; ?>">
+                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('etalement-de-paiement')->toHtml(); ?>
+            </div>
+            <?php
+            endif;
+			//commented below if condition for P3 – 39146639 – Click and Reserve fixes
+            //if ($helperClickReserve) {
+            ?>
+            <div class="row">
+        <?php if ($block->getProduct()->getObsoleteDevice() == 0): ?>
+                    <div class="col-xs-12 col-sm-6 margin-xs-b-s">
+                        <div class="media">
+                            <div class="media-left pull-left">
+                                <i class="oi oi-shop" style="font-size:20px;"></i>
+                            </div>
+                            <div class="media-body">
+                                <h5 class="margin-xs-a-n click-icn-h5"><?php /* @escapeNotVerified */ echo __('Acheter ce smartphone') ?> <br class="hidden-xs"><?php /* @escapeNotVerified */ echo __('dans un shop Orange') ?></h5>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-xs-12 col-sm-6 margin-xs-b-s">
+                        <input type="hidden" name="ip_address" id="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
+                        <button class="btn btn-default margin-xs-a-n pull-right mobile-realign" id="open_reserve"><?php /* @escapeNotVerified */ echo __('Voir la disponibilité') ?></button>
+                    </div>
+        <?php else: ?>
+                    <div class="col-xs-12 grey-strip margin-xs-b-s">
+                        <input type="hidden" name="ip_address" id="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
+                        <button class="btn btn-default pull-right margin-xs-t-m pull-right mobile-realign visible-sm visible-md visible-lg" id="open_reserve"><?php /* @escapeNotVerified */ echo __('Voir la disponibilité') ?></button>
+                        <h5 class=""><big class="mobile_openreserve"><?php /* @escapeNotVerified */ echo __('Produit épuisé en ligne') ?></big></h5>
+                        <p class="margin-xs-v-s absolute_txt"><small><?php /* @escapeNotVerified */ echo __('N’hésitez pas à consulter les stocks') ?> <?php /* @escapeNotVerified */ echo __('disponibles en shop.') ?></small></p>
+                        <button class="btn btn-default pull-right margin-xs-t-m margin-xs-b-m pull-right mobile-realign visible-xs" id="open_reserve_mobile"><?php /* @escapeNotVerified */ echo __('Voir la disponibilité') ?></button>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="modal-content" id="modal-content" style="display:none">
+        <?php echo $block->getChildHtml('click_reserve'); ?>        
+            </div>
+            <div class="daily_quota" id="daily_quota" style="display:none">
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('daily_quota')->toHtml(); ?>
+            </div>
+            <script>
+                require([
+                    'jquery',
+                    'Magento_Ui/js/modal/modal',
+                    'mage/template',
+                    'mage/mage',
+                    'js/dropdown',
+                    'jquery/validate',
+                    'jquery/ui',
+                    'mage/translate',
+                    'mage/validation'
+                ], function ($, modal) {
+                    var optionsVal = {
+                        type: 'popup',
+                        responsive: true,
+                        innerScroll: false,
+                    };
+                    var popupData = modal(optionsVal, $('#modal-content'));
+                    /* added id for mobile view call */
+                    $("#open_reserve,#open_reserve_mobile").on("click", function () {
+                        $("#daily_quota1").css("display", "none");
+                        $("#append_value_after_reserve").insertAfter("#after_reservecall_success");
+                        $("#append_value_after_reserve").hide();
+                        if ($("#edit-first-name-reserve").hasClass("mage-error")) {
+                            $("#edit-first-name-reserve").removeClass("mage-error");
+                            $("#edit-first-name-reserve-error").hide("");
+                        }
+                        if ($("#edit-name-reserve").hasClass("mage-error")) {
+                            $("#edit-name-reserve").removeClass("mage-error");
+                            $("#edit-name-reserve-error").hide("");
+                        }
+                        if ($("#edit-email-reserve").hasClass("mage-error")) {
+                            $("#edit-email-reserve").removeClass("mage-error");
+                            $("#edit-email-reserve-error").hide("");
+                        }
+                        if ($("#edit-phone-reserve").hasClass("mage-error")) {
+                            $("#edit-phone-reserve").removeClass("mage-error");
+                            $("#edit-phone-reserve-error").hide("");
+                        }
+                        $(".append_stock_data").html('');
+                        var data11 = {
+                            ip: $('#ip_address').val()
+                        };
+                        $.ajax({
+                            url: "<?php echo $this->getBaseUrl() . 'reserve/index/validation' ?>",
+                            dataType: 'json',
+                            showLoader: true,
+                            type: 'post',
+                            data: data11,
+                            success: function (data) {
+                                if (data == 'three') {
+                                    $("#daily_quota").css("display", "block");
+                                } else {
+                                    var postalcodedatavalue = '';
+                                    $('#post_code_data').val(postalcodedatavalue);
+                                    $("#modal-content").css("display", "block");
+                                    $("#click_resever_full").show();
+                                    $("#after_reservecall_success").html('');
+                                    $("#after_reservecall_success").css("display", "none");
+                                    $('#modal-content').modal('openModal');
+                                }
+
+                            }
+
+                        });
+
+                    });
+                });
+            </script>
+        <?php //} ?>
+        <?php if ($block->getProduct()->getMarketingDescription() == ''): ?>
+
+            <?php
+        endif;
+    }else if ($this->getAttributeSetName() == "Accessories") {
+        $productViewblockSoho = $block->getLayout()->createBlock('Orange\Catalog\Block\Product\CustomView');
+        $customerType = $productViewblockSoho->getCustomerTypeName();
+        if ($customerType == "SOHO") {
+            $sohoClass = "margintopsoho_acc";
+        } else {
+            $sohoClass = "margintop21";
+        }
+        $_product = $block->getProduct();
+        $obsolete_device_accessories = $_product->getObsoleteDevice();
+        $_helper = $this->helper('Magento\Catalog\Helper\Output');
+        if (!$obsolete_device_val) {
+			
+			if (!$stockStatus && $block->getProduct()->getObsoleteDevice() == 0) {
+				
+				$out_acc_class = 'row';
+			}else{
+				$out_acc_class = 'margin-xs-t-m';
+			}
+            ?>
+
+            <form action="<?php echo $this->getAccessoriesCartUrl($_product->getId()); ?>" method="post">
+                <div class="grey-strip margin-xs-b-s <?php echo $out_acc_class; ?>" id="cart_add_data">
+                    <?php if ($stockStatus) { ?>
+                        <a class="btn btn-primary pull-right hidden-sm hidden-xs <?php echo $sohoClass; ?> device-cart" href="<?php echo $block->getAddCartUrl($_product->getSku()) ?>"><?php /* @escapeNotVerified */ echo __('Commander') ?></a>
+                    <?php } ?>
+                    <h5 class=""><?php /* @escapeNotVerified echo __('Notre offre') */ echo __('Prix') ?></h5>
+                    <?php echo $block->getOrangePricingHtml($_product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(), true, true, false, 'pdp new-price orange'); ?>
+					<?php if ($stockStatus) { ?>
+                    <a class="btn btn-primary visible-sm-block visible-xs-block margin-xs-b-s mobile-width" href="<?php echo $this->getAccessoriesCartUrl($_product->getId()); ?>"><?php /* @escapeNotVerified */ echo __('Commander') ?></a>
+					<?php } ?>
+                    <?php echo $block->getBlockHtml('formkey') ?>
+                    <?php echo $block->getChildHtml('form_top'); ?>
+                    <?php echo $block->getChildHtml('form_bottom'); ?>
+                </div>
+            </form>
+        <?php
+        }
+    }
+?>

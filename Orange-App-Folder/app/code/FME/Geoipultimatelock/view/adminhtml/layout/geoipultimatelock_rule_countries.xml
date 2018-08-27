@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+
+    <container name="root">
+        <block class="FME\Geoipultimatelock\Block\Adminhtml\Rule\Edit\Tab\Countries" 
+               name="geoipultimatelock_edit_tab_countries" template="rule/edit/form/tab/countries.phtml" />
+    </container>
+</layout>

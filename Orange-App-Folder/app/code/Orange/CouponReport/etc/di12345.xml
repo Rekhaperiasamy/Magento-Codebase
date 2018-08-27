@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Orange\StockManagement\Model\ResourceModel\Stock\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">stockmanagement_stock</argument>
+            <argument name="resourceModel" xsi:type="string">Orange\StockManagement\Model\ResourceModel\Stock</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="stockmanagement_stock_data_source" xsi:type="string">Orange\StockManagement\Model\ResourceModel\Stock\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	
+	<type name="Orange\StockManagement\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Orange\StockManagement\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">stockImportUpdate</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Orange\StockManagement\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+	
+</config>

@@ -1,0 +1,99 @@
+<?php /** @var $block Colissimo\Shipping\Block\Frontend\Pickup\Load */ ?>
+<div class="colissimo-header"><h1><?php echo __('Pick-Up location') ?></h1></div>
+<div class="colissimo-content">
+    <form class="colissimo-address" id="sc-address" method="post" action="#">
+        <p>
+            <label for="sc-input-street"><?php echo __('Street') ?> :</label>
+            <input id="sc-input-street" name="street" type="text" value="<?php echo $block->getStreet() ?>" class="colissimo-street"/>
+        </p>
+        <p>
+            <label for="input-postcode"><?php echo __('Postcode') ?> <span class="colissimo-required">*</span> :</label>
+            <input id="input-postcode" name="postcode" type="text" value="<?php echo $block->getPostcode() ?>" class="colissimo-postcode required" />
+        </p>
+        <p>
+            <label for="input-city"><?php echo __('City') ?> <span class="colissimo-required">*</span> :</label>
+            <input id="input-city" name="city" type="text" value="<?php echo $block->getCity() ?>" class="colissimo-city required"/>
+        </p>
+        <?php $countries = $block->getCountries(); ?>
+        <?php if(count($countries) > 1): ?>
+            <p>
+                <label for="select-country"><?php echo __('Country') ?> <span class="colissimo-required">*</span> :</label>
+                <select name="country_id" id="select-country" class="colissimo-country">
+                    <?php foreach($countries as $country): ?>
+                        <?php if ($country['value']): ?>
+                            <option value="<?php echo $country['value'] ?>" <?php if($block->getCountryId() == $country['value']): ?> selected="selected"<?php endif; ?>><?php echo $country['label'] ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+        <?php else: ?>
+            <input type="hidden" name="country_id" value="<?php echo $block->getCountryId() ?>" />
+        <?php endif; ?>
+        <div class="colissimo-actions">
+            <button type="submit" class="colissimo-next"><span><?php echo __('Update') ?></span></button>
+        </div>
+    </form>
+    <form class="colissimo-list" id="sc-pickup" method="post" action="#">
+        <?php $collection = $block->getList() ?>
+        <?php if (count($collection)): ?>
+            <ul id="sc-list">
+                <?php /** @var \Colissimo\Shipping\Model\Pickup $pickup */ ?>
+                <?php foreach ($collection as $pickup): ?>
+                    <li>
+                        <input type="radio" value="<?php echo $pickup->getIdentifiant(); ?>-<?php echo $pickup->getReseau() ?>" name="pickup" id="sc-pickup-<?php echo $pickup->getIdentifiant(); ?>" />
+                        <label for="sc-pickup-<?php echo $pickup->getIdentifiant(); ?>">
+                            <a class="colissimo-show-info" href="#">Infos</a>
+                            <strong><?php echo $pickup->getNom() ?></strong><br />
+                            <?php echo $pickup->getData('adresse1') ?> - <?php echo $pickup->getCodePostal() ?> <?php echo $pickup->getLocalite() ?>
+                        </label>
+                        <div style="display:none">
+                            <ul class="colissimo-info">
+                                <li>
+                                    <h2><?php echo __('Address:') ?></h2>
+                                    <?php if($pickup->getAccesPersonneMobiliteReduite()): ?>
+                                        <div class="colissimo-handicap"></div>
+                                    <?php endif; ?>
+                                    <strong><?php echo $pickup->getNom() ?></strong><br />
+                                    <?php echo $block->getFullStreet($pickup, '<br />') ?><br />
+                                    <?php echo $pickup->getCodePostal() ?> <?php echo $pickup->getLocalite() ?>
+                                    <?php if($pickup->getIndiceDeLocalisation()): ?><br /><em>(<?php echo $pickup->getIndiceDeLocalisation() ?>)</em><?php endif; ?>
+                                </li>
+                                <li class="colissimo-schedule">
+                                    <h2><?php echo __('Opening:') ?></h2>
+                                    <span><?php echo __('Monday') ?> :</span> <?php echo $pickup->getHorairesOuvertureLundi() ?: __('Closed') ?><br />
+                                    <span><?php echo __('Tuesday') ?> :</span> <?php echo $pickup->getHorairesOuvertureMardi() ?: __('Closed') ?><br />
+                                    <span><?php echo __('Wednesday') ?> :</span> <?php echo $pickup->getHorairesOuvertureMercredi() ?: __('Closed') ?><br />
+                                    <span><?php echo __('Thursday') ?> :</span> <?php echo $pickup->getHorairesOuvertureJeudi() ?: __('Closed') ?><br />
+                                    <span><?php echo __('Friday') ?> :</span> <?php echo $pickup->getHorairesOuvertureVendredi() ?: __('Closed') ?><br />
+                                    <span><?php echo __('Saturday') ?> :</span> <?php echo $pickup->getHorairesOuvertureSamedi() ?: __('Closed') ?><br />
+                                    <span><?php echo __('Sunday') ?> :</span> <?php echo $pickup->getHorairesOuvertureDimanche() ?: __('Closed') ?>
+                                </li>
+                                <?php if($block->isHoliday($pickup)): ?>
+                                    <li>
+                                        <h2><?php echo __('Closure:') ?></h2>
+                                        <?php echo __('From') ?> <?php echo $block->getHolidayStart($pickup) ?> <?php echo __('to') ?> <?php echo $block->getHolidayEnd($pickup) ?>
+                                    </li>
+                                <?php endif; ?>
+                                <li class="colissimo-actions">
+                                    <button type="button" class="colissimo-previous"><span><?php echo __('Close') ?></span></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <div id="sc-map" class="colissimo-map"></div>
+            <div class="colissimo-actions">
+                <button type="button" class="colissimo-previous" id="sc-previous"><span><?php echo __('Back') ?></span></button>
+                <button type="submit" class="colissimo-next"><span><?php echo __('Next') ?></span></button>
+            </div>
+        <?php else: ?>
+            <p><?php echo __('No pickup-up was found near the specified address') ?></p>
+        <?php endif; ?>
+    </form>
+</div>
+<script>
+    require(["Colissimo_Shipping/js/view/shipping/pickup"], function(pickup) {
+        pickup.pickupInit(<?php echo $block->getJson() ?>);
+    });
+</script>

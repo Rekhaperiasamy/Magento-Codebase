@@ -1,0 +1,22 @@
+{
+    "name": "wyomind/simplegoogleshopping",
+    "description": "The Simple Google Shopping extension allows you to export quickly and safely a valid and well-structured data feed of your complete catalog of products from your Magento website to your Google Merchant Account.",
+    "type": "magento2-module",
+    "version": "12.0.1.1",
+    "license": [
+        "Commercial License - Copyright 2017 - WYOMIND Sarl - Purchasing any product (Software) from the Wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+    ],
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0",
+        "magento/framework": "^100.0.0",
+        "wyomind/core": "^3.0.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Wyomind\\SimpleGoogleShopping\\": ""
+        }
+    }
+}

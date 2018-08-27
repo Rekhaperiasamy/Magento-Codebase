@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Netstarter_StackFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="page.main.title" destination="columns.top" after="ns.faq.content.header.links" />
+        <referenceBlock name="content">
+            <block class="Netstarter\StackFaq\Block\Widget\Content" name="ns.faq.content" template="fullpage/content_fullpage.phtml">
+                <block class="Netstarter\StackFaq\Block\Faq" name="ns.faq.sidebar.menu" template="fullpage/sidebar_faq_left.phtml"/>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="columns.top">
+            <block class="Netstarter\StackFaq\Block\Widget\Content" name="ns.faq.content.header.links" before="-" template="Netstarter_StackFaq::fullpage/header_links.phtml"/>
+            <container name="ns.faq.top.container" htmlTag="div" htmlClass="ns-faq-top-bar" after="page.main.title">
+                <block class="Netstarter\StackFaq\Block\Widget\Content" name="ns.faq.content.header"  template="Netstarter_StackFaq::fullpage/content_header.phtml"/>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

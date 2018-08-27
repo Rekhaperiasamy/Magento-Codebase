@@ -1,0 +1,37 @@
+{
+    "name": "colissimo/module-rule",
+    "description": "Module Colissimo Rule for Magento 2",
+    "require": {
+        "colissimo/module-shipping": "*",
+        "magento/module-backend": "*",
+        "magento/module-catalog": "*",
+        "magento/module-config": "*",
+        "magento/module-customer": "*",
+        "magento/module-directory": "*",
+        "magento/module-payment": "*",
+        "magento/module-quote": "*",
+        "magento/module-rule": "*",
+        "magento/module-sales": "*",
+        "magento/module-shipping": "*",
+        "magento/module-store": "*",
+        "magento/module-ui": "*",
+        "magento/framework": "*"
+    },
+    "type": "magento2-module",
+    "version": "100.2.4",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Colissimo\\Rule\\": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "Matthieu Vion",
+            "homepage": "https://colissimo.magentix.fr/magento-2/",
+            "role": "Developer"
+        }
+    ]
+}

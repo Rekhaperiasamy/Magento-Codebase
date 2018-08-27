@@ -1,0 +1,282 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+  .catalog-category-view {
+    &.category-x-mas-page {
+      .main {
+        .toolbar-wrapper,
+        .toolbar-bottom,
+        #layered-filter-block,
+        .page-title-wrapper{
+          display: none;
+        }
+
+        .products-grid {
+          display: inline-block;
+          .product-items {
+            .product-item {
+              width: 24%;
+              display:none;
+            }
+            &.show-all {
+              .product-item {
+                display:block;
+              }
+
+              & + .load-more-products {
+                display:none;
+              }
+            }
+          }
+
+          .load-more-products {
+            .lib-button-primary();
+            .lib-button-revert-secondary-color();
+
+            margin:20px 0;
+            text-decoration: none;
+            color:#333333;
+            font-size:18px;
+          }
+          ol.product-items {
+            .product-item {
+              &:nth-child(-n+8) {
+                display:block;
+              }
+            }
+          }
+        }
+      }
+
+
+
+      .xmas-main-container {
+        .xmas-banner {
+          margin-top: -20px;
+          img {
+            display: block;
+          }
+        }
+        .xmas-banner-mobile {
+          margin-top: -20px;
+          img {
+            display: block;
+          }
+        }
+
+        .xmas-categories {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          margin-bottom: 50px;
+          position: relative;
+          .xmas-item {
+            width: 33.3%;
+            text-align: center;
+              .item-banner {
+                img {
+                  display: inline-block;
+				  width:91%;
+                }
+              }
+              .item-title {
+                a {
+                  .lib-font-size(45);
+                  .lib-css(font-family, @font-name__greatvibes_regular);
+                  .lib-css(color, @xmas-title-red);
+                  text-decoration: none;
+                }
+              }
+          }
+		  
+		   .xmas-giftitem {
+            width: 50%;
+            text-align: center;
+              .item-banner {
+                img {
+                  display: inline-block;
+				  width:91%;
+                }
+              }
+              .item-title {
+                a {
+                  .lib-font-size(45);
+                  .lib-css(font-family, @font-name__greatvibes_regular);
+                  .lib-css(color, @xmas-title-red);
+                  text-decoration: none;
+                }
+              }
+          }
+
+          .xmas-stars {
+            width: 100%;
+            position: absolute;
+            top:0px;
+            left:0px;
+            right: 0px;
+            text-align: center;
+            img {
+              display: inline-block;
+            }
+          }
+        }
+        .xmas-cta-container {
+          display: flex;
+          justify-content: space-between;
+          .cta-item {
+            width: 49%;
+            position: relative;
+            a {
+              img {
+                -webkit-filter: grayscale(100%);
+                filter: grayscale(100%);
+                display: block;
+                &:hover {
+                  -webkit-filter: grayscale(0%);
+                  filter: grayscale(0%);
+                }
+              }
+            }
+          }
+        }
+
+        .mobile-only {
+          display: none;
+          width: 100%;
+        }
+
+        .desktop-only {
+          display: block;
+          width: 100%;
+        }
+
+        .xmas-cat-banner {
+          margin-bottom: 30px;
+        }
+        .xmas-sub-banner {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .page-main {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+}
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+  .catalog-category-view {
+    &.category-x-mas-page {
+      .main {
+        .products-grid {
+          display: inline-block;
+          .product-items {
+            .product-item {
+              width: 24%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Tablet @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .catalog-category-view {
+    &.category-x-mas-page {
+      .main {
+        .products-grid {
+          display: inline-block;
+          .product-items {
+            .product-item {
+              width: 50%;
+            }
+          }
+        }
+      }
+    }
+    .xmas-main-container {
+      .xmas-banner {
+        display: block;
+      }
+      .xmas-banner-mobile {
+        display: none;
+      }
+    }
+  }
+}
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .catalog-category-view {
+    &.category-x-mas-page {
+      .main {
+        .products-grid {
+          display: inline-block;
+          .product-items {
+            .product-item {
+              width: 100%;
+            }
+          }
+        }
+      }
+      .xmas-main-container {
+        .xmas-banner-mobile {
+          display: block;
+        }
+        .xmas-banner {
+          display: none;
+        }
+
+        .desktop-only {
+          display: none;
+        }
+
+        .mobile-only {
+          display: block;
+        }
+
+        .xmas-categories {
+          flex-direction: column;
+
+          .xmas-item {
+            width: 100%;
+            margin-bottom: 20px;
+          }
+		   .xmas-giftitem {
+            width: 100%;
+            margin-bottom: 20px;
+          }
+        }
+
+        .xmas-cta-container {
+          flex-direction: column;
+          justify-content: space-around;
+          .cta-item {
+            width: 100%;
+            margin-bottom: 20px;
+            a {
+              img {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

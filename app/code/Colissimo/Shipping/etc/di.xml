@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Shipping Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Colissimo\Shipping\Api\PickupRepositoryInterface" type="Colissimo\Shipping\Model\PickupRepository" />
+    <preference for="Colissimo\Shipping\Api\Data\PickupSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+</config>

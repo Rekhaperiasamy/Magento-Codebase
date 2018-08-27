@@ -1,0 +1,168 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common = true) {
+
+  .account {
+    .column.main {
+      .page-title-wrapper {
+        .actions-toolbar {
+          display: inline-block;
+          width: 100%;
+          a {
+            &.reorder {
+              margin-left: 20px;
+              margin-right: 0;
+              float: right;
+            }
+          }
+        }
+      }
+      .order-links {
+        .item {
+          strong {
+            margin-bottom: 0px;
+            padding: 12px 20px 10px 20px;
+            .lib-css(font-family, @font-name__signika_regular);
+            .lib-css(color, @color-black);
+            .lib-font-size(18);
+            font-weight: 400;
+          }
+          a {
+            padding: 12px 20px 10px 20px;
+            .lib-css(border-bottom, 0);
+            .lib-css(font-family, @font-name__signika_semibold);
+            .lib-font-size(14);
+            text-decoration: none;
+            font-weight: 400;
+          }
+        }
+      }
+      .storecredit {
+        .block-balance, .block-balance-giftcard {
+          p {
+            margin-top: 15px;
+            &:last-child {
+              margin-top: 15px;
+            }
+            .price {
+              margin-top: 0px;
+            }
+          }
+        }
+        .block-balance-history {
+          .block-title {
+            .lib-css (border-bottom, 0);
+          }
+        }
+      }
+      .table-wrapper {
+        &:extend(.abs-account-blocks-tables all);
+        margin: 0px;
+      }
+      .order-details-items {
+        padding: 16px;
+        .table-wrapper {
+          &:extend(.abs-account-order-view-tables all);
+        }
+      }
+    }
+  }
+}
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+
+  .account {
+    .column.main {
+      .table-wrapper {
+        &:extend(.abs-account-blocks-tables-desktop all);
+      }
+    }
+
+    &.sales-order-history {
+      .toolbar {
+        .pages {
+          display: block;
+        }
+      }
+    }
+  }
+
+}
+
+
+//
+//  Tablet
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .account {
+    .column.main {
+      .table-wrapper {
+        &:extend(.abs-account-blocks-tables-tablet all);
+      }
+    }
+
+    &.sales-order-history {
+      .toolbar {
+        .pages {
+          display: none;
+
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+  .account {
+    .column.main {
+      .order-links {
+        .item {
+          strong {
+            padding: 12px 12px 10px;
+          }
+        }
+      }
+      .storecredit {
+        .block-balance-history {
+          .block-title {
+            padding: 0px 0px 12px;
+          }
+        }
+      }
+      .table-wrapper {
+        &:extend(.abs-account-blocks-tables-small all);
+      }
+      .order-details-items {
+        padding: 12px;
+        margin-bottom: 20px;
+        .order-title {
+          border-bottom: 0;
+          padding: 0 0 5px;
+          > strong {
+            font-size: 20px;
+          }
+        }
+        .table-wrapper {
+          &:extend(.abs-account-order-view-tables-small all);
+        }
+      }
+
+    }
+  }
+}

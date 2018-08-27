@@ -1,0 +1,23 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Dilmah\Payments\Block\Form\GlobalPay
+ */
+$instructions = $block->getInstructions();
+?>
+<?php if ($instructions): ?>
+    <?php $methodCode = $block->escapeHtml($block->getMethodCode());?>
+    <div class="items <?php /* @noEscape */ echo $methodCode ?> instructions agreement" id="payment_form_<?php /* @noEscape */ echo $methodCode ?>" style="display: none;">
+        <?php /* @noEscape */ echo nl2br($block->escapeHtml($instructions)) ?>
+    </div>
+<?php endif; ?>

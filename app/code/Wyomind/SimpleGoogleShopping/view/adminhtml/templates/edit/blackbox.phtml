@@ -1,0 +1,65 @@
+<div class="blackbox draggable">
+    <div class="resizable">
+        <div class="header">
+            <span class="button preview"><?php echo __('Preview'); ?></span>
+            <span class="button library active"><?php echo __('Library'); ?></span>
+            <span class="button report"><?php echo __('Report'); ?></span>
+            <span class="button close"></span>
+            <span class="button fullscreen"></span>
+        </div>
+        <div class="content">
+            <div class="area preview xml"><textarea id="cm-preview"></textarea></div>
+            <div class="area library"></div>
+            <div class="area report"></div>
+            <div class="area error message message-error error"><div class="msg">Error</div></div>
+            <div class="area loader"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require(["jquery", "sgs_blackbox"], function ($) {
+        $(window).on("load", function () {
+            $(".blackbox.draggable").draggable({
+                handle: ".header",
+                stop: function (et, ui) {
+                    BlackBox.savePosition(ui.position);
+                }
+            });
+            $(".blackbox .resizable").resizable({
+                stop: function (evt, ui) {
+                    BlackBox.saveSize(ui.size);
+                }
+            });
+
+            BlackBox.setPositionAndSize();
+
+            BlackBox.previewArea = CodeMirror.fromTextArea(document.getElementById('cm-preview'), {
+                matchBrackets: true,
+                mode: "application/x-httpd-php",
+                indentUnit: 2,
+                indentWithTabs: false,
+                lineWrapping: true,
+                lineNumbers: true,
+                styleActiveLine: true
+            });
+
+            $(".blackbox .button.preview").on('click', function () {
+                BlackBox.refreshPreview();
+            });
+            $(".blackbox .button.library").on('click', function () {
+                BlackBox.refreshLibrary();
+            });
+            $(".blackbox .button.report").on('click', function () {
+                BlackBox.refreshReport();
+            });
+            /* click on an attribute load sample */
+            $(document).on('click', '.load-attr-sample', function () {
+                BlackBox.loadLibrarySamples(jQuery(this));
+            });
+            
+            BlackBox.refreshLibrary();
+            
+        });
+    });
+</script>

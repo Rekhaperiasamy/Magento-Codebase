@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Handle newsletter from customer account dashboard -->
+    <type name="Magento\Newsletter\Controller\Manage\Save">
+        <plugin name="scommerce-gdpr-newsletter-save"
+                type="Scommerce\Gdpr\Model\Plugin\NewsletterSavePlugin" sortOrder="12349"/>
+    </type>
+
+    <!-- Handle subscribe footer form -->
+    <type name="Magento\Newsletter\Controller\Subscriber\NewAction">
+        <plugin name="scommerce-gdpr-subscribe-new"
+                type="Scommerce\Gdpr\Model\Plugin\SubscribePlugin" sortOrder="12349"/>
+    </type>
+
+    <!-- Handle contact us -->
+    <type name="Magento\Contact\Controller\Index\Post">
+        <plugin name="scommerce-gdpr-contact-post"
+                type="Scommerce\Gdpr\Model\Plugin\ContactPostPlugin" sortOrder="12349"/>
+    </type>
+
+    <!-- Handle checkout -->
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="scommerce-gdpr-checkout"
+                type="Scommerce\Gdpr\Model\Plugin\CheckoutPlugin" sortOrder="12349"/>
+    </type>
+
+</config>

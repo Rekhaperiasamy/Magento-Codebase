@@ -1,0 +1,9 @@
+<?php
+/**
+ * @var $block Netstarter\StackSocialMedia\Block\FbButton
+ */
+?>
+
+<?php if(!$block->isLoggedIn()) : ?>
+    <button class="loginWithFB"><?php echo $block->getFbBtnText(); ?></button>
+<?php endif; ?>

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\ProductAlert\Block\Email\Stock */
+?>
+<?php if ($_products = $block->getProducts()): ?>
+<p><?= /* @escapeNotVerified */  __('Alerte retour en stock ! Nous avons le plaisir de vous informer que ce produit est de nouveau disponible:') ?></p>
+<table>
+<?php foreach ($_products as $_product): ?>
+    <tr>
+        <td class="col photo">
+            <a href="<?= /* @escapeNotVerified */  $_product->getProductUrl() ?>" title="<?= $block->escapeHtml($_product->getName()) ?>" class="product photo">
+                <?php echo $block->getImage($_product, 'product_thumbnail_image', ['class' => 'photo image'])->toHtml(); ?>
+            </a>
+        </td>
+        <td class="col item">
+            <p>
+                <strong class="product name">
+                    <a href="<?= /* @escapeNotVerified */  $_product->getProductUrl() ?>"><?= $block->escapeHtml($_product->getName()) ?></a>
+                </strong>
+            </p>
+            <?php if ($shortDescription = $block->getFilteredContent($_product->getShortDescription())): ?>
+                <p><small><?= /* @escapeNotVerified */  $shortDescription ?></small></p>
+            <?php endif; ?>
+            <?= $block->getProductPriceHtml(
+                    $_product,
+                    \Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE,
+                    \Magento\Framework\Pricing\Render::ZONE_EMAIL,
+                    [
+                        'display_label' => __('Prix:')
+                    ]
+                );
+                ?>
+            <p><small><a href="<?= /* @escapeNotVerified */  $block->getProductUnsubscribeUrl($_product->getId()) ?>"><?= /* @escapeNotVerified */  __('Cliquer ici pour arrêter les alertes sur ce produit.') ?></a></small></p>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
+<p><a href="<?= /* @escapeNotVerified */  $block->getUnsubscribeUrl() ?>"><?= /* @escapeNotVerified */  __('Se désabonner de toutes les alertes de stock') ?></a></p>
+<?php endif; ?>

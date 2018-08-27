@@ -1,0 +1,131 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+
+  .wishlist-shared-index {
+    .page-title-wrapper {
+      margin: 14px 0 0;
+      .page-title {
+        margin-bottom: 28px;
+      }
+    }
+    .columns {
+      .column {
+        &.main {
+          .shared {
+            .wishlist {
+              &:extend(.abs-publich-wishlist-tables all);
+            }
+            .actions-toolbar {
+              margin-top: 30px;
+              margin-bottom: 50px;
+              .action{
+                &.primary {
+                  .lib-font-size(18);
+                  .lib-css(font-family, @font-name__signika_semibold);
+                  .lib-css(background, @color-yellow3);
+                  .lib-css(border, @color-yellow3);
+                  font-weight: 400;
+                  width: 200px;
+                  &:hover {
+                    .lib-css(background, @color-blue2);
+                    .lib-css(border, @color-blue2);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__xl) {
+
+  .wishlist-shared-index {
+    .columns {
+      .column {
+        &.main {
+          .shared {
+            .wishlist {
+              &:extend(.abs-publich-wishlist-tables-desktop all);
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Tablet
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .wishlist-shared-index {
+    .columns {
+      .column {
+        &.main {
+          .shared {
+            .wishlist {
+              &:extend(.abs-publich-wishlist-tables-tablet all);
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+  .wishlist-shared-index {
+    .page-title-wrapper {
+      .page-title {
+        margin-bottom: 15px;
+      }
+    }
+    .columns {
+      .column {
+        &.main {
+          .shared {
+            .wishlist {
+              &:extend(.abs-publich-wishlist-tables-small all);
+            }
+            .actions-toolbar {
+              margin-top: 40px;
+              margin-bottom: 40px;
+              .action {
+                &.primary {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

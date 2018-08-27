@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_ProductSlider
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="dilmah_product_slider" class="Dilmah\ProductSlider\Block\Widget\ProductWidget" is_email_compatible="true"
+            placeholder_image="Dilmah_ProductSlider::images/product_slider.png" >
+        <label translate="true">Featured Catalog Products List By Category</label>
+        <description translate="true">Featured category listed by given category id.</description>
+        <parameters>
+            <parameter name="featured_category_id" xsi:type="text" required="true" visible="true">
+                <label translate="true">Featured Category Id</label>
+                <value>1</value>
+            </parameter>
+            <parameter name="captions" xsi:type="text" required="true" visible="true">
+                <label translate="true">Frontend Label</label>
+                <value>Featured Teas &amp; Products</value>
+            </parameter>
+            <parameter name="products_count" xsi:type="text" required="true" visible="true">
+                <label translate="true">Number of Products to Display</label>
+                <value>10</value>
+            </parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="Dilmah_ProductSlider::widget/product_grid.phtml" selected="true">
+                        <label translate="true">Products Grid Template</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="cache_lifetime" xsi:type="text" visible="true">
+                <label translate="true">Cache Lifetime (Seconds)</label>
+                <description translate="true">86400 by default, if not set. To refresh instantly, clear the Blocks HTML Output cache.</description>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

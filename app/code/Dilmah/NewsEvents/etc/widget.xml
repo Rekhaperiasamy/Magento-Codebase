@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_NewsEvents
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="dilmah_news_events" class="Dilmah\NewsEvents\Block\Widget\NewsEvents" is_email_compatible="true"
+            placeholder_image="Dilmah_NewsEvents::images/newsevents.png">
+        <label translate="true">Home Page News Items</label>
+        <description translate="true">News content of home page</description>
+        <parameters>
+            <parameter name="captions" xsi:type="text" required="true" visible="true">
+                <label translate="true">Frontend Title</label>
+                <value>News &amp; Events</value>
+            </parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="Dilmah_NewsEvents::widget/home_news.phtml" selected="true">
+                        <label translate="true">General</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="cache_lifetime" xsi:type="text" visible="true">
+                <label translate="true">Cache Lifetime (Seconds)</label>
+                <description translate="true">86400 by default, if not set. To refresh instantly, clear the Blocks HTML
+                    Output cache.
+                </description>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

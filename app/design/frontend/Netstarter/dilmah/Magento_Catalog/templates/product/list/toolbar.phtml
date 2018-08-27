@@ -1,0 +1,34 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Catalog
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Dilmah\Catalog\Block\Product\ProductList\DilmahToolbar
+ */
+use Magento\Catalog\Block\Product\ProductList\DilmahToolbar;
+?>
+<?php if ($block->getCollection()->getSize()): ?>
+    <div class="toolbar toolbar-products" data-mage-init='<?php /* @escapeNotVerified */ echo $block->getWidgetOptionsJson(); ?>'>
+        <?php if ($block->isExpanded()): ?>
+            <?php include ($block->getTemplateFile('product/list/toolbar/sorter.phtml')) ?>
+        <?php endif; ?>
+        <?php include ($block->getTemplateFile('product/list/toolbar/amount.phtml')) ?>
+        <?php echo $block->getPagerHtml() ?>
+        <?php if ($block->isExpanded()): ?>
+            <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/viewmode.phtml')) ?>
+        <?php endif; ?>
+        <?php //include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')) ?>
+    </div>
+<?php endif ?>

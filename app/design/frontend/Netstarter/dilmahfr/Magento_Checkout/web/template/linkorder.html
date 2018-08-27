@@ -1,0 +1,26 @@
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<div>
+    <!-- ko ifnot: orderLinked -->
+    <p class="linked-heading" data-bind="i18n: 'Nous avons trouvé un compte lié à votre adresse mail'"></p>
+    <p class="email-address"><span data-bind="i18n: 'Email Address'"></span></p>
+    <p class="email-text"><span data-bind="text: getEmailAddress()"></span></p>
+    <form method="post" data-bind="submit: linkOrder">
+        <input type="submit" class="action primary" data-bind="value: $t('Associer cette commande à mon compte'), disable: linkStarted" />
+    </form>
+    <!-- /ko -->
+    <!-- ko if: orderLinked -->
+    <p class="link-thank-you" data-bind="i18n: 'Je vous remercie. Votre commande est désormais liée au compte'"></p><span class="link-thank-you" data-bind="text: getEmailAddress()"></span>
+    <!-- /ko -->
+    <!-- ko if: orderLinkError -->
+    <p data-bind="i18n: 'Quelque chose c'est mal passé. Merci d'essayer plus tard.'"></p>
+    <!-- /ko -->
+</div>

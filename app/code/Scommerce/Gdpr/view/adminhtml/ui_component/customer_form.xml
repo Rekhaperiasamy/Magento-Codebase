@@ -1,0 +1,9 @@
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="buttons" xsi:type="array">
+            <item name="scommerce_gdpr_delete" xsi:type="string">Scommerce\Gdpr\Block\Adminhtml\Customer\Edit\DeleteButton</item>
+            <item name="scommerce_gdpr_email" xsi:type="string">Scommerce\Gdpr\Block\Adminhtml\Customer\Edit\EmailButton</item>
+            <item name="scommerce_gdpr_export" xsi:type="string">Scommerce\Gdpr\Block\Adminhtml\Customer\Edit\ExportButton</item>
+        </item>
+    </argument>
+</form>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_RegionShipping
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="quote_convert_item">
+            <field name="region_shipping">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+        <fieldset id="sales_convert_order_item">
+            <field name="region_shipping">
+                <aspect name="to_quote_item" />
+            </field>
+        </fieldset>
+    </scope>
+</config>

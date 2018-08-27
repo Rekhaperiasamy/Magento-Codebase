@@ -1,0 +1,39 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="guest-user-confirmation">
+    <!-- ko ifnot: accountCreated -->
+    <p class="guest-user-header" data-bind="i18n: 'Je bent er bijna.. Meld je aan voor een account'"></p>
+    <p class="email-label"><span data-bind="i18n: 'E-mailadres'"></span></p>
+    <p class="email-text"><span data-bind="text: getEmailAddress()"></span></p>
+    <form method="post" data-bind="submit: createAccount" class="guest-register">
+        <div class="field password">
+            <label class="label" for="password">
+                <span data-bind="i18n: 'Vul je wachtwoord in'"></span>
+            </label>
+            <input type="password" class="input-text" data-validate="{required:true, 'validate-password':true}" autocomplete="off" name="password" id="password" />
+            <!-- ko if: creationError -->
+            <div class="message error">
+                <span data-bind="i18n: 'Er is iets fout gegaan, probeer het later nogmaals. '"></span>
+            </div>
+            <!-- /ko -->
+            <span data-bind="i18n: 'Minsten 6 karakters'" class="login-info"></span>
+        </div>
+        <div class="field choice newsletter">
+            <input type="checkbox" name="is_subscribed" title="Ik wil me ook aanmelden voor de nieuwsbrief" value="1" id="is_subscribed" class="checkbox">
+            <label for="is_subscribed" class="label"><span></span><span data-bind="i18n: 'Ik wil me ook aanmelden voor de nieuwsbrief'"></span></label>
+        </div>
+        <input type="submit" class="action primary" data-bind="value: $t('Log in'), disable: creationStarted" />
+        <p class="terms-conditions"><span class="terms" data-bind="i18n: 'Door je aan te melden ga je akkoord met onze '" ></span><a href="/terms-conditions" data-bind="i18n: 'Algemene voorwaarden'"></a></p>
+    </form>
+    <!-- /ko -->
+    <!-- ko if: accountCreated -->
+    <div class="message success">
+        <span data-bind="i18n: 'Een brief met verdere instructies wordt verzonden naar uw email.'"></span>
+    </div>
+    <!-- /ko -->
+
+</div>

@@ -1,0 +1,8 @@
+<script>
+    require(["jquery","sgs_index"], function ($) {
+        $(window).on("load", function () {
+            Index.updater.url = '<?php echo $block->getUrl('simplegoogleshopping/feeds/updater'); ?>';
+            Index.updater.init();
+        });
+    });
+</script>

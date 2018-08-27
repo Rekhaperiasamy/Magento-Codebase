@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="core_block_abstract_to_html_after">
+        <observer name="ops_append_check_box_to_refund_form" instance="Netresearch\OPS\Observer\AppendCheckBoxToRefundForm"/>
+        <observer name="show_warning_if_ops_transaction_is_closed" instance="Netresearch\OPS\Observer\ShowWarningForClosedTransactions"/>
+    </event>
+    <event name="sales_order_payment_capture">
+        <observer name="ops_add_invoice_to_payment" instance="Netresearch\OPS\Observer\SalesOrderPaymentCapture"/>
+    </event>
+    <event name="adminhtml_block_html_before">
+        <observer name="ops_update_order_cancel_button" instance="Netresearch\OPS\Observer\UpdateOrderCancelButton"/>
+    </event>
+</config>

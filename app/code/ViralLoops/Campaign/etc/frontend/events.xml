@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_login">
+        <observer name="viralloops_campaign_customer_login" instance="ViralLoops\Campaign\Observer\CreateCouponRegistrationObserver" />
+    </event>
+    <event name="customer_logout">
+        <observer name="viralloops_campaign_customer_logout" instance="ViralLoops\Campaign\Observer\RemoveReferralCodeObserver" />
+    </event>
+    <event name="controller_front_send_response_before">
+        <observer name="viralloops_campaign_predispatch" instance="ViralLoops\Campaign\Observer\SaveReferralCodeObserver" />
+    </event>
+</config>

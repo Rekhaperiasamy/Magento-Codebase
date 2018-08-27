@@ -1,0 +1,29 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SpecialOrders
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+<?php $product = $block->getProduct() ?>
+<?php if ($product->isSalable()): ?>
+    <div class="sticky-add-to-cart">
+        <div class="add-to-wrap">
+            <div class="add-to-wrap-in">
+                <div class="add-box">
+                    <?php echo $block->getChildHtml('addtocart.mobile') ?>
+                </div>
+        </div>
+        </div>
+
+    </div>
+<?php endif; ?>

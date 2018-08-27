@@ -1,0 +1,56 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Dilmah\Payments\Block\Form\Ntb $block */
+?>
+<?php $encryptedInvoice = $block->getEncryptedInvoice() ?>
+<?php if(!$block->getSocketCreationErr() && !$block->getInvoiceSentError() && !$block->getEncryptionErr()): ?>
+    <form name="send_form" id="amex_review_form" method="post" action="<?php echo $block->getIpgServerUrl()?>" >
+        <input type="hidden" value="<?php echo $encryptedInvoice ?>" name="encryptedInvoicePay">
+    </form>
+    <script>
+        require([
+            'jquery',
+        ], function ($) {
+            $('#amex_review_form').submit();
+        });
+    </script>
+<?php else:
+    if ($block->isDebugEnabled()):
+    ?>
+    <h2>Error in generating Encrypted invoice</h2><br /><br />
+    <h4>Socket Creation Errors</h4>
+    <ul>
+        <li><b>Socket Error No : </b> <?php print $block->getErrNo() ?></li>
+        <li><b>Socket Error String : </b><?php print $block->getErrString(); ?></li>
+        <li><b>Application Error Message : </b><?php print $block->getErrorMessage(); ?></li>
+    </ul>
+    <h4>Encryption Errors</h4>
+    <ul>
+        <li><b>Error Code : </b> <?php echo $block->getEncErrorNo() ?></li>
+        <li><b>Error Message : </b><?php echo $block->getEncErrorMsg() ?></li>
+    </ul>
+<?php
+    else:
+        $err = 'Socket Creation Errors: ' . $block->getErrString() . ':: Encryption Errors: ' . $block->getEncErrorMsg();
+        $block->logErrors($err);
+        ?>
+        <script>
+            require([
+                'jquery',
+            ], function ($) {
+                window.location.replace('/checkout/cart')
+            });
+        </script>
+<?php
+    endif;
+endif; ?>

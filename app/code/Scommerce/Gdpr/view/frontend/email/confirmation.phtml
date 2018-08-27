@@ -1,0 +1,22 @@
+<?php
+/**
+ * Delete confirmation email template
+ * Email template to send email to customer with delete confirmation link
+ */
+?>
+
+<!--@subject Account Deletion Confirmation @-->
+
+{{template config_path="design/email/header_template"}}
+<p>
+    As requested we are sending you this email so that you can completely remove your personal data from our website.
+    If you haven't requested this then please ignore or remove this email.
+</p>
+<h2>To delete your account and anonymise all transaction data from our website, please click the link below.</h2>
+<a href="{{var link|raw}}">{{var link|raw}}</a>
+<p style="color:#ff0000">
+    Please note - Once you have marked your data to be deleted or anonymised from our website then your data unfortunately cannot be restored.
+</p>
+<br>
+<p>Thank you.</p>
+{{template config_path="design/email/footer_template"}}

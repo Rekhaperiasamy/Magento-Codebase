@@ -1,0 +1,37 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+    // Fix for add to cart button
+    .products-grid {
+        &.grid {
+            .product-item {
+                .product-item-info {
+                    .product-item-details {
+                        .product-item-actions {
+                            display: inline-block;
+
+                            .actions-primary {
+                                display: flex !important;
+                                flex-wrap: wrap;
+                                align-content: center;
+                                justify-content: center;
+
+                                .action.primary {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

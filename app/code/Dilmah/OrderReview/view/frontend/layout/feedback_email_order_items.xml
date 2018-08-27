@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_OrderReview
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Feedback Email Order Items List">
+    <body>
+        <block class="Magento\Framework\View\Element\Template" name="feedback_email_items" template="Dilmah_OrderReview::email/items.phtml" cacheable="false" />
+    </body>
+</page>

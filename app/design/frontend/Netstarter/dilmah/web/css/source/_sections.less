@@ -1,0 +1,137 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .product.data.items {
+        //.lib-data-accordion();
+
+        margin-bottom: @indent__base;
+        margin-left: -@layout__width-xs-indent;
+        margin-right: -@layout__width-xs-indent;
+        .item.title {
+            a {
+                position: relative;
+                .lib-css(font-family,@font-name__signika_semibold);
+                .lib-css(color,@color-gray-darken1);
+                .lib-css(background-color,@color-gray-light4);
+                .lib-css(font-size,16px);
+                height: 50px;
+                display: block;
+                padding: 0px @indent__l;
+                vertical-align: middle;
+                width: 100%;
+                background: url("../images/button_texture.svg");
+                .lib-css(background-color,@color-yellow3);
+                .lib-css(color,@color-white);
+                text-decoration: none;
+                background-size:contain;
+                background-repeat: repeat;
+                line-height: 50px;
+
+                .lib-icon-font(
+                    @_icon-font-content: @icon-down,
+                    @_icon-font-size: 14px,
+                    @_icon-font-line-height: @icon-font__line-height,
+                    @_icon-font-color: @icon-font__color,
+                    @_icon-font-color-hover: @icon-font__color-hover,
+                    @_icon-font-color-active: @icon-font__color-active,
+                    @_icon-font-margin: @icon-font__margin,
+                    @_icon-font-vertical-align: @icon-font__vertical-align,
+                    @_icon-font-position: after,
+                    @_icon-font-display: false
+                );
+                &:after {
+                    position: absolute;
+                    right: @indent__l;
+                    top: @indent__s;
+                }
+            }
+            &.active a:after {
+                content: @icon-up;
+            }
+            margin-bottom: 1px;
+            .show-for-desktop{
+                display: none;
+            }
+        }
+        .value p:last-child {
+            margin-bottom: 0;
+        }
+        .table-wrapper {
+            margin: 0;
+        }
+      >.item.content{
+        border: none;
+        .title{
+            strong{
+                .lib-css(font-size,25px);
+                font-weight: normal;
+                .lib-css(color,@color-gray-darken1);
+            }
+            margin-bottom: 30px;
+        }
+
+      }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .product.data.items {
+        .lib-data-tabs();
+        border-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        .item.title{
+            display: none;
+        }
+        .item.title a:after {
+            display: none;
+        }
+      >.item.content{
+          border: none;
+          margin-left: inherit;
+          border-bottom: 1px solid @color-gray-light0;
+          margin-top: 0px;
+      }
+    }
+}
+
+//
+//    Mobile @screen__m
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+    .product.data.items {
+
+        .item.title{
+            display: block;
+        }
+        >.item.content{
+
+            .title{
+                strong{
+                    .lib-css(font-size,20px);
+                    font-weight: normal;
+                    .lib-css(color,@color-gray-darken1);
+                }
+                margin-bottom: 30px;
+                margin-top: 30px;
+            }
+            padding-left: @indent__base;
+            padding-right: @indent__base;
+            padding-bottom: @indent__base;
+        }
+
+    }
+
+}

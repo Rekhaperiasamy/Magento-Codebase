@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Catalog
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.main">
+            <container class="Magento\Framework\View\Element\Template" name="product.promo.info.container" htmlTag="div" htmlClass="product_promo_info" after="product.info.extrahint">
+                <block class="Magento\Cms\Block\Block" name="product.promo.info">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">product_promo_info</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

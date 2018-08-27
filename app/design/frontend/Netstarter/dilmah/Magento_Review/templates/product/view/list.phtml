@@ -1,0 +1,80 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Magento\Review\Block\Product\View\ListView
+ */
+?>
+<?php
+    $_items = $block->getReviewsCollection()->getItems();
+?>
+<?php if (count($_items)):?>
+<div class="block review-list" id="customer-reviews">
+    <div class="block-content">
+        <?php echo $block->getChildHtml('product.rating.summary') ?>
+        <ol class="items review-items">
+            <?php foreach ($_items as $_review):?>
+                <li class="item review-item" itemscope itemprop="review" itemtype="http://schema.org/Review">
+                    <div class="review-title" itemprop="name"><?php echo $block->escapeHtml($_review->getTitle()) ?></div>
+                    <div class="review-details">
+                        <p class="review-author">
+                            <strong class="review-details-value" itemprop="author"><?php echo $block->escapeHtml($_review->getNickname()) ?></strong>
+                        </p>
+                        <p class="review-date">
+                            <span class="sep"> - </span><time class="review-details-value" itemprop="datePublished" datetime="<?php /* @escapeNotVerified */ echo date('dS M Y', strtotime($_review->getCreatedAt())) ?>"><?php /* @escapeNotVerified */ echo date('dS M Y', strtotime($_review->getCreatedAt())) ?></time>
+                        </p>
+                        <?php if ($_ratingCount = count($_review->getRatingVotes())): ?>
+                            <div class="review-ratings">
+                                <?php
+                                $_totalRatings = 0;
+                                foreach ($_review->getRatingVotes() as $_vote):
+                                    $_totalRatings += $_vote->getPercent();
+                                endforeach;
+                                $_averageRating = $_totalRatings / $_ratingCount;
+                                ?>
+                                <div class="rating-summary item" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                    <div class="rating-result" title="<?php /* @escapeNotVerified */ echo $_averageRating ?>%">
+                                        <meta itemprop="worstRating" content = "1"/>
+                                        <meta itemprop="bestRating" content = "100"/>
+                                        <span style="width:<?php /* @escapeNotVerified */ echo $_averageRating ?>%">
+                                            <span itemprop="ratingValue"><?php /* @escapeNotVerified */ echo $_averageRating ?>%</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="review-content" itemprop="description"  >
+                        <p><?php echo $block->escapeHtml($_review->getDetail()) ?></p>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <div class="toolbar review-toolbar">
+            <?php echo $block->getChildHtml('toolbar') ?>
+        </div>
+    </div>
+
+    <script>
+        require(["jquery", "jquery/ui", "readMore"], function ($) {
+            $('.review-content').readMore({
+                targetElement: "p",
+                limitTextBy:500
+
+            })
+        });
+    </script>
+
+</div>
+<?php else: ?>
+    <div class="block review-list" id="customer-reviews">
+        <?php echo __('Be the first to review this product.') ?>
+    </div>
+<?php endif;?>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="dilmah_payments_item_block"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Dilmah\Payments\Block\Adminhtml\Item" name="adminhtml.dilmah_payments.grid.container"/>
+        </referenceContainer>
+    </body>
+</page>

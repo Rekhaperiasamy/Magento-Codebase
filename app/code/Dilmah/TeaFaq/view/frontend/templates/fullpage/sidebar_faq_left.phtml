@@ -1,0 +1,22 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Netstarter_StackFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+/**
+ * FAQ template - sidebar
+ *
+ * @var $block \Netstarter\StackFaq\Block\Faq
+ */
+?>
+<div class="faq-link-wrapper">
+    <div class="faq-mobile-links-header" style="display: none;">FAQs</div>
+    <div class="faq-link-set">
+        <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('faq_sidebar_links_block')->toHtml();?>
+    </div>
+</div>

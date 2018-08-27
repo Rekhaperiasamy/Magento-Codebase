@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Shopping Cart</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Shopping Cart</item>
+                    <item name="label" xsi:type="string" translate="true">Shopping Cart</item>
+                    <item name="link" xsi:type="string">/checkout/cart</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.summary.title" remove="true"/>
+        <block class="Magento\Cms\Block\Block" name="cart.information">
+            <arguments>
+                <argument name="block_id" xsi:type="string">shopping_cart_information</argument>
+            </arguments>
+        </block>
+
+        <referenceContainer name="checkout.cart.container">
+        <block class="Magento\Framework\View\Element\Template" name="cart.discount.title" template="Magento_Checkout::cart/discount_title.phtml" before="cart.discount"/>
+         <block class="Magento\Checkout\Block\Cart" name="cart.continue.shopping" template="Magento_Checkout::cart/continue_shopping.phtml" after="cart.discount"/>
+        </referenceContainer>
+        <referenceBlock name="checkout.cart">
+            <container name="cart.recently.viewed" label="Shopping Cart Recently Viewed" />
+        </referenceBlock>
+        <referenceContainer name="cart.summary">
+            <container name="cart.summary.inner" htmlTag="div" htmlClass="cart-summary-inner" before="-"/>
+        </referenceContainer>
+        <move element="cart.information" destination="cart.summary" after="checkout.cart.methods.bottom"/>
+        <!--<move element="cart.continue.shopping" destination="checkout.cart.container"/>-->
+        <move element="checkout.cart.shipping" destination="cart.summary.inner" after="checkout.cart.summary.title"/>
+        <move element="checkout.cart.totals.container" destination="cart.summary.inner"/>
+        <move element="checkout.cart.methods.bottom" destination="cart.summary.inner"/>
+    </body>
+</page>

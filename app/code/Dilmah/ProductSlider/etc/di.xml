@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_ProductSlider
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Dilmah\ProductSlider\Block\Widget\ProductWidget" shared="false">
+        <arguments>
+            <argument name="context" xsi:type="object">Magento\Catalog\Block\Product\Context</argument>
+            <argument name="productCollectionFactory" xsi:type="object" shared="false">Magento\Catalog\Model\ResourceModel\Product\CollectionFactory</argument>
+            <argument name="httpContext" xsi:type="object" shared="false">Magento\Framework\App\Http\Context</argument>
+            <argument name="categoryData" xsi:type="object" shared="false">Magento\Catalog\Model\Category</argument>
+        </arguments>
+    </type>
+</config>

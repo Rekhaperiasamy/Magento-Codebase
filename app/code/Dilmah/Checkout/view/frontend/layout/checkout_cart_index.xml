@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="checkout.cart.form.before">
+            <block class="Magento\Checkout\Block\Cart" name="checkout.cart.banner" template="Dilmah_Checkout::cart/banner.phtml">
+                <block class="Magento\Cms\Block\Block" name="banner" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">shopping_cart_banner</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="banner.mobile" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">shopping_cart_banner_mobile</argument>
+                    </arguments>
+                </block>
+            </block>
+            <block class="Dilmah\Checkout\Block\Cart" name="checkout.cart.shipping.message"
+                   template="Dilmah_Checkout::cart/shipping_message.phtml" ifconfig="shipping/message/active" after="-">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

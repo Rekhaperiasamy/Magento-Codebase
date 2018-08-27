@@ -1,0 +1,286 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables
+//  ---------------------------------------------
+
+@collapsible-nav-background: @sidebar__background-color;
+@collapsible-nav-color: @color-gray34;
+@collapsible-nav-current-border: 3px solid transparent;
+@collapsible-nav-current-border-color: @color-orange-red1;
+@collapsible-nav-current-color: @color-black;
+@collapsible-nav-current-font-weight: @font-weight__semibold;
+@collapsible-nav-item-hover: @color-gray91;
+
+//
+
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+
+//
+//  Collapsible navigation
+//  ---------------------------------------------
+
+.block-collapsible-nav {
+    .content {
+        .lib-css(background, @color-gray-light6);
+        padding: 0;
+
+    }
+    .item {
+        margin: 0;
+        a,
+        > strong {
+            min-height: 50px;
+            .lib-css(border-bottom,  solid 1px @color-gray-light0);
+            .lib-css(color, @collapsible-nav-color);
+            font-size: 18px;
+            display: block;
+            overflow: hidden;
+            padding: 0 60px 0 20px;
+            line-height: 20px;
+            position: relative;
+            word-break: normal;
+            text-transform: capitalize;
+            .lib-icon-font(
+                @_icon-font-content: @icon-next,
+                @_icon-font-size: 13px,
+                @_icon-font-position: after,
+                @_icon-font-display: block
+            );
+            &:after {
+                position: absolute;
+                right: 28px;
+                top: 10px;
+            }
+
+        }
+        a {
+            text-decoration: none;
+            &:hover {
+                .lib-css(color, @color-blue1);
+            }
+        }
+        &.current {
+            min-height: 50px;
+            background: url('../images/leaf-bg-repeater.png') repeat @color-dilmah-green;
+            a {
+                strong, b {
+                    font-weight: 400;
+                }
+            }
+            a,
+            > strong {
+                border: 0;
+                cursor: pointer;
+                font-family: @font-name__signika_semibold;
+                margin: 0;
+                line-height: 20px;
+                .lib-css(color, @color-white);
+                font-weight: 400;
+                z-index: 1;
+                .lib-icon-font(
+                    @_icon-font-content: @icon-next,
+                    @_icon-font-size: 13px,
+                    @_icon-font-position: after,
+                    @_icon-font-display: block
+                );
+
+                &:after {
+                    position: absolute;
+                    right: 28px;
+                    top: 10px;
+                }
+            }
+
+        }
+        &:last-child {
+            a, > strong {
+                border-bottom: 0;
+            }
+        }
+
+    }
+}
+
+}
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+
+    //
+    //  Collapsible navigation
+    //  ---------------------------------------------
+
+    .block-collapsible-nav {
+        .item {
+            a,
+            > strong {
+                font-size: 18px;
+                padding: 14px 50px 14px 20px;
+            }
+
+
+        }
+    }
+}
+
+
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .block-collapsible-nav {
+        .title {
+            &:extend(.abs-visually-hidden-desktop all);
+        }
+    }
+}
+
+
+
+//
+//  Tablet @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+    //
+    //  Collapsible navigation
+    //  ---------------------------------------------
+
+    .block-collapsible-nav {
+        .item {
+            a,
+            > strong {
+                font-size: 15px;
+                padding: 14px 50px 14px 20px;
+            }
+
+
+        }
+    }
+
+}
+
+
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .block-collapsible-nav {
+        left: 0;
+        position: absolute;
+        top: -21px;
+        width: 100%;
+        z-index: 5;
+        .title {
+            min-height: 55px;
+            background: url('../images/leaf-bg-repeater.png') repeat @color-dilmah-green;
+            margin: 0;
+            > strong {
+                .lib-css(color, @color-white);
+                cursor: pointer;
+                font-weight: @font-weight__regular;
+                font-family: @font-name__signika_semibold;
+                z-index: 1;
+                font-size: 20px;
+                display: block;
+                overflow: hidden;
+                padding: 0 60px 0 30px;
+                line-height: 56px;
+                position: relative;
+                word-break: break-all;
+                text-transform: capitalize;
+                margin: 0;
+                .lib-icon-font(
+                    @_icon-font-content: @icon-down,
+                    @_icon-font-size: 25px,
+                    @_icon-font-color: @color-white,
+                    @_icon-font-position: after,
+                    @_icon-font-display: block
+                );
+                &:after {
+                    position: absolute;
+                    right: 30px;
+                    top: 5px;
+                }
+                &:hover {
+                    &:after {
+                        .lib-css(color, @color-white);
+                    }
+                }
+            }
+            &.active {
+                > strong {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-up,
+                        @_icon-font-position: after
+                    );
+                }
+            }
+
+        }
+        .content {
+            display: none;
+            &.active,
+            &.collapsing{
+                @_shadow: 0 1px 5px 0 rgba(50, 50, 50, .2);
+                padding: 18px 40px 16px;
+                .lib-css(background, @color-white);
+                .lib-css(box-shadow, @_shadow);
+                .lib-css(border-bottom,  solid 1px @color-gray-light0);
+                .item {
+                    &.current {
+                        min-height: 0;
+                        background: none;
+                        .lib-css(border-bottom,  solid 1px @color-gray-light0);
+                        strong {
+                            color: @color-dilmah-green;
+                            font-weight: 400;
+                            .lib-css(font-family,@font-name__signika_regular);
+                        }
+                    }
+                    a, > strong {
+                        line-height: 38px;
+                        min-height: 38px;
+                        font-size: 16px;
+                        padding: 0 35px 0 0;
+                        &:after {
+                            display: none;
+                        }
+                        /*.lib-css(color, @color-gray-darken3);*/
+                        /*.lib-icon-font(
+                            @_icon-font-content: @icon-down,
+                            @_icon-font-size: 13px,
+                            @_icon-font-position: after,
+                            @_icon-font-display: block
+                        );*/
+
+                        &:after {
+                            position: absolute;
+                            right: 22px;
+                            top: 10px;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

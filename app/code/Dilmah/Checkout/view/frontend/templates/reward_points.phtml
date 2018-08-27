@@ -1,0 +1,26 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/**
+ * @see \Magento\Reward\Block\Tooltip
+ */
+
+if ($block->getRewardPoints() && $block->getRewardPoints() > 0):
+    ?>
+    <span class="title"><?php echo __("You've earned"); ?></span>
+    <span class="count">
+        <?php echo $block->getRewardPoints(); ?>
+    </span>
+    <span class="rewards-text-bottom"><?php echo __("Reward points with this order"); ?></span>
+    <?php
+endif;

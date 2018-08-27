@@ -1,0 +1,164 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+.lib-font-face(
+    @family-name: @font-name__signika_regular,
+    @font-path: '@{baseDir}fonts/signika/signika-regular-webfont',
+    @font-weight: normal,
+    @font-style: normal
+);
+
+.lib-font-face(
+    @family-name: @font-name__signika_semibold,
+    @font-path: '@{baseDir}fonts/signika/signika-semibold-webfont',
+    @font-weight: normal,
+    @font-style: normal
+);
+
+.lib-font-face(
+    @family-name: @font-name__signika_bold,
+    @font-path: '@{baseDir}fonts/signika/signika-bold-webfont',
+    @font-weight: normal,
+    @font-style: normal
+);
+
+.lib-font-face(
+    @family-name: @font-name__signika_light,
+    @font-path: '@{baseDir}fonts/signika/signika-light-webfont',
+    @font-weight: normal,
+    @font-style: normal
+);
+
+
+.lib-font-face(
+@family-name: @font-name__greatvibes_regular,
+@font-path: '@{baseDir}fonts/greatvibes/greatvibes-regular-webfont',
+@font-weight: normal,
+@font-style: normal
+);
+
+
+
+    //Overwrite Heading Mixin
+    // adding leaf icon heading tags
+
+  .lib-heading(@_heading_level: h1) {
+    @_font-color: "@{_heading_level}__font-color";
+    @_font-size: "@{_heading_level}__font-size";
+    @_font-family: "@{_heading_level}__font-family";
+    @_font-weight: "@{_heading_level}__font-weight";
+    @_line-height: "@{_heading_level}__line-height";
+    @_font-style: "@{_heading_level}__font-style";
+    @_margin-top: "@{_heading_level}__margin-top";
+    @_margin-bottom: "@{_heading_level}__margin-bottom";
+    //@_icon-font-size2: "@{_heading_level}__icon-font-size";
+    .lib-typography(
+      @@_font-size,
+      @@_font-color,
+      @@_font-family,
+      @@_font-weight,
+      @@_line-height,
+      @@_font-style
+    );
+    & {
+      .lib-font-size-value(@@_margin-top);
+      margin-top: @fontValue;
+    }
+    & {
+       .lib-font-size-value(@@_margin-bottom);
+       margin-bottom: @fontValue;
+    }
+
+  & {
+    .lib-icon-font(
+    @_icon-font: @icon-font,
+    @_icon-font-position:after,
+    @_icon-font-line-height:33px,
+    @_icon-font-color: @color-light-green,
+    @_icon-font-color-hover: @color-light-green,
+    @_icon-font-content:@heading-icon,
+    @_icon-font-size: @icon-font__size
+    )
+  }
+    &:after{
+      padding-top: 10px;
+    }
+  }
+
+  /// Headings
+
+h1 {
+.lib-heading(h1);
+}
+
+h2 {
+  .lib-heading(h2);
+}
+h3 {
+  .lib-heading(h3);
+}
+h4{
+  .lib-heading(h4);
+  &:after{
+    display: none;
+  }
+}
+h5{
+  .lib-heading(h5);
+  &:after{
+    display: none;
+  }
+}
+
+h6{
+  .lib-heading(h6);
+  &:after{
+    display: none;
+  }
+}
+
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    h1 {
+        .lib-css(font-size, @h1__font-size-desktop);
+        .lib-css(margin-bottom, @h1__margin-bottom__desktop);
+
+    }
+}
+
+
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+
+.items {
+    .lib-list-reset-styles();
+}
+
+}
+
+//
+//    Mobile
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+  h1 {
+    .lib-css(font-size, @h1__font-size-mobile);
+    &:after{
+      .lib-css(font-size,@icon-font__size_mobile);
+    }
+  }
+  h2 {
+    .lib-css(font-size, @h2__font-size-mobile);
+    &:after{
+      .lib-css(font-size,@icon-font__size_mobile);
+    }
+  }
+}

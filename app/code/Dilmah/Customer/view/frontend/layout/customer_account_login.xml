@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Customer
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_form_login" remove="true"/>
+        <referenceContainer name="customer.login.container">
+            <block class="Dilmah\Customer\Block\Form\Login" name="customer_form_login.new" template="Dilmah_Customer::form/login.phtml">
+                <container name="form.additional.info" as="form_additional_info"/>
+                <block class="Magento\Cms\Block\Block" name="login.page.info">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">login_register_page_info</argument>
+                    </arguments>
+                </block>
+                <block class="Netstarter\StackSocialMedia\Block\FbButton" name="header.links.FbButton.login" template="fb_button.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

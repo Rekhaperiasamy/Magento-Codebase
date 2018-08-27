@@ -1,0 +1,81 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+$helper = $this->helper('Magento\Catalog\Helper\Output');
+$product = $block->getProduct()
+?>
+<?php if ($product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1): ?>
+    <div class="product-mix-match-text">
+        <?php echo $block->getChildHtml('mix_match.instructions') ?>
+    </div>
+
+    <div class="product-mix-match">
+    <div class="additional-attributes-wrapper table-wrapper">
+        <?php if ($packSize = $product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE)): ?>
+            <div class="pack-size">
+                <label class="col label" scope="row"><?php echo __('Pack size') ?></label>
+                <span class="packs"><span id="mix-and-match-pack-count"><?php echo $packSize ?></span></span>
+            </div>
+        <?php endif; ?>
+        <?php if ($grammage = $product->getData(\Dilmah\Catalog\Helper\Data::GRAMMAGE_ATTRIBUTE)): ?>
+            <div class="grammage">
+                <label class="col label" scope="row"><?php echo __('Tea leaf weight per pack') ?></label>
+                <span class="packs"><?php echo $grammage ?>g</span>
+            </div>
+        <?php endif; ?>
+        <?php if ($baqQty = $product->getData(\Dilmah\Catalog\Helper\Data::TEA_BAG_QTY_ATTRIBUTE)): ?>
+            <div class="bags">
+                <label class="col label" scope="row"><?php echo __('Tea bags per pack') ?></label>
+                <span class="packs"><?php echo $baqQty ?></span>
+            </div>
+        <?php endif; ?>
+        <?php if ($_additional = $block->getAdditionalData()): ?>
+            <?php foreach ($_additional as $_data): ?>
+                <?php
+                if (is_string($_data['value']) && empty($_data['value'])):
+                    continue;
+                elseif (is_array($_data['value']) && count($_data['value']) == 1 && empty($_data['value'][0])):
+                    continue;
+                endif;
+                ?>
+                <div class="<?php echo $_data['code'] ?>">
+                    <?php if ($_data['code'] == \Dilmah\Catalog\Helper\Data::TIME_OF_THE_DAY_ATTRIBUTE): ?>
+                        <label class="col label" scope="row"><?php echo __('Recommended  ') . $block->escapeHtml(__($_data['label'])) ?></label>
+                        <?php foreach($_data['value'] as $value): ?>
+                            <span class="<?php echo strtolower(str_replace(' ', '-', $value)) ?>" title="<?php echo $value ?>"></span>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif;?>
+    </div>
+    <div class="pack-info">
+        <div class="total-items">
+            <label>
+                <?php echo __('Total items:') ?>
+                <span class="add-more">(<?php echo __('Add') ?>
+                    <span class="count"><?php echo $product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE) ?></span>
+                    <?php echo __('more') ?>)
+                </span>
+            </label>
+            <span class="count">0</span>
+        </div>
+        <div class="total-packs">
+            <label><?php echo __('Total packs:') ?></label>
+            <span class="count">0</span>
+        </div>
+    </div>
+    </div>
+<?php endif;?>

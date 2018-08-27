@@ -1,0 +1,22 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_CountryPopup
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2017 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+?>
+<?php 
+$themeHelper = $this->helper("Dilmah\Theme\Helper\Data"); 
+?>
+
+<?php if ($themeHelper->isHomePage()):?>
+<div class="dilmah-location-container country-popup" data-mage-init='{"countryPopup":{}}' data-role="country-modal"
+     style="display: none">
+    <p class="desc">It seems you are trying to visit our <span class="popup-current-store">&nbsp;</span> online store.
+        Did you know we also have <span class="popup-option-store">&nbsp;</span> online store?</p>
+    <p>Please confirm which site you would like to visit:</p>
+</div>
+<?php endif;?>

@@ -1,0 +1,35 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Review
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var \Dilmah\Review\Block\Product\View\Ratings $banners */
+$ratings = $block->getRatingPercentages();
+?>
+<?php if (count($ratings) > 0): ?>
+<ul class="items review-summary">
+    <?php foreach($ratings as $rating): ?>
+    <li>
+        <div class="rating-summary item" title="<?php echo $rating['percent_approved'] ?>%">
+            <div class="rating-result">
+                <meta itemprop="worstRating" content = "1"/>
+                <meta itemprop="bestRating" content = "100"/>
+                <span style="width:<?php echo $rating['percent_approved'] ?>%">
+                    <span itemprop="ratingValue"><?php echo $rating['percent_approved'] ?>%</span>
+                </span>
+            </div>
+            <span class="label rating-label">
+                <span><?php echo __($rating['rating_code']) ?></span>
+            </span>
+        </div>
+    </li>
+    <?php endforeach; ?>
+</ul>
+<?php endif; ?>

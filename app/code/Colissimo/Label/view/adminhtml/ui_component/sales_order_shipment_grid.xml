@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Label Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="print_deposit">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">print_deposit</item>
+                        <item name="label" xsi:type="string" translate="true">Print Shipping Deposit (Colissimo)</item>
+                        <item name="url" xsi:type="url" path="colissimo_label/shipping/deposit"/>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

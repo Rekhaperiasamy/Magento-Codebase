@@ -1,0 +1,206 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+
+@import 'module/_gray.less';
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+  .news-and-events-index-index {
+    width: 100%;
+    float: left;
+    .page-main {
+      padding: 0px;
+      .page-title-wrapper {
+        padding: 0 20px;
+      }
+      .page.messages {
+        padding: 0 20px;
+      }
+      .column {
+        &.main {
+          .news-articles {
+            width: 100%;
+            float: left;
+            .article {
+              max-width: 400px;
+              width: 100%;
+              float: left;
+              height: 400px;
+              margin: 0 17px 17px 0px;
+              position: relative;
+              overflow: hidden;
+              .news-image-holder {
+                height:400px;
+                position: relative;
+                overflow:hidden;
+                text-align:center;
+                width:100%;
+                img {
+                  max-width: none;
+                  height: 400px;
+                  margin:0 -100%;
+                  -webkit-filter: grayscale(100%);
+                  filter: grayscale(100%);
+                  transition: 1s all;
+                  -web-kit-transition: 1s all;
+                }
+              }
+              .news-description-holder {
+                position: absolute;
+                bottom: 0px;
+                text-align: center;
+                background: rgba(0,0,0,0.6);
+                .lib-css(color, @color-white);
+                padding: 28px 28px 0px 28px;
+                .article-title {
+                  .lib-font-size(24px);
+                  .lib-css(font-family, @font-name__signika_light);
+                  line-height: 28px;
+                  text-transform: capitalize;
+                  height: 54px;
+                  overflow: hidden;
+                }
+                .article-content {
+                  padding: 10px 0;
+                }
+                .news-button-readmore {
+                  a {
+                    .lib-button-primary();
+                    text-decoration: none;
+                    span {
+                      .lib-font-size(18px);
+                    }
+                  }
+                }
+              }
+
+              &:hover {
+                .news-image-holder {
+                  img {
+                    -webkit-filter: grayscale(0%);
+                    filter: grayscale(0%);
+                    transition: 1s all;
+                    -web-kit-transition: 1s all;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .news-and-events-index-index {
+    .page-main {
+      .column {
+        &.main {
+          .news-articles {
+            padding: 0 10px;
+            .article {
+              max-width: 350px;
+              width: 100%;
+              float: left;
+              height: 350px;
+              margin: 0 10px 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+  .news-and-events-index-index {
+    .page-main {
+      .column {
+        &.main {
+          .news-articles {
+            padding: 0 10px;
+            .article {
+              max-width: 310px;
+              width: 100%;
+              float: left;
+              height: 310px;
+              margin: 0 10px 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Larger Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__xl) {
+  .news-and-events-index-index {
+    .page-main {
+      .column {
+        &.main {
+          .news-articles {
+            padding: 0px;
+            .article {
+              max-width: 400px;
+              width: 100%;
+              float: left;
+              height: 400px;
+              margin: 0 8px 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .news-and-events-index-index {
+    .page-main {
+      .page-title-wrapper {
+        padding:0 10px;
+      }
+      .page.messages {
+        padding:0 10px;
+      }
+      .column {
+        &.main {
+          .news-articles {
+            padding: 0 10px;
+            .article {
+              max-width: 100%;
+              width: 100%;
+              float: left;
+              height: 400px;
+              margin: 0 0 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

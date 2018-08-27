@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="monetico_1euro" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Cofidis 1euro Payment</label>
+        <comment>The purchases are paid in 3, 5, 10, 20 times or small amounts by the customer, but the merchant is paid in one time.</comment>
+        <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+        <attribute type="activity_path">payment/monetico_1euro/active</attribute>
+        <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Enable this Solution</label>
+            <comment>
+                <![CDATA[You should have signed the option in your Monetico contract.
+                <br />The One-time payment method should be configured.]]>
+            </comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/monetico_1euro/active</config_path>
+            <requires><group id="monetico_required"/></requires>
+        </field>
+        <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Title</label>
+            <config_path>payment/monetico_1euro/title</config_path>
+        </field>
+        <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Sort Order</label>
+            <validate>validate-number</validate>
+            <config_path>payment/monetico_1euro/sort_order</config_path>
+        </field>
+    </group>
+</include>

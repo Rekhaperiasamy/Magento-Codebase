@@ -1,0 +1,22 @@
+<?php
+/**
+ * Delete confirmation email template
+ * Email template to send email to customer with delete confirmation link
+ */
+?>
+
+<!--@subject Votre demande de suppression de données personnelles @-->
+
+{{template config_path="design/email/header_template"}}
+<p>
+    Conformément à votre demande, nous vous envoyons ce mail afin de finaliser la suppression de vos données personnelles de notre site.
+    Si vous n’êtes pas à l’origine de cette demande, merci d’ignorer ou de supprimer ce message.
+</p>
+<h2>Pour supprimer votre compte et anonymiser toutes vos données transactionnelles, cliquez sur le lien ci-dessous : </h2>
+<a href="{{var link|raw}}">{{var link|raw}}</a>
+<p style="color:#ff0000">
+    Attention : Une fois que vous aurez accepté la suppression et l’anonymisation de vos données personnelles, celles-ci ne pourront plus être restaurées
+</p>
+<br>
+<p>Thank you.</p>
+{{template config_path="design/email/footer_template"}}

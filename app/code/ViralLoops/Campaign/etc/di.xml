@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="ViralLoops\Campaign\Observer\CreateCouponConversionObserver">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+    <type name="ViralLoops\Campaign\Observer\CreateCouponRegistrationObserver">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+    <type name="ViralLoops\Campaign\CustomerData\JsDataCampaign">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+    <type name="ViralLoops\Campaign\Observer\SaveReferralCodeObserver">
+        <arguments>
+            <argument name="request" xsi:type="object">Magento\Framework\App\Request\Http</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,150 @@
+2018-06-21 11:58:57 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-21 11:59:16 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-21 11:59:37 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-21 12:00:31 : Payfast\Payfast\Model\Payfast::initialize : bof
+2018-06-21 12:00:31 : Payfast\Payfast\Model\Payfast::getOrderPlaceRedirectUrl : bof
+2018-06-21 12:00:32 : Payfast\Payfast\Controller\Redirect\Index::execute : bof
+2018-06-21 12:00:32 : Payfast\Payfast\Model\Payfast::getStandardCheckoutFormFields : pfOutput for signature is : merchant_id=10000100&merchant_key=46f0cd694581a&return_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fredirect%2Fsuccess%2F&cancel_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fredirect%2Fcancel%2F&notify_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fnotify%2F&name_first=Cate&name_last=F&email_address=xcatef8473%40payfast.co.za&m_payment_id=14000000015&amount=108.00&item_name=SA+store+view%2C+Order+%2314000000015
+2018-06-21 12:00:32 : Payfast\Payfast\Model\Payfast::getStandardCheckoutFormFields : data is :Array
+(
+    [merchant_id] => 10000100
+    [merchant_key] => 46f0cd694581a
+    [return_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/redirect/success/
+    [cancel_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/redirect/cancel/
+    [notify_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/notify/
+    [name_first] => Cate
+    [name_last] => F
+    [email_address] => xcatef8473@payfast.co.za
+    [m_payment_id] => 14000000015
+    [amount] => 108.00
+    [item_name] => SA store view, Order #14000000015
+    [signature] => 897d6e01bea88e48028d2423cd929397
+    [user_agent] => Magento 2.1.13
+)
+
+2018-06-21 12:17:44 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-21 12:19:21 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-22 04:49:20 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-22 04:49:41 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-22 05:04:24 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-22 05:09:43 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-06-22 05:10:34 : Payfast\Payfast\Model\Payfast::initialize : bof
+2018-06-22 05:10:34 : Payfast\Payfast\Model\Payfast::getOrderPlaceRedirectUrl : bof
+2018-06-22 05:10:34 : Payfast\Payfast\Controller\Redirect\Index::execute : bof
+2018-06-22 05:10:35 : Payfast\Payfast\Model\Payfast::getStandardCheckoutFormFields : pfOutput for signature is : merchant_id=10000100&merchant_key=46f0cd694581a&return_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fredirect%2Fsuccess%2F&cancel_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fredirect%2Fcancel%2F&notify_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fnotify%2F&email_address=vn00517053%40techmahindra.com&m_payment_id=14000000016&amount=115.00&item_name=SA+store+view%2C+Order+%2314000000016
+2018-06-22 05:10:35 : Payfast\Payfast\Model\Payfast::getStandardCheckoutFormFields : data is :Array
+(
+    [merchant_id] => 10000100
+    [merchant_key] => 46f0cd694581a
+    [return_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/redirect/success/
+    [cancel_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/redirect/cancel/
+    [notify_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/notify/
+    [name_first] => 
+    [name_last] => 
+    [email_address] => vn00517053@techmahindra.com
+    [m_payment_id] => 14000000016
+    [amount] => 115.00
+    [item_name] => SA store view, Order #14000000016
+    [signature] => 3ebe46e05846853d3fe32ca08bc39262
+    [user_agent] => Magento 2.1.13
+)
+
+2018-06-22 05:20:31 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-02 11:02:17 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-02 11:08:40 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-02 11:08:54 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 08:11:16 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:30:10 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:31:24 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:33:41 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:34:39 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:34:50 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:34:58 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:34:58 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:35:12 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:43:56 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:47:57 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:48:12 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:48:30 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:49:33 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-03 10:51:10 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-04 13:48:28 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-04 14:05:23 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-04 14:29:32 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-13 06:27:41 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-13 06:27:53 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-13 06:28:06 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-13 06:29:38 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-13 06:30:14 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-13 06:30:16 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-15 03:59:28 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-15 04:00:46 : Payfast\Payfast\Model\Payfast::initialize : bof
+2018-07-15 04:00:46 : Payfast\Payfast\Model\Payfast::getOrderPlaceRedirectUrl : bof
+2018-07-15 04:00:47 : Payfast\Payfast\Controller\Redirect\Index::execute : bof
+2018-07-15 04:00:47 : Payfast\Payfast\Model\Payfast::getStandardCheckoutFormFields : pfOutput for signature is : merchant_id=10000100&merchant_key=46f0cd694581a&return_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fredirect%2Fsuccess%2F&cancel_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fredirect%2Fcancel%2F&notify_url=https%3A%2F%2Fdilmahtea-uat-sa.shop.dilmahtea.com%2Fpayfast%2Fnotify%2F&email_address=nv%40gmail.com&m_payment_id=14000000017&amount=115.00&item_name=SA+store+view%2C+Order+%2314000000017
+2018-07-15 04:00:47 : Payfast\Payfast\Model\Payfast::getStandardCheckoutFormFields : data is :Array
+(
+    [merchant_id] => 10000100
+    [merchant_key] => 46f0cd694581a
+    [return_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/redirect/success/
+    [cancel_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/redirect/cancel/
+    [notify_url] => https://dilmahtea-uat-sa.shop.dilmahtea.com/payfast/notify/
+    [name_first] => 
+    [name_last] => 
+    [email_address] => nv@gmail.com
+    [m_payment_id] => 14000000017
+    [amount] => 115.00
+    [item_name] => SA store view, Order #14000000017
+    [signature] => d318cef12a04a19151a43c566f05ed25
+    [user_agent] => Magento 2.1.13
+)
+
+2018-07-15 05:03:57 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-24 10:08:35 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-24 10:10:14 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-24 11:19:43 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-24 12:01:08 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-26 11:17:33 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-26 11:18:57 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-26 11:19:13 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-26 11:23:22 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-26 12:00:36 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-26 12:02:39 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-27 07:16:54 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-30 04:23:35 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-30 05:21:09 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-30 05:43:28 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-30 06:05:47 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-31 06:07:17 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-07-31 10:15:08 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-01 06:41:55 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-01 10:03:52 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 05:35:05 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 05:38:39 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 06:01:27 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 06:21:30 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 06:47:16 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 07:18:17 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-02 07:22:45 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-03 05:51:03 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-03 06:55:32 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-07 07:05:06 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-08 09:44:11 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-09 10:46:25 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-09 10:50:14 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-10 09:59:44 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-16 08:18:26 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-16 08:22:28 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-16 09:55:42 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-17 05:33:53 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-17 05:57:56 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-17 06:22:19 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 03:35:35 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 03:59:00 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 04:01:16 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 04:02:56 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 05:03:51 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 07:32:46 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-21 07:34:58 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-22 05:13:06 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof
+2018-08-22 06:29:30 : Payfast\Payfast\Model\Payfast::getCheckoutRedirectUrl : bof

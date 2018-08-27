@@ -1,0 +1,39 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+.cms-countries-we-shipped-to {
+  .column {
+    &.main {
+      p {
+        &.split-columns {
+          -webkit-column-count: 3; /* Chrome, Safari, Opera */
+          -moz-column-count: 3; /* Firefox */
+          column-count: 3;
+        }
+      }
+    }
+  }
+}
+
+}
+
+//
+//    Mobile @screen__m max width 768
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .cms-countries-we-shipped-to {
+    .column {
+      &.main {
+        p {
+          &.split-columns {
+            -webkit-column-count: 2; /* Chrome, Safari, Opera */
+            -moz-column-count: 2; /* Firefox */
+            column-count: 2;
+          }
+        }
+      }
+    }
+  }
+}

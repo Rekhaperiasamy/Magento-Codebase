@@ -1,0 +1,89 @@
+<!--
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+-->
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" />
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <div class="allowed-payment-icon">
+                <div class="payment-icon payment_method_monetico_cb"></div>
+                <div class="payment-icon payment_method_monetico_master"></div>
+                <div class="payment-icon payment_method_monetico_visa"></div>
+            </div>
+            <span data-bind="text: getTitle()"></span>
+            <!-- <a data-bind="attr: {href: getPaymentAcceptanceMarkHref()}, click: showAcceptanceWindow" class="action action-help">--><!--</a> -->
+        </label>
+    </div>
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <br>
+        <fieldset class="fieldset" data-bind='attr: {id: "payment_form_" + getCode()}'>
+            <div class="payment-method-note">
+                <!-- ko i18n: 'Payment through the CM-CIC service.' --><!-- /ko -->
+            </div>
+            <div class="payment-method-icon">
+                <div class="payment-method-bank-icon payment_method_monetico_cic"></div>
+                <div class="payment-method-bank-icon payment_method_monetico_cm"></div>
+                <div class="payment-method-bank-icon payment_method_monetico_desjardins"></div>
+            </div>
+        </fieldset>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+		
+		<div class="field choice required terms-option">
+            <input id="terms-and-conditions"
+                   type="checkbox"
+                   name="terms"
+                   class="checkbox"
+                   data-bind="click: termsOnClick"/>
+            <label for="terms-and-conditions" class="label cpage" style="width: 100%;float: left;"><span>Je déclare avoir pris connaissance des conditions générales de vente et les accepte sans réserve</span></label><br>
+            <a href="/terms-conditions" target="_blank">(Lire les Conditions générales de vente)</a>
+            <span class="validate-error" id="terms-validation-error" style="display:none;"><!-- ko i18n: 'Ce champ est obligatoire.' --><!--/ko--></span>
+        </div>
+		
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')},
+                        css: {disabled: !isPlaceOrderActionAllowed()},
+                        enable: (getCode() == isChecked())
+                        "
+                        disabled>
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+		
+		
+    </div>
+</div>

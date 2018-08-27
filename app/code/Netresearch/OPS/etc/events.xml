@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="sales_order_payment_place_end">
+        <observer name="ops_sales_order_payment_place_end" instance="Netresearch\OPS\Observer\SetOrderStateDirectLink"/>
+    </event>
+    <event name="sales_quote_payment_import_data_before">
+        <observer name="ops_clear_payment_method" instance="Netresearch\OPS\Observer\ClearPaymentMethodFromQuote"/>
+    </event>
+    <event name="sales_order_place_after">
+        <observer name="ops_payPerMail" instance="Netresearch\OPS\Observer\PayPerMail"/>
+    </event>
+    <event name="controller_action_predispatch">
+        <observer name="clear_session" instance="Netresearch\OPS\Observer\ClearQuote"/>
+    </event>
+</config>

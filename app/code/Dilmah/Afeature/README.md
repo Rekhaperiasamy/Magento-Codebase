@@ -1,0 +1,1 @@
+Dilmah_Afeature provides the functionality to manage responsive banners (eg: Home page banner slider)

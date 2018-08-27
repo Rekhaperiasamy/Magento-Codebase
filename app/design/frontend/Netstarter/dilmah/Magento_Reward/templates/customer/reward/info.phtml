@@ -1,0 +1,63 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @see \Magento\Reward\Block\Customer\Reward\Info
+ */
+?>
+<?php
+$helper = $this->helper('Magento\Reward\Helper\Data');
+$maxBalance = $block->getMaxBalance();
+$minBalance = $block->getMinBalance();
+$expireIn = $block->getExpireIn();
+?>
+<div class="block block-reward-info">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Reward points balance Information'); ?></strong>
+    </div>
+    <div class="block-content">
+        <p class="reward-balance"><?php /* @escapeNotVerified */ echo __('Your current balance is %1. This can be converted to %2 discount on your next order.', $helper->formatReward($block->getPointsBalance()), $helper->formatAmount($block->getCurrencyBalance()))?></p>
+        <div class="reward-rates">
+            <strong class="title"><?php /* @escapeNotVerified */ echo __('Current exchange rates:')?></strong>
+            <?php if ($block->getPtsToAmountRateAmount() || $block->getAmountToPtsRatePts()): ?>
+                <?php if ($block->getPtsToAmountRateAmount()): ?>
+                    <p><?php /* @escapeNotVerified */ echo __('You can convert reward points to store credit. Each %1 can be redeemed for %2', $helper->formatReward($block->getPtsToAmountRatePts(), null, null, '<strong>%s</strong>'), '<strong>' . $helper->formatAmount($block->getPtsToAmountRateAmount()) . '</strong>')?></p>
+                <?php endif;?>
+            <?php else:?>
+                <?php /* @escapeNotVerified */ echo __('None')?>
+            <?php endif;?>
+        </div>
+        <?php if ($maxBalance || $minBalance):?>
+            <strong class="title"><?php /* @escapeNotVerified */ echo __('Balance limitations:')?></strong>
+            <div class="reward-limit">
+            <?php if ($maxBalance):?>
+                <p><?php /* @escapeNotVerified */ echo __('Balance limit is %1.', $helper->formatReward($maxBalance))?></p>
+                <?php if ($block->getIsMaxBalanceReached()):?>
+                    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('Maximum balance is reached')?></span></div>
+                <?php endif;?>
+            <?php endif;?>
+            <?php if ($minBalance):?>
+                <p><?php /* @escapeNotVerified */ echo __('Minimum Balance in order to redeem: %1.', $helper->formatReward($minBalance))?></p>
+                <?php if (!$block->getIsMinBalanceReached()):?>
+                    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You need a higher balance to use your rewards points.')?></span></div>
+                <?php endif;?>
+            <?php endif;?>
+            </div>
+        <?php endif;?>
+        <?php if ($expireIn):?>
+            <div class="reward-expiring">
+                <strong class="title"><?php /* @escapeNotVerified */ echo __('Each earned reward points award expires in %1 days.', $expireIn)?></strong>
+                <?php if ($block->getIsHistoryPublished()):?>
+                    <p><?php /* @escapeNotVerified */ echo __('Refer to reward points history to see when a specific record expires.')?></p>
+                <?php endif;?>
+            </div>
+        <?php endif;?>
+    </div>
+</div>

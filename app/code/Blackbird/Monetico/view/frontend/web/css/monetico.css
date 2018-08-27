@@ -1,0 +1,138 @@
+@charset "utf-8";
+
+/** Iframe style */
+iframe.sealed-form {
+    width: 622px;
+    height: 270px;
+    border: none;
+}
+iframe#cmcic-sealed-form.sealed-form body {
+    zoom: 0.5;
+}
+/** Payment Method icons */
+.payment-method .payment-method-title .label .allowed-payment-icon {
+    display: inline-block;
+    float: right;
+    margin-top: -5px;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_cb {
+    width: 40px;
+    height: 28px;
+    content: url(../images/media/cb.gif);
+    background: url(../images/media/cb.gif) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_master {
+    width: 44px;
+    height: 28px;
+    content: url(../images/media/master.gif);
+    background: url(../images/media/master.gif) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_visa {
+    width: 45px;
+    height: 28px;
+    content: url(../images/media/visa.gif);
+    background: url(../images/media/visa.gif) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_1euro {
+    width: 59px;
+    height: 28px;
+    content: url(../images/media/1euro.png);
+    background: url(../images/media/1euro.png) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_3xcb {
+    width: 47px;
+    height: 28px;
+    content: url(../images/media/3xcb.png);
+    background: url(../images/media/3xcb.png) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_4xcb {
+    width: 47px;
+    height: 28px;
+    content: url(../images/media/4xcb.png);
+    background: url(../images/media/4xcb.png) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-title .label .allowed-payment-icon .payment-icon.payment_method_monetico_paypal {
+    width: 45px;
+    height: 28px;
+    content: url(../images/media/paypal.jpg);
+    background: url(../images/media/paypal.jpg) no-repeat;
+    background-size: cover;
+}
+/** Payment Method Service icons */
+.payment-method .payment-method-content .fieldset .payment-method-icon .payment-method-bank-icon {
+    display: inline-block;
+    margin: 1rem;
+    height: 5rem;
+    width: auto;
+}
+.payment-method .payment-method-content .fieldset .payment-method-icon .payment_method_monetico_desjardins
+{
+    width: 161px;
+    height: 50px;
+    content: url(../images/desjardins.png);
+    background: url(../images/desjardins.png) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-content .fieldset .payment-method-icon .payment_method_monetico_cic
+{
+    width: 110px;
+    height: 50px;
+    content: url(../images/cic.jpg);
+    background: url(../images/cic.jpg) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-content .fieldset .payment-method-icon .payment_method_monetico_cm
+{
+    width: 250px;
+    height: 50px;
+    content: url(../images/credit-mutuel.jpg);
+    background: url(../images/credit-mutuel.jpg) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-content .fieldset .payment-method-icon .payment_method_monetico_cofidis
+{
+    width: 75px;
+    height: 50px;
+    content: url(../images/cofidis.png);
+    background: url(../images/cofidis.png) no-repeat;
+    background-size: cover;
+}
+.payment-method .payment-method-content .fieldset .payment-method-icon .payment_method_monetico_paypal
+{
+    width: 150px;
+    height: 50px;
+    content: url(../images/paypal.png);
+    background: url(../images/paypal.png) no-repeat;
+    background-size: cover;
+}
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) {
+  .opc-payment .payment-methods .payment-method .payment-method-content .terms-option.choice .label.cpage{margin-bottom:30px;}
+}
+
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  {
+   .opc-payment .payment-methods .payment-method .payment-method-content .terms-option.choice .label.cpage{margin-bottom:30px;}
+  }
+  
+@media only screen 
+  and (min-device-width: 330px) 
+  and (max-device-width: 380px) {
+   .opc-payment .payment-methods .payment-method .payment-method-content .terms-option.choice .label.cpage{margin-bottom:30px;}
+  }
+  
+  
+  @media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) {
+   .opc-payment .payment-methods .payment-method .payment-method-content .terms-option.choice .label.cpage{margin-bottom:30px;}
+  }

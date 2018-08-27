@@ -1,0 +1,60 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block Magento\Bundle\Block\Catalog\Product\View\Type\Bundle */ ?>
+<?php
+$product = $block->getProduct();
+$isCombo = $product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1;
+$isPack = $product->getData(\Dilmah\Catalog\Helper\Data::IS_PACK_PRODUCT_ATTRIBUTE) == 1;
+$packSize = $product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE);
+?>
+<?php $options = $block->decorateArray($block->getOptions()); ?>
+<?php if ($product->isSaleable()): ?>
+    <?php if (count($options)): ?>
+        <script type="text/x-magento-init">
+            {
+                "#product_addtocart_form": {
+                    "priceBundle": {
+                        "optionConfig": <?php /* @escapeNotVerified */
+                    echo $block->getJsonConfig() ?>,
+                        "controlContainer": ".field.option"
+                    }
+                }
+            }
+        </script>
+        <fieldset class="fieldset fieldset-bundle-options <?php echo $isPack ? 'hide-for-pack' : '' ?>"  data-mage-init='{"bundleCustom":""}'>
+            <?php if ($isCombo): ?>
+                <div class="mix-match-heading">
+                <div class="option-title"><?php echo __('Select your options') ?></div>
+                <?php if ($packSize): ?>
+                    <div class="pack-notice"><?php echo __('Please add Multiples of') . ' ' . $packSize ?></div>
+                <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <div class="header">
+                    <div class="image"></div>
+                    <div class="name"><?php echo __('Product Name') ?></div>
+                    <div class="qty"><?php echo __('QTY') ?></div>
+                </div>
+            <?php endif; ?>
+            <?php foreach ($options as $option): ?>
+                <?php if (!$option->getSelections()): ?>
+                    <?php continue; ?>
+                <?php endif; ?>
+                <?php echo $block->getOptionHtml($option) ?>
+            <?php endforeach; ?>
+
+        </fieldset>
+        <div class="load-more-mix">See More</div>
+        <input type="hidden" name="qty" id="bundle-qty" value="1" />
+    <?php else: ?>
+        <p class="empty"><?php /* @escapeNotVerified */
+            echo __('No options of this product are available.') ?></p>
+    <?php endif; ?>
+<?php endif; ?>

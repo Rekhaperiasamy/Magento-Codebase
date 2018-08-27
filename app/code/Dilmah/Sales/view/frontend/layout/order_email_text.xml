@@ -1,0 +1,9 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Order Text" design_abstraction="custom">
+    <body>
+        <block class="Magento\Cms\Block\Block" name="banner">
+            <arguments>
+                <argument name="block_id" xsi:type="string">order_email_text</argument>
+            </arguments>
+        </block>
+    </body>
+</page>

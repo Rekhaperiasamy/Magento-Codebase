@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Model\Order\CustomerManagement">
+        <plugin name="sales_order_customermanagement" type="Dilmah\Sales\Plugin\Model\Order\CustomerManagement" sortOrder="1" />
+    </type>
+    <preference for="Magento\Sales\Model\Order" type="Dilmah\Sales\Model\Order" />
+    <preference for="Magento\Sales\Model\Order\Pdf\Invoice" type="Dilmah\Sales\Model\Order\Pdf\Invoice" />
+</config>

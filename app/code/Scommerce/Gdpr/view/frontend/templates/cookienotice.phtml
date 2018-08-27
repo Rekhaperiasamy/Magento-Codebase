@@ -1,0 +1,133 @@
+<?php
+/**
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ * @var \Scommerce\Gdpr\Block\Cookienotice $block
+ */
+?>
+
+<style>
+    .scommerce-gdpr-cookienotice {background: #<?php echo $block->getCookieBackgroundColor() ?>;color: #<?php echo $block->getCookieTextColor() ?>;}
+    .scommerce-gdpr-cookienotice .message span.cookie-title {color: #<?php echo $block->getCookieTextColor() ?>;}
+    .scommerce-gdpr-cookienotice .message a {color: #<?php echo $block->getCookieLinkColor() ?>;}
+</style>
+
+<div id="js-cookienotice" class="scommerce-gdpr-cookienotice" style="display: none;">
+    <div class="message">
+        <span class="cookie-title"><?php echo __('Cookie Policy');?></span>
+        <p>
+            <?php echo $block->getCookieTextMessage() ?><br>
+            <a href="<?php echo $block->getCmsPageUrl() ?>">
+                <?php echo $block->getCookieLinkText() ?>
+            </a>
+        </p>
+        <p class="accept">
+            <a id="js-gdpr-accept" href=""><?php echo __('Accept');?></a>
+        </p>
+        <?php if (! $block->isBlocked()): ?>
+            <p class="decline">
+                <a id="js-gdpr-decline" href=""><?php echo __('Decline');?></a>
+            </p>
+        <?php endif ?>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'mage/cookies'
+    ], function($) {
+        // Model
+        var Model = {
+            wrapper: $('<?php echo $block->getCssPageWrapperClass() ?>'), // Page wrapper for enable/disable access to page
+            block: $('#js-cookienotice'), // Block with cookie alert text and links
+            wrapperClass: 'scommerce-gdpr-disabled', // Css class for enabling/disabling page wrapper
+            bottomClass: 'scommerce-gdpr-bottom-position', // Css class for bottom position of message
+			topClass: 'scommerce-gdpr-top-position', // Css class for top position of message
+            isBlocked: <?php echo (int) $block->isBlocked() ?>, // Config value for enable/disable accees to site page
+            isBottom: <?php echo (int) $block->isBottom() ?>, // Config value for top/bottom message position
+            cookieKey: '<?php echo $block->getCookieKey() ?>', // Cookie key to check accepted cookie policy
+            cookieClosedKey: '<?php echo $block->getCookieClosedKey() ?>', // Closed Cookie key to check if cookie message is closed
+
+            // Initialize model
+            initialize: function() {
+                if (! this.get(this.cookieClosedKey)) {
+                    this.block.show();
+                }
+                if (this.isBlocked && ! this.get(this.cookieKey)) {
+                    this.disable();
+                }
+                if (this.isBottom) {
+                    this.bottom();
+                }
+				else{
+					this.top();
+				}
+            },
+
+            // Set cookie value
+            set: function(name, value) {
+				$.cookie.domain = window.location.hostname;
+                $.cookie(name, value, {expires: new Date(new Date().getTime() + (100 * 365 * 24 * 60 * 60))});
+            },
+
+            // Get cookie value (just check to value is 1)
+            get: function(name) {
+                return $.cookie(name) == 1;
+            },
+
+            // Close gdpr block
+            close: function() {
+                this.set(this.cookieClosedKey, 1);
+                this.block.hide();
+            },
+
+            // Accept rules
+            accept: function() {
+                this.close();
+                this.set(this.cookieKey, 1);
+                if (this.isBlocked) {
+                    this.enable();
+                }
+            },
+
+            // Decline rules
+            decline: function() {
+                this.close();
+                this.set(this.cookieKey, 0);
+            },
+
+            // Disable page wrapper ("close" access to site page)
+            disable: function() {
+                this.wrapper.addClass(this.wrapperClass);
+            },
+
+            // Enable page wrapper ("allow" access to site page)
+            enable: function() {
+                this.wrapper.removeClass(this.wrapperClass);
+            },
+
+            // "Move" message to bottom
+            bottom: function() {
+                this.block.addClass(this.bottomClass);
+            },
+			
+			// "Move" message to top
+            top: function() {
+                this.block.addClass(this.topClass);
+            }
+        };
+
+        // Callbacks
+        $('#js-gdpr-accept').on('click', function(e) {
+            e.preventDefault();
+            Model.accept();
+        });
+        $('#js-gdpr-decline').on('click', function(e) {
+            e.preventDefault();
+            Model.decline();
+        });
+
+        // Initialize
+        Model.initialize();
+    });
+</script>

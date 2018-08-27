@@ -1,0 +1,24 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko if: isAvailable -->
+<div class="payment-option opc-payment-additional customerbalance" id="customerbalance-placer">
+    <div class="field choice">
+        <input type="checkbox" class="checkbox" id="customerbalance-check" name="customerbalance" value="1" aria-required="true" data-bind ="{click: toggleCustomerBalance, checked: isChecked()}">
+        <label class="label" for="customerbalance-check">
+            <span></span>
+        </label>
+        <span></span>
+    </div>
+    <div class="payment-option-title"><!-- ko i18n: 'Store credit' --><!-- /ko --></div>
+    <div class="payment-option-content field choice">
+        <div class="payment-option-inner">
+            <span id="customerbalance-available-amount" data-bind="text: formatBalance()"></span>
+            <!-- ko i18n: 'Store credit available' --><!-- /ko -->
+        </div>
+    </div>
+</div>
+<!-- /ko -->

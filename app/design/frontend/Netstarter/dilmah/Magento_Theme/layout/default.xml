@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Netstarter Pty Ltd.
+*
+* @category    Netstarter
+* @package     Dilmah_Theme
+* @author      Netstarter Team <contact@netstarter.com>
+* @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="footer_links" remove="true"/>
+        <referenceBlock name="copyright" remove="true"/>
+        <referenceBlock name="compare-link-wrapper" remove="true"/>
+        <move element="form.subscribe" destination="newsletter.box.wrapper"/>
+        <!--<move element="minicart" destination="header.links" after="multiple-wish-list-link"/>-->
+        <move element="customer-service-link" destination="header.links" before="multiple-wish-list-link"/>
+        <move element="catalog.topnav" destination="header.content.nav.row" />
+        <move element="top.search" destination="header.content.category.row" />
+        <referenceContainer name="header.panel">
+            <referenceBlock name="header.links">
+                <block class="Magento\Cms\Block\Block" name="customer-service-link" before="multiple-wish-list-link">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">header_customer_services_icon</argument>
+                    </arguments>
+                </block>
+            </referenceBlock>
+        </referenceContainer>
+        <referenceContainer name="header-wrapper">
+            <container name="header.content.wrapper" htmlTag="div" htmlClass="header-content-wrapper" after="logo">
+                <container name="header.content.category.row" htmlTag="div" htmlClass="header-category-wrapper">
+                    <block class="Magento\Cms\Block\Block" name="header.tea.types" >
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">header_tea_by_types</argument>
+                        </arguments>
+                    </block>
+                </container>
+                <container name="header.content.nav.row" htmlTag="div" htmlClass="header-navigation-wrapper" after="header.content.category.row"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="footer">
+            <container name="footer.wrap" as="footer.wrap" htmlClass="footer-wrapper" htmlTag="div">
+                <block class="Magento\Framework\View\Element\Template" name="footer.wrapper" template="Dilmah_Theme::html/footer.phtml">
+                    <block class="Magento\Cms\Block\Block" name="footer.about.links" >
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer_about_links</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="footer.customer.services.links" >
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer_customer_services_links</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Cms\Block\Block" name="footer.shop.links" >
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">footer_shop_links</argument>
+                        </arguments>
+                    </block>
+                    <container name="footer.right.wrapper" as="footer.right" htmlClass="block footer-right col-4" htmlTag="div">
+                        <block class="Magento\Cms\Block\Block" name="footer.connect.content" >
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">footer_right_connect</argument>
+                            </arguments>
+                        </block>
+                        <container name="newsletter.box.wrapper" as="footer.newsletter.box.right" htmlClass="block footer-newsletter" htmlTag="div" >
+                            <block class="Magento\Cms\Block\Block" name="footer.kit.content" >
+                                <arguments>
+                                    <argument name="block_id" xsi:type="string">footer_right_kit</argument>
+                                </arguments>
+                            </block>
+                        </container>
+                        <block class="Magento\Cms\Block\Block" name="footer.secure.content" >
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">footer_right_secure</argument>
+                            </arguments>
+                        </block>
+                        <block class="Magento\Directory\Block\Currency" name="footer.currency" after="footer.right" template="currency.phtml">
+                            <arguments>
+                                <argument name="id_modifier" xsi:type="string">footer</argument>
+                            </arguments>
+                        </block>
+                    </container>
+                </block>
+                <container name="bottom.links.wrapper" as="bottom.links.wrapper" htmlClass="bottom-links" htmlTag="div">
+                    <block class="Magento\Theme\Block\Html\Footer" name="copyright.txt" template="Dilmah_Theme::html/copyright.phtml">
+                        <block class="Magento\Cms\Block\Block" name="bottom.links.block" >
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">bottom_links_section</argument>
+                            </arguments>
+                        </block>
+                    </block>
+                </container>
+            </container>
+        </referenceContainer>
+        <container name="newsletter.slider.bottom" htmlClass="bottom-newsletter-slider-wrapper" htmlTag="div">
+            <block class="Magento\Framework\View\Element\Template" name="newsletter.slider.block" template="Dilmah_Theme::html/footernewsletterslider.phtml">
+                <block class="Magento\Newsletter\Block\Subscribe" name="newsletter.content" template="Magento_Newsletter::subscribe.phtml" />
+            </block>
+        </container>
+    </body>
+</page>

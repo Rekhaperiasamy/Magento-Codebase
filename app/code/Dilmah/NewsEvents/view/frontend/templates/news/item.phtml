@@ -1,0 +1,27 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_NewsEvents
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+/** @var \Dilmah\NewsEvents\Block\NewsItem\NewsItem $block */
+?>
+<div class="article" xmlns="http://www.w3.org/1999/html">
+    <div class="news-image-holder"><img src="<?php echo $block->getImage() ?>" alt="" class="grayscale"></div>
+    <div class="news-description-holder">
+        <div class="article-title"><?php echo $block->getTitle() ?></div>
+        <p class="article-content">
+            <?php echo $block->getDescription() ?>
+        </p>
+        <div class="news-button-readmore">
+            <a href="<?php echo $block->getLink() ?>" target="_blank">
+                <span><?php /* @escapeNotVerified */
+                    echo __('Read More') ?></span>
+            </a>
+        </div>
+    </div>
+</div>

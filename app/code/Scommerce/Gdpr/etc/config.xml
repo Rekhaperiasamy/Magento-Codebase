@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <scommerce_gdpr>
+            <general>
+                <enable>1</enable>
+                <delete_enabled_on_frontend>0</delete_enabled_on_frontend>
+                <attentionmessage>Please note - Once you have marked your data to be deleted or anonymised from our system then your data cannot be restored.</attentionmessage>
+                <successmessage>Your account has been successfully deleted, and all order details have been anonymised.</successmessage>
+                <sender_email_identity>general</sender_email_identity>
+                <confirmation_email_template>scommerce_gdpr_general_confirmation_email_template</confirmation_email_template>
+                <delete_confirmation_email_template>scommerce_gdpr_general_delete_confirmation_email_template</delete_confirmation_email_template>
+                <enable_cookie>1</enable_cookie>
+                <blocked>0</blocked>
+                <page_wrapper_class>.page-wrapper</page_wrapper_class>
+                <cookie_message>We use cookies on this website to improve your shopping experience. We use cookies to remember log-in details and provide secure log-in, collect statistics to optimize site functionality, and deliver content tailored to your interests. Click accept to give your consent to accept cookies and go directly to the site or click on more information to see detailed descriptions of the types of cookies we store.</cookie_message>
+                <cms_page>home</cms_page>
+                <cookie_link_text>Click here to learn about cookie settings.</cookie_link_text>
+                <cookie_text_color>FFF8C7</cookie_text_color>
+                <cookie_link_color>FFFFFF</cookie_link_color>
+                <cookie_background_color>000333</cookie_background_color>
+                <cookie_message_position>0</cookie_message_position>
+            </general>
+			<orderquote>
+				<quote_expire>30</quote_expire>
+				<order_chunk>50</order_chunk>
+				<debugging>1</debugging>
+			</orderquote>
+            <privacy>
+                <enable>1</enable>
+                <setting_text><![CDATA[By checking this box you agree to our <a href="/privacy-policy-cookie-restriction-mode" target="_blank">Privacy Policy</a>. You also agree to receive information relevant to your order or account via email.]]></setting_text>
+                <enable_newsletter>1</enable_newsletter>
+                <enable_contact_us>1</enable_contact_us>
+                <enable_checkout>1</enable_checkout>
+                <enable_registration>1</enable_registration>
+            </privacy>
+        </scommerce_gdpr>
+    </default>
+</config>

@@ -1,0 +1,386 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .nsfaq-index-index,
+  .dtfaq-index-index {
+    .faq-menu {
+      width: 100%;
+      float: left;
+      .lib-css(border-bottom, solid 1px @color-yellow3);
+      margin-bottom: 23px;
+      a {
+        &.faq {
+          width: 300px;
+          float: left;
+          height: 50px;
+          .lib-css(background, @color-gray-light4);
+          .lib-css(color, @color-gray-darken1);
+          .lib-font-size(16);
+          .lib-css(font-family, @font-name__signika_semibold);
+          text-align: center;
+          line-height: 50px;
+          text-decoration: none;
+          border-right:solid 1px @color-white;
+
+          &:hover,
+          &.active {
+            background: url('../images/leaf-bg-repeater.png') repeat @color-yellow3;
+            .lib-css(color, @color-white);
+          }
+        }
+      }
+    }
+
+    .page-title-wrapper {
+      width: 100%;
+      float: left;
+      margin-bottom: 27px;
+      .page-title {
+        margin-bottom: 0px;
+        span {
+          .lib-css(color, @color-gray-darken1);
+          .lib-font-size (24px);
+        }
+        &:after {
+          content: normal;
+        }
+      }
+    }
+
+    .ns-faq-top-bar {
+      width: 100%;
+      float: left;
+      margin-bottom: 27px;
+    }
+
+    .column {
+      &.main {
+        width: 100%;
+        float: left;
+        .ns-faq-content-wrapper {
+          width: 100%;
+          float: left;
+
+          .ns-faq-sidebar-menu {
+            .lib-layout-column(2, 1, 23%);
+            margin-bottom: 40px;
+            .ns-faq-static {
+              width: 100%;
+              float: left;
+              .faq-link-wrapper {
+                width: 100%;
+                float: left;
+                .faq-link-set {
+                  width: 100%;
+                  float: left;
+                  .links {
+                    margin: 0px;
+                    padding:0px;
+                    width: 100%;
+                    float: left;
+                    li {
+                      list-style:none;
+                      width: 100%;
+                      float: left;
+                      padding:0px;
+                      margin: 0px;
+                      border-bottom: solid 1px @color-white;
+                      a {
+                        display: inline-block;
+                        background: url('../images/leaf-bg-repeater.png') repeat @color-blue2;
+                        width: 100%;
+                        line-height: 50px;
+                        padding-left: 20px;
+                        .lib-css(color, @color-white);
+                        .lib-css(font-family, @font-name__signika_semibold);
+                        .lib-font-size(18);
+                        text-decoration: none;
+                        font-weight: 400;
+                        &:hover {
+                          background: url('../images/leaf-bg-repeater.png') repeat @color-yellow3;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .faq-header-show {
+              width: 100%;
+              float: left;
+              .faq-header {
+                margin: 0px;
+                padding:0px;
+                width: 100%;
+                float: left;
+                li {
+                  list-style:none;
+                  width: 100%;
+                  float: left;
+                  padding:0px;
+                  margin: 0px;
+                  border-bottom: solid 1px @color-white;
+                  a {
+                    display: inline-block;
+                    background: url('../images/leaf-bg-repeater.png') repeat @color-blue2;
+                    width: 100%;
+                    line-height: 50px;
+                    padding-left: 20px;
+                    .lib-css(color, @color-white);
+                    .lib-css(font-family, @font-name__signika_semibold);
+                    .lib-font-size(18);
+                    text-decoration: none;
+                    font-weight: 400;
+                    &:hover {
+                      background: url('../images/leaf-bg-repeater.png') repeat @color-yellow3;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .ns-faq-content {
+            .lib-layout-column(2, 2, 77%);
+            padding-left: 20px;
+            .faq-content-container {
+              .faq-overflow {
+                .faq-wrapper {
+                  .faq-category {
+                    width: 100%;
+                    float: left;
+                    padding-bottom: 25px;
+                    .faq-cat-title-wrapper {
+                      width: 100%;
+                      float: left;
+                      border-bottom: solid 2px @color-yellow3;
+                      height:56px;
+                      span {
+                        .lib-css(color, @color-yellow3);
+                        .lib-font-size(16);
+                        text-decoration: underline;
+                        float: right;
+                        padding-top: 7px;
+                        cursor: pointer;
+                        &.catTitle {
+                          .lib-css(color, @color-gray-darken1);
+                          .lib-font-size(24);
+                          text-decoration: none;
+                          float: left;
+                          padding-top: 0px;
+                          cursor: inherit;
+                        }
+                      }
+                    }
+
+                    .faq-content {
+                      float: left;
+                      width: 100%;
+                      .faq-question {
+                        float: left;
+                        width: 100%;
+                        margin: 26px 0 0;
+                        padding-bottom: 20px;
+                        border-bottom: solid 1px @color-gray-light0;
+                        .question {
+                          .lib-css(color, @color-blue2);
+                          line-height: 24px;
+                          .lib-font-size(18);
+                          width: 95%;
+                          float: left;
+                          cursor: pointer;
+                        }
+                        .ui-accordion-header-icon {
+                          float: right;
+                          cursor: pointer;
+                          .lib-icon-font(
+                            @_icon-font-line-height:15px,
+                            @_icon-font-color: @color-gray-light0,
+                            @_icon-font-color-hover: @color-gray-light0,
+                            @_icon-font-content:@icon-payment-expand,
+                            @_icon-font-size: 15px
+                          );
+                          &:before {
+                            font-weight: 600;
+                          }
+                          &:after {
+                            content: normal;
+                          }
+                        }
+                        &.ui-state-active {
+                          border-bottom: none;
+                          .ui-accordion-header-icon {
+                            .lib-icon-font(
+                              @_icon-font-line-height:15px,
+                              @_icon-font-color: @color-gray-light0,
+                              @_icon-font-color-hover: @color-gray-light0,
+                              @_icon-font-content:@icon-payment-minimize,
+                              @_icon-font-size: 15px
+                            );
+                            &:before {
+                              font-weight: 600;
+                            }
+                          }
+                        }
+                      }
+
+                      .faq-answer {
+                        padding-bottom: 26px;
+                        border-bottom: solid 1px @color-gray-light0;
+                        float:left;
+                        .lib-css(background, @color-white);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .nsfaq-index-index,
+  .dtfaq-index-index {
+    .column {
+      &.main {
+        .ns-faq-content-wrapper {
+          .ns-faq-sidebar-menu {
+            .lib-layout-column(2, 1, 28%);
+            .faq-link-wrapper {
+              .faq-mobile-links-header {
+                display: none !important;
+              }
+              .faq-link-set {
+                display: block !important;
+              }
+            }
+
+          }
+          .ns-faq-content {
+            .lib-layout-column(2, 2, 72%);
+          }
+
+        }
+      }
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+  .nsfaq-index-index,
+  .dtfaq-index-index {
+    .column {
+      &.main {
+        .ns-faq-content-wrapper {
+          .ns-faq-sidebar-menu {
+            .lib-layout-column(2, 1, 23%);
+          }
+          .ns-faq-content {
+            .lib-layout-column(2, 2, 77%);
+          }
+
+        }
+      }
+    }
+  }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .nsfaq-index-index,
+  .dtfaq-index-index {
+    .faq-menu {
+      a {
+        &.faq {
+          width: 50%; 
+        }
+      }
+    }
+    .page-title-wrapper {
+      .page-title {
+        float: left;
+      }
+    }
+    .ns-faq-top-bar {
+      .faq-description {
+        .lib-css(color, @color-gray-darken3);
+        margin-bottom: 20px;
+      }
+      margin-bottom: 0px;
+    }
+    .column {
+      &.main {
+        .ns-faq-content-wrapper {
+          .ns-faq-sidebar-menu {
+            display: none;
+            .faq-link-wrapper {
+              .faq-mobile-links-header {
+                display: none !important;
+              }
+              .faq-link-set {
+                display: block !important;
+              }
+            }
+          }
+
+          .ns-faq-content {
+            width: 100%;
+            padding-left: 0px;
+            .faq-content-container {
+              .faq-overflow {
+                .faq-wrapper {
+                  .faq-category {
+                    .faq-cat-title-wrapper {
+                      min-height: 56px;
+                      height: auto;
+
+                      span {
+                        width: 25%;
+                        float: left;
+                        text-align: right;
+                        .lib-font-size(14);
+                        &.catTitle {
+                          width: 75%;
+                          float: left;
+                          text-align: left;
+                          .lib-font-size(24);
+                          padding-bottom: 10px;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+

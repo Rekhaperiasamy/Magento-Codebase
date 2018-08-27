@@ -1,0 +1,54 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Template for filter items block
+ *
+ * @var $block \Magento\LayeredNavigation\Block\Navigation\FilterRenderer
+ */
+?>
+<?php
+$isMaxValDisplayed = false;
+$isMinValDiaplyed = false;
+?>
+<ol class="items">
+    <?php foreach ($filterItems as $filterItem): ?>
+        <li class="item">
+            <?php $filterObj = $filterItem->getFilter();?>
+            <?php if ($filterItem->getCount() > 0): ?>
+                <a href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" <?php
+
+                if($this->helper('\Netstarter\StackNavigation\Helper\Data')->isPriceFilter($filterObj) && !$isMaxValDisplayed){
+                    echo('data-max-price-val="'.$this->helper('\Netstarter\StackNavigation\Helper\Data')->getMaxPrice($filterObj).'"');
+                    $isMaxValDisplayed = true;
+                }
+
+                if($this->helper('\Netstarter\StackNavigation\Helper\Data')->isPriceFilter($filterObj) && !$isMinValDiaplyed){
+                    echo('data-min-price-val="'.$this->helper('\Netstarter\StackNavigation\Helper\Data')->getMinPrice($filterObj).'"');
+                    $isMinValDiaplyed = true;
+                }
+                ?>
+                >
+                    <?php /* @escapeNotVerified */ echo __($filterItem->getLabel()) ?>
+                    <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                        <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
+                            <?php if ($filterItem->getCount() == 1):?> <?php /* @escapeNotVerified */ echo __('item')?><?php else:?> <?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
+                    <?php endif; ?>
+                </a>
+            <?php else:?>
+                <?php /* @escapeNotVerified */ echo __($filterItem->getLabel()) ?>
+                <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                    <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
+                        <?php if ($filterItem->getCount() == 1):?><?php /* @escapeNotVerified */ echo __('item')?><?php else:?><?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
+                <?php endif; ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ol>

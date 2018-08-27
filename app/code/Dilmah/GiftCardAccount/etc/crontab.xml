@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_GiftCardAccount
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="dilmah_gift_card_expiration_notification_daily"
+             instance="Dilmah\GiftCardAccount\Cron\NotifyGiftCardExpirationDaily" method="execute">
+            <schedule>0 0 * * *</schedule>
+        </job>
+    </group>
+</config>

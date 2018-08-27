@@ -1,0 +1,17 @@
+
+<script type="text/x-magento-init">
+{
+    "*": {
+    "ajaxData"  		: {
+                "multi_select_sections"         : "<?php echo $block->getMutiselectSections();?>"
+    },
+    "priceSlider"  		: {
+    "sliderTemplate"     : "<div class='price-slider-container'><div id='sliderWrap'></div><div class='ui-slider-label'><label>Price range:</label><input type='text' data-min-price='' readonly class='left' ><input type='text' data-max-price='' readonly class='right' ></div></div>"
+    },
+    "stackNavigation" 	: {
+        		"filter_options_show_count"       : <?php echo $block->getLimitCategoryCount(); ?>,
+        		"filter_options_content"       : "<?php echo $block->getShowMoreButtonAppliedSections(); ?>"
+            }
+    }
+}
+</script>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_form">
+            <block class="Netresearch\OPS\Block\Adminhtml\Customer\Edit\Tab\Alias" name="customer_edit_tab_ops_alias">
+                <action method="setTablLabel">
+                    <argument name="label" xsi:type="string">Payment Information</argument>
+                </action>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

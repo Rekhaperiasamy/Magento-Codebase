@@ -1,0 +1,18 @@
+<!-- ko foreach: aliasesContainer.getAliases(getCode()) -->
+<div class="control">
+    <input type="radio" style="display: none;"
+           data-bind="attr: {
+                             name: 'payment[' + $parent.getCode() + '][alias]',
+                             id: 'alias_' + $parent.getCode() + '_' + id,
+                             checked: $parent.renderer.aliasId == alias && !$parent.renderer.newAliasIsChecked},
+                             event: {click: $parent.selectAlias.bind($parent, $data) },
+                            value: alias" required>
+    <label data-bind="attr: {for: 'alias_' + $parent.getCode() + '_' + id}" class="alias_label">
+        <ul style="list-style: none;">
+            <li><!-- ko i18n: 'Account owner:' --><!-- /ko --> <span data-bind="text:cardHolderName"></span></li>
+            <!--@TODO: differntiante between IBAN and AccNo/BLZ-->
+            <li><!-- ko i18n: 'IBAN:' --><!-- /ko --> <span data-bind="text:aliasCardNumber"></span></li>
+        </ul>
+    </label>
+</div>
+<!-- /ko -->

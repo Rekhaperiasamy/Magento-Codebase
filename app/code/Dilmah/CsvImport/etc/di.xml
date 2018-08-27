@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_CsvImport
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Theme\Model\View\Design">
+        <arguments>
+            <argument name="themes" xsi:type="array">
+                <item name="frontend" xsi:type="string">Netstarter/dilmah</item>
+                <item name="adminhtml" xsi:type="string">Netstarter/dilmah</item>
+            </argument>
+        </arguments>
+    </type>
+       <preference for="Magento\OfflineShipping\Model\Carrier\Flatrate\ItemPriceCalculator" type="Dilmah\CsvImport\Model\Flatrate\Price" />
+	<!-- <preference for="Magento\OfflineShipping\Model\Carrier\Flatrate\ItemPriceCalculator" type="Dilmah\CsvImport\Model\Flatrate\Price" />-->
+</config>

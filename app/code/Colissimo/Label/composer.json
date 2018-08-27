@@ -1,0 +1,24 @@
+{
+  "name": "colissimo/module-label",
+  "description": "Module Label for Colissimo Shipping",
+  "require": {
+    "colissimo/module-shipping":"*"
+  },
+  "type": "magento2-module",
+  "version": "100.2.4",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Colissimo\\Label\\": ""
+    }
+  },
+  "authors": [
+    {
+      "name": "Matthieu Vion",
+      "homepage": "https://colissimo.magentix.fr/magento-2/",
+      "role": "Developer"
+    }
+  ]
+}

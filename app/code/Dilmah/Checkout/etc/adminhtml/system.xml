@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="checkout" translate="label" type="text" sortOrder="305" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="cart" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="show_cart_message" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Shipping Threshold Message</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>shipping/message/active</config_path>
+                </field>
+                <field id="shipping_message_threshold" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Shipping Message Threshold</label>
+                    <config_path>shipping/message/threshold</config_path>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="show_cart_message">1</field>
+                    </depends>
+                </field>
+                <field id="shipping_message" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Message</label>
+                    <config_path>shipping/message/message</config_path>
+                    <comment>Eg: 'Buy another %s worth goods and get FREE shipping!', where %s will be used to insert the amount to be used to get free shipping</comment>
+                    <depends>
+                        <field id="show_cart_message">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

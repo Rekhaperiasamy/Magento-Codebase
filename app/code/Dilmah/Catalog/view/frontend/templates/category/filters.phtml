@@ -1,0 +1,30 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Catalog
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category layered navigation state
+ *
+ * @var $block \Magento\LayeredNavigation\Block\Navigation\State
+ */
+?>
+<?php $_filters = $block->getActiveFilters() ?>
+<?php if (!empty($_filters)): ?>
+    <div class="filter-current">
+        <strong class="block-subtitle filter-current-subtitle"
+                role="heading"
+                aria-level="2"
+                data-count="<?php echo count($_filters); ?>"><?php /* @escapeNotVerified */
+            echo __('Now Shopping by') ?></strong>
+    </div>
+<?php endif; ?>

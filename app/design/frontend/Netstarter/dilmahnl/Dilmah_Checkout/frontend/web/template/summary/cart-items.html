@@ -1,0 +1,93 @@
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<!-- ko ifnot: isItemsBlockExpanded() -->
+<div class="block items-in-cart" data-bind="mageInit: {'cartSummary': {'collapsible':{'openedState': 'active', 'active': true, 'animate': true}}}">
+    <div class="title" data-role="title">
+        <span data-bind="i18n: 'overzicht van de bestelling'" class="title"></span>
+        <strong role="heading"><span data-bind="text: getItemsQty()"></span>
+            <!-- ko if: getItemsQty() == 1 -->
+            <!-- ko i18n: 'producten in de winkelwagen' --><!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: getItemsQty() > 1 -->
+            <!-- ko i18n: 'producten in de winkelwagen' --><!-- /ko -->
+            <!-- /ko -->
+        </strong>
+    </div>
+
+    <!-- ko if: isFreeShippingThresholdActive && getFreeShippingThresholdMessage() -->
+    <div class="cart-sidebar-freeshipping-threshold">
+        <span data-bind="text: getFreeShippingThresholdMessage()"></span>
+    </div>
+    <!-- /ko -->
+
+    <div class="content minicart-items" data-role="content">
+        <div class="minicart-items-wrapper overflowed">
+            <ol class="minicart-items">
+                <!-- ko foreach: getItems() -->
+                <li class="product-item">
+                    <div class="product">
+                        <!-- ko foreach: $parent.elems() -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                        <!-- /ko -->
+                    </div>
+                </li>
+                <!-- /ko -->
+            </ol>
+        </div>
+        <div class="block edit-my-cart">
+            <button
+                    type="button"
+                    class="action action-edit-cart"
+                    data-bind="click: gotoCart">
+                <span data-bind="i18n: 'Edit my Cart'"></span>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: isItemsBlockExpanded() -->
+<div class="block items-in-cart" data-bind="mageInit: {'cartSummary': {'collapsible':{'openedState': 'active', 'active': true, 'animate': true}}}">
+    <div class="title" data-role="title">
+        <span data-bind="i18n: 'overzicht van de bestelling'" class="title"></span>
+        <strong role="heading"><span data-bind="text: getItemsQty()"></span>
+            <!-- ko if: getItemsQty() == 1 -->
+            <!-- ko i18n: 'producten in de winkelwagen' --><!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: getItemsQty() > 1 -->
+            <!-- ko i18n: 'producten in de winkelwagen' --><!-- /ko -->
+            <!-- /ko -->
+        </strong>
+    </div>
+    <div class="content minicart-items" data-role="content">
+        <div class="minicart-items-wrapper overflowed xx">
+            <ol class="minicart-items">
+                <!-- ko foreach: getItems() -->
+                <li class="product-item">
+                    <div class="product">
+                        <!-- ko foreach: $parent.elems() -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                        <!-- /ko -->
+                    </div>
+                </li>
+                <!-- /ko -->
+            </ol>
+        </div>
+        <div class="block edit-my-cart">
+            <button
+                    type="button"
+                    class="action action-edit-cart"
+                    data-bind="click: gotoCart">
+                <span data-bind="i18n: 'Edit my Cart'"></span>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

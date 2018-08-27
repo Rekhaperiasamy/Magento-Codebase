@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_submit_all_after">
+        <observer name="scommerce_gdpr_checkout_submit_all_after" instance="Scommerce\Gdpr\Observer\OrderCreateObserver" />
+    </event>
+</config>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Contact
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_ImportExport:etc/import.xsd">
+    <entity name="base_price_import" label="Base Price Import" model="Dilmah\CsvImport\Model\Import\BasePriceImport" behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic" />
+    <entity name="stock_import" label="Stock Update" model="Dilmah\CsvImport\Model\Import\StockImport" behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic" />
+</config>

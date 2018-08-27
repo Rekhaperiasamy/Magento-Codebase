@@ -1,0 +1,32 @@
+<!-- ko foreach: aliasesContainer.getAliases(getCode()) -->
+<div class="control">
+    <input type="radio" style="display: none;"
+           data-bind="attr: {
+                             name: 'payment[' + $parent.getCode() + '][alias]',
+                             id: 'alias_' + $parent.getCode() + '_' + id,
+                             checked: $parent.renderer.aliasId == alias && !$parent.renderer.newAliasIsChecked},
+                             event: {click: $parent.selectAlias.bind($parent, $data) },
+                                value: alias" required>
+    <label data-bind="attr: {for: 'alias_' + $parent.getCode() + '_' + id}" class="alias_label">
+        <ul style="list-style: none;">
+            <li><!-- ko i18n: 'Name on Card:' --><!-- /ko --> <span data-bind="text:cardHolderName"></span></li>
+            <li><!-- ko i18n: 'Credit Card Number:' --><!-- /ko --> <span data-bind="text:aliasCardNumber"></span></li>
+            <li><!-- ko i18n: 'Credit Card Type:' --><!-- /ko --> <img data-bind="attr: {src: $parent.getImageForBrand(storedAliasBrand)}"/></li>
+            <li><!-- ko i18n: 'Expiration Date:' --><!-- /ko --> <span data-bind="text:expirationDatePart"></span></li>
+            <!-- ko if: $parent.isInlinePaymentType(storedAliasBrand) -->
+            <li style="display: none;">
+                <label data-bind="attr: {for: $parent.getCode().toUpperCase() + '_CVC_alias_' + $parent.getCode() + '_' + id}" style="display: inline-block;">
+                    <span><!-- ko i18n: 'Card Verification Number' --><!-- /ko --> <span style="color: #e02b27; font-size: 1.2rem; margin: 0 0 0 5px;">*</span></span>
+                </label>
+                <input type="text" style="display: inline-block; width: 140px;" maxlength="6"
+                       data-bind="attr: {
+                                         name: 'payment[' + $parent.getCode() + '][cvc]',
+                                         id: $parent.getCode().toUpperCase() + '_CVC_alias_' + id,
+                                         'data-validate': JSON.stringify({required:true})},
+                                  value: $parent.aliasCvc"/>
+            </li>
+            <!-- /ko -->
+        </ul>
+    </label>
+</div>
+<!-- /ko -->

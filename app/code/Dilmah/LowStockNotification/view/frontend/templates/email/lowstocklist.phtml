@@ -1,0 +1,39 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SpecialOrders
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Table Body for Low Stock List
+ *
+ */
+?>
+<?php $products = $block->getProducts() ?>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Product Sku</th>
+        <th>Current Stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    foreach ($products as $key => $product) :?>
+        <tr>
+            <td> <?php echo ($key + 1); ?></td>
+            <td> <?php echo $product['name']; ?></td>
+            <td> <?php echo $product['sku']; ?></td>
+            <td> <?php echo $product['qty']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

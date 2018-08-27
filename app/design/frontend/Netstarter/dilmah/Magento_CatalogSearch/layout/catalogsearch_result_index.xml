@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.top">
+            <block name="banner.image.search" as="banner.image.search" class="Magento\Framework\View\Element\Template" template="Dilmah_Catalog::searchresult/banners.phtml" before="breadcrumbs" />
+        </referenceContainer>
+        <referenceBlock name="search.result">
+            <!--<block name="category.list.top.filters.search" as="navigation.filters.search" class="Magento\LayeredNavigation\Block\Navigation\State" template="Dilmah_Catalog::category/filters.phtml"/>-->
+            <block name="category.list.top.filters.search" as="navigation.filters.search" class="Magento\LayeredNavigation\Block\Navigation\State" template="Netstarter_StackNavigation::layer/ns_state.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,39 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Magento
+ * @package     Magento_Catalog
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+$product = $block->getProduct();
+$bagQty = $product->getData(\Dilmah\Catalog\Helper\Data::TEA_BAG_QTY_ATTRIBUTE);
+$grammage = $product->getData(\Dilmah\Catalog\Helper\Data::GRAMMAGE_ATTRIBUTE);
+$servings = $product->getData(\Dilmah\Catalog\Helper\Data::NUMBER_OF_SERVINGS_ATTRIBUTE);
+$isCombo = $product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1;
+?>
+<?php if (!$isCombo): // this section will show if the product is not a mix and match product ?>
+    <?php if (!empty($bagQty) || !empty($grammage) || !empty($servings)): ?>
+        <div class="bag-info-wrapper">
+            <ul class="bag-desc">
+                <?php if (!empty($bagQty)): ?>
+                    <li class="bag-qty">
+                        <span><?php echo $bagQty ?></span><?php echo __('bags per pack') ?>
+                    </li>
+                <?php elseif(!empty($grammage)): ?>
+                    <li class="grammage">
+                        <span><?php echo $grammage ?></span><?php echo __('grams per pack') ?>
+                    </li>
+                <?php endif; ?>
+                <?php if (!empty($servings)): ?>
+                    <li class="servings">
+                        <span><?php echo $servings ?></span><?php echo __('servings per pack') ?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

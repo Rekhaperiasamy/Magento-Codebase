@@ -1,0 +1,11 @@
+<?php
+/** @var \Dilmah\NewsEvents\Block\Widget\NewsEvents $block */
+?>
+
+<div class="news-articles" data-mage-init='{"newsEvents": {}}'>
+    <div class="articles">
+        <?php
+        echo $block->getNewsItems('home');
+        ?>
+    </div>
+</div>

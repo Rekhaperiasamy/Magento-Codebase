@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Scommerce\Gdpr\Api\ConsentRepositoryInterface" type="Scommerce\Gdpr\Model\ConsentRepository" />
+    <preference for="Scommerce\Gdpr\Api\Data\ConsentInterface" type="Scommerce\Gdpr\Model\Data\Consent" />
+    <preference for="Scommerce\Gdpr\Api\Data\ConsentSearchResultInterface" type="Magento\Framework\Api\SearchResults" />
+
+    <!-- Command list -->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="scommerce_gdpr_quote_reset" xsi:type="object">Scommerce\Gdpr\Console\Command\QuoteResetCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="ScommerceGdprConsentGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Scommerce\Gdpr\Model\ResourceModel\Consent\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ScommerceGdprConsentGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ScommerceGdprConsentGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Scommerce\Gdpr\Model\ResourceModel\Consent\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">scommerce_gdpr_consent</argument>
+            <argument name="eventPrefix" xsi:type="string">scommerce_gdpr_consent_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">consent_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Scommerce\Gdpr\Model\ResourceModel\Consent</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="scommerce_gdpr_consent_list_data_source" xsi:type="string">Scommerce\Gdpr\Model\ResourceModel\Consent\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>

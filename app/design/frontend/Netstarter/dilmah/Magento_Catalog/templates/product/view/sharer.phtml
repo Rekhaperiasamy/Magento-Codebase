@@ -1,0 +1,36 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Magento
+ * @package     Magento_Catalog
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+$product = $block->getProduct();
+$productUrl = $product->getProductUrl();
+$productName = $block->stripTags($product->getName());
+$imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+$imageId = 'product_share_image';
+?>
+<div class="social-share-widgets">
+    <ul>
+        <li class="social-links">
+            <a href = '#' data-link="www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($productUrl) ?>&t=<?php echo urlencode($productName) ?>, 'Facebook', width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes" title="<?php echo __('Share on Facebook') ?>" class="fb-icon" rel=nofollow></a>
+        </li>
+        <li class="social-links">
+            <a href = '#' data-link="twitter.com/home/?status=<?php echo urlencode($productName . ' (' . $productUrl . ')') ?>, 'Twitter', width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes"  title="<?php echo __('Tweet') ?>" class="tweet-icon" rel=nofollow></a>
+        </li>
+        <li class="social-links">
+            <a href = '#' data-link="plus.google.com/share?url=<?php echo urlencode($productUrl) ?>, 'Google+', width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes"  title="<?php echo __('Google+') ?>" class="gplus-icon" rel=nofollow></a>
+        </li>
+        <li class="social-links">
+            <a href = '#' data-link="pinterest.com/pin/create/button/?url=<?php echo urlencode($productUrl) ?>&media=<?php echo urlencode($imageHelper->init($product, $imageId)->getUrl()); ?>&description=<?php echo urlencode($productName) ?>,Pinterest,width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes"  title="<?php echo __('Pin it') ?>" class="pin-it-icon" rel=nofollow></a>
+        </li>
+        <li class="social-links">
+            <a href = '#' data-link="www.tumblr.com/widgets/share/tool?posttype=photo&title=<?php echo urlencode($productName) ?>&content=<?php echo urlencode($imageHelper->init($product, $imageId)->getUrl()); ?>&caption=<?php echo urlencode($productName) ?>&canonicalUrl=<?php echo urlencode($productUrl) ?>&shareSource=tumblr_share_button, 'Tumblr', width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes"  title="<?php echo __('Share on Tumblr') ?>" class="tumblr-icon" rel=nofollow></a>
+        </li>
+    </ul>
+</div>

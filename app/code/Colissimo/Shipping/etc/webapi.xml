@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Shipping Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/colissimo/:pickupId/:networkCode" method="GET">
+        <service class="Colissimo\Shipping\Api\PickupRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimo/:cartId" method="GET">
+        <service class="Colissimo\Shipping\Api\PickupRepositoryInterface" method="current"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimo" method="GET">
+        <service class="Colissimo\Shipping\Api\PickupRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimo/:cartId/:pickupId/:networkCode" method="PUT">
+        <service class="Colissimo\Shipping\Api\PickupRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimo/:cartId" method="DELETE">
+        <service class="Colissimo\Shipping\Api\PickupRepositoryInterface" method="reset"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+.monetico-section > .config > .comment:before {
+    display: block;
+    content: '';
+    background: url('../images/monetico-logo.png') no-repeat 0 0 / 455px auto;
+    height: 60px;
+    width: 600px;
+}
+.monetico-section > .entry-edit-head > a:after {
+    display: block;
+    content: '';
+    background: url('../images/mastervisa.png') no-repeat 0 0 / 36% auto;
+    float: right;
+    height: 35px;
+    width: 280px;
+}
+.monetico-section .monetico-variable-list {
+    padding-left: 2rem;
+    list-style-type: none;
+}
+.monetico-section .monetico-variable-list .monetico-variable:before {
+    display: inline-block;
+    content: '-';
+    font-weight: 700;
+    padding-right: 1rem;
+}
+.monetico-section .monetico-variable-list .monetico-variable {
+    margin: 0.5rem 0.5rem;
+}
+.monetico-section .monetico-variable-list .monetico-variable > strong {
+    display: inline-block;
+    width: 160px;
+}
+.monetico-section .monetico-variable-list .monetico-variable > span:before {
+    display: inline-block;
+    content: ':';
+    margin: 0 1rem;
+}

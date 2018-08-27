@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_save_before">
+        <observer
+            name="cartinfo_checkout_cart_save_before"
+            instance="Dilmah\Cartinfo\Observer\Cartinfo" />
+    </event>
+</config>

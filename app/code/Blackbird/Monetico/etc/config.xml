@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <monetico_onetime>
+                <active>0</active>
+                <title>Monetico One-time Payment Method</title>
+                <version>3.0</version>
+                <environment>sandbox</environment>
+                <private_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <order_status>pending</order_status>
+                <order_status_payment_accepted>processing</order_status_payment_accepted>
+                <order_status_payment_refused>holded</order_status_payment_refused>
+                <order_status_payment_canceled>canceled</order_status_payment_canceled>
+                <create_invoice>1</create_invoice>
+                <allowspecific>0</allowspecific>
+                <verify_3dsecure>1</verify_3dsecure>
+                <use_iframe>0</use_iframe>
+                <locale>EN</locale>
+                <transaction_description>Payment from %code_societe% through Monetico %payment_method% for the Order %order_id%</transaction_description>
+                <allow_options>1</allow_options>
+                <disabled_options>1euro,3xcb,4xcb,paypal</disabled_options>
+                <use_base_currency>0</use_base_currency>
+                <group>monetico</group>
+                <model>Blackbird\Monetico\Model\Method\Onetime</model>
+            </monetico_onetime>
+            <monetico_multitime>
+                <active>0</active>
+                <amount_min>100</amount_min>
+                <amount_max>1000</amount_max>
+                <title>Monetico Multi-time Payment Method</title>
+                <version>3.0</version>
+                <environment>sandbox</environment>
+                <private_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <order_status>pending</order_status>
+                <order_status_payment_accepted>processing</order_status_payment_accepted>
+                <order_status_payment_refused>holded</order_status_payment_refused>
+                <order_status_payment_canceled>canceled</order_status_payment_canceled>
+                <create_invoice>1</create_invoice>
+                <number_terms>3</number_terms>
+                <term_rate_1>34</term_rate_1>
+                <term_rate_2>33</term_rate_2>
+                <term_rate_3>33</term_rate_3>
+                <allowspecific>0</allowspecific>
+                <verify_3dsecure>1</verify_3dsecure>
+                <use_iframe>0</use_iframe>
+                <locale>EN</locale>
+                <transaction_description>Payment from %code_societe% through Monetico %payment_method% for the Order %order_id%</transaction_description>
+                <allow_options>1</allow_options>
+                <use_base_currency>0</use_base_currency>
+                <group>monetico</group>
+                <model>Blackbird\Monetico\Model\Method\Multitime</model>
+            </monetico_multitime>
+            <monetico_1euro>
+                <active>0</active>
+                <title>Monetico Cofidis 1euro Payment Method</title>
+                <model>Blackbird\Monetico\Model\Method\CofidisEuro</model>
+            </monetico_1euro>
+            <monetico_3xcb>
+                <active>0</active>
+                <amount_min>100</amount_min>
+                <amount_max>1000</amount_max>
+                <title>Monetico Cofidis 3xCB Payment Method</title>
+                <model>Blackbird\Monetico\Model\Method\CofidisTxcb</model>
+            </monetico_3xcb>
+            <monetico_4xcb>
+                <active>0</active>
+                <amount_min>100</amount_min>
+                <amount_max>1000</amount_max>
+                <title>Monetico Cofidis 4xCB Payment Method</title>
+                <model>Blackbird\Monetico\Model\Method\CofidisFxcb</model>
+            </monetico_4xcb>
+            <monetico_paypal>
+                <active>0</active>
+                <title>Monetico PayPal Payment Method</title>
+                <model>Blackbird\Monetico\Model\Method\PayPal</model>
+            </monetico_paypal>
+        </payment>
+    </default>
+</config>

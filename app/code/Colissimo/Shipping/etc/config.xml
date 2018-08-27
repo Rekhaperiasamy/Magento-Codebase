@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Shipping Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <colissimo>
+                <active>0</active>
+                <model>Colissimo\Shipping\Model\Carrier\Colissimo</model>
+                <title>La Poste : Colissimo</title>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <homecl>
+                    <active>0</active>
+                    <name>Domicile sans signature</name>
+                    <specificcountry>FR</specificcountry>
+                </homecl>
+                <homesi>
+                    <active>0</active>
+                    <name>Domicile avec signature</name>
+                    <specificcountry>FR,BE,NL,DE,GB,LU,ES</specificcountry>
+                </homesi>
+                <pickup>
+                    <active>0</active>
+                    <name>Point de retrait</name>
+                    <specificcountry>FR,BE,NL,DE,GB,LU,ES</specificcountry>
+                    <open>1</open>
+                </pickup>
+                <international>
+                    <active>0</active>
+                    <name>Expert International</name>
+                    <specificcountry>DK,DE,IE,EL,ES,IT,LU,NL,AT,PL,PT,FI,SE,UK</specificcountry>
+                </international>
+                <domtomcl>
+                    <active>0</active>
+                    <name>Outre-Mer sans signature</name>
+                    <specificcountry>GP,MQ,GF,RE,PM,YT,TF,WF,PF,NC,BL,MF</specificcountry>
+                </domtomcl>
+                <domtomsi>
+                    <active>0</active>
+                    <name>Outre-Mer avec signature</name>
+                    <specificcountry>GP,MQ,GF,RE,PM,YT,TF,WF,PF,NC,BL,MF</specificcountry>
+                </domtomsi>
+            </colissimo>
+        </carriers>
+    </default>
+</config>

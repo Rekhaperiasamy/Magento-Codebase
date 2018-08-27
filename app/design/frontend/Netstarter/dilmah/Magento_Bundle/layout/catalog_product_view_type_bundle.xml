@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.bundle.options.top" remove="true"/>
+        <referenceBlock name="customize.button" remove="true"/>
+        <referenceBlock name="bundle.summary" remove="true"/>
+
+        <move element="product.info.bundle" destination="product.info.main" before="product.info.addtocart.bundle"/>
+        <move element="product.info.addtocart.bundle" destination="product.info.main" before="product.info.extrahint"/>
+
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Catalog\Block\Product\View" name="product.bag.info" template="product/view/bag_info.phtml" after="product.info.price"/>
+        </referenceContainer>
+    </body>
+</page>

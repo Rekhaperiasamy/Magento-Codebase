@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Shipping Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Colissimo_Shipping::css/style.css"/>
+    </head>
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="step-config" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-rates-validation" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="colissimo-validation" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Colissimo_Shipping/js/view/shipping-rates-validation</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shippingAdditional" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">shippingAdditional</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="colissimo_shipping_method_extend" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Colissimo_Shipping/js/view/checkout/shipping/colissimo</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="colissimo_shipping_sidebar_pickup" xsi:type="array">
+                                            <item name="component" xsi:type="string">Colissimo_Shipping/js/view/checkout/sidebar/pickup</item>
+                                            <item name="displayArea" xsi:type="string">shipping-information</item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="head.additional">
+            <block class="Colissimo\Shipping\Block\Frontend\Pickup\Load\Maps" name="pickup.maps.api" template="Colissimo_Shipping::pickup/load/maps.phtml" />
+        </referenceContainer>
+    </body>
+</page>

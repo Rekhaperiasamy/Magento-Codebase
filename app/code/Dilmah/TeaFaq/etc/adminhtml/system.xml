@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Dilmah_TeaFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="dilmah_teafaq" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Tea FAQ</label>
+            <tab>netstarter</tab>
+            <resource>Dilmah_TeaFaq::faq</resource>
+            <group id="settings" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>FAQ Settings</label>
+                <field id="config_dtfaq_title" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Page Title</label>
+                </field>
+                <field id="config_dtfaq_description" translate="label" type="textarea" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Description</label>
+                </field>
+                <field id="config_dtfaq_show_desc" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Description</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="config_dtfaq_keywords" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Meta keywords</label>
+                </field>
+                <field id="config_dtfaq_meta_description" translate="label" type="textarea" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Meta Description</label>
+                </field>
+                <field id="config_dtfaq_canonical_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Canonical Url</label>
+                </field>
+            </group>
+            <group id="general" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="config_dtfaq_widgetonly" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use the FAQ Widget separately only in CMS pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>By enabling, this Module will be able to use only as a separate Widget</comment>
+                </field>
+                <field id="config_dtfaq_show_categories_on_top" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show FAQ Categories on top</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="config_dtfaq_filter_method" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use FAQ Category Filter Method</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Filter Method "Yes" will display only the FAQs related with the category while "No" will scroll up to the relevant Category</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

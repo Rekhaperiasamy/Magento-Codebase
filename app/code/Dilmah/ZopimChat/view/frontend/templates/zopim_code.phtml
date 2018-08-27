@@ -1,0 +1,36 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Dilmah\ZopimChat\Block\ZopimChat
+ */
+?>
+<!--Start of Zopim Live Chat Script-->
+<script type="text/javascript">
+    var ua = navigator.userAgent.toLowerCase(),
+        platform = navigator.platform.toLowerCase();
+    platformName = ua.match(/ip(?:ad|od|hone)/) ? 'ios' : (ua.match(/(?:webos|android)/) || platform.match(/mac|win|linux/) || ['other'])[0],
+        isMobile = /ios|android|webos/.test(platformName);
+
+    //ignore in product detail page mobile
+    if(document.body.classList.contains('catalog-product-view') && isMobile) {
+        //do nothing
+    } else {
+        window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+            d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+        _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+            $.src="//v2.zopim.com/?<?php echo $block->getZopimChatKey() ?>";z.t=+new Date;$.
+                type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+
+
+    }
+
+</script>
+<!--End of Zopim Live Chat Script-->

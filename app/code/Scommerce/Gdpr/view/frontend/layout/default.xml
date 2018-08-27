@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Scommerce_Gdpr::css/cookienotice_v1.css"/>
+    </head>
+    <body>
+		<referenceBlock name="header.links">
+			<block class="Magento\Framework\View\Element\Html\Link\Current" name="cookie-preference">
+				<arguments>
+					<argument name="label" xsi:type="string">Cookie Preference</argument>
+					<argument name="path" xsi:type="string">scommerce_gdpr/customer/cookiereset</argument>
+				</arguments>
+			</block>        
+		</referenceBlock>
+        <referenceContainer name="after.body.start">
+            <block class="Scommerce\Gdpr\Block\Cookienotice"
+                   name="scommerce.gdpr.cookienotice"
+                   template="Scommerce_Gdpr::cookienotice.phtml"
+                   before="-" cacheable="false"/>
+        </referenceContainer>
+		<referenceBlock name="form.subscribe">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Scommerce_Gdpr::subscribe.phtml</argument>
+            </action>
+            <block class="Scommerce\Gdpr\Block\Form\Subscribe" name="scommerce.gdpr.newsletter" template="Scommerce_Gdpr::form/subscribe.phtml" />
+        </referenceBlock>
+    </body>
+</page>

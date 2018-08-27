@@ -1,0 +1,21 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Dilmah_TeaFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+
+/**
+ * FAQ template
+ *
+ * @var $block \Dilmah\TeaFaq\Block\Faq
+ */
+?>
+<div class="dilmah-tfaq-content">
+    <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('dt_faq_content')->toHtml();?>
+</div>
+<div class="faq-mobile_need_help"></div>

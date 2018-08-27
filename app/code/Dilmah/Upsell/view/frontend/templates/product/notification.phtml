@@ -1,0 +1,30 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Upsell
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Dilmah\Upsell\Block\Product */
+?>
+<?php
+$upsellProduct = $block->getUpsellProduct()
+?>
+<?php if ($upsellProduct): ?>
+    <?php
+    $isCombo = $upsellProduct->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1;
+    $isPack = $upsellProduct->getData(\Dilmah\Upsell\Block\Product::IS_PACK_ATTRIBUTE) == 1;
+    $packSize = $upsellProduct->getData(\Dilmah\Upsell\Block\Product::PACK_SIZE_ATTRUBTE);
+    ?>
+    <?php if (($isPack || $isCombo) && $packSize): ?>
+        <div class="upsell-notification <?php echo $isCombo ? 'product-mix-match' : '' ?>">
+            <span><?php echo sprintf('Did you know we have this product in %s packs?', $packSize) ?></span>
+            <a href="<?php echo $upsellProduct->getProductUrl() ?>"><?php echo __('Click here') ?></a>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

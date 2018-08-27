@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.success" remove="true" />
+        <referenceBlock name="checkout.registration" remove="true" />
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Order Summary</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Order Summary</item>
+                    <item name="label" xsi:type="string" translate="true">Order Summary</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Dilmah\Checkout\Block\Onepage\Success" name="checkout.success.dilmah" template="Magento_Checkout::success.phtml" cacheable="false"/>
+            <block name="link.account.to.system" class="Dilmah\Checkout\Block\Onepage\Success" template="Magento_Checkout::link_account.phtml" >
+                <block class="Magento\Reward\Block\Tooltip\Checkout" name="success.rewards.points" template="Dilmah_Checkout::reward_points.phtml">
+                    <arguments>
+                        <argument name="reward_type" xsi:type="string">Magento\Reward\Model\Action\OrderExtra</argument>
+                    </arguments>
+                </block>
+                <block class="Dilmah\Checkout\Block\Onepage\Success" name="checkout.linkorder.dilmah" as="checkout.linkorder.dilmah" template="Magento_Checkout::linkorder.phtml" cacheable="false"/>
+                <block class="Magento\Checkout\Block\Registration" name="checkout.registration.dilmah" as="checkout.registration.dilmah" template="Magento_Checkout::registration.phtml" cacheable="false"/>
+                <block class="Magento\Cms\Block\Block" name="link_order" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">checkout_confirmation_link_order</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="logged_user" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">checkout_confirmation_logged_user</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="create_account" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">checkout_confirmation_create_account</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

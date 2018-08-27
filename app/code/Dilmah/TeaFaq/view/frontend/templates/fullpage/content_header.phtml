@@ -1,0 +1,32 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Netstarter_StackFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Netstarter\StackFaq\Block\Widget\Content
+ */
+?>
+<?php
+/** @var \Dilmah\TeaFaq\Model\ResourceModel\Category\Collection $categories */
+
+$helper = $this->helper('Dilmah\TeaFaq\Helper\Data');
+$useFaqasWigetOnly = $helper->getConfiguration('general/config_dtfaq_widgetonly');
+$showDescription = $helper->getConfiguration('settings/config_dtfaq_show_desc');
+?>
+
+<?php if ($showDescription == '1'): ?>
+    <div class="faq-description">
+        <?php echo $helper->getConfiguration('settings/config_dtfaq_description');?>
+    </div>
+<?php endif; ?>
+
+

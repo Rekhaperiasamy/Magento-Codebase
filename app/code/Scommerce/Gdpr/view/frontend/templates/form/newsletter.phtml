@@ -1,0 +1,20 @@
+<?php
+/**
+ * @var \Scommerce\Gdpr\Block\Form\Newsletter $block
+ */
+?>
+
+<div class="field choice required">
+    <input type="checkbox" name="scommerce_gdpr_privacy_consent" value="1" id="scommerce_gdpr_privacy_consent" class="checkbox"  data-validate="{required:true}" />
+    <label for="scommerce_gdpr_privacy_consent" class="label"><span><?php echo $block->getPrivacySettingText() ?></span></label>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($){
+        var dataForm = $('#form-validate');
+        dataForm.mage('validation', {});
+    });
+</script>

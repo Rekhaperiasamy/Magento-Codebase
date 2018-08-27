@@ -1,0 +1,84 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Netstarter_StackFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Netstarter\StackFaq\Block\Widget\Content
+ */
+?>
+<?php
+/** @var \Netstarter\StackFaq\Model\ResourceModel\Category\Collection $categories */
+$categories = $block->getCategories();
+$categoryCount = $categories->count();
+$itemHtml = '';
+$helper = $this->helper('Netstarter\StackFaq\Helper\Data');
+
+$showCategories = $helper->getConfiguration('general/config_faq_show_categories_on_top');
+$showDescription = $helper->getConfiguration('settings/config_faq_show_desc');
+$filterMethod = 0; //Filter and
+//$filterMethod = $helper->getConfiguration('general/config_faq_filter_method');
+$hiddenStyle = __('style="display:none;"');
+?>
+<div class="ns-faq-content-header">
+    <?php echo $block->getChildHtml('ns.faq.content.header'); ?>
+</div>
+<div class="ns-faq-content-wrapper">
+    <div class="ns-faq-sidebar-menu">
+        <div class="ns-faq-static">
+            <?php echo $block->getChildHtml('ns.faq.sidebar.menu'); ?>
+        </div>
+        <?php if ($categoryCount) : ?>
+            <?php //Showing the Faq Categories on the Left Sidebar ?>
+            <div class="faq-header-show" <?php if ($showCategories == 0) echo $hiddenStyle; ?>>
+                <ul class="faq-header" data-mage-init='{"faqExtended":{}}'>
+                    <?php foreach ($categories as $category): ?>
+                        <?php $_text = $helper->cleanCategoryTitle($category->getTitle());
+                        $_catId = $category->getCategooryId();
+                        ?>
+                        <li class="faq-cat-head">
+                            <a href="#<?php echo $_text; ?>" title="<?php echo $_text; ?>"
+                               class="<?php echo ($filterMethod == '1') ? 'faq-cat-name' : 'faq-cat-name-anchor'; ?>"><?php echo $category->getTitle(); ?></a>
+                            <?php $itemHtml .= $block->getItemHtml($category); ?>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div class="ns-faq-content">
+        <div class="faq-content-container">
+            <!--FAQ Scroller-->
+            <?php if ($categoryCount) : ?>
+                <div class="faq-navs-show" <?php if ($filterMethod == '0') echo $hiddenStyle; ?>>
+                    <div class="faq-navs">
+                        <button title="Expand" class="expand-all">[ + ]</button>
+                        <button title="Clear" class="reset"></button>
+                        <button title="Down" class="down disable"></button>
+                        <button title="Up" class="up"></button>
+                    </div>
+                </div>
+
+                <!--FAQ Content Section-->
+                <div class="faq-overflow">
+                    <div class="faq-wrapper">
+                        <!--Include Category Item Here-->
+                        <?php echo $itemHtml; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <?php echo 'There are no FAQ items at the moment.' ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_GiftCardAccount
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="unused_giftcard_account_notification_email_template" label="Gift Card Notification"
+              file="giftcard_expiration_notification_email_format.html" type="html" module="Dilmah_GiftCardAccount"
+              area="frontend"/>
+</config>

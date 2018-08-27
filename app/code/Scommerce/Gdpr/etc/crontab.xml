@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="scommerce_gdpr_cron" instance="Scommerce\Gdpr\Cron\Cron" method="execute">
+            <schedule>0 3 * * *</schedule>
+        </job>
+		<job name="scommerce_gdpr_cron_order_anonymisation" instance="Scommerce\Gdpr\Cron\CronOrderAnonymisation" method="execute">
+            <schedule>0 * * * *</schedule>
+        </job>
+    </group>
+</config>

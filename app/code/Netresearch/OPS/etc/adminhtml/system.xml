@@ -1,0 +1,1700 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment_services" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Payment Services</label>
+            <tab>sales</tab>
+            <resource>Magento_Payment::payment</resource>
+            <group id="ops_support" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Information</label>
+                <frontend_model>Netresearch\OPS\Block\System\Config\Support</frontend_model>
+            </group>
+            <group id="ops" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" translate="label comment">
+                <label>Ingenico ePayments Account</label>
+                <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                </field>
+                <field id="pspid" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>PSPID</label>
+                    <comment>PSPID is a case sensitive field</comment>
+                </field>
+                <field id="secret_key_type" translate="label tooltip" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hash algorithm</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Backend\HashMethods</source_model>
+                    <tooltip><![CDATA[This must be identical to the value in the Ingenico ePayments backend in section <em>Technical information</em> on tab <em>Global security parameters</em>.]]></tooltip>
+                </field>
+                <field id="secret_key_in" translate="label comment tooltip" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SHA-IN Pass phrase</label>
+                    <comment><![CDATA[Refer to Ingenico ePayment's backend in section <em>Technical Information</em> on tab <em>Data and origin verification</em>.]]></comment>
+                    <tooltip><![CDATA[This must be identical to the value in the Ingenico ePayments backend in section <em>Technical information</em> on tab <em>Data and origin verification</em>.]]></tooltip>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="secret_key_out" translate="label comment tooltip" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SHA-OUT Pass phrase</label>
+                    <comment><![CDATA[Refer to Ingenico ePayments's backend in section <em>Technical Information</em> on tab <em>Transaction feedback</em>.]]></comment>
+                    <tooltip><![CDATA[This must be identical to the value in the Ingenico ePayments backend in section <em>Technical information</em> on tab <em>Transaction feedback</em>.]]></tooltip>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="mode" translate="label comment tooltip" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <tooltip>Depending on the selection the extension will communicate with the Ingenico ePayments test or production service. Choose custom, if you have to use special urls for the gateway.</tooltip>
+                    <source_model>Netresearch\OPS\Model\Source\Mode</source_model>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Mode</frontend_model>
+                    <comment><![CDATA[<p id="ops_mode_comment" style="color:red; display:none;">Please note that, after changing this value, you might also need to update additional fields like API-User and password, PSPID or SHA-IN/OUT pass phrase.</p>]]></comment>
+                </field>
+                <field id="frontend_gateway" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Frontend Gateway URL</label>
+                    <comment><![CDATA[Test url example: https://secure.ogone.com/ncol/test/orderstandard_utf8.asp<br />Production url example: https://secure.ogone.com/ncol/prod/orderstandard_utf8.asp]]></comment>
+                    <depends>
+                        <field id="mode">custom</field>
+                    </depends>
+                </field>
+                <field id="ops_alias_gateway" translate="label comment" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Alias Gateway URL</label>
+                    <comment><![CDATA[Test url example: https://ogone.test.v-psp.com/Tokenization/HostedPage<br />Production url example: https://secure.ogone.com/Tokenization/HostedPage]]></comment>
+                    <depends>
+                        <field id="mode">custom</field>
+                    </depends>
+                </field>
+                <field id="directlink_gateway" translate="label comment" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DirectLink Gateway URL</label>
+                    <comment><![CDATA[Test url example: https://secure.ogone.com/ncol/test/maintenancedirect.asp<br />Production url example: https://secure.ogone.com/ncol/prod/maintenancedirect.asp]]></comment>
+                    <depends>
+                        <field id="mode">custom</field>
+                    </depends>
+                </field>
+                <field id="directlink_gateway_order" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DirectLink Gateway Order URL</label>
+                    <comment><![CDATA[Test url example: https://secure.ogone.com/ncol/test/orderdirect.asp<br />Production url example: https://secure.ogone.com/ncol/prod/orderdirect.asp]]></comment>
+                    <depends>
+                        <field id="mode">custom</field>
+                    </depends>
+                </field>
+                <field id="directlink_maintenance_api" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DirectLink Maintenance API URL</label>
+                    <comment><![CDATA[Test url example: https://secure.ogone.com/ncol/test/querydirect.asp<br />Production url example: https://secure.ogone.com/ncol/prod/querydirect.asp]]></comment>
+                    <depends>
+                        <field id="mode">custom</field>
+                    </depends>
+                </field>
+                <field id="api_userid" translate="label tooltip" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API User</label>
+                    <tooltip><![CDATA[Special user for API must be created in the Ingenico ePayments backend in section <em>Users</em>.]]></tooltip>
+                </field>
+                <field id="api_pswd" translate="label tooltip" type="obscure" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Password</label>
+                    <tooltip>Password which has been set in the Ingenico ePayments backend for above API user.</tooltip>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="payment_action" translate="label comment tooltip" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment Action</label>
+                    <tooltip><![CDATA[This setting will override the configuration in the Ingenico ePayments backend in section <em>Technical information</em> on tab <em>Global transaction parameters</em>.]]></tooltip>
+                    <source_model>Netresearch\OPS\Model\Source\PaymentAction</source_model>
+                </field>
+                <field id="send_invoice" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Send Invoice to Customer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="payment_action">authorize_capture</field>
+                    </depends>
+                </field>
+                <field id="template" translate="label comment tooltip" type="select" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment Template</label>
+                    <source_model>Netresearch\OPS\Model\Source\Template</source_model>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Template</frontend_model>
+                    <comment><![CDATA[]]></comment>
+                    <tooltip><![CDATA[For an easier PCI compliance we recommend redirect mode, iFrame mode or dynamic template with the template hosted on Ingenico ePayments servers.]]></tooltip>
+                </field>
+                <field id="template_identifier" translate="label tooltip" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Template Identifier/Url</label>
+                    <tooltip>Enter the TemplateRootId you received from Ingenico ePayments or the url to an external template.</tooltip>
+                    <depends>
+                        <field id="template">ops_template</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="html_title" translate="label comment" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title of the Ingenico ePayments Template</label>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="bgcolor" translate="label comment" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Color of Ingenico ePayments Template</label>
+                    <comment><![CDATA[e.g: white]]></comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="txtcolor" translate="label comment" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Color of the Ingenico ePayments Template</label>
+                    <comment><![CDATA[e.g: black]]></comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="tblbgcolor" translate="label comment" type="text" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Table Background Color of the Ingenico ePayments Template</label>
+                    <comment><![CDATA[e.g: white]]></comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="tbltxtcolor" translate="label comment" type="text" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Table Text Color of the Ingenico ePayments Template</label>
+                    <comment><![CDATA[e.g: black]]></comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="showcatalogbutton" translate="label" type="select" sortOrder="230" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show catalog button</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                </field>
+                <field id="showhomebutton" translate="label" type="select" sortOrder="240" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show home button</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                </field>
+                <field id="buttonbgcolor" translate="label" type="text" sortOrder="250" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Button Background Color of the Ingenico ePayments Template</label>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="buttontxtcolor" translate="label comment" type="text" sortOrder="260" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Button Text Color of the Ingenico ePayments Template</label>
+                    <comment><![CDATA[e.g: white]]></comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="fonttype" translate="label comment" type="text" sortOrder="270" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font Family of the Ingenico ePayments Template</label>
+                    <comment><![CDATA[e.g: Verdana]]></comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="logo" translate="label comment" type="text" sortOrder="280" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo of the Ingenico ePayments Template</label>
+                    <comment>URL/filename of the logo. The URL must be absolute and stored on a secure server.</comment>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="pmlist" translate="label comment" type="select" sortOrder="290" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Layout of Payment Methods</label>
+                    <source_model>Netresearch\OPS\Model\Source\Pmlist</source_model>
+                    <depends>
+                        <field id="template" separator=",">ops,ops_iframe</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="showQuoteIdInOrderGrid" translate="label comment" type="select" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Quote ID in the order grid</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="submitExtraParameters" translate="label comment tooltip" type="select" sortOrder="330" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Submit extra parameters</label>
+                    <tooltip>Only enable this if you wish to use Fraud Detection.</tooltip>
+                    <comment>Enable this if you wish to use fraud detection</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="resendPaymentInfo_identity" translate="label tooltip" type="select" sortOrder="340" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Resend payment information identity</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <tooltip>Sender identity. See 'Store Email Adresses'.</tooltip>
+                </field>
+                <field id="resendPaymentInfo_template" translate="label tooltip" type="select" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Resend payment information template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <tooltip>The email template to use. Choose 'Default Template from Locale' to use Ingenico ePayments extensions default template.</tooltip>
+                </field>
+                <field id="payPerMail_template" translate="label tooltip" type="select" sortOrder="355" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>PayPerMail Email Template.</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <tooltip>The email template to use. Choose 'Default Template from Locale' to use Ingenico ePayments extensions default template.</tooltip>
+                </field>
+                <field id="device_fingerprinting" translate="label tooltip comment" type="select" sortOrder="360" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable device fingerprinting</label>
+                    <comment>When enabling this, you still need to request the explicit consent of the customer in the checkout to transmit this data.</comment>
+                    <tooltip>This functionality will transmit specific customer data as hash to Ingenico ePayments to identify the device from which the transaction was sent can be identified with the highest probability.</tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="ops_rtimeout" translate="label comment tooltip" type="text" sortOrder="370" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Timeout for transactions</label>
+                    <comment>This value specifies the request timeout for that transaction. A value between 30 and 60 is possible.</comment>
+                    <validate>validate-digits-range digits-range-30-60</validate>
+                </field>
+                <field id="creditdebit_split" translate="label tooltip comment" type="select" sortOrder="380" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Credit/Debit card Split</label>
+                    <tooltip><![CDATA[If activated an extra parameter is transmitted to Ingenico ePayments for the Creditcard/Debitcard payment methods.]]></tooltip>
+                    <comment><![CDATA[See also <a title='Split credit/debit cards' target='_blank' href='https://payment-services.ingenico.com/int/en/ogone/support/guides/integration%20guides/split-credit-debit-cards'>Ingenico ePayments documentation</a>.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="debug_flag" translate="label tooltip comment" type="select" sortOrder="390" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Debug</label>
+                    <tooltip>This will log requests and responses in /var/log/ops.log</tooltip>
+                    <comment>Make sure the global Magento logging is also enabled.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+        <section id="payment">
+            <group id="ops_dc" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Dc</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="types" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Card Types</label>
+                    <source_model>Netresearch\OPS\Model\Source\DebitCard\Types</source_model>
+                </field>
+                <field id="redirect_all" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable redirect payment for all card types</label>
+                    <comment><![CDATA[If set to <em>Yes></em>, customers will be redirected to the external Ingenico ePayments payment page.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="inline_types" translate="label tooltip" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable inline payment for these card types</label>
+                    <tooltip>For the selected card types, the customer can enter the credit card details directly in the checkout.</tooltip>
+                    <source_model>Netresearch\OPS\Model\Source\DebitCard\AliasInterfaceEnabledTypes</source_model>
+                    <comment><![CDATA[<span style='color:red;'>When using this feature, make sure to enable all Dynamic Parameters in the Ingenico ePayments Backoffice in section <em>Tech. information &gt; Transaction feedback &gt; Alias gateway and Tokenization</em>.</span>]]></comment>
+                    <depends>
+                        <field id="redirect_all">0</field>
+                    </depends>
+                </field>
+                <field id="enabled_3dsecure" translate="label tooltip" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable 3D secure</label>
+                    <tooltip>If the customer's credit card supports 3D Secure, he will be redirected to an external page to enter his password.</tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="backend_enabled" translate="label tooltip" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable for backend</label>
+                    <tooltip>This sets if this payment method should also be available for orders from the Magento backend.</tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="active_alias" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled Alias Manager</label>
+                    <comment>If this option is enabled, the customer's alias data will be saved in the shop. The data can then be used again later if the buyer has stored them permanently on Ingenico ePayments side.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="alias_usage_for_new_alias" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Aliasusage New</label>
+                    <comment>Here you can enter the desired text which will be displayed on Ingenico ePayments side.</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active_alias">1</field>
+                    </depends>
+                </field>
+                <field id="alias_usage_for_existing_alias" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Aliasusage existing Alias</label>
+                    <comment>Here you can enter the desired text which is used for existing alias, the text will be displayed on Ingenico ePayments</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active_alias">1</field>
+                    </depends>
+                </field>
+                <field id="show_alias_manager_info_for_guests" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Alias Manager information for guests</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active_alias">1</field>
+                    </depends>
+                </field>
+                <field id="zero_amount_checkout" translate="label comment" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow zero amount authorization</label>
+                    <comment>Only if payment action is authorize.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="template_name" translate="label comment" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>HTP Template Name</label>
+                    <depends>
+                        <field id="redirect_all">0</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="ops_cc" type="text" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Cc</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="types" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Card Types</label>
+                    <source_model>Netresearch\OPS\Model\Source\Cc\Types</source_model>
+                </field>
+                <field id="redirect_all" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable redirect payment for all card types</label>
+                    <comment><![CDATA[If set to <em>Yes></em>, customers will be redirected to the external Ingenico ePayments payment page.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="inline_types" translate="label tooltip" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable inline payment for these card types</label>
+                    <tooltip>For the selected card types, the customer can enter the credit card details directly in the checkout.</tooltip>
+                    <source_model>Netresearch\OPS\Model\Source\Cc\AliasInterfaceEnabledTypes</source_model>
+                    <comment><![CDATA[<span style='color:red;'>When using this feature, make sure to enable all Dynamic Parameters in the Ingenico ePayments Backoffice in section <em>Tech. information &gt; Transaction feedback &gt; Alias gateway and Tokenization</em>.</span>]]></comment>
+                    <depends>
+                        <field id="redirect_all">0</field>
+                    </depends>
+                </field>
+                <field id="enabled_3dsecure" translate="label tooltip" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable 3D secure</label>
+                    <tooltip>If the customer's credit card supports 3D Secure, he will be redirected to an external page to enter his password.</tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="backend_enabled" translate="label tooltip" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable for backend</label>
+                    <tooltip>This sets if this payment method should also be available for orders from the Magento backend.</tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="active_alias" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled Alias Manager</label>
+                    <comment>If this option is enabled, the customer's alias data will be saved in the shop. The data can then be used again later if the buyer has stored them permanently on Ingenico ePayments side.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="alias_usage_for_new_alias" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Aliasusage New</label>
+                    <comment>Here you can enter the desired text which will be displayed on Ingenico ePayments side.</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active_alias">1</field>
+                    </depends>
+                </field>
+                <field id="alias_usage_for_existing_alias" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Aliasusage existing Alias</label>
+                    <comment>Here you can enter the desired text which is used for existing alias, the text will be displayed on Ingenico ePayments</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active_alias">1</field>
+                    </depends>
+                </field>
+                <field id="zero_amount_checkout" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow zero amount authorization</label>
+                    <comment>Only if payment action is authorize.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="template_name" translate="label comment" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>HTP Template Name</label>
+                    <depends>
+                        <field id="redirect_all">0</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="ops_cashU" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments CashU</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_interSolve" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments InterSolve</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="brands" translate="comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label/>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Form\Field\Brand</frontend_model>
+                    <backend_model>Netresearch\OPS\Model\System\Config\Backend\Intersolve\Brands</backend_model>
+                    <comment>Add one or more brands. In field "BRAND" you will have to enter the value you got from Ingenico ePayments.</comment>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_Masterpass" type="text" sortOrder="125" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Masterpass</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_giroPay" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments GiroPay</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_paypal" type="text" sortOrder="135" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Paypal</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_directEbanking" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePaymentsSofortÜberweisung</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="brands" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Brands</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <source_model>Netresearch\OPS\Model\Source\DirectEbanking\Brands</source_model>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_ingHomePay" type="text" sortOrder="145" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments IngHomePay</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_paysafecard" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Paysafecard</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_cbcOnline" type="text" sortOrder="155" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments CbcOnline</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_fortisPayButton" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments FortisPayButton</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_pingPing" type="text" sortOrder="165" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments PingPing</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_eps" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Eps</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_openInvoiceNl" type="text" sortOrder="175" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Open Invoice NL</label>
+                <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Make sure that <em>gender</em> and <em>date of birth</em> are required fields in the checkout. Otherwise this payment method will not be displayed.<br />If AfterPay is the acquirer, it is not possible to perform partial captures.]]></comment>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="encoding" translate="label comment tooltip" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Request Data Encoding</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Backend\Encoding</source_model>
+                    <comment><![CDATA[When using Klarna as your aquirer you will need to switch to the option 'Other'.]]></comment>
+                    <tooltip><![CDATA[When the option 'Other' is selected the request data will get converted to ASCII chararcters by using the appropriate transliterations for the given locale of the store.]]></tooltip>
+                </field>
+                <field id="show_invoice_terms" translate="label comment tooltip" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show invoice terms link</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip><![CDATA[Allows you to display a configurable link to your aquirers invoicing terms and conditions.]]></tooltip>
+                </field>
+                <field id="invoice_terms_title" translate="label comment tooltip" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invoice terms title</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="show_invoice_terms">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="invoice_terms_url" translate="label comment tooltip" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invoice terms URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="show_invoice_terms">1</field>
+                    </depends>
+                    <validate>required-entry, validate-url</validate>
+                </field>
+            </group>
+            <group id="ops_kbcOnline" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments KbcOnline</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_postFinanceEFinance" type="text" sortOrder="185" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments PostFinanceEFinance</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_directDebit" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments DirectDebit</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="countryIds" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Countries</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <source_model>Netresearch\OPS\Model\Source\DirectDebit\Countries</source_model>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="backend_enabled" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable for backend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="template_name" translate="label comment" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>HTP Template Name</label>
+                </field>
+            </group>
+            <group id="ops_iDeal" type="text" sortOrder="195" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments IDeal</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_eDankort" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments EDankort</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_belfiusDirectNet" type="text" sortOrder="205" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Belfius Direct Net</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_openInvoiceAt" type="text" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Open Invoice AT</label>
+                <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Make sure that <em>gender</em> and <em>date of birth</em> are required fields in the checkout. Otherwise this payment method will not be displayed.<br />If AfterPay is the acquirer, it is not possible to perform partial captures.]]></comment>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="allow_discounted_carts" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow for discounted carts</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Allow payment method for discounted carts. Please note that not all aquirers support transmission of discount items.</comment>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="encoding" translate="label comment tooltip" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Request Data Encoding</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Backend\Encoding</source_model>
+                    <comment><![CDATA[When using Klarna as your aquirer you will need to switch to the option 'Other'.]]></comment>
+                    <tooltip><![CDATA[When the option 'Other' is selected the request data will get converted to ASCII chararcters by using the appropriate transliterations for the given locale of the store.]]></tooltip>
+                </field>
+                <field id="show_invoice_terms" translate="label comment tooltip" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show invoice terms link</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip><![CDATA[Allows you to display a configurable link to your aquirers invoicing terms and conditions.]]></tooltip>
+                </field>
+                <field id="invoice_terms_title" translate="label comment tooltip" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invoice terms title</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="show_invoice_terms">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="invoice_terms_url" translate="label comment tooltip" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invoice terms URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="show_invoice_terms">1</field>
+                    </depends>
+                    <validate>required-entry, validate-url</validate>
+                </field>
+            </group>
+            <group id="ops_openInvoiceDe" type="text" sortOrder="215" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments Open Invoice DE</label>
+                <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Make sure that <em>gender</em> and <em>date of birth</em> are required fields in the checkout. Otherwise this payment method will not be displayed.]]></comment>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="allow_discounted_carts" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Allow for discounted carts</label>
+                    <comment>Allow payment method for discounted carts. Please note that not all aquirers support transmission of discount items.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="encoding" translate="label comment tooltip" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Request Data Encoding</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Backend\Encoding</source_model>
+                    <comment><![CDATA[When using Klarna as your aquirer you will need to switch to the option 'Other'.]]></comment>
+                    <tooltip><![CDATA[When the option 'Other' is selected the request data will get converted to ASCII chararcters by using the appropriate transliterations for the given locale of the store.]]></tooltip>
+                </field>
+                <field id="show_invoice_terms" translate="label comment tooltip" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show invoice terms link</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip><![CDATA[Allows you to display a configurable link to your aquirers invoicing terms and conditions.]]></tooltip>
+                </field>
+                <field id="invoice_terms_title" translate="label comment tooltip" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invoice terms title</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="show_invoice_terms">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="invoice_terms_url" translate="label comment tooltip" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Invoice terms URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="show_invoice_terms">1</field>
+                    </depends>
+                    <validate>required-entry, validate-url</validate>
+                </field>
+            </group>
+            <group id="ops_bankTransfer" type="text" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments BankTransfer</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="countryIds" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Countries</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <source_model>Netresearch\OPS\Model\Source\BankTransfer\Countries</source_model>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_kwixoCredit" type="text" sortOrder="225" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments KwixoCredit</label>
+                <field id="kwixo_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Kwixxo Config</label>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Kwixoconfiguration</frontend_model>
+                </field>
+                <field id="active" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="delivery_date" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Estimated Delivery Date</label>
+                    <validate>required-entry validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="rnp_fee" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>RNP Fee</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="ecom_shipMethodType" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Method Type</label>
+                    <source_model>Netresearch\OPS\Model\Source\Kwixo\ShipMethodType</source_model>
+                    <validate>validate-select</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="ecom_shipMethodSpeed" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Speed (in hours)</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="shiping_method_details" type="textarea" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Method Details</label>
+                    <validate>validate-length maximum-length-50</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_kwixoApresReception" type="text" sortOrder="230" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments KwixoApresReception</label>
+                <field id="kwixo_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Kwixxo Config</label>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Kwixoconfiguration</frontend_model>
+                </field>
+                <field id="active" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="delivery_date" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Estimated Delivery Date</label>
+                    <validate>required-entry validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="rnp_fee" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>RNP Fee</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="ecom_shipMethodType" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Method Type</label>
+                    <source_model>Netresearch\OPS\Model\Source\Kwixo\ShipMethodType</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="ecom_shipMethodSpeed" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Speed (in hours)</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="shiping_method_details" type="textarea" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Method Details</label>
+                    <validate>validate-length maximum-length-50</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_kwixoComptant" type="text" sortOrder="235" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments KwixoComptant</label>
+                <field id="kwixo_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Kwixxo Config</label>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Kwixoconfiguration</frontend_model>
+                </field>
+                <field id="active" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="delivery_date" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Estimated Delivery Date</label>
+                    <validate>required-entry validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="rnp_fee" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>RNP Fee</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="ecom_shipMethodType" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Method Type</label>
+                    <source_model>Netresearch\OPS\Model\Source\Kwixo\ShipMethodType</source_model>
+                    <validate>validate-select</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="ecom_shipMethodSpeed" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Speed (in hours)</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="shiping_method_details" type="textarea" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Shipping Method Details</label>
+                    <validate>validate-length maximum-length-50</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_opsid" type="text" sortOrder="240" showInDefault="1" showInWebsite="0" showInStore="0" translate="label">
+                <label>Existing Ingenico ePayments Transaction</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable for backend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_BCMC" type="text" sortOrder="245" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments BCMC</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+
+            <group id="ops_payPerMail" type="text" sortOrder="246" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments PayPerMail</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+
+            </group>
+            <group id="ops_chinaUnionPay" type="text" sortOrder="250" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Ingenico ePayments ChinaUnionPay</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <comment>This payment method always uses direct sale as payment action.</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="ops_flex" type="text" sortOrder="255" showInDefault="1" showInWebsite="1" showInStore="1" translate="label comment">
+                <label>Ingenico ePayments Flex payment method</label>
+                <comment>A generic payment method, that lets the customer choose the exact method on Ingenico ePayments side.</comment>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+                <field id="default" translate="label tooltip" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show empty default option</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip><![CDATA[A generic option, that lets the customer choose the exact method on Ingenico ePayments side.]]></tooltip>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="default_title" translate="label tooltip" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default option title</label>
+                    <tooltip>Title to display for the default option.</tooltip>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="methods" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Methods</label>
+                    <frontend_model>Netresearch\OPS\Block\System\Config\Form\Field\Method</frontend_model>
+                    <backend_model>Netresearch\OPS\Model\System\Config\Backend\Flex\Methods</backend_model>
+                    <comment>Add one or more methods. In field 'PM' you will have to enter the PM value you got from Ingenico ePayments, same goes for the field 'BRAND'.</comment>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="logo" translate="label" type="image" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <comment>Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">netresearch/ops/logo</upload_dir>
+                    <base_url type="media" scope_info="1">netresearch/ops/logo</base_url>
+                </field>
+                <field id="logo_position" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Position</label>
+                    <source_model>Netresearch\OPS\Model\System\Config\Source\PaymentLogoPosition</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <!-- hide old ogone extension which is part of Magento EE due to a misunderstanding -->
+            <group id="pbridge_ogone_direct" type="text" showInDefault="0" showInWebsite="0" showInStore="0">
+            </group>
+            <group id="ogone" type="text" showInDefault="0" showInWebsite="0" showInStore="0">
+            </group>
+            <group id="ccsave" type="text" sortOrder="700">
+            </group>
+        </section>
+    </system>
+</config>

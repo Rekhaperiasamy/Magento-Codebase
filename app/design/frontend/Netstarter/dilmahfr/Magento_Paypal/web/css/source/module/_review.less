@@ -1,0 +1,391 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    //  PayPal Review Order page
+    .paypal-review {
+        .block {
+            &:extend(.abs-account-blocks all);
+            .actions-toolbar {
+                .action {
+                    &.primary {
+                        &:extend(.abs-revert-secondary-color all);
+                    }
+                }
+            }
+        }
+
+        .actions-toolbar {
+            margin-top: 10px;
+        }
+
+        #review-buttons-container {
+            margin: 30px 0 80px;
+            .primary {
+                button {
+                    position: absolute;
+                    right: 0px;
+                    margin-right: 0px;
+                    max-width: 300px;
+                    border:none;
+                    width: 100%;
+                    span {
+                        .lib-font-size(18px);
+                    }
+                    .lib-css(background, @color-yellow3);
+                    &:hover {
+                        .lib-css(background, @color-yellow-light2);
+                    }
+                }
+            }
+        }
+
+        .paypal-review-title {
+            padding: 0 0 @indent__s;
+            > strong {
+                .lib-font-size(20);
+                font-weight: @font-weight__regular;
+                .lib-css(font-family, @font-name__signika_semibold);
+            }
+            .action {
+                display: inline-block;
+                margin: 12px 0 0 10px;
+            }
+        }
+
+        .table-paypal-review-items {
+            .col {
+                &.price,
+                &.subtotal {
+                    &:extend(.abs-incl-excl-tax all);
+                }
+                &.name {
+                    padding-top: 16px;
+                }
+                &.qty {
+                    text-align: center;
+                }
+
+
+
+                &.price {
+                    .price-including-tax {
+                        .price {
+                            font-weight: 400 !important;
+                        }
+                    }
+                }
+            }
+
+            .cart-tax-total {
+                &:extend(.abs-tax-total all);
+                &-expanded {
+                    &:extend(.abs-tax-total-expanded all);
+                }
+            }
+
+            tfoot {
+                tr {
+                    th {
+                        &.mark {
+                            .lib-css(color, @color-gray-darken3);
+                            .lib-font-size(16px);
+                            line-height: 18px;
+                        }
+                    }
+                    td {
+                        span {
+                            .lib-css(color, @color-gray-darken1);
+                            .lib-font-size(18px);
+                            line-height: 18px;
+                        }
+                        padding-right: 20px;
+                    }
+                    &:first-child {
+                        th, td {
+                            padding-top: 30px;
+                        }
+                    }
+
+                    &.grand.totals {
+                        border-top: solid 1px #cccccc;
+                        th {
+                            padding-bottom: 30px;
+                            padding-top: 20px;
+                            &.mark {
+                                .lib-css(color, @color-gray-darken1);
+                                .lib-font-size(24px);
+                                line-height: 24px;
+                                font-weight: 400;
+                                .lib-css(font-family, @font-name__signika_regular);
+                                strong {
+                                    font-weight: 400;
+                                }
+                            }
+                        }
+                        td {
+                            padding-bottom: 30px;
+                            padding-top: 20px;
+                            span {
+                                .lib-css(color, @color-yellow3);
+                                .lib-font-size(24px);
+                                font-weight: 400;
+                                line-height: 24px;
+                                .lib-css(font-family, @font-name__signika_regular);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .item-options {
+            dt {
+                display: inline-block;
+                &:after {
+                    content: ': ';
+                }
+            }
+            dd {
+                margin: 0;
+            }
+        }
+    }
+
+    //  Discounts
+    .paypal-review-discount {
+        display: none;
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+    .paypal-review {
+
+        .block-order-details-view {
+            .block-content {
+                .box {
+                    border-bottom: solid 1px #ccc;
+                    padding-bottom: 30px;
+
+                    &.box-order-billing-address {
+                        img {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .box-order-shipping-method {
+            .actions-toolbar {
+                display: none;
+            }
+        }
+
+        .table-paypal-review-items {
+            .col {
+                &.subtotal {
+                    text-align: left;
+                }
+            }
+            .product-item-name {
+                display: inline-block;
+            }
+
+
+            tfoot {
+                tr {
+                    th {
+                        &.mark {
+                            .lib-css(color, @color-gray-darken3);
+                            .lib-font-size(16px);
+                            line-height: 16px;
+                        }
+                    }
+                    td {
+                        span {
+                            .lib-css(color, @color-gray-darken1);
+                            .lib-font-size(16px);
+                            line-height: 16px;
+                        }
+                        padding-right: 20px;
+                    }
+                    &:first-child {
+                        th, td {
+                            padding-top: 30px;
+                        }
+                    }
+
+                    &.grand.totals {
+                        border-top: solid 1px #cccccc;
+                        th {
+                            padding-bottom: 30px;
+                            padding-top: 20px;
+                            &.mark {
+                                .lib-css(color, @color-gray-darken1);
+                                .lib-font-size(18px);
+                                line-height: 18px;
+                                font-weight: 400;
+                                .lib-css(font-family, @font-name__signika_regular);
+                                strong {
+                                    font-weight: 400;
+                                }
+                            }
+                        }
+                        td {
+                            padding-bottom: 30px;
+                            padding-top: 20px;
+                            span {
+                                .lib-css(color, @color-yellow3);
+                                .lib-font-size(18px);
+                                font-weight: 400;
+                                line-height: 18px;
+                                .lib-css(font-family, @font-name__signika_regular);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #review-buttons-container {
+            margin: 30px 0 30px;
+            .primary {
+                button {
+                    position: relative;
+                }
+            }
+        }
+
+    }
+
+
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .paypal-review {
+        .paypal-review-title {
+            border-bottom: @border-width__base solid @border-color__base;
+        }
+        .block-content {
+            &:extend(.abs-add-clearfix-desktop all);
+
+            .box-order-shipping-address,
+            .box-order-shipping-method,
+            .box-order-billing-address {
+                box-sizing: border-box;
+                float: left;
+                width: 32%;
+                margin-right: 1%;
+                padding:20px;
+                border:solid 1px @color-gray-light0;
+                min-height: 300px;
+                margin-bottom: 0px;
+                position: relative;
+
+                .box-title {
+                    margin: 0 0 20px;
+                    span {
+                        .lib-font-size(20px);
+                        .lib-css(font-family, @font-name__signika_semibold);
+                        .lib-css(font-weight, normal);
+                    }
+                }
+
+                .box-content {
+                    address {
+                        line-height: 24px;
+                    }
+                    line-height: 24px;
+                }
+
+                .box-actions {
+                    position: absolute;
+                    top: 42px;
+                    left: 20px;
+                }
+            }
+            .box-order-shipping-method {
+                .actions-toolbar {
+                    display: none;
+                }
+            }
+
+            .box-order-billing-address {
+                width: 33%;
+                margin-right: 0%;
+
+                img {
+                    display: none;
+                }
+            }
+        }
+
+        .column.main & {
+            .actions-toolbar {
+                &:extend(.abs-reset-left-margin-desktop all);
+            }
+        }
+
+        .table-paypal-review-items {
+            .col {
+                &.price,
+                &.qty {
+                    text-align: center;
+                    .lib-font-size(16px);
+                    .lib-css(font-weight, 400);
+                }
+                &.item {
+                    width: 60%;
+                }
+            }
+        }
+
+        .col.subtotal,
+        .mark,
+        .amount {
+            text-align: right;
+        }
+    }
+
+    //  Discounts
+    .paypal-review-discount {
+        &:extend(.abs-add-clearfix-desktop all);
+        &:extend(.abs-discount-block-desktop all);
+        border-top: @border-width__base solid @border-color__base;
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .paypal-review {
+        .block-content {
+            .box-order-shipping-address,
+            .box-order-shipping-method,
+            .box-order-billing-address {
+                min-height: 250px;
+            }
+        }
+    }
+
+
+}

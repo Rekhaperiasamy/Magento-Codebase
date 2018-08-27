@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Seo
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Dilmah\Seo\Block\Code" name="google.code.remarketing" template="Dilmah_Seo::google_remarketing.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="after.body.start">
+            <block ifconfig="google/analytics/active" class="Magento\Framework\View\Element\Template"
+                   template="Dilmah_Seo::js.phtml" name="google.tagmanager.js"/>
+            <referenceBlock name="google.code" remove="true"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,132 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common = true) {
+
+  .account {
+    .column {
+      &.main {
+        .giftcard-account {
+          float: left;
+          padding-left: 66px;
+          .giftcard {
+            &.info {
+              background: @color-grey-border;
+              padding: 34px 40px;
+              p {
+                .lib-css(font-family, @font-name__signika_regular);
+                .lib-font-size(16);
+                font-weight: 400;
+                color: @color-gray-darken3;
+                span, strong {
+                  .lib-css(font-family, @font-name__signika_semibold);
+                  .lib-font-size(18);
+                  .lib-css(color, @color-yellow3);
+                  font-weight: 400;
+                  padding-left: 10px;
+                }
+              }
+            }
+          }
+          .fieldset {
+            margin-bottom: 30px;
+            .giftcard {
+              label {
+                margin: 0 0 12px;
+                span {
+                  .lib-css(font-family, @font-name__signika_semibold);
+                  .lib-font-size(20);
+                  .lib-css(color, @color-gray-light2);
+                }
+              }
+            }
+          }
+          .actions-toolbar {
+            .secondary {
+              .action.check {
+                color: @color-gray-darken1;
+                &:hover {
+                  span {
+                    color: @color-white;
+                  }
+                }
+                span {
+                  .lib-css(font-family, @font-name__signika_regular);
+                  .lib-font-size(18);
+                  font-weight: 400;
+                  color: @color-gray-darken1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+
+  .account {
+    .column{
+      &.main {
+        .giftcard-account {
+          padding-left: 66px;
+        }
+      }
+    }
+  }
+
+}
+
+
+
+
+
+//
+//  Tablet
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .account {
+    .column{
+      &.main {
+        .giftcard-account {
+          padding-left: 0px;
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+  .account {
+    .column{
+      &.main {
+        .giftcard-account {
+          padding-left: 0px;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+
+}

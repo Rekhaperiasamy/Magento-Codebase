@@ -1,0 +1,185 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+
+  .account {
+    .column.main {
+      .pager {
+        &:first-child {
+          margin: 20px 0;
+        }
+      }
+      .block-reward-info {
+        .block-content {
+          padding: 20px 0 0;
+          .title, strong {
+            .lib-css(font-family, @font-name__signika_semibold);
+            .lib-font-size(15);
+            font-weight: normal;
+          }
+        }
+      }
+      .block:not(.widget) {
+        .block-content {
+          .reward-history {
+            margin-bottom: 20px;
+            &:extend(.abs-account-order-view-tables all);
+          }
+        }
+      }
+    }
+
+    &.magento-reward-customer-info {
+      .column {
+        &.main {
+          .table-wrapper {
+            width: 100%;
+            float: left;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+
+  .account {
+    .column.main {
+      .block:not(.widget) {
+        .block-content {
+          .reward-history {
+            .data.table {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Tablet
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .account {
+    .column.main {
+      .block:not(.widget) {
+        .block-content {
+          .reward-history {
+            .data.table {
+              width: 700px;
+            }
+          }
+        }
+      }
+      .pager {
+        &:first-child {
+          margin: 0px 0;
+        }
+        .toolbar-amount {
+          display: none;
+        }
+        .pages {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+}
+
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+  .account {
+    .column.main {
+      .block:not(.widget) {
+        .block-content {
+          .reward-history {
+            &:extend(.abs-account-order-view-tables-small all);
+            .data.table {
+              &.table-reward-history {
+                tbody {
+                  tr {
+                    border-bottom: 1px solid @color-gray-light0;
+                    padding: 20px 0;
+                    &:first-child {
+                      border-top: 1px solid @color-gray-light0;
+                    }
+                    td {
+                      &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+                        padding: 10px 20px 10px;
+                      }
+                      &:last-child {
+                        border-bottom: 0;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .table-wrapper {
+            &.reward-history {
+              margin: 0 0 20px;
+
+              tbody {
+                .col {
+                  &.date {
+                    small {
+                      display: inline;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .reward-settings {
+        .fieldset {
+          .field {
+            padding: 0 20px;
+            &.choice {
+              padding: 4px 0 4px 40px;
+            }
+          }
+        }
+      }
+      .toolbar {
+        padding: 0px 20px 0px;
+        border-bottom: none;
+        .pager {
+          .toolbar-amount {
+            display: none;
+          }
+          .pages {
+            float: none;
+          }
+        }
+      }
+    }
+  }
+
+}

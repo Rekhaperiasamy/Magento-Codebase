@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+-->
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment/etc/payment.xsd">
+    <groups>
+        <group id="monetico">
+            <label>Monetico Payment Methods</label>
+        </group>
+    </groups>
+    <methods>
+        <method name="monetico_onetime">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="monetico_multitime">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="monetico_1euro">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="monetico_3xcb">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="monetico_4xcb">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="monetico_paypal">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+    </methods>
+</payment>

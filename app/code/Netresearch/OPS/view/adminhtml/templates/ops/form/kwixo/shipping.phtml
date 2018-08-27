@@ -1,0 +1,94 @@
+<div class="page-main-actions">
+    <div class="page-actions-placeholder"></div>
+    <div class="page-actions">
+        <div class="page-actions-inner">
+            <div class="page-actions-buttons">
+                <button id="save" title="Save Page" type="button" class="action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="jQuery('#edit_form').submit();">
+                    <span class="ui-button-text"><?php echo __('Save'); ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+/** @var $this \Netresearch\OPS\Block\Adminhtml\Kwixo\Shipping\Edit */
+$shippingMethods = $this->getShippingMethods();
+$kwixoShippingTypes = $this->getKwixoShippingTypes();
+if (0 < count($shippingMethods)): ?>
+<form id="edit_form" name="edit_form" action="<?php echo $this->getFormActionUrl(); ?>" method="POST">
+    <input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+    <table class="form-list">
+        <tr>
+            <th>
+                <?php echo __('Shipping method type'); ?>
+            </th>
+            <th>
+                <?php echo __('Kwixo shipping type'); ?>
+            </th>
+            <th>
+                <?php echo __('Shipping speed (in hours)'); ?>
+            </th>
+            <th>
+                <?php echo __('Shipping method details'); ?>
+            </th>
+        </tr>
+        <?php
+        foreach ($shippingMethods as $shippingMethod):
+            $code = $shippingMethod['code'];
+            $values = $shippingMethod['values'];
+            ?>
+            <tr>
+                <td>
+                    <?php echo $this->escapeHtml($shippingMethod['label']); ?>
+                </td>
+                <td>
+                    <select
+                            class="kwixo_shipping_select"
+                            name="<?php echo $code; ?>[kwixo_shipping_type]">
+                        <?php foreach (
+                            $kwixoShippingTypes as $kwixoShippingType
+                        ): ?>
+                            <option
+                                value="<?php echo $kwixoShippingType['value']; ?>"
+                                <?php if (array_key_exists('kwixo_shipping_type', $values) && $kwixoShippingType['value'] == $values['kwixo_shipping_type']): ?>
+                                    selected="selected"
+                                <?php endif; ?>
+                                >
+                                <?php echo $kwixoShippingType['label']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if (array_key_exists('kwixo_shipping_type_error', $values)): ?>
+                        <div class="error">
+                            <?php echo __('shipping type not valid'); ?>
+                        </div>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <input type="text" class="input-text"
+                           name="<?php echo $code; ?>[kwixo_shipping_speed]"
+                           value="<?php echo  array_key_exists('kwixo_shipping_speed', $values)? $values['kwixo_shipping_speed'] : ''; ?>"
+                        />
+                    <?php if (array_key_exists('kwixo_shipping_speed_error', $values)): ?>
+                        <div class="error">
+                            <?php echo __('shipping speed not valid'); ?>
+                        </div>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <input type="text" class="input-text"
+                           name="<?php echo $code; ?>[kwixo_shipping_details]"
+                           value="<?php echo array_key_exists('kwixo_shipping_details', $values)? $values['kwixo_shipping_details'] : '';; ?>"
+                        />
+                    <?php if (array_key_exists('kwixo_shipping_details_error', $values)): ?>
+                        <div class="error">
+                            <?php echo __('shipping details not valid'); ?>
+                        </div>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </table>
+</form>
+<?php endif;?>

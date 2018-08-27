@@ -1,0 +1,32 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+?>
+<div id="linkorder" data-bind="scope:'linkorder'">
+    <br />
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#linkorder": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "linkorder": {
+                            "component": "Magento_Checkout/js/view/linkorder",
+                            "config": {
+                                "linkOrderUrl": "<?php /* @escapeNotVerified */ echo $block->getLinkOrderUrl(); ?>",
+                                "email": "<?php /* @escapeNotVerified */ echo $block->getCheckoutSession()->getLastRealOrder()->getCustomerEmail(); ?>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

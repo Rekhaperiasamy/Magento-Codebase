@@ -1,0 +1,24 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Seo
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2017 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var $block \Dilmah\Seo\Block\Code */
+?>
+<!-- Google Code for Sale Conversion Page -->
+<script>
+    var google_tag_params = {
+        dynx_itemid: [<?php /* @escapeNotVerified */ echo $block->getProductId() ?>],
+        dynx_pagetype: '<?php /* @escapeNotVerified */ echo $block->getPageType()?>',
+        dynx_totalvalue: '<?php /* @escapeNotVerified */ echo $block->getTotalValue()?>'
+    };
+    dataLayer.push(google_tag_params);
+</script>
+

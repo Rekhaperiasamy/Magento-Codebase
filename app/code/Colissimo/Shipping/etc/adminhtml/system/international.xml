@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Shipping Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="international" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Expert International</label>
+        <fieldset_css>colissimo-configuration</fieldset_css>
+        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enabled</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="name" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Name</label>
+        </field>
+        <field id="price" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Price</label>
+            <frontend_model>Colissimo\Shipping\Block\Adminhtml\System\Config\Form\Field\Price\International</frontend_model>
+            <backend_model>Colissimo\Shipping\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+        </field>
+        <field id="specificcountry" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Ship to Specific Countries</label>
+            <source_model>Colissimo\Shipping\Model\Config\Source\Country\International</source_model>
+            <can_be_empty>1</can_be_empty>
+        </field>
+    </group>
+</include>

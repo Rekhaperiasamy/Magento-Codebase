@@ -1,0 +1,31 @@
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SpecialOrders
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<!--@subject Special Order Request@-->
+<!--@vars {
+"var data.comment":"Comment",
+"var data.email":"Sender Email",
+"var data.name":"Sender Name",
+"var data.telephone":"Sender Telephone"
+} @-->
+{{template config_path="design/email/header_template"}}
+<p>{{trans "%first_name has requested a Special Order. Please review and take necessary actions!" first_name=$data.first_name}}</p>
+<div><label>{{trans "First Name:"}}</label> {{trans "%first_name" first_name=$data.first_name}}</div>
+<div><label>{{trans "Last Name:"}}</label> {{trans "%last_name" last_name=$data.last_name}}</div>
+<div><label>{{trans "Email:"}}</label> {{trans "%email" email=$data.email}}</div>
+<div><label>{{trans "Phone Number:"}}</label> {{trans "%telephone" telephone=$data.telephone}}</div>
+<br/>
+<div><label>{{trans "Product Category:"}}</label> {{trans "%product_category" product_category=$data.product_category}}</div>
+<div><label>{{trans "Product Type:"}}</label> {{trans "%product_type" product_type=$data.product_type}}</div>
+<div><label>{{trans "Tea format:"}}</label> {{trans "%tea_format" tea_format=$data.tea_format}}</div>
+<br/>
+<div><label>{{trans "Message:"}}</label> {{trans "%message" message=$data.message}}</div>
+
+{{template config_path="design/email/footer_template"}}

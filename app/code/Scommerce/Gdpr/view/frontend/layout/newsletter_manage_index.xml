@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_newsletter">
+            <container name="customer.form.newsletter.extra"/>
+        </referenceBlock>
+        <referenceContainer name="customer.form.newsletter.extra">
+            <block class="Scommerce\Gdpr\Block\Form\Newsletter" template="Scommerce_Gdpr::form/newsletter.phtml" />
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,195 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .cms-tea-for-your-mood {
+        .mobile-only {
+            display: none;
+        }
+
+        .tea-moods,
+        .tea-bag-section {
+            .lib-vendor-prefix-display(flex);
+            justify-content: space-around;
+            -webkit-justify-content: space-around;
+        }
+
+        .tea-moods {
+            margin-bottom: 30px;
+
+            .containter {
+                text-align: center;
+                padding: 20px;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .tea-leaf {
+                padding: 15px;
+                .lib-icon-font(
+                    @_icon-font-line-height:29px,
+                    @_icon-font-color: @color-gray-light0,
+                    @_icon-font-color-hover: @color-blue2,
+                    @_icon-font-content:@icon-di-leaf,
+                    @_icon-font-size: 22px
+                );
+            }
+
+            .tea-bag {
+                padding: 15px;
+                .lib-icon-font(
+                    @_icon-font-line-height:29px,
+                    @_icon-font-color: @color-gray-light0,
+                    @_icon-font-color-hover: @color-blue2,
+                    @_icon-font-content:@icon-teabag,
+                    @_icon-font-size: 22px
+                );
+            }
+
+            .tea-bag,
+            .tea-leaf {
+                margin-top: 20px;
+
+                &:before {
+                    font-size: 36px;
+                    line-height: 36px;
+                }
+            }
+        }
+    }
+
+    .recipe-page {
+        .desktop-only {
+            display: block;
+        }
+
+        .mobile-only {
+            display: none;
+        }
+
+        .recipe-videos {
+            .lib-vendor-prefix-display(flex);
+            .lib-vendor-prefix-flex-wrap(wrap);
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
+
+            .video-container {
+                width: 50%;
+                max-height: 345px;
+                padding: 20px;
+
+                iframe {
+                    min-height: 300px;
+                }
+            }
+        }
+
+        .recipe-container {
+            .lib-vendor-prefix-display(flex);
+            .lib-vendor-prefix-flex-wrap(wrap);
+            justify-content: space-around;
+            -webkit-justify-content: space-around;
+
+            .recipe {
+                width: 33%;
+                padding: 20px;
+            }
+        }
+    }
+
+    #flake {
+        z-index: 999;
+        position: fixed !important;
+    }
+
+    .off-white-page{
+        .page-main {
+            .lib-css(background-color, @tea-club-bg);
+        }
+    }
+}
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .cms-tea-for-your-mood {
+        .desktop-only {
+            display: none;
+        }
+        .mobile-only {
+            display: block;
+        }
+        .xmas-cat-banner {
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+        .tea-moods {
+            .lib-vendor-prefix-flex-direction(column);
+
+            .container {
+                padding: 20px 0;
+            }
+
+            .tea-bag,
+            .tea-leaf {
+                margin-top: 10px;
+            }
+        }
+
+        .tea-bag-section {
+            .lib-vendor-prefix-flex-wrap(wrap);
+
+            .tea-bag {
+                width: 50%;
+                padding: 5px;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .recipe-page {
+        .xmas-cat-banner {
+            img {
+                width: 100%;
+            }
+        }
+        .desktop-only {
+            display: none;
+        }
+
+        .mobile-only {
+            display: block;
+        }
+
+        .recipe-videos {
+            .video-container {
+                width: 100%;
+                padding: 10px 0;
+
+                iframe {
+                    min-height: 240px;
+                }
+            }
+        }
+
+        .recipe-container {
+            .recipe {
+                width: 100%;
+                padding: 10px 0;
+                text-align: center;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_AutomatedCustomerGroup
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Dilmah_AutomatedCustomerGroup" setup_version="1.0.0">
+        <sequence>
+            <module name="Magento_Eav"/>
+            <module name="Magento_Directory"/>
+            <module name="Magento_Customer"/>
+        </sequence>
+    </module>
+</config>

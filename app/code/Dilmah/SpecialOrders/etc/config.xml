@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SpecialOrders
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <captcha translate="label">
+            <frontend>
+                <areas>
+                    <user_create>
+                        <label>Create user</label>
+                    </user_create>
+                    <user_login>
+                        <label>Login</label>
+                    </user_login>
+                    <user_forgotpassword>
+                        <label>Forgot password</label>
+                    </user_forgotpassword>
+                    <guest_checkout>
+                        <label>Check Out as Guest</label>
+                    </guest_checkout>
+                    <register_during_checkout>
+                        <label>Register during Checkout</label>
+                    </register_during_checkout>
+                    <contact_us>
+                        <label>Contact Us</label>
+                    </contact_us>
+                    <special_orders>
+                        <label>Special Orders</label>
+                    </special_orders>
+                </areas>
+            </frontend>
+        </captcha>
+        <special_orders translate="label">
+            <email>
+                <active>1</active>
+            </email>
+        </special_orders>
+    </default>
+</config>

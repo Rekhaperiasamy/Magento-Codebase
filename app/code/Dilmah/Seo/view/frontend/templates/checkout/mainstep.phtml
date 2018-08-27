@@ -1,0 +1,71 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var \Magento\GoogleTagManager\Block\ListJson $block */
+?>
+
+<div id="checkout-shipping-load">
+    <!-- Content loaded dynamically -->
+</div>
+
+<script>
+    setTimeout(function () {
+
+        require([
+            'Magento_Checkout/js/view/payment'
+        ], function(payment) {
+            var subscription = payment.prototype.isVisible.subscribe(function(value){
+                if (value) {
+                    notifyCheckoutStep('2');
+                    subscription.dispose();
+                }
+            });
+        });
+    }, 1000);
+    function notifyCheckoutStep(step)
+    {
+        var dlUpdate = {
+            'event': 'checkout',
+            'ecommerce' : {
+                'currencyCode' : dlCurrencyCode,
+                'checkout' : {
+                    'actionField' : {
+                        'step' : step
+                    },
+                    'products' : [ ]
+                }
+            }
+        };
+
+        var cart = <?php /* @escapeNotVerified */ echo $block->getCartContent() ?>;
+        for (var i = 0; i < cart.length; i++) {
+            var product = cart[i];
+            dlUpdate.ecommerce.checkout.products.push({
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
+                'quantity': product.qty
+            });
+        }
+        dataLayer.push(dlUpdate);
+        dataLayer.push({ 'ecommerce' : { 'checkout' : 0 }});
+    }
+    notifyCheckoutStep('1');
+</script>
+
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        $(function () {
+            $('#maincontent').on('click', '#co-payment-form button[type="submit"]', function (clickEvent){
+                notifyCheckoutStep('3');
+            });
+
+        });
+    });
+</script>

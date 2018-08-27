@@ -1,0 +1,136 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SpecialOrders
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Dilmah\SpecialOrders\Block\Form
+ */
+
+$formData = $block->getFormData();
+?>
+<!--New phone number validation added. DT-390 -->
+<script type="text/x-magento-init">
+{
+    "*": {
+        "phoneNumberValidation" :""
+    }
+}
+</script>
+<div class="page-wrapper">
+    <div class="top-content">
+        <?php echo $block->getChildHtml('special.orders.top.content') ?>
+    </div>
+    <div class="mid-content">
+        <div class="form-wrapper">
+            <form class="form special-orders"
+                  action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
+                  id="special-orders-form"
+                  method="post"
+                  data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+                  data-mage-init='{"validation":{}}'>
+                <fieldset class="fieldset">
+                    <div class="fieldset fieldset-row">
+                        <div class="field first_name required">
+                            <label class="label" for="first_name"><span><?php /* @escapeNotVerified */ echo __('First name') ?></span></label>
+                            <div class="control">
+                                <input name="first_name" id="first_name" title="<?php /* @escapeNotVerified */ echo __('First name') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. John') ?>" data-validate="{required:true}" value="<?php echo __($formData->getFirstName())?>"/>
+                            </div>
+                        </div>
+                        <div class="field last_name required">
+                            <label class="label" for="last_name"><span><?php /* @escapeNotVerified */ echo __('Last name') ?></span></label>
+                            <div class="control">
+                                <input name="last_name" id="last_name" title="<?php /* @escapeNotVerified */ echo __('Last name') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. Smith') ?>" data-validate="{required:true}" value="<?php echo __($formData->getLastName())?>"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row">
+                        <div class="field email required">
+                            <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+                            <div class="control">
+                                <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. name@domain.com') ?>" data-validate="{required:true, 'validate-email':true}" value="<?php echo __($formData->getEmail())?>"/>
+                            </div>
+                        </div>
+                        <div class="field telephone required">
+                            <label class="label" for="telephone"><span><?php /* @escapeNotVerified */ echo __('Phone number') ?></span></label>
+                            <div class="control">
+                                <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Phone number') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. +94 114 8220000') ?>" data-validate="{required:true,'validate-phone-number':true}" value="<?php echo __($formData->getTelephone())?>"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row">
+                        <div class="field product_category">
+                            <label class="label" for="product_category"><span><?php /* @escapeNotVerified */ echo __('Product Category') ?></span></label>
+                            <div class="control">
+                                <?php $productCategories = $block->getProductCategories();?>
+                                <select name="product_category" id="product_category" title="<?php /* @escapeNotVerified */ echo __('Product Category') ?>" class="input-select">
+                                    <option value=""><?php /* @escapeNotVerified */ echo __('Select Product Category') ?></option>
+                                    <?php foreach($productCategories as $productCategory):?>
+                                        <option value="<?php /* @escapeNotVerified */ echo __($productCategory) ?>"
+                                            <?php if (stripos($productCategory, $formData->getProductCategory()) !== false): ?> selected="selected"<?php endif; ?>><?php /* @escapeNotVerified */ echo __($productCategory) ?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field product_type">
+                            <label class="label" for="product_type"><span><?php /* @escapeNotVerified */ echo __('Product Type') ?></span></label>
+                            <div class="control">
+                                <?php $productTypes = $block->getProductType();?>
+                                <select name="product_type" id="product_type" title="<?php /* @escapeNotVerified */ echo __('Product Type') ?>" class="input-select">
+                                    <option value=""><?php /* @escapeNotVerified */ echo __('Select Product Type') ?></option>
+                                    <?php foreach($productTypes as $productType):?>
+                                        <option value="<?php /* @escapeNotVerified */ echo __($productType) ?>"
+                                            <?php if (stripos($productType, $formData->getProductType()) !== false): ?> selected="selected"<?php endif; ?>><?php /* @escapeNotVerified */ echo __($productType) ?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row">
+                        <div class="field tea_format">
+                            <label class="label" for="tea_format"><span><?php /* @escapeNotVerified */ echo __('Tea format') ?></span></label>
+                            <div class="control">
+                                <?php $teaFormats = $block->getTeaFormat();?>
+                                <select name="tea_format" id="tea_format" title="<?php /* @escapeNotVerified */ echo __('Tea format') ?>" class="input-select">
+                                    <option value=""><?php /* @escapeNotVerified */ echo __('Select Tea Format') ?></option>
+                                    <?php foreach($teaFormats as $teaFormat):?>
+                                        <option value="<?php /* @escapeNotVerified */ echo __($teaFormat) ?>"
+                                            <?php if (stripos($teaFormat, $formData->getTeaFormat()) !== false): ?> selected="selected"<?php endif; ?>><?php /* @escapeNotVerified */ echo __($teaFormat) ?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row wide">
+                        <div class="field message">
+                            <label class="label" for="message"><span><?php /* @escapeNotVerified */ echo __('Message') ?></span></label>
+                            <div class="control">
+                                <textarea name="message" id="message" title="<?php /* @escapeNotVerified */ echo __('Message') ?>" class="input-text" cols="5" rows="3" placeholder="<?php /* @escapeNotVerified */ echo __('Write any additional information here...') ?>"><?php echo __($formData->getMessage())?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <?php echo $block->getChildHtml('form.additional.info'); ?>
+                </fieldset>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <input type="hidden" name="hideit" id="hideit" value="" />
+                        <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Send My Order') ?>" class="action submit primary">
+                            <span><?php /* @escapeNotVerified */ echo __('Send My Order') ?></span>
+                        </button>
+                    </div>
+                    <div class="required-msg"><em>*</em>Required Fields</div>
+                </div>
+            </form>
+        </div>
+        <div class="right-info">
+            <?php echo $block->getChildHtml('special.orders.right.info') ?>
+        </div>
+    </div>
+</div>

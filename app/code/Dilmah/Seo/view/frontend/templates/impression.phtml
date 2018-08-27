@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var \Dilmah\Seo\Block\ListJson $block */
+$productCollection = $block->getLoadedProductCollection();
+$block->checkCartItems();
+?>
+
+<?php if (count($productCollection) > 0) { ?>
+    <?php
+    $listPosition = 0;
+    if (is_object($productCollection) && $productCollection->getCurPage() > 0) {
+        $position = ($productCollection->getCurPage() - 1) * $productCollection->getPageSize() + 1;
+    } else {
+        $position = 1;
+    }
+    ?>
+    <script>
+        var staticImpressions = staticImpressions || {};
+        staticImpressions['<?php /* @escapeNotVerified */ echo $block->getBlockName() ?>'] = [
+    <?php
+
+            /** @var \Magento\Catalog\Model\Product $product */
+            foreach ($productCollection as $product) {
+        ?>
+            {
+                "id": "<?php /* @escapeNotVerified */ echo $block->escapeJsQuote($product->getSku()) ?>",
+                "type": "<?php /* @escapeNotVerified */ echo $product->getTypeId() ?>",
+                "name": "<?php /* @escapeNotVerified */ echo $block->escapeJsQuote($product->getName()); ?>",
+                "category": "<?php /* @escapeNotVerified */ echo $block->escapeJsQuote($block->getCurrentCategory()->getParentCategory()->getName()) ?>",
+                "list": "<?php /* @escapeNotVerified */ echo $block->escapeJsQuote($block->getCurrentCategory()->getName()) ?>",
+                "price": "<?php /* @escapeNotVerified */ echo $block->escapeJsQuote($block->getDisplayPrice($product)) ?>",
+                "brand": "<?php /* @escapeNotVerified */ echo \Dilmah\Catalog\Helper\Data::BRAND_LABEL; ?>",
+                "variant": "<?php /* @escapeNotVerified */ echo $block->escapeJsQuote($block->getProductVariant($product)) ?>",
+                "position": "<?php /* @escapeNotVerified */ echo $position++ ?>",
+                "listPosition": "<?php /* @escapeNotVerified */ echo $listPosition++ ?>"
+            },
+    <?php
+    }
+    ?>
+        ];
+    </script>
+    <?php
+}

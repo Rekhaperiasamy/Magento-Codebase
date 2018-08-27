@@ -1,0 +1,106 @@
+<?php
+/** @var \Netresearch\OPS\Block\Placeform $this */
+?>
+
+<form name="ops" id="ops_review_form" action="<?php echo $this->getFormAction();?>" method="post"
+      target="<?php echo $this->isIframeTarget() ? 'ops_placeform_iframe' : '_top'; ?>">
+    <?php $formData = $this->getFormData(); ?>
+    <?php if ($this->hasMissingParams()): ?>
+        <div id="messages_product_view">
+            <ul class="messages">
+                <li class="note-msg">
+                    <ul>
+                        <li><?php echo $this->getQuestion(); ?></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="fieldset">
+            <h2 class="legend"><?php echo __('Your details') ?></h2>
+            <ul class="form-list">
+    <?php else: ?>
+        <div class="page-title-wrapper" id="loading_notice">
+            <h1 class="page-title">
+                <span class="base" data-ui-id="page-title-wrapper"><?php
+                    if ($this->isIframeTarget()) {
+                        echo __('Please wait a moment while the Ingenico ePayments payment page is loading...');
+                    } else {
+                        echo __('Please wait a moment. This page will transfer your data to Ingenico ePayments payment gateway in a few seconds...');
+                    }
+                    ?>
+                </span>
+            </h1>
+        </div>
+        <!--<p id="loading_notice">
+            <strong>
+                <?php /*
+                if ($this->isIframeTarget()) {
+                    echo __('Please wait a moment while the Ingenico ePayments payment page is loading.');
+                } else {
+                    echo __('Please wait a moment. This page will transfer your data to Ingenico ePayments payment gateway in a few seconds.');
+                }*/
+                ?>
+            </strong>
+        </p>-->
+    <?php endif; ?>
+
+    <?php if (is_array($formData)): ?>
+        <fieldset>
+            <?php foreach ($formData as $name => $value) { ?>
+                <?php if ($this->hasMissingParams() && in_array($name, $this->getQuestionedFormFields())): ?>
+                <?php if ($name !== 'CIVILITY' && $name !== 'ECOM_SHIPTO_POSTAL_NAME_PREFIX') : ?>
+                    <label class="required" for="<?php echo($name); ?>"><?php echo __($name) ?> <em>*</em></label>
+                    <div class="input-box"><input class="required-entry" id="<?php echo $name; ?>" name="<?php echo $name; ?>" value="<?php echo(htmlentities($value, ENT_COMPAT, 'UTF-8')); ?>" /></div>
+                <?php endif; ?>
+                <?php if (($name ==='CIVILITY' || $name == 'ECOM_SHIPTO_POSTAL_NAME_PREFIX')): ?>
+                    <label class="required" for ="<?php echo($name); ?>"><?php echo __($name) ?> <em>*</em></label>
+                    <div class="input-box">
+                        <select class="required-entry" id="prefix" name="<?php echo($name); ?>">
+                            <option <?php if ($value == 'Mr'): echo 'selected'; endif; ?> value='Mr' >Mr</option>
+                            <option <?php if ($value == 'Mrs'): echo 'selected'; endif; ?> value='Mrs' >Mrs</option>
+                        </select>
+                   </div>
+                <?php endif; ?>
+                <?php else: ?>
+                    <input type="hidden" name="<?php echo $name; ?>" value="<?php echo(htmlentities($value, ENT_COMPAT, 'UTF-8')); ?>" />
+                <?php endif; ?>
+            <?php }?>
+        </fieldset>
+    <?php endif; ?>
+    <?php if ($this->hasMissingParams()): ?>
+            </ul>
+        </div>
+        <div class="buttons-set">
+            <p class="required"><?php echo __('* Required Fields') ?></p>
+            <button class="button" title="OK" type="submit">
+                <span><span>OK</span></span>
+            </button>
+        </div>
+    <?php endif; ?>
+</form>
+<?php if ($this->isIframeTarget()): ?>
+    <iframe id="ops_placeform_iframe" name="ops_placeform_iframe" src="" style="display: none; width: 100%;"></iframe>
+<?php endif; ?>
+<script type="text/javascript">
+    require([
+        "jquery"
+    ], function(jQuery){
+//<![CDATA[
+        <?php if (false == $this->hasMissingParams()): ?>
+        jQuery(document).ready(function() {
+            var review = jQuery('#ops_review_form');
+            review.submit();
+        });
+        <?php endif; ?>
+
+        <?php if($this->isIframeTarget()): ?>
+        jQuery('#ops_placeform_iframe').on('load', function() {
+            jQuery(this).css('display', 'block');
+            jQuery(this).css('width', 0.9 * window.innerWidth);
+            jQuery('#loading_notice').css('display', 'none');
+        });
+        <?php endif; ?>
+//]]>
+    });
+</script>
+

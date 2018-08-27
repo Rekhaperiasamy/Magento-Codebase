@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_GiftCardAccount
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\GiftCardAccount\Observer\CreateGiftCard">
+        <plugin name="dilmah_magento_giftcardaccount_create" type="Dilmah\GiftCardAccount\Model\Plugin\CreateGiftCard"/>
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="NotifyGiftCardExpirationDailyCommand" xsi:type="object">Dilmah\GiftCardAccount\Console\Command\NotifyGiftCardExpirationDailyCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

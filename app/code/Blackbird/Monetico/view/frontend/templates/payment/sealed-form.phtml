@@ -1,0 +1,57 @@
+<?php
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+?>
+<?php
+/**
+ * @var \Blackbird\Monetico\Block\Payment\SealedForm $block
+ * @see \Blackbird\Monetico\Block\Payment\SealedForm
+ */
+?>
+<?php if ($block->isPaymentMethodIntegrated()): ?>
+    <iframe class="sealed-form" id="monetico-sealed-form-iframe" name="monetico-iframe" src="<?php /* @escapeNotVerified */ echo $block->getPaymentFormActionUrlEncoded() ?>">
+<?php endif; ?>
+        <div class="sealed-form" id="cmcic-sealed-form">
+            <div class="message info">
+                <span><?php /* @escapeNotVerified */ echo __('You will be redirected to %1 in a few seconds.', $block->getServiceName()) ?></span>
+            </div>
+            <form method="POST"
+                  action="<?php /* @escapeNotVerified */ echo $block->getPaymentFormAction() ?>"
+                  target="_top"
+                  name="monetico_payment_checkout"
+                  id="monetico_payment_checkout">
+                <fieldset class="fieldset payment">
+                    <?php foreach ($block->getSealedFormData() as $key => $value): ?>
+                        <input name="<?= /* @escapeNotVerified */ $key ?>" type="hidden" value="<?php /* @escapeNotVerified */ echo $value ?>" />
+                    <?php endforeach; ?>
+                </fieldset>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button type="submit" class="action pay primary" title="<?php /* @escapeNotVerified */ echo __('Place Payment') ?>">
+                            <span><?php /* @escapeNotVerified */ echo __('Place Payment') ?></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+<?php if ($block->isPaymentMethodIntegrated()): ?>
+    </iframe>
+    <script>
+        require(['Magento_Checkout/js/model/full-screen-loader'], function (fullScreenLoader) {
+            fullScreenLoader.stopLoader();
+        });
+    </script>
+<?php endif; ?>

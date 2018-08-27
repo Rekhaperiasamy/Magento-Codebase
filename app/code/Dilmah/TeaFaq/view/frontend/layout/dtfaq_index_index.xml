@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Dilmah_TeaFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Tea FAQ</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Tea FAQ</item>
+                    <item name="title" xsi:type="string" translate="true">Tea FAQ</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <move element="page.main.title" destination="columns.top" after="dilmah.tfaq.content.header.links" />
+        <referenceBlock name="content">
+            <block class="Dilmah\TeaFaq\Block\Widget\Content" name="dilmah.tfaq.content" template="fullpage/content_fullpage.phtml">
+                <block class="Dilmah\TeaFaq\Block\Faq" name="dilmah.tfaq.sidebar.menu" template="fullpage/sidebar_faq_left.phtml"/>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="columns.top">
+            <block class="Dilmah\TeaFaq\Block\Faq" name="dilmah.tfaq.content.header.links" before="-" template="fullpage/header_links.phtml" />
+            <container name="dilmah.tfaq.top.container" htmlTag="div" htmlClass="ns-faq-top-bar" after="page.main.title">
+                <block class="Dilmah\TeaFaq\Block\Widget\Content" name="ns.faq.content.header"  template="fullpage/content_header.phtml"/>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

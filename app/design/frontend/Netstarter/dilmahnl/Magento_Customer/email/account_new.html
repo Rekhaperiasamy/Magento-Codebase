@@ -1,0 +1,42 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject Welkom bij {{var store.getFrontendName()}} @-->
+<!--@vars {
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var customer.email":"Customer Email",
+"var customer.name":"Customer Name"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<h1 class="title">{{trans "Account registratie"}}</h1>
+<p class="greeting">{{trans "Beste %name," name=$customer.name}}</p>
+<p>{{trans "Welcome to the Dilmah family! Your account has been created and you are now officially a part of the Dilmah Online Tea Boutique fold."}}</p>
+<p>
+    {{trans 'Om in te loggen gebruikt u onderstaande inloggegevens.'}}
+</p>
+
+<table class="email-credentials">
+    <tr>
+        <th>{{trans "Email:"}}</th>
+        <td>{{var customer.email}}</td>
+    </tr>
+    <tr>
+        <th>{{trans "Wachtwoord:"}}</th>
+        <td><em>{{trans "Het wachtwoord dat u heeft ingesteld bij het aanmaken van dit account"}}</em></td>
+    </tr>
+</table>
+<br />
+<p>
+    {{trans
+        'Bent u uw wachtwoord vergeten? Klik <a href="%reset_url">hier</a> om een nieuw wachtwoord aan te vragen.'
+        reset_url="$this.getUrl($store,'customer/account/createPassword/',[_query:[id:$customer.id,token:$customer.rp_token],_nosid:1])"
+    |raw}}
+</p>
+
+<p>{{trans "Als u verder nog vragen heeft helpen we u daar graag mee! U kunt ons bereiken via"}}
+    <a href='mailto:info@dilmah.nl'>info@dilmah.nl</a> {{trans "of 023-5160360."}}</p>
+{{template config_path="design/email/footer_template"}}

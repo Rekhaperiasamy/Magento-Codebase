@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<dataSource name="product_listing_data_source"></dataSource>
+<listingToolbar name="listing_top"></listingToolbar>
+<columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
+<argument name="data" xsi:type="array">
+    <item name="config" xsi:type="array">
+        <item name="editorConfig" xsi:type="array">
+            <item name="selectProvider" xsi:type="string">product_listing.product_listing.product_columns.ids</item>
+            <item name="enabled" xsi:type="boolean">true</item>
+            <item name="indexField" xsi:type="string">entity_id</item>
+            <item name="clientConfig" xsi:type="array">
+                <item name="saveUrl" xsi:type="url" path="my_product/product/inlineEdit"/>
+                <item name="validateBeforeSave" xsi:type="boolean">false</item>
+            </item>
+        </item>
+        <item name="childDefaults" xsi:type="array">
+            <item name="fieldAction" xsi:type="array">
+                <item name="provider" xsi:type="string">product_listing.product_listing.product_columns_editor</item>
+                <item name="target" xsi:type="string">startEdit</item>
+                <item name="params" xsi:type="array">
+                    <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                    <item name="1" xsi:type="boolean">true</item>
+                </item>                        
+            </item>
+        </item>
+    </item>
+</argument>
+ 
+    <column name="qty">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="editor" xsi:type="string">text</item>
+            </item>
+        </argument>
+    </column>
+	
+	<column name="sku">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="editor" xsi:type="string">text</item>
+            </item>
+        </argument>
+    </column>
+
+</columns>
+</listing>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Customer
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_form_register" remove="true"/>
+        <referenceContainer name="content">
+            <container name="customer.register.container" label="Customer Register Container" htmlTag="div" htmlClass="register-container">
+                <block class="Dilmah\Customer\Block\Form\Register" name="customer_form_register.new" template="Dilmah_Customer::form/register.phtml">
+                    <container name="form.additional.info" as="form_additional_info"/>
+                    <container name="customer.form.register.fields.before" as="form_fields_before" label="Form Fields Before" htmlTag="div" htmlClass="customer-form-before"/>
+                    <block class="Magento\Cms\Block\Block" name="register.page.info">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">login_register_page_info</argument>
+                        </arguments>
+                    </block>
+                    <block class="Netstarter\StackSocialMedia\Block\FbButton" name="header.links.FbButton.register" template="fb_button.phtml"/>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

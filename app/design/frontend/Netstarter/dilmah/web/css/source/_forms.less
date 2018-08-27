@@ -1,0 +1,411 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@legend-border-bottom: 1px solid @color-gray-light6;
+@form-field__vertical-indent__desktop: 29px;
+@form-calendar-icon__color: @primary__color;
+
+//
+//    Common
+//--------------------------------------
+
+
+
+
+& when (@media-common = true) {
+
+  body {
+    ._keyfocus *,
+    input:not([disabled]),
+    textarea:not([disabled]),
+    select:not([disabled]) {
+      &:focus {
+        .lib-css(box-shadow, 0px 0px);
+
+      }
+    }
+  }
+
+.fieldset {
+    .lib-form-fieldset();
+    &:last-child {
+        margin-bottom: 0;
+    }
+    > .field,
+    > .fields > .field {
+        .lib-form-field();
+        &.no-label {
+            > .label {
+                .lib-visually-hidden();
+            }
+        }
+        &.choice {
+            .label {
+                font-weight: normal;
+                margin: 0;
+                display: inline;
+            }
+        }
+        .label {
+            .column:not(.main) & {
+                font-weight: normal;
+            }
+        }
+        .field.choice {
+            margin-bottom: @indent__s;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+.legend + .fieldset,
+.legend + div {
+    clear: both;
+}
+.legend {
+    span {
+        margin-right: @indent__xs;
+    }
+}
+fieldset.field {
+    border: 0;
+    padding: 0;
+}
+.field {
+    &.date {
+        .time-picker {
+            white-space: nowrap;
+            margin-top: @indent__s;
+            display: inline-block;
+        }
+    }
+    .message {
+        &.warning {
+            margin-top: @indent__s;
+        }
+    }
+}
+
+.select-styling() {
+    .lib-css(appearance, none, 1);
+    appearance: none;
+    border: 1px solid @border-color__base;
+    //height: 32px;
+    background: @select__background url('../images/select-bg.svg') no-repeat 100% 45%;
+    background-size: 30px 60px;
+    padding-right: 25px;
+    text-indent: .01em;
+    text-overflow: '';
+    &::-ms-expand{
+        display:none;
+    }
+    .lt-ie10 & {
+        background-image: none;
+        padding-right: 4px;
+    }
+}
+
+select {
+    .select-styling();
+}
+
+
+div.mage-error[generated] {
+    margin-top: 7px;
+    .lib-font-size(14);
+}
+
+    select.mage-error{
+        background: @error__bg-color url('../images/select-bg.svg') no-repeat 100% 45%;
+    }
+
+// TEMP
+
+.field .tooltip {
+    .lib-tooltip(right);
+    .tooltip-content {
+        min-width: 200px;
+        white-space: normal;
+    }
+}
+
+input:focus ~ .tooltip .tooltip-content,
+select:focus ~ .tooltip .tooltip-content {
+    display: block;
+}
+
+.hasDatepicker {
+    + .ui-datepicker-trigger {
+        .lib-button-reset();
+        .lib-icon-font(
+        @_icon-font-content: @icon-calendar,
+        @_icon-font-color: @primary__color__lighter,
+        @_icon-font-size: @icon-calendar__font-size,
+        @_icon-font-line-height: @icon-calendar__font-size,
+        @_icon-font-display: block,
+        @_icon-font-text-hide: true
+        );
+        display: inline-block;
+        vertical-align: middle;
+        &:focus {
+            box-shadow: none;
+            outline: 0;
+        }
+    }
+}
+
+//
+//    Sidebar forms
+//--------------------------------------
+
+.sidebar {
+    .fieldset {
+        margin: 0;
+        > .field:not(.choice) >,
+        .fields > .field {
+            &:not(:last-child) {
+                margin: 0 0 @form-field__vertical-indent;
+            }
+            .label {
+                margin: 0 0 4px;
+                padding: 0 0 @indent__xs;
+                text-align: left;
+                width: 100%;
+            }
+            .control {
+                width: 100%;
+            }
+        }
+    }
+}
+
+//
+//    General Checkboxes and Radio Buttons
+//--------------------------------------
+
+    .sidebar-main { //Currently set for Layered Navigation only
+        label {
+            margin: 0;
+            padding: 0 0 0 25px;
+            cursor: pointer;
+            line-height: 30px;
+            position: relative;
+            input[type="checkbox"] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 18px;
+                height: 18px;
+                padding: 0;
+                margin: 0;
+                z-index: 100;
+                opacity: 0;
+                cursor: pointer;
+                + span {
+                    display: inline-block;
+                    width: 18px;
+                    height: 18px;
+                    margin: -1px 10px 0 0;
+                    padding: 0;
+                    vertical-align: middle;
+                    background: url("../images/checkbox-btn.png") no-repeat;
+                    cursor: pointer;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                &:checked {
+                    + span {
+                        background-position: 0 -18px;
+                    }
+                }
+            }
+        }
+
+        label {
+            margin: 0;
+            padding: 0 0 0 25px;
+            cursor: pointer;
+            line-height: 30px;
+            position: relative;
+            input[type="radio"] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 18px;
+                height: 18px;
+                padding: 0;
+                margin: 0;
+                z-index: 100;
+                opacity: 0;
+                cursor: pointer;
+                + span {
+                    display: inline-block;
+                    width: 18px;
+                    height: 18px;
+                    margin: -1px 10px 0 0;
+                    padding: 0;
+                    vertical-align: middle;
+                    background: url("../images/radio-btn.png") no-repeat;
+                    cursor: pointer;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                &:checked {
+                    + span {
+                        background-position: 0 -18px;
+                    }
+                }
+            }
+        }
+    }
+
+    .choice{
+        &:not(.review-field-rating){
+            input[type="radio"]{
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 22px;
+                height: 22px;
+                padding: 0;
+                margin: 0;
+                z-index: 100;
+                opacity: 0;
+                cursor: pointer;
+                display: none;
+
+                & + label{
+                    top: 0;
+                    left: 0;
+                    margin: 0;
+                    padding: 0;
+                    cursor: pointer;
+                    span {
+                        display: inline-block;
+                        /*width: 22px;*/
+                        height: 22px;
+                        margin: -1px 10px 0 0;
+                        padding: 0;
+                        vertical-align: middle;
+                        background: url("../images/radio-btn.png") no-repeat;
+                        cursor: pointer;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        line-height: 1.7;
+
+                        &:before {
+                            content: '';
+                            margin-left:30px;
+
+                        }
+                    }
+                }
+                &:checked{
+                    & + label{
+                        span {
+                            background-position: 0 -22px;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .product-add-form {
+        .product-options-wrapper {
+            .options-list {
+                .choice {
+                    width:20%;
+                    display: inline-table;
+                }
+            }
+        }
+    }
+
+.choice{
+    position: relative;
+    input[type="checkbox"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        margin: 0;
+        z-index: 100;
+        opacity: 0;
+        cursor: pointer;
+        & + label{
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+
+            span {
+                display: inline-block;
+                padding: 0;
+                //width: 30px;
+                width: 100%;
+                line-height: 30px;
+                padding-left: 40px;
+
+                height: 30px;
+                margin: -1px 10px 0 0;
+
+                vertical-align: middle;
+                background: url("../images/check-box-bg.gif") no-repeat;
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-position: 0 -33px;
+            }
+        }
+
+        &:checked {
+            & + label{
+                span {
+                    background-position: 0 0px;
+
+                }
+            }
+        }
+    }
+}
+
+
+
+
+}
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .legend {
+        .lib-css(border-bottom, @legend-border-bottom);
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    .product-add-form {
+        .product-options-wrapper {
+            .options-list {
+                .choice {
+                    display: block;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_OrderReview
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<!--@subject Donnez-nous votre avis sur votre commande #{{var order.getIncrementId()}} @-->
+<!--@vars {
+"var order.increment_id":"Order Id",
+"layout handle=\"feedback_email_top_block\" items=$items area=\"frontend\"":"Feedback Email Top Content",
+"layout handle=\"feedback_email_order_items\" items=$items area=\"frontend\"":"Order Items Grid",
+"layout handle=\"feedback_email_block\" items=$items area=\"frontend\"":"Feedback Email Bottom Content",
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr>
+        <td class="h1">Producten beoordelen</td>
+    </tr>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Beste %name," name=$order.getBillingAddress().getName()}}</p>
+            {{layout handle="feedback_email_top_block" area="frontend"}}
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{layout handle="feedback_email_order_items" items=$items area="frontend"}}
+        </td>
+    </tr>
+    <tr class="email-extras">
+        <td>
+            {{layout handle="feedback_email_block" area="frontend"}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,11 @@
+<?php
+/**
+ * Considering the weight for loading  getLoadedProductCollection() method in two phtml files
+ * (Because of the implementation it can not be loaded twice using the same listing block)
+ * both printing result count and printing the detail of first 3 products placed in the same phtml file.
+ */
+?>
+<?php //Printing category result count ?>
+ 'resultsCount':"<?php echo $block->getPageResultCount(); ?>",
+<?php //Printing first 3 products of the category listing ?>
+<?php  echo $block->getProductListingForCriteo();?>

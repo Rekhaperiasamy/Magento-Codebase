@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="monetico_section" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Monetico CM-CIC Desjardins Payment</label>
+                <comment><![CDATA[<p>Accept credit/debit cards with Monetico (CM-CIC & Desjardins) in your Magento store.</p><p><a href="https://www.monetico-services.com/fr/identification/authentification.html" target="_blank">Click here to login to your existing Monetico account</a>. Or to setup a new account and accept payments on your website, <a href="https://www.monetico-paiement.fr/fr/contact.html" target="_blank">click here to signup for a Monetico account</a>.</p>]]></comment>
+                <attribute type="expanded">1</attribute>
+                <fieldset_css>complex monetico-section</fieldset_css>
+                <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                <!-- GENERAL SETTINGS -->
+                <group id="monetico_settings" translate="label comment" showInDefault="1" showInWebsite="1" sortOrder="10">
+                    <label>Common Settings</label>
+                    <comment>These data are common for all payment methods through Monetico.</comment>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                    <field id="canceled_empty_cart" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Empty the Cart after Cancellation</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/monetico/canceled_empty_cart</config_path>
+                    </field>
+                    <field id="canceled_redirect_cart" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Redirect to the Cart after Cancellation</label>
+                        <comment>We will redirect the customer to the default failure page if the redirect option is disabled.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/monetico/canceled_redirect_cart</config_path>
+                        <depends><field id="canceled_empty_cart">0</field></depends>
+                    </field>
+                    <field id="canceled_error_message" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Cancellation Message</label>
+                        <comment>We will replace the default message on the failure page by this one.</comment>
+                        <config_path>payment/monetico/canceled_error_message</config_path>
+                    </field>
+                    <field id="use_cron_cancel" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Automatic Cancellation</label>
+                        <comment>We will run a cron to cancel orders, in new status, older than the value you have configured.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/monetico/use_cron_cancel</config_path>
+                    </field>
+                    <field id="cancel_delay" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Delay Before Cancellation</label>
+                        <comment>The cancel delay in seconds. If field is empty default value 2700 will be saved.</comment>
+                        <validate>validate-zero-or-greater</validate>
+                        <config_path>payment/monetico/cancel_delay</config_path>
+                        <depends><field id="use_cron_cancel">1</field></depends>
+                    </field>
+                    <field id="debug_mode" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Debug Mode</label>
+                        <comment>We will trace the events in the /var/log/monetico.log file.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/monetico/debug_mode</config_path>
+                    </field>
+                </group>
+                <!-- Monetico Onetime -->
+                <include path="Blackbird_Monetico::system/monetico_onetime.xml"/>
+                <!-- Monetico Multitime -->
+                <include path="Blackbird_Monetico::system/monetico_multitime.xml"/>
+                <!-- Monetico Cofidis 1euro -->
+                <include path="Blackbird_Monetico::system/monetico_1euro.xml"/>
+                <!-- Monetico Cofidis 3xCB -->
+                <include path="Blackbird_Monetico::system/monetico_3xcb.xml"/>
+                <!-- Monetico Cofidis 4xCB -->
+                <include path="Blackbird_Monetico::system/monetico_4xcb.xml"/>
+                <!-- Monetico PayPal -->
+                <include path="Blackbird_Monetico::system/monetico_paypal.xml"/>
+            </group>
+        </section>
+    </system>
+</config>

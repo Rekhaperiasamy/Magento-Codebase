@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Dilmah_TeaFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dilmah_TeaFaq::dilmah_tfaq" title="Tea FAQ" module="Dilmah_TeaFaq" sortOrder="6" parent="Netstarter_StackCore::main_menu" resource="Dilmah_TeaFaq::dilmah_tfaq"/>
+        <add id="Dilmah_TeaFaq::configuration" title="Configuration" module="Dilmah_TeaFaq" sortOrder="1" parent="Dilmah_TeaFaq::dilmah_tfaq" action="adminhtml/system_config/edit/section/dilmah_teafaq" resource="Dilmah_TeaFaq::configuration"/>
+        <add id="Dilmah_TeaFaq::dilmah_tfaq_category" title="Categories" module="Dilmah_TeaFaq" sortOrder="2" parent="Dilmah_TeaFaq::dilmah_tfaq" action="dtfaq/category/index" resource="Dilmah_TeaFaq::dilmah_tfaq"/>
+        <add id="Dilmah_TeaFaq::dilmah_tfaq_item" title="Items" module="Dilmah_TeaFaq" sortOrder="3" parent="Dilmah_TeaFaq::dilmah_tfaq" action="dtfaq/item/index" resource="Dilmah_TeaFaq::dilmah_tfaq"/>
+    </menu>
+</config>

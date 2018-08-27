@@ -1,0 +1,42 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Theme
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?PHP
+if ($block->getChildHtml('seo.content')) {
+    ?>
+    <div class="title-wrapper">
+        <?php echo $block->getChildHtml('seo.title'); ?>
+
+    </div>
+    <div class="seo-inner-wrapper row-eq-height">
+
+        <div class="bg-right"></div>
+
+
+        <!--    <div class="columns">-->
+
+
+        <div class="content">
+            <div class="home-seo-left">
+                <?php echo $block->getChildHtml('seo.content'); ?>
+                <?php //echo $this->helper('Dilmah\Theme\Helper\Data')->truncate($block->getChildHtml('seo.content'),1000)
+                ?>
+            </div>
+            <div class="home-seo-right">
+            </div>
+        </div>
+
+
+        <!--    </div>-->
+    </div>
+<?php } ?>

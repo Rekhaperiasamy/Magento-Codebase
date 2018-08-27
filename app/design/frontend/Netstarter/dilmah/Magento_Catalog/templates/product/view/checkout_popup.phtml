@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<div class="checkout-popup" id="checkout-popup">
+
+    <div class="messages">
+        <div class="message message-success success">
+            <div><?php /* @escapeNotVerified */ echo __('Product has been added to shopping cart successfully.') ?></div>
+        </div>
+    </div>
+    <div id="mix-and-match" class="messages"></div>
+
+    <a href="#" class="close"><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></a>
+    <a href="<?php /* @escapeNotVerified */ echo $this->getUrl('checkout') ?>" data-cart-url="<?php echo $this->getUrl('customer/account/login', ['_secure' => true]);?>" id="checkout-popup-button" class="primary"><?php echo __('Checkout') ?></a>
+</div>
+<script>
+    require([
+        'jquery',
+        'ko',
+        'Magento_Customer/js/customer-data'
+    ], function ($,ko,customerData) {
+        $(function () { // to ensure that code evaluates on page load
+            var self = this;
+            var cart = customerData.get('cart');
+            var customer = customerData.get('customer');
+            $('#checkout-popup-button').click(function(e) {
+                e.preventDefault();
+                if(_.isString(customer().firstname)){
+                    window.location.replace($(this).attr('href'));
+                }else{
+                    var flag = false;
+                    if(!_.isEmpty(cart())){
+                        $.each( cart().items, function( i, val ) {
+                            if (val['is_mix_match_promo']){
+                                flag = true;
+                            }
+                        });
+                    }
+                    if(flag){
+                        window.location.replace($(this).attr('data-cart-url'));
+
+                    }else{
+                        window.location.replace($(this).attr('href'));
+                    }
+                }
+                return false;
+            });
+
+        });
+    });
+</script>

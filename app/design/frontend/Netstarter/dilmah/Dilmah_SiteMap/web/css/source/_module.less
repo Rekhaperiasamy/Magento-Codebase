@@ -1,0 +1,235 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+
+  .sitemap-index-index {
+    .page-main {
+      > .page-title-wrapper {
+        .page-title {
+          margin-bottom: 29px;
+        }
+      }
+    }
+  }
+  .sitemap-top-categorys {
+    width: 100%;
+    float: left;
+    .sub-title {
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+    .navigation {
+      font-weight: normal;
+      position: inherit;
+      .level0 {
+        position: static;
+        float: left;
+        width: 25%;
+        .level-top {
+          padding: 0;
+          span {
+            .lib-css(font-family, @font-name__signika_regular);
+            font-weight: normal;
+          }
+          &:hover, &.ui-state-focus {
+            .lib-css(color, @color-yellow3);
+            background: none;
+          }
+        }
+        .submenu {
+          font-weight: normal;
+          position: static;
+          display: block!important;
+          top: 0!important;
+          left: 0!important;
+          border:0;
+          margin: 10px 0 0!important;
+          box-shadow:none;
+          width: 100%;
+          float: left;
+          .level1 {
+            margin-bottom: 8px;
+          }
+          a {
+            .lib-css(color, @color-gray-darken1);
+            padding: 0;
+            text-decoration: none;
+            .lib-font-size(16);
+            background: url('../images/dot-bullet.png') no-repeat 21px 5px;
+            /*background-size: 8px;*/
+            padding-left: 44px;
+            padding-right: 30px;
+            .ie10 &,
+            .ie11 & {
+              background-position: 21px 7px;
+            }
+            &:hover, &.ui-state-focus {
+              .lib-css(color, @color-yellow3);
+              background: url('../images/dot-bullet.png') no-repeat 21px 5px;
+              /*background-size: 8px;*/
+              text-decoration: underline;
+              .ie10 &,
+              .ie11 & {
+                background-position: 21px 7px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .sitemap-bottom-navigation {
+    width: 100%;
+    float: left;
+    margin: 40px 0;
+    .bottom-nav-item {
+      width: 25%;
+      float: left;
+      padding: 0 61px 0 0;
+      .sub-title {
+        .lib-css(font-family, @font-name__signika_regular);
+        .lib-font-size(25);
+        .lib-css(color, @color-yellow3);
+        font-weight: normal;
+        padding: 0 0 10px 18px;
+        margin: 0 0 15px;
+        .lib-css(border-bottom, 1px solid @color-gray-light0);
+      }
+      ul {
+        padding-left: 0;
+        li {
+          list-style: none;
+          margin-bottom: 8px;
+          padding-left: 18px;
+          a {
+            .lib-css(font-family, @font-name__signika_semibold);
+            .lib-font-size(16);
+            .lib-css(color, @color-gray-darken3);
+            text-decoration: none;
+            &:hover {
+              .lib-css(color, @color-yellow3);
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+
+  .sitemap-top-categorys {
+    .navigation {
+      .level0 {
+        width: 25%;
+      }
+    }
+  }
+  .sitemap-bottom-navigation {
+    .bottom-nav-item {
+      width: 25%;
+    }
+  }
+
+}
+
+
+
+//
+//  Tablet @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .sitemap-top-categorys {
+    .navigation {
+      .level0 {
+        width: 33%;
+      }
+    }
+  }
+  .sitemap-bottom-navigation {
+    .bottom-nav-item {
+      width: 33%;
+    }
+  }
+
+}
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+  .sitemap-index-index {
+    .page-main {
+      > .page-title-wrapper {
+        .page-title {
+          margin-bottom: 17px;
+        }
+      }
+    }
+  }
+  .sitemap-top-categorys {
+    padding-top: 13px;
+    .lib-css(border-top, 1px solid @color-gray-light0);
+    .sub-title {
+      margin-bottom: 16px;
+    }
+    .navigation {
+      padding: 0 12px;
+      .level0 {
+        width: 100%;
+        border-top: 0;
+        margin-bottom: 22px;
+        &:last-child {
+          border-bottom: 0;
+        }
+        a {
+          .lib-css(color, @color-blue2);
+          .lib-css(font-family, @font-name__signika_regular);
+          .lib-font-size(18);
+          text-transform: none;
+          font-weight: normal;
+          &:after {
+            display: none;
+          }
+        }
+        .submenu {
+          margin: 15px 0 0!important;
+          li {
+            margin: 0 0 12px;
+            a {
+              background-position: 20px 6px;
+              padding-left: 42px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .sitemap-bottom-navigation {
+    margin: 3px 0 20px;
+    .bottom-nav-item {
+      width: 100%;
+      padding: 0;
+      margin: 0 0 1px;
+    }
+  }
+
+}

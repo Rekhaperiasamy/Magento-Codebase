@@ -1,0 +1,35 @@
+<?php
+/** @var \Netresearch\OPS\Block\Form\DirectDebit $this */
+?>
+
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?php /* @noEscape */ echo $this->getMethodCode(); ?>"
+          style="display:none">
+    <div class="field-country admin__field _required">
+        <label class="admin__field-label" for="ops_directdebit_country">
+            <span><?php echo __('Country'); ?><em class="required">*</em></span>
+        </label>
+        <div class="admin__field-control">
+            <select title="ops_directdebit_country" class="required-entry admin__control-select" name="ops_directDebit[country]" id="OPS_DIRECTDEBIT_BRAND">
+                <option value=""><?php echo __('--Please Select--')?></option>
+                <?php foreach ($this->getDirectDebitCountryIds() as $countryId) : ?>
+                    <option value="<?php echo "Direct Debits " . $countryId; ?>" <?php if (strtoupper($countryId) == $this->getCountry()): ?> selected="selected" <?php endif; ?> ><?php echo $this->getCountryNameByCode($countryId); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="admin__field-control">
+        <input style="display:none;" name="payment[<?php echo $this->getMethodCode(); ?>][alias]" value="" id="<?php echo $this->getMethodCode() ?>_alias_input">
+        <iframe id="ops_iframe_<?php echo $this->getMethodCode() ?>" class="ops_tokenization_frame" style="display: block;" src="about:blank"></iframe>
+        <div id="<?php echo $this->getMethodCode() ?>_loader" style="display: none; font-weight: bold;"></div>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    require([
+        'Netresearch_OPS/js/view/payment/method/<?php echo $this->getMethodCode(); ?>'
+    ], function (method) {
+//<![CDATA[
+        var payment = new method();
+//]]>
+    });
+</script>

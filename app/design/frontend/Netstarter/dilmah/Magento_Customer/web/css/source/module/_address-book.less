@@ -1,0 +1,121 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common = true) {
+
+
+  .account {
+    &.magento-giftcardaccount-customer-index {
+      .column {
+        &.main {
+          .actions-toolbar {
+            .secondary {
+              .action {
+                &.check {
+                  padding: 15px 15px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .column {
+      &.main {
+        .block:not(.widget) {
+          .block-content {
+            .box {
+              padding: 20px 0;
+              margin-bottom: 0;
+              .box-title {
+                width: 100%;
+                .lib-css(font-family, @font-name__signika_semibold);
+                span {
+                  .lib-font-size(16);
+                  font-weight: normal;
+                }
+              }
+            }
+          }
+        }
+        .block-addresses-list {
+          .items > {
+            .item {
+              padding: 20px 0;
+            }
+          }
+        }
+      }
+    }
+    .abs-account-block-font-size,
+    .block-balance-giftcard .block-content,
+    .block-addresses-list address,
+    .box-billing-address .box-content,
+    .box-shipping-address .box-content,
+    .box-information .box-content,
+    .block-reviews-dashboard .product-name {
+      .lib-font-size(14);
+      line-height: 20px;
+    }
+  }
+
+
+}
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .account {
+    .column {
+      &.main {
+        .storecredit {
+          .block {
+            &.block-balance, &.block-balance-giftcard {
+              &:not(.widget) {
+                .block-title {
+                  padding: 0px 0px;
+                }
+              }
+            }
+          }
+        }
+        .block:not(.widget) {
+          .block-content {
+            .box {
+              padding: 20px 0 20px;
+            }
+          }
+        }
+        .block {
+          .lib-css(border-top,  solid 1px @color-gray-light0);
+          padding: 20px 0px 0;
+          margin-bottom: 20px;
+          &:last-child {
+            .lib-css(border-bottom, 0);
+          }
+          &:not(.widget) {
+            .block-title {
+              padding: 0px 0px 12px;
+            }
+          }
+        }
+      }
+    }
+    &.customer-account-index {
+      .column {
+        &.main {
+          .block {
+            &:not(.widget) {
+              .block-title {
+                padding: 0px 20px 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

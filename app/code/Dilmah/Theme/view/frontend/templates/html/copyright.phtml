@@ -1,0 +1,21 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Theme
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="footer-copyright-wrapper">
+    <?php echo $block->getChildHtml('bottom.links.block'); ?>
+    <small class="copyright">
+        <span><?php /* @escapeNotVerified */
+            echo $block->getCopyright() ?></span>
+      <!--  <span><?php echo __('Powered by ') ?><a href="http://www.netstarter.com.au/" target="_blank">Netstarter</a></span>-->
+    </small>
+</div>

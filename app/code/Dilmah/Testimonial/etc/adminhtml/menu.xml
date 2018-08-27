@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Testimonial
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dilmah_Testimonial::dilmah_testimonial" title="Testimonials" module="Dilmah_Testimonial" sortOrder="10" parent="Dilmah_Theme::dilmah" action="dilmah_testimonial/item"  resource="Dilmah_Testimonial::dilmah_testimonial"/>
+        <add id="Dilmah_Testimonial::dilmah_testimonial_item" title="Items" module="Dilmah_Testimonial" sortOrder="20" parent="Dilmah_Testimonial::dilmah_testimonial" action="dilmah_testimonial/item/index" resource="Dilmah_Testimonial::dilmah_testimonial"/>
+    </menu>
+</config>

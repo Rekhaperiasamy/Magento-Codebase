@@ -1,0 +1,132 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Update Cart'); ?>
+
+<?php
+$isPack = $_product->getData(\Dilmah\Catalog\Helper\Data::IS_PACK_PRODUCT_ATTRIBUTE) == 1;
+$isCombo = $_product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1;
+$packSize = $_product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE);
+$bagCount = $_product->getData(\Dilmah\Catalog\Helper\Data::TEA_BAG_QTY_ATTRIBUTE);
+
+$pOptions = $_product->getProductOptionsCollection();
+$optionFieldId = null;
+
+foreach ($pOptions as $id => $option)
+{
+    if (strpos(strtolower($option['title']), 'engrav') !== false)
+    {
+        if ($option['type'] == 'field')
+        {
+            $optionFieldId = 'options_' . $id . '_text';
+        }
+    }
+}
+?>
+
+<?php if ($isCombo): ?>
+    <?php $buttonTitle = __('You need to add ') . '<span class="counter">' . $packSize . '</span>' . __(' more item'); ?>
+<?php endif; ?>
+<?php if ($_product->isSaleable()): ?>
+    <div class="box-tocart update <?php echo $isCombo ? 'product-mix-match' : '' ?>">
+        <fieldset class="fieldset"  data-mage-init='{"bundleCustom":""}'>
+            <?php if ($block->shouldRenderQuantity() && !$isCombo): ?>
+            <div class="field qty" data-mage-init='{"cartCount":{}}'>
+                <?php if ($isPack && $packSize > 0): ?>
+                    <div class="control select">
+                        <select name="qty" id="qty" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text select" data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>">
+                            <?php for($x = 1; $x <= 6; $x++): ?>
+                                <option value="<?php /* @escapeNotVerified */ echo $x ?>" <?php /* @escapeNotVerified */ echo ($block->getProductDefaultQty() * 1 == $x) ? 'selected="selected"' : '' ?>><?php /* @escapeNotVerified */ echo __('%1 unit (%2 packs)', $x, $x * $packSize) ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                <?php else: ?>
+                    <div class="control">
+                        <div class="qty-minus qty-main-btn">-</div>
+                        <input type="number" name="qty" id="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" data-validate="{'required-number':true,digits:true}"/>
+                        <div class="qty-plus qty-main-btn">+</div>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="actions">
+                <button type="submit"
+                        class="action primary tocart <?php echo $isCombo ? 'mix-match' : '' ?>"
+                        id="product-updatecart-button">
+                    <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+                </button>
+                <?php echo $block->getChildHtml('', true) ?>
+            </div>
+        </fieldset>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#product_addtocart_form": {
+                "validation": {},
+                "addToCart": {
+                    "cartButtonId": "#product-updatecart-button",
+                    "cartForm": "#product_addtocart_form"
+                }
+            }
+        }
+    </script>
+    <script>
+        require([
+            'jquery',
+            'mage/mage',
+            'Magento_Catalog/product/view/validation',
+            'Magento_Catalog/js/catalog-add-to-cart'
+        ], function ($) {
+            'use strict';
+            var engraveFieldId = '<?php echo $optionFieldId ?>';
+            var currentStoreId = '<?php echo $this->helper('Dilmah\Catalog\Helper\Data')->getStoreId();?>';
+            var globalStoreId = '<?php echo \Dilmah\Catalog\Helper\Data::GLOBAL_STORE_ID;?>';
+
+            // Validate English only for option field
+            if(currentStoreId == globalStoreId){
+                $.validator.addMethod("validate-engraving", function () {
+                    var engraveFieldId = '<?php echo $optionFieldId ?>';
+                    var english = /^[A-Za-z]*$/;
+                    if (engraveFieldId.length > 0) {
+                        if(!english.test($('#'+engraveFieldId).val())){
+                            return false;
+                        }
+                    }
+                    return true;
+
+                }, "Please enter Engraving Message in English Only");
+            }
+
+            if (engraveFieldId != '') {
+                $('#'+engraveFieldId).validate({
+                    rules : {
+                        'validate-engraving' : true
+                    }
+                });
+                var dataValidate = $('#'+engraveFieldId).attr('data-validate');
+                var prefix = '{';
+                if (dataValidate) {
+                    if (dataValidate.length > 0) {
+                        dataValidate = dataValidate.substring(0, dataValidate.length - 1) + ',';
+                        prefix = '';
+                    }
+                } else {
+                    dataValidate = '';
+                }
+
+                dataValidate += prefix + '"validate-engraving":true}';
+                $('#'+engraveFieldId).attr("data-validate", dataValidate);
+            }
+
+        });
+    </script>
+<?php endif; ?>

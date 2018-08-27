@@ -1,0 +1,82 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<style>
+    #content-desktop {display: block;}
+    #content-mobile {display: none;}
+	#Smore {display: none;}
+
+    @media screen and (max-width: 768px) {
+
+    #content-desktop {display: none;}
+    #content-mobile {display: block;}
+	#Smore {display: block;}
+    }
+.content {
+  margin:-33px 0px 6px;	
+}
+
+.hideContent {
+    overflow: hidden;
+    line-height: 1.5em;
+    height: 3em;
+}
+
+.showContent {
+    line-height: 1.5em;
+    height: auto;
+}
+.show-more {
+   margin: -13px 0px 14px 0;	
+}
+</style>
+<?php if ($_description = $block->getCurrentCategory()->getDescription()): ?>
+    <div class="category-description" id="content-desktop" data-mage-init='{"readMore":{"targetElement":"p"}}' >
+        <?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($block->getCurrentCategory(), $_description, 'description') ?>
+    </div>
+	 <div class="category-description content hideContent" id="content-mobile" data-mage-init='{"readMore":{"targetElement":"p"}}' >
+        <?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($block->getCurrentCategory(), $_description, 'description') ?>
+    </div>
+	
+	<div class="show-more" id="Smore">
+        <a href="#">Voir plus</a>
+    </div>
+	<br />
+<?php endif; ?>
+<script>
+    require([
+        'jquery'        
+    ], function ($) {
+        $(function () { // to ensure that code evaluates on page load
+            
+$(".show-more a").on("click", function() {
+    var $this = $(this); 
+    var $content = $this.parent().prev("div.content");
+    var linkText = $this.text().toUpperCase();    
+    
+    if(linkText === "VOIR PLUS"){
+        linkText = "Réduire";
+        $content.switchClass("hideContent", "showContent", 400);
+    } else {
+        linkText = "Voir plus";
+        $content.switchClass("showContent", "hideContent", 400);
+    };
+
+    $this.text(linkText);
+});
+        });
+    });
+</script>

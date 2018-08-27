@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Review
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <body>
+        <referenceBlock name="product.info.product_additional_data" remove="true"/>
+        <referenceContainer name="root">
+            <block class="Dilmah\Review\Block\Product\View\ListView" name="product.info.product_additional_data.new" template="Magento_Review::product/view/list.phtml">
+                <block class="Dilmah\Review\Block\Product\View\Ratings" name="product.rating.summary" template="Dilmah_Review::rating_summary.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</layout>

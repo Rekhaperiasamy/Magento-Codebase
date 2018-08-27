@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SiteMap
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Sitemap</title>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Sitemap</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Sitemap</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Sitemap</item>
+                    <item name="title" xsi:type="string" translate="true">Sitemap</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="site.map.categories" template="Dilmah_SiteMap::sitemap.phtml">
+                <block class="Magento\Theme\Block\Html\Topmenu" name="catalog.mainnav.sitemap" template="html/topmenu.phtml" />
+                <block class="Magento\Cms\Block\Block" name="sitemap.bottom.content" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">sitemap_bottom_content</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="email_order_set_template_vars_before">
+        <observer
+            name="orderemail_email_order_set_template_vars_before"
+            instance="Dilmah\Orderemail\Observer\AddExtraDataToTransport" />
+    </event>
+</config>

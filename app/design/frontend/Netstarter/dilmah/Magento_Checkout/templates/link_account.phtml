@@ -1,0 +1,53 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Dilmah\Checkout\Block\Onepage\Success */ ?>
+<div class="checkout-success-additional">
+    <?php if ($block->getCheckoutSession()->getQuote()->getCustomerId()): ?>
+        <div class="logged">
+            <div class="rewards-earned">
+                <?php echo $block->getChildHtml('success.rewards.points'); ?>
+                <a class="action my-account"
+                   href="<?php /* @escapeNotVerified */
+                   echo $this->getUrl('customer/account/') ?>"
+                   onclick="this.target='_blank';">
+                    <span><?php /* @escapeNotVerified */
+                        echo __('Go to my account') ?></span>
+                </a>
+            </div>
+        </div>
+        <div class="logged-user-block">
+            <?php echo $block->getChildHtml('logged_user'); ?>
+        </div>
+    <?php else:
+        if ($block->isEmailRegistered()): ?>
+            <div class="email-registered">
+                <div class="linked-account">
+                    <?php echo $block->getChildHtml('checkout.linkorder.dilmah'); ?>
+                </div>
+            </div>
+            <div class="link-order-block">
+                <?php echo $block->getChildHtml('link_order'); ?>
+            </div>
+        <?php else: ?>
+            <div class="not-registered">
+                <div class="signup-free">
+                    <?php echo $block->getChildHtml('checkout.registration.dilmah'); ?>
+                </div>
+            </div>
+            <div class="create-account-block">
+                <?php echo $block->getChildHtml('create_account'); ?>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,31 @@
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_GiftCardAccount
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+
+<!--@subject Unused Gift Cards Notification : Dilmah @-->
+
+{{template config_path="design/email/header_template"}}
+
+<h3><strong>You have a Gift card which would be expired.</strong></h3>
+<br>
+<strong>Have a balance of :</strong> {{var balance}}<br>
+<strong>Gift Code :</strong> {{var code|raw}}<br>
+<strong>Would be expired On :</strong> {{var date_expires}}<br>
+<br/>
+<p>
+    {{trans
+    'This gift card can be used at <a href="%store_url">%store_name</a> and can be used for purchases.'
+
+    store_url=$this.getUrl($store_obj,'',[_nosid:1])
+    store_name=$store_obj.getFrontendName()
+    |raw}}
+</p>
+
+{{template config_path="design/email/footer_template"}}

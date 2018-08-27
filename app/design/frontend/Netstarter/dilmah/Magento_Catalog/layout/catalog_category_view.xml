@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="category.image" destination="page.top" before="breadcrumbs" />
+        <move element="page.main.title" destination="content" before="category.products" />
+        <move element="category.cms" destination="content" before="category.products" />
+        <referenceBlock name="product_list_toolbar">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">product/list/toolbar.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="category.image">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">category/image.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="category.description">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">category/description.phtml</argument>
+            </action>
+            <block name="category.list.top.filters" as="navigation.filters" class="Magento\LayeredNavigation\Block\Navigation\State" template="Netstarter_StackNavigation::layer/ns_state.phtml"/>
+            <!--<block name="category.list.top.filters" as="navigation.filters" class="Magento\LayeredNavigation\Block\Navigation\State" template="Dilmah_Catalog::category/filters.phtml"/>-->
+        </referenceBlock>
+        <!--<referenceContainer name="content">
+            <block name="category.list.top.filters" class="Magento\LayeredNavigation\Block\Navigation\State" template="Dilmah_Catalog::category/filters.phtml" before="category.products"/>
+        </referenceContainer>-->
+    </body>
+</page>

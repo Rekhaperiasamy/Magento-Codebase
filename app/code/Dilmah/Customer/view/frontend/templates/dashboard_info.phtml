@@ -1,0 +1,32 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Customer
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var \Dilmah\Customer\Block\Dashboard $block */
+$block->prepareTemplateData();
+?>
+<div class="dashboard-info">
+    <ul>
+        <li class="name">
+            <div class="icon"></div>
+            <div class="account-details"><?php /* @escapeNotVerified */ echo $block->getCustomerFirstName() ?><span><?php echo $block->getCustomerEmail() ?></span></div>
+        </li>
+        <li class="reward-points">
+            <div class="icon"></div>
+            <div class="account-details"><?php /* @escapeNotVerified */ echo number_format($block->getPointsBalance()) ?><span><?php echo __('Reward points') ?></span></div>
+        </li>
+        <li class="store-credit">
+            <div class="icon"></div>
+            <div class="account-details"><?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($block->getStoreCredit(), true, false); ?><span><?php echo __('Store credits') ?></span></div>
+        </li>
+    </ul>
+</div>

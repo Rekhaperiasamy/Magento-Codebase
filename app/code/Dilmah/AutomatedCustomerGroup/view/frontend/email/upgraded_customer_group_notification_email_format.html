@@ -1,0 +1,39 @@
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_AutomatedCustomerGroup
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+-->
+
+<!--@subject Congrats on your upgrade: Dilmah @-->
+
+{{template config_path="design/email/header_template"}}
+
+<h1>Tea Club Membership Upgrade</h1>
+<h3><strong>Congrats on your upgrade to Tea Connoisseur Level in the Tea Club</strong></h3>
+
+<p>Hi {{trans "%customer_name," customer_name=$name}}</p>
+<p>Congratulations on your upgrade to our Platinum Level, the Tea Connoisseur. You now have
+access to high end products such as the Tea Maker’s Private Reserve, special discounts at
+Dilmah t-lounges in your country, complimentary copy of the Dilmah Tea Inspired Cuisine and
+Beverages ebooks and free tea samples. All of this and the privileges available to members of the
+Lovers of Tea Club.</p>
+
+<p>Thank you,</p>
+
+<strong>Dilmah Real Tea Boutique</strong>
+<br/>
+<a href="{{var store_url}}">{{var store_url}}</a>
+
+<br/><br/>
+<p>
+    PS – The goodness in your cup of tea goes beyond the commercial – check our MJF Charitable Foundation to learn more about the work we do.
+    <a href="www.mjffoundation.org">www.mjffoundation.org</a>
+</p>
+
+{{template config_path="design/email/footer_template"}}

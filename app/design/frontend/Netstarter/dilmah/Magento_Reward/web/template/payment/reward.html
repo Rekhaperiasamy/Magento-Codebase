@@ -1,0 +1,23 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+<div class="payment-option opc-payment-additional rewardpoints" id="reward_placer" data-bind="visible: isVisible()">
+    <div class="field choice">
+        <input type="checkbox" class="checkbox" id="rewardpoints-check" name="rewardpoints" value="1" aria-required="true" data-bind="{checked: isChecked(), click: toggleRewardPoints}">
+        <label class="label" for="rewardpoints-check">
+            <span></span>
+        </label>
+        <span></span>
+    </div>
+    <div class="payment-option-title">
+        <span data-bind="i18n: 'Reward points'"></span>
+    </div>
+    <div class="payment-option-content field choice">
+        <div class="payment-option-inner">
+            <span data-bind="html: $t(label)"></span>
+        </div>
+    </div>
+</div>

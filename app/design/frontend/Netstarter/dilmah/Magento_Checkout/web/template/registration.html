@@ -1,0 +1,39 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="guest-user-confirmation">
+    <!-- ko ifnot: accountCreated -->
+    <p class="guest-user-header" data-bind="i18n: 'You\'re almost there.. sign up for a free account'"></p>
+    <p class="email-label"><span data-bind="i18n: 'Email Address'"></span></p>
+    <p class="email-text"><span data-bind="text: getEmailAddress()"></span></p>
+    <form method="post" data-bind="submit: createAccount" class="guest-register">
+        <div class="field password">
+            <label class="label" for="password">
+                <span data-bind="i18n: 'Enter a password'"></span>
+            </label>
+            <input type="password" class="input-text" data-validate="{required:true, 'validate-password':true}" autocomplete="off" name="password" id="password" />
+            <!-- ko if: creationError -->
+            <div class="message error">
+                <span data-bind="text: errorMessage"></span>
+            </div>
+            <!-- /ko -->
+            <span data-bind="i18n: 'Atleast 8 characters'" class="login-info"></span>
+        </div>
+        <div class="field choice newsletter">
+            <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter" value="1" id="is_subscribed" class="checkbox">
+            <label for="is_subscribed" class="label"><span></span><span data-bind="i18n: 'Sign up to receive our Newsletter'"></span></label>
+        </div>
+        <input type="submit" class="action primary" data-bind="value: $t('Login'), disable: creationStarted" />
+        <p class="terms-conditions"><span class="terms" data-bind="i18n: 'By signing up you agree to the '" ></span><a href="/terms-conditions" data-bind="i18n: 'Terms & Conditions'"></a></p>
+    </form>
+    <!-- /ko -->
+    <!-- ko if: accountCreated -->
+    <div class="message success">
+        <span data-bind="i18n: 'A letter with further instructions will be sent to your email.'"></span>
+    </div>
+    <!-- /ko -->
+
+</div>

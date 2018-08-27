@@ -1,0 +1,60 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Afeature
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Dilmah\Afeature\Block\Banner
+ */
+?>
+
+<?php
+/** @var \Dilmah\Afeature\Model\ResourceModel\Item\Collection $banners */
+$banners = $block->getItems();
+?>
+
+<?php if ($banners->count()) : ?>
+    <div class="main-banner-wrapper">
+        <div  style="opacity:0" id="afeature-main-slider" class="main-banner-slider" data-mage-init='{"afeature":{}}'>
+            <?php foreach ($banners as $banner): ?>
+                <div class="afeature-item <?php echo $banner->getHasTwoSections() ? 'two-sectinos' : ''; ?>">
+                    <?php
+                    $image = '<img class="banner" data-retina="' . $block->getRetinaImageUrl($banner) . '" data-desktop="' . $block->getDesktopImageUrl($banner) . '" data-tablet="' . $block->getTabletImageUrl($banner) . '" data-mobile="' . $block->getMobileImageUrl($banner) . '" src="" alt="' . $banner->getAlt() . '" />';
+                    ?>
+                    <?php if ($banner->getHasTwoSections() == 0): ?>
+                        <?php if(!empty($banner->getData('url'))): ?>
+                            <a href="<?php echo $banner->getData('url') ?>">
+                        <?php endif; ?>
+                            <?php echo $image; ?>
+                        <?php if(!empty($banner->getData('url'))): ?>
+                            </a>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <?php echo $image; ?>
+                        <?php if(!empty($banner->getData('url'))): ?>
+                            <a href="<?php echo $banner->getData('url') ?>" class="banner-section-left"></a>
+                        <?php endif; ?>
+                        <?php if(!empty($banner->getData('url2'))): ?>
+                            <a href="<?php echo $banner->getData('url2') ?>" class="banner-section-right"></a>
+                        <?php endif; ?>
+                        <?php
+                        $bannerHtml = $banner->getHtml();
+                        echo !empty($bannerHtml) ? $bannerHtml : '';
+                        ?>
+
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="main-banner-arrows"></div>
+        <div class="main-banner-dots"></div>
+    </div>
+<?php endif; ?>

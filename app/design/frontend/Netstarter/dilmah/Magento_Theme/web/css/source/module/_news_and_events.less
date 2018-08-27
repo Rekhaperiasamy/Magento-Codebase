@@ -1,0 +1,100 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+  .news-articles {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    max-width: @layout__max-width;
+    box-sizing: border-box;
+    .articles {
+      width: 100%;
+      float: left;
+      padding: 75px 0px;
+      .article {
+        max-width: 400px;
+        width: 100%;
+        float: left;
+        height: 400px;
+        margin: 0 20px 20px 0px;
+        position: relative;
+        overflow: hidden;
+        .news-image-holder {
+          height:400px;
+          position: relative;
+          overflow:hidden;
+          text-align:center;
+          width:100%;
+          img {
+            max-width: none;
+            height: 400px;
+            margin:0 -100%;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            transition: 1s all;
+            -web-kit-transition: 1s all;
+          }
+        }
+        .news-description-holder {
+          position: absolute;
+          bottom: 0px;
+          text-align: center;
+          background: rgba(0,0,0,0.6);
+          .lib-css(color, @color-white);
+          padding: 28px 28px 0px 28px;
+          .article-title {
+            .lib-font-size(24px);
+            .lib-css(font-family, @font-name__signika_light);
+            line-height: 28px;
+            text-transform: capitalize;
+            height: 54px;
+            overflow: hidden;
+          }
+          .article-content {
+            padding: 10px 0;
+          }
+          .news-button-readmore {
+            a {
+              .lib-button-primary();
+              text-decoration: none;
+              span {
+                .lib-font-size(18px);
+              }
+            }
+          }
+        }
+
+        &:last-child {
+          margin-right: 0px;
+        }
+
+        &:hover {
+          .news-image-holder {
+            img {
+         -webkit-filter: grayscale(0%);
+              filter: grayscale(0%);
+              transition: 1s all;
+              -web-kit-transition: 1s all;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}

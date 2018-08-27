@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Label Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="shipping_label_purge" instance="Colissimo\Label\Cron\Purge" method="execute">
+            <schedule>0 0 * * *</schedule>
+        </job>
+    </group>
+</config>

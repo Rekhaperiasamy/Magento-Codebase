@@ -1,0 +1,179 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<!--New phone number validation added. DT-390 -->
+<script type="text/x-magento-init">
+{
+    "*": {
+        "phoneNumberValidation" :""
+    }
+}
+</script>
+<style>
+#contact-form .submit {
+margin-top: 90px !important;
+}
+</style>
+
+<?php
+
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();        
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$storeId = $storeManager->getStore()->getStoreId(); 
+$storeName = $storeManager->getStore()->getStoreName(); 
+
+if ($storeId == 1){
+$privacyUrl = $storeManager->getStore()->getBaseUrl() . 'private-policy';
+}
+elseif ($storeId == 11) {
+$privacyUrl = $storeManager->getStore()->getBaseUrl() . 'privacyverklaring';
+}
+elseif ($storeId == 9) {
+$privacyUrl = $storeManager->getStore()->getBaseUrl() . 'privacy-policy-cookie-restriction-mode';
+}
+else{
+$privacyUrl = $block->getPrivacyUrl();
+}
+
+?>
+<div class="page-wrapper">
+    <div class="top-content">
+        <?php echo $block->getChildHtml('contact.top.content') ?>
+    </div>
+    <div class="mid-content">
+        <div class="form-wrapper">
+            <form class="form contact"
+                  action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
+                  id="contact-form"
+                  method="post"
+                  data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+                  data-mage-init='{"validation":{}}'>
+                <fieldset class="fieldset">
+                    <div class="fieldset fieldset-row">
+                        <div class="field first_name required">
+                            <label class="label" for="first_name"><span><?php /* @escapeNotVerified */ echo __('First name') ?></span></label>
+                            <div class="control">
+                                <input name="first_name" id="first_name" title="<?php /* @escapeNotVerified */ echo __('First name') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. John') ?>" data-validate="{required:true,validate-field:true}"/>
+                            </div>
+                        </div>
+                        <div class="field last_name required">
+                            <label class="label" for="last_name"><span><?php /* @escapeNotVerified */ echo __('Last name') ?></span></label>
+                            <div class="control">
+                                <input name="last_name" id="last_name" title="<?php /* @escapeNotVerified */ echo __('Last name') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. Smith') ?>" data-validate="{required:true}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row">
+                        <div class="field email required">
+                            <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+                            <div class="control">
+                                <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. name@domain.com') ?>" data-validate="{required:true, 'validate-email':true}"/>
+                            </div>
+                        </div>
+                        <div class="field telephone required">
+                            <label class="label" for="telephone"><span><?php /* @escapeNotVerified */ echo __('Phone number') ?></span></label>
+                            <div class="control">
+                                <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Phone number') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. +94 114 8220000') ?>" data-validate="{required:true, 'validate-phone-number':true}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row">
+                        <div class="field order">
+                            <label class="label" for="order"><span><?php /* @escapeNotVerified */ echo __('Order number') ?></span></label>
+                            <div class="control">
+                                <input name="order" id="order" title="<?php /* @escapeNotVerified */ echo __('Order number') ?>" class="input-text" type="text" placeholder="<?php /* @escapeNotVerified */ echo __('e.g. 000000051') ?>"/>
+                            </div>
+                        </div>
+                        <div class="field subject">
+                            <label class="label" for="subject"><span><?php /* @escapeNotVerified */ echo __('Subject') ?></span></label>
+                            <div class="control">
+                                <input name="subject" id="subject" title="<?php /* @escapeNotVerified */ echo __('Subject') ?>" class="input-text" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row wide">
+                        <div class="field topic">
+                            <label class="label" for="topic"><span><?php /* @escapeNotVerified */ echo __('Your topic') ?></span></label>
+                            <div class="control">
+                                <select name="topic" id="topic" title="<?php /* @escapeNotVerified */ echo __('Your topic') ?>" class="input-select">
+                                    <option value=""><?php /* @escapeNotVerified */ echo __('Select your topic') ?></option>
+                                    <?php $topics = $block->getTopics() ?>
+                                    <?php if (is_array($topics)): ?>
+                                        <?php foreach ($topics as $topic): ?>
+                                            <option value="<?php /* @escapeNotVerified */ echo __($topic) ?>"><?php /* @escapeNotVerified */ echo __($topic) ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row wide">
+                        <div class="field comment required">
+                            <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?></span></label>
+                            <div class="control">
+                                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}" placeholder="<?php /* @escapeNotVerified */ echo  __('Write your message ...') ?>"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldset fieldset-row wide newsletter-field">
+                        <?php if ($block->isNewsletterEnabled()): ?>
+                            <div class="field choice newsletter">
+                                <input type="checkbox" name="is_subscribed" title="<?php /* @escapeNotVerified */ echo __('Sign up to receive our Newsletter') ?>" value="1" id="is_subscribed" class="checkbox"/>
+                                <label for="is_subscribed" class="label">
+                                    <span></span>
+                                    <?php /* @escapeNotVerified */ echo __('Sign up to receive our Newsletter') ?>
+                                </label>
+                            </div>
+                        <?php endif ?>
+                    </div>
+                    <div class="fieldset fieldset-row wide">
+                        <div class="field choice is_confirmed">
+                            <input type="checkbox" name="is_confirmed" title="<?php /* @escapeNotVerified */ echo __('Privacy Policy') ?>" value="1" id="is_subscribed" class="checkbox" data-validate="{required:true}"/>
+                            <label for="is_confirmed" class="label">
+                                <span></span>
+                                <?php /* @escapeNotVerified */ echo __('Confirm acceptance of our') ?> <a class="privacy-policy" href="<?php /* @escapeNotVerified */ echo $privacyUrl ?>"><?php /* @escapeNotVerified */ echo __('Privacy Policy') ?></a>
+                            </label>
+                        </div>
+                    </div>
+                    <?php echo $block->getChildHtml('form.additional.info'); ?>
+                </fieldset>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <input type="hidden" name="hideit" id="hideit" value="" />
+                        <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Send My Message') ?>" class="action submit primary">
+                            <span><?php /* @escapeNotVerified */ echo __('Send My Message') ?></span>
+                        </button>
+                    </div>
+                    <div class="required-msg"><em>*</em><?php echo __('Required Fields')?></div>
+                </div>
+            </form>
+        </div>
+        <div class="right-info">
+            <?php echo $block->getChildHtml('contact.right.info') ?>
+        </div>
+    </div>
+</div>
+
+	<script type="text/javascript">
+require(['jquery',
+      'mage/template',
+	  'mage/mage',
+	  'jquery/validate',
+      'jquery/ui',
+      'mage/translate',
+	  'mage/validation'
+	 ], function ($) {
+	 
+	$.validator.addMethod(
+'validate-field', function (value) {
+ return /^[a-zA-Z-]+$/.test(value);
+}, $.mage.__('Please use letters only in this field.'));
+	  
+});
+</script>	 

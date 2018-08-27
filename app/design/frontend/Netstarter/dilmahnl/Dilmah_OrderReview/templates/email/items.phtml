@@ -1,0 +1,33 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_OrderReview
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $items = $block->getItems() ?>
+<?php if ($items): ?>
+    <table class="email-items">
+        <?php foreach ($items as $item): ?>
+            <?php
+            if ($item->getParentItem()) {
+                continue;
+            }
+            ?>
+            <tbody>
+                <td>
+                    <?php //echo /* @escapeNotVerified */  __('Please ')?>
+                     <a href="<?php //echo $item->getProduct()->getProductUrl()?>"><?php echo /* @escapeNotVerified */  __('Klik hier ')?></a>
+                    <?php echo /* @escapeNotVerified */  __('om een beoordeling te schrijven  ')?>
+                    <b><?php echo $item->getName() ?></b>
+                </td>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>

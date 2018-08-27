@@ -1,0 +1,108 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="block-content">
+    <!-- ko if: getCartParam('summary_count') -->
+    <div class="minicart-top">
+        <!-- ko if: getCartParam('possible_onepage_checkout') -->
+            <!-- ko foreach: getRegion('subtotalContainer') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+        <!-- /ko -->
+
+        <div class="items-total">
+            <span class="count"><!-- ko text: getCartParam('summary_count') --><!-- /ko --></span>
+            <!-- ko if: getCartParam('summary_count') == 1 -->
+                <!-- ko i18n: 'item' --><!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: getCartParam('summary_count') > 1 -->
+                <!-- ko i18n: 'items' --><!-- /ko -->
+            <!-- /ko -->
+        </div>
+
+        <!-- ko if: getCartParam('possible_onepage_checkout') -->
+        <div class="actions">
+            <div class="primary">
+                <button
+                        id="top-cart-btn-checkout"
+                        type="button"
+                        class="action primary checkout"
+                        data-bind="attr: {title: $t('Checkout')}">
+                    <!-- ko i18n: 'Checkout' --><!-- /ko -->
+                </button>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: getCartParam('summary_count') && isFreeShippingThresholdActive && getFreeShippingThresholdMessage() -->
+    <div class="cart-sidebar-freeshipping-threshold">
+        <span data-bind="text: getFreeShippingThresholdMessage()"></span>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: getCartParam('summary_count') -->
+    <div data-action="scroll" class="minicart-items-wrapper">
+        <ol id="mini-cart" class="minicart-items" data-bind="foreach: { data: getCartParam('items'), as: 'item' }">
+            <!-- ko foreach: $parent.getRegion($parent.getItemRenderer(item.product_type)) -->
+                <!-- ko template: {name: getTemplate(), data: item, afterRender: function() {$parents[1].initSidebar()}} --><!-- /ko -->
+            <!-- /ko -->
+        </ol>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko ifnot: getCartParam('summary_count') -->
+    <strong class="subtitle empty" data-bind="visible: closeSidebar()">
+        <!-- ko i18n: 'You have no items in your shopping cart.' --><!-- /ko -->
+    </strong>
+    <!-- /ko -->
+</div>
+
+
+<!-- ko if: getCartParam('summary_count') -->
+<div class="minicart-bottom">
+    <div class="row">
+        <!-- ko if: getCartParam('possible_onepage_checkout') -->
+            <!-- ko foreach: getRegion('subtotalContainer') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+        <!-- /ko -->
+
+        <div class="items-total">
+            <span class="count"><!-- ko text: getCartParam('summary_count') --><!-- /ko --></span>
+            <!-- ko if: getCartParam('summary_count') == 1 -->
+                <!-- ko i18n: 'item' --><!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: getCartParam('summary_count') > 1 -->
+                <!-- ko i18n: 'items' --><!-- /ko -->
+            <!-- /ko -->
+        </div>
+        <div class="actions">
+            <div class="secondary">
+                <a class="action viewcart" data-bind="attr: {href: shoppingCartUrl}">
+                    <span><!-- ko i18n: 'Voir le panier' --><!-- /ko --></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- ko if: getCartParam('possible_onepage_checkout') -->
+    <div class="actions">
+        <div class="primary">
+            <a
+            id="top-cart-btn-checkout-bottom"
+            class="action primary checkout"
+            href=""
+            data-bind="attr: {href: window.checkout.checkoutUrl }">
+            <!-- ko text: $t('Checkout') --><!-- /ko -->
+            </a>
+            <div data-bind="html: getCartParam('extra_actions')"></div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+<!-- /ko -->
+

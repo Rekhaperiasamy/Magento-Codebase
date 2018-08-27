@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/ops/payment/update" method="POST">
+        <service class="Netresearch\OPS\Api\RetryPaymentInterface" method="updatePaymentInformation"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/ops/payment/getAliasList" method="POST">
+        <service class="Netresearch\OPS\Api\AliasInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/ops/payment/getAliasListForRetry" method="POST">
+        <service class="Netresearch\OPS\Api\AliasInterface" method="getListForRetryPage"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/ops/payment/generateHash" method="POST">
+        <service class="Netresearch\OPS\Api\HashInterface" method="getShaSign"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

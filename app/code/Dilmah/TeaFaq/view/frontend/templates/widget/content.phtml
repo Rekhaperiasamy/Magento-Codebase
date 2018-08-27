@@ -1,0 +1,86 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Dilmah_TeaFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Dilmah\TeaFaq\Block\Widget\Content
+ */
+?>
+
+<?php
+/** @var \Dilmah\TeaFaq\Model\ResourceModel\Category\Collection $categories */
+$categories = $block->getCategories();
+
+$itemHtml = '';
+$helper = $this->helper('Dilmah\TeaFaq\Helper\Data');
+?>
+
+<?php if ($categories->count()) : ?>
+    <?php
+    $useFaqasWigetOnly = $helper->getConfiguration('general/config_dtfaq_widgetonly');
+    $showCategories = $helper->getConfiguration('general/config_dtfaq_show_categories_on_top');
+    $showDescription = $helper->getConfiguration('settings/config_dtfaq_show_desc');
+    $filterMethod = $helper->getConfiguration('general/config_dtfaq_filter_method');
+    $hiddenStyle = __('style="display:none;"');
+    if ($useFaqasWigetOnly == '1'):?>
+        <div class="page-title-wrapper">
+            <h1 class="page-title">
+                <span class="base" data-ui-id="page-title-wrapper">
+                    <?php echo $helper->getConfiguration('settings/config_dtfaq_title'); ?>
+                </span>
+            </h1>
+        </div>
+    <?php endif;?>
+
+    <?php if ($showDescription == '1'):?>
+        <div class="faq-description">
+            <?php echo $helper->getConfiguration('settings/config_dtfaq_description');?>
+        </div><br/>
+    <?php endif; ?>
+
+    <div class="faq-header-show" <?php if ($showCategories == 0) echo $hiddenStyle;?>>
+        <div class="faq-header" data-mage-init='{"faq":{}}'>
+            <?php foreach ($categories as $category): ?>
+                <?php $_text = $helper->cleanCategoryTitle($category->getTitle());
+                $_catId = $category->getCategooryId();
+                ?>
+                <div class="faq-cat-head">
+                    <a href="#<?php echo $_text; ?>" title="<?php echo $_text; ?>" class="<?php echo ($filterMethod == '1')? 'faq-cat-name': 'faq-cat-name-anchor';?>"><?php echo $category->getTitle(); ?></a>
+                    <?php $itemHtml .= $block->getItemHtml($category); ?>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </div>
+    <div class="faq-content-container">
+        <!--FAQ Scroller-->
+        <div class="faq-navs-show" <?php if ($filterMethod == '0') echo $hiddenStyle;?>>
+            <div class="faq-navs">
+                <button title="Expand" class="expand-all" >[ + ]</button>
+                <button title="Clear" class="reset" ></button>
+                <button title="Down" class="down disable"></button>
+                <button title="Up" class="up"></button>
+            </div>
+        </div>
+
+        <!--FAQ Content Section-->
+        <div class="faq-overflow">
+            <div class="faq-wrapper">
+                <!--Include Category Item Here-->
+                <?php echo $itemHtml; ?>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="faq-content-container"><?php echo 'There are no FAQ items at the moment.' ?></div>
+<?php endif; ?>
+
+

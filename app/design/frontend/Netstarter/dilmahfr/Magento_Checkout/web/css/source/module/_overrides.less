@@ -1,0 +1,22 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Overrides
+//--------------------------------------
+& when (@media-common = true) {
+  // One Page Checkout
+  .opc-wrapper{
+    .form-shipping-address{
+      .fieldset{
+        .field{
+          &[name="shippingAddress.region_id"]{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

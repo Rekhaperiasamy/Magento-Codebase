@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Label Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="shipping">
+            <group id="colissimo_label" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Colissimo Label</label>
+                <field id="account_number" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Account</label>
+                </field>
+                <field id="account_password" translate="label" type="password" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Password</label>
+                </field>
+                <field id="commercial_name" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Commercial Name</label>
+                </field>
+                <field id="site_name" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Site name</label>
+                </field>
+                <field id="site_number" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Site number</label>
+                </field>
+                <field id="label_size" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Label Size</label>
+                    <source_model>Colissimo\Label\Model\Config\Source\Size</source_model>
+                </field>
+                <field id="label_path" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Label Path</label>
+                </field>
+                <field id="delete_label_after" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Delete label after</label>
+                    <comment>Delete label from database X day(s) after shipping. Cron must be enabled.</comment>
+                </field>
+            </group>
+        </section>
+        <section id="carriers">
+            <group id="colissimo">
+                <group id="domtomcl">
+                    <field id="insurance" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Insurance Ad Valorem</label>
+                        <source_model>Colissimo\Label\Model\Config\Source\Insurance</source_model>
+                    </field>
+                </group>
+                <group id="domtomsi">
+                    <field id="insurance" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Insurance Ad Valorem</label>
+                        <source_model>Colissimo\Label\Model\Config\Source\Insurance</source_model>
+                    </field>
+                </group>
+                <group id="homecl">
+                    <field id="insurance" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Insurance Ad Valorem</label>
+                        <source_model>Colissimo\Label\Model\Config\Source\Insurance</source_model>
+                    </field>
+                </group>
+                <group id="homesi">
+                    <field id="insurance" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Insurance Ad Valorem</label>
+                        <source_model>Colissimo\Label\Model\Config\Source\Insurance</source_model>
+                    </field>
+                </group>
+                <group id="international">
+                    <field id="insurance" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Insurance Ad Valorem</label>
+                        <source_model>Colissimo\Label\Model\Config\Source\Insurance</source_model>
+                    </field>
+                </group>
+                <group id="pickup">
+                    <field id="insurance" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Insurance Ad Valorem</label>
+                        <source_model>Colissimo\Label\Model\Config\Source\Insurance</source_model>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

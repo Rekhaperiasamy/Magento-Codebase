@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- Sale Rule CRUD -->
+    <route url="/V1/colissimoRules/:ruleId" method="GET">
+        <service class="Colissimo\Rule\Api\RuleRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Colissimo_Rule::rule"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimoRules/search" method="GET">
+        <service class="Colissimo\Rule\Api\RuleRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Colissimo_Rule::rule"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimoRules" method="POST">
+        <service class="Colissimo\Rule\Api\RuleRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Colissimo_Rule::rule"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimoRules/:ruleId" method="PUT">
+        <service class="Colissimo\Rule\Api\RuleRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Colissimo_Rule::rule"/>
+        </resources>
+    </route>
+    <route url="/V1/colissimoRules/:ruleId" method="DELETE">
+        <service class="Colissimo\Rule\Api\RuleRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Colissimo_Rule::rule"/>
+        </resources>
+    </route>
+</routes>

@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\GiftCardAccount\Block\Checkout\Cart\Giftcardaccount $block
+ * @see \Magento\GiftCardAccount\Block\Checkout\Cart\Giftcardaccount
+ */
+?>
+<div class="block giftcard" id="block-giftcard" >
+    <div data-role="title" class="title">
+        <strong id="block-giftcard-heading" role="heading" aria-level="2">
+            <?php echo $block->escapeHtml(__('Gift Card ID')); ?>
+        </strong>
+    </div>
+    <div data-role="content" class="content" aria-labelledby="block-giftcard-heading">
+        <div id="giftcard-balance-lookup"></div>
+        <span id="gc-please-wait" class="please-wait load indicator" style="display: none;"
+              data-text="<?php echo $block->escapeHtml(__('This won\'t take long . . .')); ?>">
+            <span><?php echo $block->escapeHtml(__('This won\'t take long . . .')); ?></span>
+        </span>
+        <form class="form giftcard add" id="giftcard-form"
+              action="<?php echo $block->escapeUrl($block->getUrl('magento_giftcardaccount/cart/add')); ?>" method="post"
+              data-mage-init='{"validation": {},"giftCard": {
+                "giftCardCodeSelector": "#giftcard-code",
+                "checkStatus": ".action.check",
+                "giftCardStatusUrl": "<?php echo $block->escapeHtml($block->getUrl('magento_giftcardaccount/cart/quickCheck',  ['_secure' => true])); ?>",
+                "giftCardStatusId": "#giftcard-balance-lookup",
+                "giftCardSpinnerId": "#gc-please-wait",
+                "messages": ".page.messages .messages"
+              }}'>
+            <div class="fieldset">
+                <div class="field">
+                    <div class="control">
+                        <input class="input-text" type="text" id="giftcard-code" name="giftcard_code"
+                               data-validate="{'required-entry':true}" value="" />
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button class="action add primary" type="submit" value="<?php echo $block->escapeHtml(__('Apply Gift Card')); ?>">
+                            <span><?php echo $block->escapeHtml(__('Apply')); ?></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

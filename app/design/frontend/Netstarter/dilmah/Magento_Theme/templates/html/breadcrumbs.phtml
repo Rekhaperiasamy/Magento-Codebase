@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php if ($crumbs && is_array($crumbs)) : ?>
+    <?php $i = 1; $json = ''?>
+    <div class="breadcrumbs">
+        <ul class="items">
+            <?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
+                <li class="item <?php /* @escapeNotVerified */ echo $crumbName ?>">
+                    <?php if ($crumbInfo['link']) : ?>
+                        <a href="<?php /* @escapeNotVerified */ echo $crumbInfo['link'] ?>" title="<?php echo $block->escapeHtml(__($crumbInfo['title'])) ?>">
+                            <?php echo $block->escapeHtml(__($crumbInfo['label'])) ?>
+                        </a>
+                    <?php elseif ($crumbInfo['last']) : ?>
+                        <strong><?php echo $block->escapeHtml(__($crumbInfo['label'])) ?></strong>
+                    <?php else: ?>
+                        <?php echo $block->escapeHtml(__($crumbInfo['label'])) ?>
+                    <?php endif; ?>
+                </li>
+                <?php
+                $crumbLink = ($crumbInfo["link"]) ? $crumbInfo["link"] : "";
+                $crumbLast = ($crumbInfo["last"]) ? "" : ",";
+                $crumbId = ($crumbInfo["link"]) ? '"@id": "' . $crumbLink . '" ,' : "";
+                ?>
+                <?php $json .= '{ "@type": "ListItem", "position": '.$i. ', "item": { '. $crumbId .' "name": "' . $block->escapeHtml(__($crumbInfo["label"])) . '" } }' . $crumbLast ;?>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    <?php echo $json;?>
+  ]
+}
+</script>
+<?php endif; ?>

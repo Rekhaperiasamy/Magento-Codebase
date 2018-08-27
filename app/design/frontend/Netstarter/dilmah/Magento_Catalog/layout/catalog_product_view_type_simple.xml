@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="product.info.simple" destination="product.info.form.content" before="product.info.addtocart"/>
+        <move element="product.info.simple.extra" destination="product.info.form.content" after="product.info.simple"/>
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Catalog\Block\Product\View" name="product.bag.info" template="product/view/bag_info.phtml" after="product.info.price"/>
+        </referenceContainer>
+    </body>
+</page>

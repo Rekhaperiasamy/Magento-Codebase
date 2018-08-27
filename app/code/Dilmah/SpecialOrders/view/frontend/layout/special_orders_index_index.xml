@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_SpecialOrders
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Special Orders</title>
+    </head>
+    <body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Special Orders</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Special Orders</item>
+                    <item name="title" xsi:type="string" translate="true">Special Orders</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Dilmah\SpecialOrders\Block\Form" name="special.orders.form" template="Dilmah_SpecialOrders::form.phtml" cacheable="false">
+                <block class="Magento\Cms\Block\Block" name="special.orders.top.content" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">special_orders_top_content</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="special.orders.right.info" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">contact_info_right</argument>
+                    </arguments>
+                </block>
+                <container name="form.additional.info" label="Form Additional Info"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

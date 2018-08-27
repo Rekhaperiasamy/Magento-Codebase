@@ -1,0 +1,46 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject Bienvenue dans la {{var store.getFrontendName()}} @-->
+<!--@vars {
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var customer.email":"Customer Email",
+"var customer.name":"Customer Name"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<h1 class="title">{{trans "Confirmation de création de compte"}}</h1>
+<p class="greeting">{{trans "%name," name=$customer.name}}</p>
+<p>{{trans "Welcome to the Dilmah family! Your account has been created and you are now officially a part of the Dilmah Online Tea Boutique fold."}}</p>
+<p>
+    {{trans
+        'Pour vous connecter sur notre site, utilisez ces identifiants lorsqu’ils vous seront demandés ou en allant directement sur la page <a href="%customer_url">Mon Compte</a>:'
+
+        customer_url=$this.getUrl($store,'customer/account/',[_nosid:1])
+    |raw}}
+</p>
+
+<table class="email-credentials">
+    <tr>
+        <th>{{trans "Email:"}}</th>
+        <td>{{var customer.email}}</td>
+    </tr>
+    <tr>
+        <th>{{trans "Password:"}}</th>
+        <td><em>{{trans "Celui que vous avez choisi lors de la création de votre compte."}}</em></td>
+    </tr>
+</table>
+<br />
+<p>
+    {{trans
+        'Vous avez oublié votre mot de passe ? Cliquez <a href="%reset_url">ici</a> pour le réinitialiser.'
+        reset_url="$this.getUrl($store,'customer/account/createPassword/',[_query:[id:$customer.id,token:$customer.rp_token],_nosid:1])"
+    |raw}}
+</p>
+<br />
+
+<p>{{trans "Any questions regarding your account, click 'Reply' in your email client and we'll be more than happy to help!"}}</p>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Colissimo Label Module
+ *
+ * @author    Magentix
+ * @copyright Copyright © 2017 Magentix. All rights reserved.
+ * @license   https://www.magentix.fr/en/licence.html Magentix Software Licence
+ * @link      https://colissimo.magentix.fr/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <colissimo>
+                <domtomcl>
+                    <insurance>0</insurance>
+                </domtomcl>
+                <domtomsi>
+                    <insurance>0</insurance>
+                </domtomsi>
+                <homecl>
+                    <insurance>0</insurance>
+                </homecl>
+                <homesi>
+                    <insurance>0</insurance>
+                </homesi>
+                <international>
+                    <insurance>0</insurance>
+                </international>
+                <pickup>
+                    <insurance>0</insurance>
+                </pickup>
+            </colissimo>
+        </carriers>
+        <shipping>
+            <colissimo_label>
+                <label_size>PDF_A4_300dpi</label_size>
+                <label_path>var/colissimo/label</label_path>
+                <delete_label_after>10</delete_label_after>
+            </colissimo_label>
+        </shipping>
+    </default>
+</config>

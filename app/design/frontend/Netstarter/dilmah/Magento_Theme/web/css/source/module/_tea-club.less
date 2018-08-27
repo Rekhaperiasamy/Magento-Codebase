@@ -1,0 +1,651 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+  .tea-club-main-container {
+    .banner {
+      display: block;
+      img {
+        display: block;
+      }
+      padding-bottom: 35px;
+    }
+    .banner-mobile {
+      display: none;
+      img {
+        display: block;
+      }
+      padding-bottom: 20px;
+    }
+
+    .sticky-nav-wrapper {
+      width: 100%;
+      float: left;
+      margin-bottom: 35px;
+
+      &.isStuck{
+        z-index:10;
+        max-width:1252px;
+        padding-left:20px;
+        padding-right:20px;
+        margin-left:-20px;
+      }
+      .navbar-nav {
+        margin: 0px !important;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        background-color: @color-gray-light4;
+        li {
+          min-height: 60px;
+          text-align: center;
+          float: left;
+          width: 20%;
+          border-right: 1px solid #ffffff;
+          background: none;
+          margin: 0px !important;
+          padding: 0px !important;
+          a {
+            .lib-css(font-family, @font-name__signika_semibold);
+            color: @color-gray-darken1;
+            background-color: @color-gray-light4;
+            font-size: 16px;
+            display: block;
+            min-height: 60px;
+            line-height: 20px;
+            padding: 18px 5px;
+            vertical-align: middle;
+            width: calc(100%);
+            text-decoration: none;
+            &:hover {
+              background: url("../images/button_texture.svg");
+              background-color: @color-yellow3;
+              color: @color-white;
+              text-decoration: none;
+              background-size: cover;
+              background-repeat: repeat;
+              height:100%;
+            }
+          }
+          /*&.active {
+            a {
+              background: url("../images/button_texture.svg");
+              background-color: @color-yellow3;
+              color: @color-white;
+              text-decoration: none;
+              background-size: cover;
+              background-repeat: repeat;
+              height:100%;
+            }
+          }*/
+        }
+      }
+    }
+
+    .left-column {
+      width: 70%;
+      float: left;
+      .welcome-container {
+        .welcome-content {
+          float: left;
+          width: 100%;
+          border-bottom: solid 1px #ededed;
+          margin-bottom: 20px;
+          padding-top: 20px;
+          .img {
+            float: left;
+            padding: 0 20px 0px 0;
+            img {
+              display: block;
+            }
+            margin-top: -20px;
+          }
+          p {
+            .lib-css(font-family, @font-name__signika_light);
+            .lib-font-size(16);
+            .lib-css(color, @color-gray-light2);
+          }
+
+        }
+      }
+
+      .blog-list-container {
+        width:100%;
+        float: left;
+        padding: 20px 0;
+        .blog-post-item {
+          padding-bottom: 30px;
+          margin-bottom: 30px;
+          border-bottom: solid 1px @color-grey-border;
+          h2 {
+            margin: 0px 0px 15px;
+            .lib-css(font-family, @font-name__signika_semibold);
+            .lib-font-size(16);
+            .lib-css(color, @color-yellow3);
+            text-transform: uppercase;
+            .date {
+              .lib-css(font-family, @font-name__signika_light);
+              .lib-font-size(16);
+              .lib-css(color, @color-gray-light2);
+              text-transform: capitalize;
+            }
+          }
+          p {
+            .lib-css(font-family, @font-name__signika_light);
+            .lib-font-size(16);
+          }
+
+          .blog-link {
+            .lib-button-primary(@_button-width: 150px);
+            .lib-button-revert-secondary-color();
+            .lib-font-size(16);
+            .lib-css(color, @color-gray-darken1);
+            border: solid 2px @color-blue2;
+            text-decoration: none;
+            text-align: center;
+            padding: 1px 15px;
+          }
+
+          &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .points-scheme-container {
+      &.right-column {
+        width:30%;
+        float: right;
+
+        margin-bottom: 40px;
+        .col {
+          width: 100%;
+          float: right;
+          h3 {
+            .lib-css(font-family, @font-name__signika_regular);
+            .lib-font-size(20);
+            .lib-css(color, @color-gray-darken1);
+            padding: 30px 0 10px 0;
+            margin: 0px;
+            border-bottom:solid 1px @color-blue2;
+            min-height: 55px;
+            background: @color-white;
+            span {
+              .lib-font-size(16);
+              padding-left: 5px;
+            }
+          }
+          .bottom-content {
+            padding: 30px 10px;
+            background: @tea-club-bg;
+            height: 100%;
+            .banner {
+              padding: 0px 0px 10px 0px;
+              text-align: center;
+              img {
+                display: inline-block;
+              }
+            }
+            .content {
+              padding:0 20px;
+              .lib-css(color, @color-gray-light2);
+              ul {
+                margin: 0px !important;
+                .lib-css(color, @color-gray-light2);
+                li {
+                  background: none !important;
+                  padding: 0px !important;
+                  .lib-css(color, @color-gray-light2);
+                }
+              }
+            }
+          }
+
+          &.point-platinum {
+            padding: 0 2%;
+          }
+        }
+      }
+    }
+
+    .ebook-container {
+      width: 100%;
+      float: left;
+      margin-top: 80px;
+      margin-bottom: 70px;
+
+      background: #dddcda; /* Old browsers */
+      background: -moz-linear-gradient(left, #dddcda 0%, #cfcecc 46%, #cac9c7 100%, #9e9e9c 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(left, #dddcda 0%,#cfcecc 46%,#cac9c7 100%,#9e9e9c 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to right, #dddcda 0%,#cfcecc 46%,#cac9c7 100%,#9e9e9c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddcda', endColorstr='#9e9e9c',GradientType=1 ); /* IE6-9 */
+
+      .image {
+        float: left;
+        width: 38%;
+        padding-top: 50px;
+        padding-left: 15px;
+        padding-bottom: 10px;
+      }
+
+      .content {
+        float: right;
+        width: 60%;
+        background: url('../images/tea-comma-open.png') top -10px left 0px no-repeat, url('../images/tea-comma-close.png') bottom 0px right -20px no-repeat;
+        min-height: 250px;
+        padding: 50px 100px 20px 120px;
+        .lib-css(font-family, @font-name__signika_light);
+        .lib-font-size(22);
+        .lib-css(color, @color-white);
+        
+        .author {
+          float: right;
+          .lib-css(color, @tea-club-ebook-text);
+          .lib-font-size(26);
+          .lib-css(font-family, @font-name__signika_regular);
+        }
+      }
+
+      .more {
+        width: 100%;
+        float: left;
+        text-align: center;
+        position: relative;
+        a {
+          .lib-font-size(25);
+          .lib-css(font-family, @font-name__signika_regular);
+          text-decoration: none;
+          .lib-css(color, @color-white);
+          border: solid 1px #008e8f;
+          padding: 10px 25px;
+          position: absolute;
+          bottom: 50px;
+          left: 35%;
+          right: 35%;
+          span {
+            .lib-css(color, @color-blue5);
+          }
+          &:hover {
+            background: @color-white;
+            .lib-css(color, @color-blue1);
+            span {
+              .lib-css(color, @color-blue1);
+            }
+          }
+        }
+      }
+    }
+
+    .video-container {
+      width: 100%;
+      float: left;
+      .video-item {
+        width: 32%;
+        float: left;
+        .video-img {
+          position: relative;
+          a.teaclub-video-popup{
+            display:block;
+            &:before {
+              content: '';
+              background: url("../images/tea-club-video-player.png") 0px 0px no-repeat;
+              display: block;
+              position: absolute;
+              top: 40%;
+              width: 39px;
+              height: 51px;
+              z-index: 2;
+              left: 45%;
+              right: 45%;
+            }
+            &:after {
+              content: '';
+              background: rgba(0, 0, 0, 0.6);
+              width: 100%;
+              height: 100%;
+              display: block;
+              position: absolute;
+              top: 0;
+              z-index:1;
+            }
+            & + iframe {
+              width:100%;
+              height:100%;
+              display:block;
+              position:absolute;
+              top:0;
+              left:0;
+              z-index: 3;
+            }
+          }
+          img {
+            display: block;
+          }
+
+
+          &:hover  {
+            cursor: pointer;
+            a.teaclub-video-popup{
+              &:after {
+                background: rgba(0, 0, 0, 0.2);
+              }
+            }
+          }
+        }
+        .video-title {
+          .lib-font-size(18);
+          .lib-css(font-family, @font-name__signika_semibold);
+          text-decoration: none;
+          .lib-css(color, @color-gray-darken1);
+          padding: 15px 0px 40px;
+        }
+
+        &.mobile {
+          display: none;
+        }
+      }
+
+      #sticky-school-of-tea,
+      #sticky-tea-gastronomy,
+      #sticky-mjf-videos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+  .tea-club-main-container {
+    .left-column {
+      width: 70%;
+    }
+
+    .points-scheme-container {
+
+      .col {
+        width: 100%;
+        max-width: 270px;
+
+        h3 {
+          min-height: 85px;
+        }
+
+        .bottom-content {
+          .banner {
+            padding: 0px 0px 10px 0px;
+            text-align: center;
+            float: none;
+          }
+        }
+      }
+    }
+
+    .video-container {
+      .video-item {
+        width: 32%;
+      }
+    }
+
+    .ebook-container {
+      margin-top: 80px;
+      .image {
+        float: left;
+        width: 30%;
+        padding-top: 30px;
+      }
+      .content {
+        float: right;
+        width: 70%;
+        padding: 30px 100px 20px 120px;
+        .lib-font-size(20);
+        background-size: auto;
+        .author {
+          .lib-font-size(22);
+        }
+      }
+      .more {
+        a {
+          .lib-font-size(20);
+          bottom: 20px;
+          left: 35%;
+          right: 35%;
+        }
+      }
+    }
+
+
+  }
+}
+
+//
+//  Desktop @screen__xl
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__xl) {
+  .tea-club-main-container {
+    .points-scheme-container {
+      .col {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  }
+}
+
+//
+//  Tablet @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .tea-club-main-container {
+    .left-column {
+      width: 65%;
+    }
+    .points-scheme-container {
+      width: 33%;
+      .col {
+        width: 48%;
+        flex: inherit;
+        .bottom-content {
+          margin-bottom: 20px;
+          display: inline-block;
+          width: 100%;
+          .banner {
+            padding: 0px 0px 0px 0px;
+          }
+          .content {
+            padding: 0px;
+          }
+        }
+        &.point-platinum {
+          padding:0px;
+        }
+      }
+    }
+
+    .video-container {
+      .video-item {
+        width: 48%;
+      }
+    }
+
+    .ebook-container {
+
+      .image {
+        width: 30%;
+        padding-top: 30px;
+      }
+      .content {
+        width: 70%;
+        background: url('../images/tea-comma-open.png') top -10px left 0px no-repeat, url('../images/tea-comma-close.png') bottom 0px right -20px no-repeat;
+        background-size: 70px auto, 70px auto;
+        min-height: 200px;
+        padding: 20px 50px 20px 80px;
+        .lib-font-size(18);
+        .author {
+          .lib-font-size(20);
+        }
+      }
+
+      .more {
+        a {
+          .lib-font-size(18);
+          bottom: 20px;
+          left: 30%;
+          right: 30%;
+        }
+      }
+    }
+  }
+
+  .menuItem {
+    &.hide-in-large {
+      display: none !important;
+    }
+  }
+}
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .tea-club-main-container {
+
+    .left-column {
+      width: 100%;
+    }
+
+    .banner {
+      display: none;
+    }
+    .banner-mobile {
+      display: block;
+    }
+
+    .sticky-nav-wrapper {
+      margin-bottom: 15px;
+      &.isStuck{
+        left:0;
+        margin-left:0;
+      }
+      .navbar-nav {
+        flex-wrap: wrap;
+        li {
+          width: 50%;
+          min-height: 0;
+          border-bottom: solid 1px #ffffff;
+          &.hide-in-small{
+            display:none !important;
+          }
+          &.hide-in-large {
+            display: block !important;
+          }
+          a {
+            min-height: 0;
+            padding:3px 5px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .welcome-container {
+      .welcome-content {
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+        padding-top: 20px;
+
+        .img {
+          padding: 0 0px 20px 0 !important;
+          width: 100%;
+          text-align: center;
+
+          img {
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    .points-scheme-container {
+      width: 100% !important;
+      margin-bottom: 0px;
+      .col {
+        width: 100%;
+        h3 {
+          line-height: 30px;
+          padding: 0px 0px 10px 0px;
+        }
+        .bottom-content {
+          padding: 20px;
+          margin-bottom: 20px;
+          .banner {
+            display: block;
+          }
+          .content {
+            padding: 0px;
+          }
+        }
+        &.point-platinum {
+          padding: 0px;
+        }
+      }
+    }
+
+    .video-container {
+      .video-item {
+        display: none;
+        &.mobile {
+          float: left;
+          width: 100%;
+          display: block;
+        }
+      }
+    }
+
+    .ebook-container {
+      margin-top: 40px;
+      .image {
+        float: left;
+        width: 100%;
+        padding: 30px 0 0 0;
+        text-align: center;
+        img {
+          display: inline-block;
+        }
+      }
+      .content {
+        width: 100%;
+        background-size: 70px auto, 70px auto;
+        padding: 50px 50px 70px 50px;
+        .lib-font-size(18);
+        .author {
+          .lib-font-size(18);
+        }
+      }
+
+      .more {
+        a {
+          bottom: 60px;
+          left: auto;
+          right: auto;
+          max-width: 250px;
+          padding: 10px 20px;
+          position: relative;
+          .lib-font-size(18);
+        }
+      }
+    }
+  }
+}

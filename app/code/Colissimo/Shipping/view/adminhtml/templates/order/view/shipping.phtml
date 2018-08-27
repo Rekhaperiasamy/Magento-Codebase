@@ -1,0 +1,26 @@
+<?php /** @var $block \Colissimo\Shipping\Block\Adminhtml\Order\View\Shipping */ ?>
+<?php $shippingAddress = $block->getOrder()->getShippingAddress() ?>
+
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Colissimo Information') ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Shipping Data') ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <?php if ($shippingAddress->getColissimoProductCode()): ?>
+                    <p><?php echo __('Product code: %1', $shippingAddress->getColissimoProductCode()) ?></p>
+                <?php endif; ?>
+                <?php if ($shippingAddress->getColissimoPickupId()): ?>
+                    <p><?php echo __('Pickup code: %1', $shippingAddress->getColissimoPickupId()) ?></p>
+                <?php endif; ?>
+                <?php if ($shippingAddress->getColissimoNetworkCode()): ?>
+                    <p><?php echo __('Network: %1', $shippingAddress->getColissimoNetworkCode()) ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>

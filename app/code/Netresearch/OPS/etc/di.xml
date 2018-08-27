@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Netresearch\OPS\Model\Response\Type\Refund">
+        <arguments>
+            <argument name="metadata" xsi:type="object">creditmemoMetadata</argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="quote_id" xsi:type="string">sales_order.quote_id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Netresearch\OPS\Model\Logger\IncomingHandler" type="Netresearch\OPS\Model\Logger\Handler">
+        <arguments>
+            <argument name="filename" xsi:type="string">incoming.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Netresearch\OPS\Model\Logger\Logger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">opsLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="ops" xsi:type="object">Netresearch\OPS\Model\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Netresearch\OPS\Model\Logger\IncomingLogger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">opsIncomingLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="ops" xsi:type="object">Netresearch\OPS\Model\Logger\IncomingHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Netresearch\OPS\Helper\Data">
+        <arguments>
+            <argument name="opsLogger" xsi:type="object">Netresearch\OPS\Model\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Netresearch\OPS\Controller\Api\DirectLinkPostBack">
+        <arguments>
+            <argument name="opsIncomingLogger" xsi:type="object">Netresearch\OPS\Model\Logger\IncomingLogger</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\PaymentInformationManagement">
+        <plugin name="PaymentInformationManagementPlugin"
+                type="Netresearch\OPS\Plugin\PaymentInformationManagementPlugin"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\Repository">
+        <plugin name="QuoteItemRepositoryPlugin" type="Netresearch\OPS\Plugin\QuoteItemRepositoryPlugin"/>
+    </type>
+    <type name="Magento\Quote\Model\QuoteRepository">
+        <plugin name="QuoteRepositoryPlugin" type="Netresearch\OPS\Plugin\QuoteRepositoryPlugin"/>
+    </type>
+    <type name="\Magento\Checkout\Model\GuestPaymentInformationManagement">
+        <plugin name="GuestPaymentInformationManagementPlugin"
+                type="Netresearch\OPS\Plugin\GuestPaymentInformationManagementPlugin"/>
+    </type>
+    <type name="\Netresearch\OPS\Model\Response\Handler">
+        <plugin name="TransactionalMailPlugin" type="Netresearch\OPS\Plugin\TransactionalMailPlugin"/>
+    </type>
+    <preference for="Netresearch\OPS\Api\RetryPaymentInterface" type="Netresearch\OPS\Model\Rest\RetryPayment"/>
+    <preference for="Netresearch\OPS\Api\AliasInterface" type="Netresearch\OPS\Model\Rest\Alias"/>
+    <preference for="Netresearch\OPS\Api\HashInterface" type="Netresearch\OPS\Model\Rest\GenerateHash"/>
+</config>

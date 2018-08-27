@@ -1,0 +1,84 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+$helper = $this->helper('Magento\Catalog\Helper\Output');
+$product = $block->getProduct();
+$isCombo = $product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1;
+?>
+<?php if (!$isCombo): // this section will show if the product is not a mix and match product ?>
+    <?php if ($_additional = $block->getAdditionalData()): ?>
+        <div class="additional-attributes-wrapper table-wrapper">
+            <?php foreach ($_additional as $_data): ?>
+                <?php
+                if (is_string($_data['value']) && empty($_data['value'])):
+                    continue;
+                elseif (is_array($_data['value']) && count($_data['value']) == 1 && empty($_data['value'][0])):
+                    continue;
+                elseif ($_data['value'] == 'No'):
+                    continue;
+                elseif ($_data['value'] == 'N/A'):
+                    continue;
+                endif;
+                ?>
+                <div class="<?php echo $_data['code'] ?>">
+                    <?php if ($_data['code'] == \Dilmah\Catalog\Helper\Data::TIME_OF_THE_DAY_ATTRIBUTE): ?>
+                        <label class="col label" scope="row"><?php echo __($block->escapeHtml(__($_data['label']))) ?></label>
+                        <?php foreach($_data['value'] as $value): ?>
+                            <span class="<?php echo strtolower(str_replace(' ', '-', $value)) ?>" title="<?php echo $value ?>"></span>
+                        <?php endforeach; ?>
+                    <?php elseif ($_data['code'] == \Dilmah\Catalog\Helper\Data::RECOMMENDATION_ATTRIBUTE): ?>
+                        <span><?php echo __('Recommended for:') ?></span>
+                        <?php foreach($_data['value'] as $value): ?>
+                            <?php
+                            $class = '';
+                            if (strpos(strtolower($value), 'cocktail') !== false):
+                                $class = 'cocktail';
+                            elseif (strpos(strtolower($value), 'cooking') !== false):
+                                $class = 'cooking';
+                            elseif (strpos(strtolower($value), 'pairing') !== false):
+                                $class = 'pairing';
+                            endif;
+                            ?>
+                            <label class="col label <?php echo $class ?>" scope="row"><?php echo $block->escapeHtml(__($value)) ?></label>
+                            <span class="<?php echo $class ?>" title="<?php echo $value ?>"></span>
+                        <?php endforeach; ?>
+                    <?php elseif ($_data['code'] == \Dilmah\Catalog\Helper\Data::TEA_FORMAT_ATTRIBUTE): ?>
+                        <label class="col label" scope="row"><?php echo $block->escapeHtml(__($_data['label'])) ?></label>
+                        <?php
+                        $class = '';
+                        if (strpos(strtolower($_data['value']), 'cup bags') !== false):
+                            $class = 'cup-bags';
+                        elseif (strpos(strtolower($_data['value']), 'loose') !== false):
+                            $class = 'loose';
+                        elseif (strpos(strtolower($_data['value']), 'tagless') !== false):
+                            $class = 'tagless';
+                        elseif (strpos(strtolower($_data['value']), 'wrapped') !== false):
+                            $class = 'wrapped';
+                        elseif (strpos(strtolower($_data['value']), 'luxury') !== false):
+                            $class = 'luxury';
+                        endif;
+                        ?>
+                        <span class="<?php echo $class ?>" title="<?php echo $_data['value'] ?>"></span>
+                    <?php elseif ($_data['code'] == \Dilmah\Catalog\Helper\Data::SHIPPING_AVAILABILITY_ATTRIBUTE): ?>
+                        <div class="<?php echo $_data['code'] ?>-inner">
+                            <label class="col label" scope="row"><?php echo $block->escapeHtml(__($_data['label'])) ?></label>
+                            <span class="shipping-value" title="<?php echo $_data['value'] ?>"><?php echo $_data['value'] ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif;?>
+<?php endif;?>

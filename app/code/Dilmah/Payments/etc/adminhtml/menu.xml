@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dilmah_Payments::dilmah_payments" title="Payments" module="Dilmah_Payments" sortOrder="10" parent="Dilmah_Theme::dilmah" action="dilmah_payments/item"  resource="Dilmah_Payments::dilmah_payments"/>
+        <add id="Dilmah_Payments::dilmah_payments_item" title="History" module="Dilmah_Payments" sortOrder="20" parent="Dilmah_Payments::dilmah_payments" action="dilmah_payments/item/index" resource="Dilmah_Payments::dilmah_payments"/>
+    </menu>
+</config>

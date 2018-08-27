@@ -1,0 +1,94 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php
+$idSuffix = $block->getIdSuffix() ? $block->getIdSuffix() : '';
+/** @var \Magento\Bundle\Pricing\Render\FinalPriceBox $block */
+$productId = $block->getSaleableItem()->getId();
+/** @var \Magento\Bundle\Pricing\Price\FinalPrice $finalPriceModel */
+$finalPriceModel = $block->getPrice();
+$minimalPrice = $finalPriceModel->getMinimalPrice();
+$maximalPrice = $finalPriceModel->getMaximalPrice();
+/** @var \Magento\Bundle\Pricing\Price\BundleRegularPrice $regularPriceModel */
+$regularPriceModel = $block->getPriceType('regular_price');
+$maximalRegularPrice = $regularPriceModel->getMaximalPrice();
+$minimalRegularPrice = $regularPriceModel->getMinimalPrice();
+
+$product = $block->getSaleableItem();
+$isPack = $product->getData(\Dilmah\Catalog\Helper\Data::IS_PACK_PRODUCT_ATTRIBUTE) == 1;
+$isCombo = $product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1;
+$packSize = $product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE);
+?>
+<?php if ($block->getSaleableItem()->getPriceView()): ?>
+    <p class="minimal-price">
+        <span class="special-price">
+            <?php /* @escapeNotVerified */ echo $block->renderAmount($minimalPrice, [
+                'display_label'     => __('As low as'),
+                'price_id'          => $block->getPriceId('from-'),
+                'include_container' => true
+            ]); ?>
+        </span>
+        <?php if ($minimalPrice < $minimalRegularPrice): ?>
+            <span class="old-price">
+                <?php /* @escapeNotVerified */ echo $block->renderAmount($minimalRegularPrice, [
+                    'display_label'     => __('Regular Price'),
+                    'price_id'          => $block->getPriceId('old-price-' . $idSuffix),
+                    'include_container' => true,
+                    'skip_adjustments'  => true
+                ]); ?>
+            </span>
+        <?php endif ?>
+    </p>
+<?php else: ?>
+    <?php if ($block->showRangePrice()): ?>
+        <p class="price-from">
+            <span class="special-price">
+                <?php /* @escapeNotVerified */ echo $block->renderAmount($minimalPrice, [
+                    'display_label'     => __('From'),
+                    'price_id'          => $block->getPriceId('from-'),
+                    'price_type'        => 'minPrice',
+                    'include_container' => true
+                ]); ?>
+            </span>
+            <?php if ($minimalPrice < $minimalRegularPrice): ?>
+                <span class="old-price">
+                    <?php /* @escapeNotVerified */ echo $block->renderAmount($minimalRegularPrice, [
+                        'display_label'     => __('Regular Price'),
+                        'price_id'          => $block->getPriceId('old-price-' . $idSuffix),
+                        'include_container' => true,
+                        'skip_adjustments'  => true
+                    ]); ?>
+                </span>
+            <?php endif ?>
+        </p>
+    <?php else: ?>
+        <span class="special-price">
+            <?php /* @escapeNotVerified */ echo $block->renderAmount($minimalPrice, [
+                'price_id'          => $block->getPriceId('product-price-'),
+                'include_container' => true
+            ]); ?>
+        </span>
+        <?php if ($minimalPrice < $minimalRegularPrice): ?>
+            <span class="old-price">
+                <?php /* @escapeNotVerified */ echo $block->renderAmount($minimalRegularPrice, [
+                    'display_label'     => __('Regular Price'),
+                    'price_id'          => $block->getPriceId('old-price-' . $idSuffix),
+                    'include_container' => true,
+                    'skip_adjustments'  => true
+                ]); ?>
+            </span>
+        <?php endif ?>
+    <?php endif ?>
+<?php endif ?>
+<span class="per-pack">
+    <?php if(($isPack || $isCombo) && $packSize): ?>
+        <?php echo sprintf(__('(Includes %s packs)'), $packSize) ?>
+    <?php endif; ?>
+</span>

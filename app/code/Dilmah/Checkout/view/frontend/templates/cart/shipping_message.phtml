@@ -1,0 +1,24 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+/** @var $block \Dilmah\Checkout\Block\Cart */
+?>
+
+<?php
+$freeShippingAmount = $block->getFreeShippingAlertMessage();
+if ($freeShippingAmount !== false): ?>
+    <div class="cart-free-shipping-alert-message">
+        <?php echo sprintf(
+            __($block->getShippingMessage()),
+            $block->getCurrencySymbol($block->getCurrencyCode()) . '' . number_format($freeShippingAmount, 2)
+        ); ?>
+    </div>
+    <?php
+endif;

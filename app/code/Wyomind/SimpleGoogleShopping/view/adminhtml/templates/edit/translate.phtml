@@ -1,0 +1,26 @@
+<?php
+/*
+ * Copyright © 2015 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+?>
+
+<?php
+/**
+ * @var $block \Magento\Theme\Block\Js\Translate
+ */
+?>
+<?php
+$data = [
+    'Refresh' => __('Refresh'),
+    'Preview' => __('Preview'),
+    'Library' => __('Library'),
+    'Report' => __('Report'),
+    'No product found.' => __('No product found.'),
+];
+?>
+<script>
+    require(["jquery", "mage/translate"], function ($) {
+        $.mage.translate.add(<?php echo Zend_Json::encode($data) ?>)
+    });
+</script>

@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="scommerce" translate="label" sortOrder="400">
+            <label>Scommerce Configuration</label>
+        </tab>
+        <section id="scommerce_gdpr" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>GDPR</label>
+            <tab>scommerce</tab>
+            <resource>Scommerce_Gdpr::config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <comment>Enable extension</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="license_key" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>License Key</label>
+                    <comment>Please enter license key</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="delete_enabled_on_frontend" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Customer Account Deletion / Anonymisation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to "yes" then customers can delete their record on frontend from my account section</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="attentionmessage" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Attention message</label>
+                    <comment>The message shown to customer on the front before deleting their account</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/delete_enabled_on_frontend">1</field>
+                    </depends>
+                </field>
+
+                <field id="successmessage" translate="label comment" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Success message</label>
+                    <comment>The message shown to customers on the frontend after deleting their account. (leave blank for default)</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/delete_enabled_on_frontend">1</field>
+                    </depends>
+                </field>
+
+                <field id="sender_email_identity" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Sender</label>
+                    <comment>This email address gets used to send link to customers to delete their account as well as send deletion confirmation email to customers</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="confirmation_email_template" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Confirmation Email Template</label>
+                    <comment>Email template to send email to customer with delete confirmation link</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="delete_confirmation_email_template" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Delete Confirmation Email Template</label>
+                    <comment>Email template to send email deletion confirmation to customers after successfully deleting their account</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_cookie" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable cookie message</label>
+                    <comment>If set to "yes" then cookie message will be shown to customers on the frontend</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="blocked" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Block access to site until cookie policy is accepted</label>
+                    <comment>If set to "yes" then customer access to site will be blocked until cookie policy is accepted. If set to "no" then just normal cookie message block will be shown until cookie policy is accepted, but the access to the site will be allowed.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="page_wrapper_class" translate="label comment" type="text" sortOrder="125" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Page Wrapper Css Class</label>
+                    <comment>Css class of page wrapper html element. Uses for block customer access until cookie policy is accepted</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                        <field id="*/*/blocked">1</field>
+                    </depends>
+                </field>
+
+                <field id="cookie_message" translate="label comment" type="textarea" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cookie text message</label>
+                    <comment>This message show in cookie policy area</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="cms_page" translate="label comment" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Information Page</label>
+                    <comment>Use this page for learn about cookie settings.</comment>
+                    <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="cookie_link_text" translate="label comment" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cookie link text</label>
+                    <comment>Text on link to Information Page</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="cookie_text_color" translate="label comment" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cookie text color</label>
+                    <comment>Color of Cookie Text Message</comment>
+                    <frontend_model>Scommerce\Gdpr\Block\Adminhtml\Config\Color</frontend_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="cookie_link_color" translate="label comment" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cookie link color</label>
+                    <comment>Color of links in cookie policy area</comment>
+                    <frontend_model>Scommerce\Gdpr\Block\Adminhtml\Config\Color</frontend_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="cookie_background_color" translate="label comment" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cookie background color</label>
+                    <comment>Background color of cookie policy area</comment>
+                    <frontend_model>Scommerce\Gdpr\Block\Adminhtml\Config\Color</frontend_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+
+                <field id="cookie_message_position" translate="label comment" type="select" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Message Position</label>
+                    <comment>Choose position of the notice message</comment>
+                    <source_model>Scommerce\Gdpr\Model\Config\Source\Position</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/*/enable_cookie">1</field>
+                    </depends>
+                </field>
+            </group>
+			<group id="orderquote" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Order and Quote Anonymisation Settings</label>
+				<field id="order_expire" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Order anonymisation after (days)</label>
+                    <comment><![CDATA[Number of days to anonymise personal data in order related tables. Leave it blank for not anonymising any personal data automatically.<br/><font color='#ff0000'><strong>Please note: Anonymised data can't be restored so please test this on your test site before enabling</strong></font>]]></comment>
+                    <validate>validate-number</validate>
+                </field>
+				<field id="order_chunk" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Chunk of orders to anonymise</label>
+                    <comment><![CDATA[If you have huge amount of transactions in the system then you should limit the number of transactions to be anonymised when cron job runs every hour]]></comment>
+                    <validate>validate-number</validate>
+                </field>
+				<field id="quote_expire" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Quote expires after (days)</label>
+                    <comment>Number of days to set personal data to NULL in sales_flat_quote table</comment>
+                    <validate>validate-number</validate>
+                </field>
+				<field id="debugging" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Debugging</label>
+                    <comment>If set to "yes" it will log debugging data related to quote and order anonymisation in the log file under var/log/anonymisation.log</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+			</group>
+            <group id="privacy" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Privacy Settings</label>
+
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable privacy setting</label>
+                    <comment>This will enable privacy agreement checkbox on pages where you collection personal information</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="setting_text" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Privacy Setting Text</label>
+                    <comment>This text will appear next to privacy agreement checkbox</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/privacy/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_newsletter" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Newsletter</label>
+                    <comment>If set to Yes then privacy agreement checkbox will appear for customers to confirm before submitting newsletter subscription</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/privacy/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_contact_us" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Contact Us</label>
+                    <comment>If set to Yes then privacy agreement checkbox will appear for customers to confirm before submitting contact us form</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/privacy/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_checkout" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Checkout</label>
+                    <comment>If set to Yes then privacy agreement checkbox will appear for customers to confirm before submitting billing form</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/privacy/enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="enable_registration" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Registration</label>
+                    <comment>If set to Yes then privacy agreement checkbox will appear for customers to confirm before submitting registration form</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                        <field id="*/privacy/enable">1</field>
+                    </depends>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

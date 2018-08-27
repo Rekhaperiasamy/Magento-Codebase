@@ -1,0 +1,175 @@
+"Save and Continue Edit","Save and Continue Edit"
+"Blacklist Item Information","Blacklist Item Information"
+General,General
+Email,Email
+"Blacklist View","Blacklist View"
+"Queue Item Information","Queue Item Information"
+Subject,Subject
+Body,Body
+Coupon,Coupon
+"Queue View","Queue View"
+"Rule Information","Rule Information"
+Analytics,Analytics
+"Google Analytics","Google Analytics"
+"Campaign Source","Campaign Source"
+"<b>Required.</b> Use <b>utm_source</b> to identify a search engine, newsletter name, or other source.<br/><i>Example:</i> utm_source=google","<b>Required.</b> Use <b>utm_source</b> to identify a search engine, newsletter name, or other source.<br/><i>Example:</i> utm_source=google"
+"Campaign Medium","Campaign Medium"
+"<b>Required.</b> Use <b>utm_medium</b> to identify a medium such as email or cost-per- click<br/><i>Example:</i> utm_medium=cpc","<b>Required.</b> Use <b>utm_medium</b> to identify a medium such as email or cost-per- click<br/><i>Example:</i> utm_medium=cpc"
+"Campaign Name","Campaign Name"
+"<b>Required.</b> Used for keyword analysis. Use <b>utm_campaign</b> to identify a specific product promotion or strategic campaign.<br/><i>Example:</i> utm_campaign=spring_sale","<b>Required.</b> Used for keyword analysis. Use <b>utm_campaign</b> to identify a specific product promotion or strategic campaign.<br/><i>Example:</i> utm_campaign=spring_sale"
+"Campaign Term","Campaign Term"
+"Used for paid search. Use <b>utm_term</b> to note the keywords for this ad.<br/><i>Example:</i> utm_term=running+shoes","Used for paid search. Use <b>utm_term</b> to note the keywords for this ad.<br/><i>Example:</i> utm_term=running+shoes"
+"Campaign Content","Campaign Content"
+"Used for A/B testing and content-targeted ads. Use <b>utm_content</b> to differentiate ads or links that point to the same URL.<br/><i>Example:</i> utm_content=logolink <i>or</i> utm_content=textlink","Used for A/B testing and content-targeted ads. Use <b>utm_content</b> to differentiate ads or links that point to the same URL.<br/><i>Example:</i> utm_content=logolink <i>or</i> utm_content=textlink"
+Conditions,Conditions
+"Conditions (don't add conditions if need all products)","Conditions (don't add conditions if need all products)"
+Name,Name
+Status,Status
+Priority,Priority
+"Cancel Condition","Cancel Condition"
+"Note! Additional to the listed actions Order Placed action will always cancel the abandoned cart email","Note! Additional to the listed actions Order Placed action will always cancel the abandoned cart email"
+Schedule,Schedule
+"Add Record","Add Record"
+"Stores & Customer Groups","Stores & Customer Groups"
+"Apply In","Apply In"
+Stores,Stores
+"Leave empty or select all to apply the rule to any store","Leave empty or select all to apply the rule to any store"
+"Apply For","Apply For"
+"Customer Groups","Customer Groups"
+"Leave empty or select all to apply the rule to any group","Leave empty or select all to apply the rule to any group"
+Test,Test
+Products,Products
+Quantity,Quantity
+Subtotal,Subtotal
+"Applied Coupon","Applied Coupon"
+Created,Created
+Updated,Updated
+"IP Address","IP Address"
+Send,Send
+"Rule View","Rule View"
+"test email","test email"
+"Before sending test messages, please fill in the %1 in the extension configuration section","Before sending test messages, please fill in the %1 in the extension configuration section"
+"import GeoIP Data","import GeoIP Data"
+"Please update Amasty Base module. Re-upload it and replace all the files.","Please update Amasty Base module. Re-upload it and replace all the files."
+Marketing,Marketing
+Blacklist,Blacklist
+"You deleted the blacklist.","You deleted the blacklist."
+"We can't delete the blacklist right now. Please review the log and try again.","We can't delete the blacklist right now. Please review the log and try again."
+"We can't find a blacklist to delete.","We can't find a blacklist to delete."
+"Something went wrong while editing the blacklist.","Something went wrong while editing the blacklist."
+"New Blacklist Email","New Blacklist Email"
+"Something went wrong while export feed data. Please review the error log.","Something went wrong while export feed data. Please review the error log."
+"The wrong blacklist is specified.","The wrong blacklist is specified."
+"You saved the blacklist item.","You saved the blacklist item."
+"Something went wrong while saving the blacklist data. Please review the error log.","Something went wrong while saving the blacklist data. Please review the error log."
+History,History
+"Error. Please see the log for more information.","Error. Please see the log for more information."
+Queue,Queue
+"You deleted the queue.","You deleted the queue."
+"We can't delete the queue right now. Please review the log and try again.","We can't delete the queue right now. Please review the log and try again."
+"We can't find a queue to delete.","We can't find a queue to delete."
+"Something went wrong while editing the queue.","Something went wrong while editing the queue."
+"Edit queue item #%1","Edit queue item #%1"
+"The wrong queue is specified.","The wrong queue is specified."
+"You saved the queue item.","You saved the queue item."
+"Something went wrong while saving the queue data. Please review the error log.","Something went wrong while saving the queue data. Please review the error log."
+Rules,Rules
+"You deleted the rule.","You deleted the rule."
+"We can't delete the rule right now. Please review the log and try again.","We can't delete the rule right now. Please review the log and try again."
+"We can't find a rule to delete.","We can't find a rule to delete."
+"Something went wrong while editing the rule.","Something went wrong while editing the rule."
+"New Rule","New Rule"
+"Something went wrong while delete rule. Please review the error log.","Something went wrong while delete rule. Please review the error log."
+"The wrong rule is specified.","The wrong rule is specified."
+"You saved the rule.","You saved the rule."
+"Something went wrong while saving the rule data. Please review the error log.","Something went wrong while saving the rule data. Please review the error log."
+"Email didn't send.","Email didn't send."
+"You have been unsubscribed","You have been unsubscribed"
+"The schedule should be completed.","The schedule should be completed."
+"Number of recovered cards this month","Number of recovered cards this month"
+Active,Active
+Inactive,Inactive
+"Link from Email Clicked","Link from Email Clicked"
+"Any product went out of stock","Any product went out of stock"
+"All products went out of stock","All products went out of stock"
+"Not sent","Not sent"
+Sent,Sent
+"Canceled by the admin","Canceled by the admin"
+"Customer is Not Newsletter Subscriber","Customer is Not Newsletter Subscriber"
+Edit,Edit
+"Please, mind that your emails sending period is greater than Quote Lifetime (days). (To check it, please, go to Stores->Configuration->Sales->Checkout->Shopping Cart->Quote Lifetime). ","Please, mind that your emails sending period is greater than Quote Lifetime (days). (To check it, please, go to Stores->Configuration->Sales->Checkout->Shopping Cart->Quote Lifetime). "
+"Transactional Email","Transactional Email"
+"Delivery Time","Delivery Time"
+Days,Days
+Hours,Hours
+Minutes,Minutes
+Type,Type
+None,None
+"Percent of product price discount","Percent of product price discount"
+"Fixed amount discount","Fixed amount discount"
+"Fixed amount discount for whole cart","Fixed amount discount for whole cart"
+"Auto add promo items with products","Auto add promo items with products"
+"Auto add promo items for the whole cart","Auto add promo items for the whole cart"
+"Auto add the same product","Auto add the same product"
+"Discount Amount","Discount Amount"
+"Expired in (days)","Expired in (days)"
+"Maximum Qty Discount is Applied To","Maximum Qty Discount is Applied To"
+"Discount Qty Step (Buy X)","Discount Qty Step (Buy X)"
+Expand,Expand
+Collapse,Collapse
+"Send the Same Coupon Again","Send the Same Coupon Again"
+"Use Shopping Cart Rule","Use Shopping Cart Rule"
+"Rule ID","Rule ID"
+"Rule option `Use Auto Generation` should be turned on","Rule option `Use Auto Generation` should be turned on"
+Delete,Delete
+Price,Price
+"Hello,","Hello,"
+"Dear %firstName %lastName,","Dear %firstName %lastName,"
+"You have items in your shopping bag.","You have items in your shopping bag."
+"Get them with discount!","Get them with discount!"
+"reply to this mail","reply to this mail"
+"Save money with coupon code <span style=""border: 1px solid #E0E0E0; margin-left: 10px; background-color: #f9f9f9;"">%coupon</span> !","Save money with coupon code <span style=""border: 1px solid #E0E0E0; margin-left: 10px; background-color: #f9f9f9;"">%coupon</span> !"
+"Coupon expiration date: <span style=""border: 1px solid #E0E0E0; margin-left: 10px; background-color: #f9f9f9;"">%expiration_date</span> ","Coupon expiration date: <span style=""border: 1px solid #E0E0E0; margin-left: 10px; background-color: #f9f9f9;"">%expiration_date</span> "
+"CHECK OUT","CHECK OUT"
+"Delivered by  CompanyName, Street 123, City , Telephone , support@company.com","Delivered by  CompanyName, Street 123, City , Telephone , support@company.com"
+Unsubscibe,Unsubscibe
+"Abandoned Cart Email","Abandoned Cart Email"
+Information,Information
+"The coupon is available only for particular customer","The coupon is available only for particular customer"
+"If the option is disabled the coupon can be used by all customers.","If the option is disabled the coupon can be used by all customers."
+"Trigger a rule no more than 1 time per quote","Trigger a rule no more than 1 time per quote"
+"Send emails only to registered customers","Send emails only to registered customers"
+"Automatically remove sent emails from History","Automatically remove sent emails from History"
+"In days.","In days."
+"Disable guest email logging for EU customers (GPDR compliance requirement)","Disable guest email logging for EU customers (GPDR compliance requirement)"
+"For use this setting you need import GEOIP Data","For use this setting you need import GEOIP Data"
+"Email Templates","Email Templates"
+"Sender Name","Sender Name"
+"Sender Email","Sender Email"
+"Send to Newsletter Subscribers Only","Send to Newsletter Subscribers Only"
+"Sends copy of emails to","Sends copy of emails to"
+"Reply To Name","Reply To Name"
+"Reply To Email","Reply To Email"
+Testing,Testing
+"Safe Mode","Safe Mode"
+"When safe mode is activated, the extension sends emails only to the test email, nothing <b>will be sent to customers</b>","When safe mode is activated, the extension sends emails only to the test email, nothing <b>will be sent to customers</b>"
+"Recipient Email","Recipient Email"
+Import,Import
+"Debug (For Developers Only)","Debug (For Developers Only)"
+"Enable Debug Mode","Enable Debug Mode"
+"If the option is enabled module will be working without delay and only selected emails.","If the option is enabled module will be working without delay and only selected emails."
+"Permitted Email Domains","Permitted Email Domains"
+"Comma separated email domains without @ symbol.","Comma separated email domains without @ symbol."
+"Add Email","Add Email"
+"Delete items","Delete items"
+"Delete selected items?","Delete selected items?"
+ID,ID
+Rule,Rule
+"First Name","First Name"
+"Last Name","Last Name"
+Scheduled,Scheduled
+"Cancel items","Cancel items"
+"Cancel selected items?","Cancel selected items?"
+Cancel,Cancel
+"Create New Rule","Create New Rule"
+"Delete rules","Delete rules"

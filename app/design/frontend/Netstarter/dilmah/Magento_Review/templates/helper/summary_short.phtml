@@ -1,0 +1,36 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Magento_Review
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $url = $block->getReviewsUrl() . '#reviews'; ?>
+<?php $urlForm = $block->getReviewsUrl() . '#review-form'; ?>
+<?php if ($block->getReviewsCount()): ?>
+<?php $rating = $block->getRatingSummary(); ?>
+<div class="product-reviews-summary short<?php echo !$rating ? ' no-rating' : ''?>">
+    <?php if ($rating):?>
+    <div class="rating-summary">
+        <span class="label"><span><?php /* @escapeNotVerified */ echo __('Rating') ?>:</span></span>
+        <div class="rating-result" title="<?php /* @escapeNotVerified */ echo $rating; ?>%">
+            <span style="width:<?php /* @escapeNotVerified */ echo $rating; ?>%"><span><?php /* @escapeNotVerified */ echo $rating; ?>%</span></span>
+        </div>
+    </div>
+    <?php endif;?>
+</div>
+<?php elseif ($block->getDisplayIfEmpty()): ?>
+<div class="product-reviews-summary short empty">
+    <div class="reviews-actions">
+<!--        <a class="action add" href="--><?php ///* @escapeNotVerified */ echo $urlForm; ?><!--">-->
+<!--            --><?php ///* @escapeNotVerified */ echo __('Be the first to review this product') ?>
+<!--        </a>-->
+    </div>
+</div>
+<?php endif; ?>

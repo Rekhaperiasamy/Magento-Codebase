@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Checkout
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="checkout_layeredprocess" type="Dilmah\Checkout\Plugin\Block\Checkout\LayoutProcessor" sortOrder="1" />
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="add_to_cart_check" type="Dilmah\Checkout\Plugin\Controller\Cart\Add" sortOrder="51" />
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\UpdateItemOptions">
+        <plugin name="updagte_cart_check" type="Dilmah\Checkout\Plugin\Controller\Cart\UpdateItemOptions" sortOrder="51" />
+    </type>
+    <type name="Magento\Checkout\Controller\Account\Create">
+        <plugin name="account_create_checkout" type="Dilmah\Checkout\Plugin\Controller\Account\Create" sortOrder="1" />
+    </type>
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="plugin_default_config_cart" type="Dilmah\Checkout\Plugin\Model\DefaultConfigProvider" sortOrder="99" />
+    </type>
+    <type name="Magento\Checkout\Block\Cart\Sidebar">
+        <plugin name="plugin_checkout_block_cart_sidebar" type="Dilmah\Checkout\Plugin\Block\Cart\Sidebar" sortOrder="99" />
+    </type>
+    <type name="Magento\Checkout\CustomerData\Cart">
+        <plugin name="plugin_checkout_customerdata_cart" type="Dilmah\Checkout\Plugin\CustomerData\Cart" sortOrder="99" />
+    </type>
+    <!--<type name="Magento\Checkout\Block\Registration">-->
+        <!--<plugin name="checkout_registration_dilmah" type="Dilmah\Checkout\Plugin\Block\Registration" sortOrder="1" />-->
+    <!--</type>-->
+    <type name="Dilmah\Checkout\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Dilmah\Checkout\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">DilmahCheckoutLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Dilmah\Checkout\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Checkout\CustomerData\DefaultItem" type="Dilmah\Checkout\CustomerData\DefaultItem" />
+    <preference for="Magento\Checkout\Controller\Cart\Add" type="Dilmah\Checkout\Controller\Cart\Add" />
+    <!--<preference for="Magento\Checkout\CustomerData\Cart" type="Dilmah\Checkout\CustomerData\Cart" />-->
+    <preference for="Magento\Checkout\Block\Registration" type="Dilmah\Checkout\Block\Registration" />
+</config>

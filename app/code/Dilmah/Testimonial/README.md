@@ -1,0 +1,1 @@
+Dilmah_Testimonial provides the functionality to manage testimonials and insert them into the website as widgets.

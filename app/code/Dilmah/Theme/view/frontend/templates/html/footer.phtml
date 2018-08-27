@@ -1,0 +1,135 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Theme
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+?> 
+<?php 
+$themeHelper = $this->helper("Dilmah\Theme\Helper\Data"); 
+$registerUrl =  $block->getUrl('customer/account/create'); 
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$context = $om->get('Magento\Framework\App\Http\Context');
+$isLoggedIn = $context->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+$storeManager = $om->get('\Magento\Store\Model\StoreManagerInterface');
+$storeId = $storeManager->getStore()->getStoreId(); 
+?>
+    <script type="text/x-magento-init">
+    {
+        ".bottom-newsletter-slider-content": {
+            "footer": {
+                "cookieName": "newsletterPopup"
+            }
+        }
+    }
+
+    </script>
+<?php echo $block->getChildHtml('footer.about.links'); ?>
+<?php echo $block->getChildHtml('footer.customer.services.links'); ?>
+<?php echo $block->getChildHtml('footer.shop.links'); ?>
+<?php echo $block->getChildHtml('footer.right'); ?>
+
+<style>
+#fixed-form{
+    position: fixed;
+    bottom: 0px;
+    left: 80%;
+    width: 20%;
+    text-align: center;
+    margin: 0;
+
+}
+
+#fixed-form .button:before { 
+   
+   content: "- ";
+}
+
+#fixed-form .expanded:before { 
+    content: "+ ";
+}
+
+#fixed-form .button { 
+  font-size:1.1em; 
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #ba942e;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px 5px 0px 0px;
+  padding: 5px 20px 5px 20px;
+  background-color: #ba942e;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-box-shadow: 4px 0px 5px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 4px 0px 5px 0px rgba(0,0,0,0.3);
+  box-shadow: 4px 0px 5px 0px rgba(0,0,0,0.3);
+}
+
+#fixed-form .body{
+    background-color: #fff; 
+    border-radius: 5px;
+    border: 2px solid #ba942e;
+    margin-bottom: 16px;
+    padding: 10px; 
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
+}
+
+#fixed-form .body p{
+   color: #000;
+}
+
+@media only screen and (min-width:768px){
+    #fixed-form .button{
+       margin: 0;
+
+    }
+    #fixed-form {
+        left: 80%;
+        width: 20%;
+        text-align: left;
+    }
+
+    #fixed-form .body{
+        padding: 15px;
+        border-radius: 0px 5px 5px 5px;
+    }
+}
+</style>
+
+<?php if (($themeHelper->isHomePage()) && ($isLoggedIn == '') && ($storeId == 1)): ?>
+<section id="fixed-form">
+	<div class="button">Click Me!</div>
+		<div class="body">
+		     <p>Not a member yet? <a href="<?php echo $registerUrl ?>" class="register">Register Now</a></p>
+        </div>
+</section>
+<?php endif;?>
+
+<script>
+require(
+    [
+        'jquery'
+	 ],
+    function(
+        $
+		 ) {
+		    $("#fixed-form .body").show();
+            $("#fixed-form .button").click(function () {
+            $(this).next("#fixed-form div").slideToggle(400);
+            $(this).toggleClass("expanded");
+            });
+		   }
+);
+</script>

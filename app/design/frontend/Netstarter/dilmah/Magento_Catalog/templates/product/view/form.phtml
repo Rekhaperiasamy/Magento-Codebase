@@ -1,0 +1,84 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+<?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+<?php $_product = $block->getProduct(); ?>
+
+<?php $seo_data = [];?>
+<?php /* @escapeNotVerified */ $seo_data['name'] = $_product->getName(); ?>
+<?php /* @escapeNotVerified */ $seo_data['brand'] = \Dilmah\Catalog\Helper\Data::BRAND_LABEL; ?>
+<?php /* @escapeNotVerified */ $_product->getCategory()? $seo_data['catagory'] = $_product->getCategory()->getName():''; ?>
+<?php /* @escapeNotVerified */ $seo_data['id'] = $_product->getId(); ?>
+<?php /* @escapeNotVerified */ $seo_data['price'] = $_product->getPrice(); ?>
+<?php /* @escapeNotVerified */ $seo_data['currency'] = $_product->getStore()->getCurrentCurrency()->getCode() ?>
+
+<?php
+    // todo : SEO Variant repeats in several phtmls it needs to get it to a helper
+?>
+<?php if ($_product->getData(\Dilmah\Catalog\Helper\Data::IS_PACK_PRODUCT_ATTRIBUTE) == 1): // if pack product ?>
+    <?php if ($packSize = $_product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE)): ?>
+        <?php if ($bags = $_product->getData(\Dilmah\Catalog\Helper\Data::TEA_BAG_QTY_ATTRIBUTE)): ?>
+            <?php $bag_info = sprintf(__('%s Tea bags'), $packSize * $bags); $seo_data['variant'] = $bag_info?>
+        <?php elseif ($grammage = $_product->getData(\Dilmah\Catalog\Helper\Data::GRAMMAGE_ATTRIBUTE)): ?>
+            <?php $grammage_info = sprintf(__('%s Grams'), $packSize * $grammage);  $seo_data['variant'] = $grammage_info ?>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>
+
+
+<div class="product-add-form <?php echo $_product->getData(\Dilmah\Catalog\Helper\Data::IS_PACK_PRODUCT_ATTRIBUTE) == 1 ? 'pack-product' : '' ?> <?php echo $_product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1 ? 'product-mix-match' : '' ?>">
+    <form action="<?php /* @escapeNotVerified */ echo $block->getSubmitUrl($_product) ?>" method="post"
+          id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>  data-seo="<?php printf("%s",htmlspecialchars(json_encode($seo_data), ENT_QUOTES, 'UTF-8'));?>">
+        <?php if ($block->displayProductStockStatus()): ?>
+            <?php if ($_product->getTypeId() == 'configurable' || $_product->getTypeId() == 'downloadable'): // out of stock message for downloadable and configurable products ?>
+                <?php if (!$_product->isAvailable()): ?>
+                    <div class="stock unavailable" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>">
+                        <span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+        <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+        <input type="hidden" name="selected_configurable_option" value="" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+        <?php echo $block->getBlockHtml('formkey')?>
+        <?php echo $block->getChildHtml('form_top'); ?>
+        <?php if (!$block->hasOptions()):?>
+            <?php echo $block->getChildHtml('product_info_form_content'); ?>
+        <?php else:?>
+            <?php if ($_product->isSaleable() && $block->getOptionsContainer() == 'container1'):?>
+                <?php echo $block->getChildChildHtml('options_container') ?>
+            <?php endif;?>
+        <?php endif; ?>
+
+        <?php if ($_product->isSaleable() && $block->hasOptions() && $block->getOptionsContainer() == 'container2'):?>
+            <?php echo $block->getChildChildHtml('options_container') ?>
+        <?php endif;?>
+        <?php echo $block->getChildHtml('form_bottom'); ?>
+    </form>
+</div>
+<script>
+    require([
+        'jquery',
+        'Magento_Catalog/js/price-box'
+    ], function($){
+        var priceBoxes = $('[data-role=priceBox]');
+
+        priceBoxes = priceBoxes.filter(function(index, elem){
+            return !$(elem).find('.price-from').length;
+        });
+
+        priceBoxes.priceBox({'priceConfig': <?php /* @escapeNotVerified */ echo $block->getJsonConfig() ?>});
+    });
+</script>

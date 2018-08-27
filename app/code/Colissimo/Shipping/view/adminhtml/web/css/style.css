@@ -1,0 +1,9 @@
+.colissimo-configuration{background:#fff5e1;border:1px solid #ccc;padding:0 10px 0 10px;margin-top:20px}
+.section-config .admin__collapsible-block tr:last-child>td>.colissimo-configuration{border-bottom:1px solid #ccc}
+#carriers_colissimo_pickup,
+#carriers_colissimo_homecl,
+#carriers_colissimo_homesi,
+#carriers_colissimo_international,
+#carriers_colissimo_domtomcl,
+#carriers_colissimo_domtomsi{padding-bottom:2.6rem}
+#carriers_colissimo-head{padding-left:35px;background:url(../images/icons/colissimo.png) no-repeat left center}

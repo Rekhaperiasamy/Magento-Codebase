@@ -1,0 +1,10 @@
+<?php
+/**
+ * @var \Scommerce\Gdpr\Block\Form\Register $block
+ */
+?>
+
+<div class="field required choice">
+    <input type="checkbox" name="scommerce_gdpr_privacy_consent" value="1" id="scommerce_gdpr_privacy_consent"<?php if ($block->getFormData()->getScommerceGdprPrivacyConsent()): ?> checked="checked"<?php endif; ?> class="checkbox"  data-validate="{required:true}" />
+    <label for="scommerce_gdpr_privacy_consent" class="label"><span><?php echo $block->getPrivacySettingText() ?></span></label>
+</div>

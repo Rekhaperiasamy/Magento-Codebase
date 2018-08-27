@@ -1,0 +1,17 @@
+<span style="margin-right: 5px;">
+<?php echo __(
+    "Don't forget to set your shipping method to use KWIXO in the best way"
+); ?> -
+</span>
+<a target="_blank" href="<?php echo $this->getUrl('adminhtml/kwixoshipping'); ?>">
+    <?php echo __('Kwixo shipping setting'); ?>
+</a>
+
+<a target="_blank" href="<?php echo $this->getUrl('adminhtml/kwixocategory'); ?>">
+    <?php echo __('Kwixo Category Mapping'); ?>
+</a>
+<span style="margin-left: 5px;">
+    <?php echo __(
+        'Please note that a proper category mapping is necessary in order to use this payment method'
+    ); ?>.
+</span>

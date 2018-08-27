@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="monetico_onetime" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>One-time Payment</label>
+        <comment>The purchases are fully paid in one time.</comment>
+        <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+        <attribute type="activity_path">payment/monetico_onetime/active</attribute>
+        <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Enable this Solution</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/monetico_onetime/active</config_path>
+            <requires><group id="monetico_required"/></requires>
+        </field>
+        <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Title</label>
+            <config_path>payment/monetico_onetime/title</config_path>
+        </field>
+        <field id="sort_order" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Sort Order</label>
+            <validate>validate-number</validate>
+            <config_path>payment/monetico_onetime/sort_order</config_path>
+        </field>
+        <!-- API CONFIGURATION -->
+        <group id="monetico_required" translate="label comment" showInDefault="1" showInWebsite="1" sortOrder="40">
+            <label>API Monetico Settings</label>
+            <comment>These information are available in your Monetico account.</comment>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="version" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Version</label>
+                <source_model>Blackbird\Monetico\Model\Config\Source\Version</source_model>
+                <config_path>payment/monetico_onetime/version</config_path>
+            </field>
+            <field id="environment" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Environment</label>
+                <source_model>Blackbird\Monetico\Model\Config\Source\Environment</source_model>
+                <config_path>payment/monetico_onetime/environment</config_path>
+            </field>
+            <field id="tpe_number" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>TPE Number</label>
+                <config_path>payment/monetico_onetime/tpe_number</config_path>
+            </field>
+            <field id="site_code" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Site Code</label>
+                <config_path>payment/monetico_onetime/site_code</config_path>
+            </field>
+            <field id="private_key" translate="label" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Security Hash Key</label>
+                <config_path>payment/monetico_onetime/private_key</config_path>
+                <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+            </field>
+        </group>
+        <!-- CONFIGURE ORDER STATUS -->
+        <group id="monetico_status" translate="label" showInDefault="1" showInWebsite="1" sortOrder="50">
+            <label>Order Status Settings</label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="order_status" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>New Order Status</label>
+                <source_model>Magento\Sales\Model\Config\Source\Order\Status\Newprocessing</source_model>
+                <config_path>payment/monetico_onetime/order_status</config_path>
+            </field>
+            <field id="order_status_payment_accepted" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Payment Validated Order Status</label>
+                <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+                <config_path>payment/monetico_onetime/order_status_payment_accepted</config_path>
+            </field>
+            <field id="order_status_payment_refused" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Payment Refused Order Status</label>
+                <source_model>Blackbird\Monetico\Model\Config\Source\Order\Status\Canceled</source_model>
+                <config_path>payment/monetico_onetime/order_status_payment_refused</config_path>
+            </field>
+            <field id="order_status_payment_canceled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Payment Canceled Order status</label>
+                <source_model>Blackbird\Monetico\Model\Config\Source\Order\Status\Canceled</source_model>
+                <config_path>payment/monetico_onetime/order_status_payment_canceled</config_path>
+            </field>
+            <field id="create_invoice" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Create Invoice</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/create_invoice</config_path>
+            </field>
+        </group>
+        <!-- COUNTRY RESTRICTION -->
+        <group id="monetico_country_specific" translate="label" showInDefault="1" showInWebsite="1" sortOrder="60">
+            <label>Country Specific Settings</label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="allowspecific" translate="label" type="allowspecific" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Payment from Applicable Countries</label>
+                <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                <config_path>payment/monetico_onetime/allowspecific</config_path>
+            </field>
+            <field id="specificcountry" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Payment from Specific Countries</label>
+                <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                <can_be_empty>1</can_be_empty>
+                <config_path>payment/monetico_onetime/specificcountry</config_path>
+            </field>
+        </group>
+        <!-- 3D SECURE -->
+        <group id="monetico_3dsecure" translate="label" showInDefault="1" showInWebsite="1" sortOrder="70">
+            <label>3D Secure Verification Settings</label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="verify_3dsecure" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Enable 3DSecure Verification</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/verify_3dsecure</config_path>
+            </field>
+            <field id="verify_3dsecure_min_amount" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Maximum Amount before 3D-Secure</label>
+                <validate>validate-zero-or-greater</validate>
+                <config_path>payment/monetico_onetime/max_amount</config_path>
+                <depends><field id="verify_3dsecure">0</field></depends>
+            </field>
+        </group>
+        <!-- DESIGN SETTINGS -->
+        <group id="monetico_interface" translate="label" showInDefault="1" showInWebsite="1" sortOrder="80">
+            <label>Monetico Interface Settings</label>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="use_iframe" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Include in Iframe</label>
+                <comment>You should have signed the option in your Monetico contract.</comment>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/use_iframe</config_path>
+            </field>
+            <field id="locale" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Locale Configuration</label>
+                <comment>We will use the current store language in preference.</comment>
+                <source_model>Blackbird\Monetico\Model\Config\Source\AvailableLocales</source_model>
+                <config_path>payment/monetico_onetime/locale</config_path>
+            </field>
+        </group>
+        <!-- TRANSACTION SETTINGS -->
+        <group id="monetico_transaction" translate="label comment" showInDefault="1" showInWebsite="1" sortOrder="90">
+            <label>Transaction Description</label>
+            <comment><![CDATA[
+                <p>You can customize the transaction description, these variables can be used:<p>
+                <ul class="monetico-variable-list">
+                    <li class="monetico-variable"><strong>%order_id%</strong><span>Order ID number</span></li>
+                    <li class="monetico-variable"><strong>%payment_method%</strong><span>Payment Method name</span></li>
+                    <li class="monetico-variable"><strong>%code_societe%</strong><span>Store Code Name</span></li>
+                </ul>
+            ]]></comment>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="transaction_description" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Transaction Message</label>
+                <comment>We will set a default message if the value is empty.</comment>
+                <config_path>payment/monetico_onetime/transaction_description</config_path>
+            </field>
+        </group>
+        <!-- PAYMENT OPTIONS -->
+        <group id="monetico_options" translate="label comment" showInDefault="1" showInWebsite="1" sortOrder="100">
+            <label>Options Settings</label>
+            <comment>Enable or disable Monetico options and configure them.</comment>
+            <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+            <field id="payment_express" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Enable the Payment Express Option</label>
+                <comment>You should have signed the option in your Monetico contract.</comment>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/payment_express</config_path>
+            </field>
+            <field id="force_cb" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Force the Credit Card Input</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/force_cb</config_path>
+                <depends><field id="payment_express">1</field></depends>
+            </field>
+            <field id="allow_options" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Enable all Payment Options</label>
+                <comment>We will display the payment options on the Monetico payment page, from your settings.</comment>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/allow_options</config_path>
+            </field>
+            <field id="disabled_options" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Disable Specific Payment Options</label>
+                <validate>validate-no-empty</validate>
+                <source_model>Blackbird\Monetico\Model\Config\Source\OptionPayment</source_model>
+                <config_path>payment/monetico_onetime/disabled_options</config_path>
+                <depends><field id="allow_options">0</field></depends>
+            </field>
+        </group>
+        <!-- CURRENCY OPTION -->
+        <group id="monetico_currency" translate="label" showInDefault="1" showInWebsite="1" sortOrder="140">
+            <label>Price Currency</label>
+            <field id="monetico_currency" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <label>Use Base Currency</label>
+                <comment>We will use the price defined in the base currency if enabled.</comment>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <config_path>payment/monetico_onetime/use_base_currency</config_path>
+            </field>
+        </group>
+    </group>
+</include>

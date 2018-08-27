@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+
+<?php echo __(
+    '%1 has been added to your Wish List. Click <a href="%2">here</a> to continue shopping.',
+    $block->escapeHtml($block->getData('product_name')),
+    $block->escapeUrl($block->getData('referer')
+    )
+);

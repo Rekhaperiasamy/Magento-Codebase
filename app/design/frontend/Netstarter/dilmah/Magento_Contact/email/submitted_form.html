@@ -1,0 +1,25 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject Contact Us Request @-->
+<!--@vars {
+"var data.comment":"Comment",
+"var data.email":"Sender Email",
+"var data.name":"Sender Name",
+"var data.telephone":"Sender Telephone"
+} @-->
+
+{{trans "First Name: %first_name" first_name=$data.first_name}}
+{{trans "Last Name: %last_name" last_name=$data.last_name}}
+{{trans "Email: %email" email=$data.email}}
+{{trans "Phone Number: %telephone" telephone=$data.telephone}}
+
+{{trans "Order Number: %order" order=$data.order}}
+{{trans "Subject: %subject" subject=$data.subject}}
+
+{{trans "Topic: %topic" topic=$data.topic}}
+
+{{trans "Comment: %comment" comment=$data.comment}}

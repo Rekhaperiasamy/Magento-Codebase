@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="opsBackendSalesOrderViewStatusUpdate" type="Netresearch\OPS\Block\Adminhtml\Sales\Order\Plugin\AddStatusUpdateButtonToOrderView"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="opsBackendSalesOrderViewResendPayment" type="Netresearch\OPS\Block\Adminhtml\Sales\Order\Plugin\AddResendPaymentInfoButtonToOrderView"/>
+    </type>
+    <type name="\Magento\Sales\Block\Adminhtml\Order\Invoice\Create\Items">
+        <plugin name="opsBackendSalesOrderInvoiceCapture" type="Netresearch\OPS\Block\Adminhtml\Sales\Order\Invoice\Plugin\DisableCaptureForZeroAmountInvoice"/>
+    </type>
+</config>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+?>
+<?php
+$_product = $block->getProduct();
+$_wishlistSubmitParams = $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product);
+?>
+
+<div class="product-addto-links <?php echo $_product->getData(\Dilmah\Catalog\Helper\Data::IS_COMBO_PRODUCT_ATTRIBUTE) == 1 ? 'product-mix-match' : '' ?>" data-role="add-to-links">
+    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
+        <a href="#"
+            class="action towishlist"
+            rel="nofollow"
+            data-post='<?php /* @escapeNotVerified */ echo $_wishlistSubmitParams; ?>'
+            data-action="add-to-wishlist"><span><?php /* @escapeNotVerified */ echo __('Add to Wishlist') ?></span></a>
+    <?php endif; ?>
+</div>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($block->getWishlistOptions())?>
+        }
+    }
+</script>

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Acart
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="amasty_acart" translate="label" type="text" sortOrder="161812" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Abandoned Cart Email</label>
+            <tab>amasty</tab>
+            <resource>Amasty_Acart::amasty_acart</resource>
+            <group id="amasty_information" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Information</label>
+                <frontend_model>Amasty\Acart\Block\Adminhtml\System\Config\Information</frontend_model>
+            </group>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="customer_coupon" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>The coupon is available only for particular customer</label>
+                    <comment><![CDATA[If the option is disabled the coupon can be used by all customers.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="send_onetime" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Trigger a rule no more than 1 time per quote</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="only_customers" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Send emails only to registered customers</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="history_clean_days" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Automatically remove sent emails from History</label>
+                    <comment><![CDATA[In days.]]></comment>
+                    <validate>required-entry validate-digits</validate>
+                </field>
+                <field id="disable_logging_for_guests" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
+                    <label>Disable guest email logging for EU customers (GPDR compliance requirement)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[For use this setting you need import GEOIP Data]]></comment>
+                    <frontend_model>Amasty\Acart\Block\Adminhtml\System\Config\Field\DisableLogging</frontend_model>
+                    <backend_model>Amasty\Acart\Model\Source\DisableLogging</backend_model>
+                </field>
+            </group>
+            <group id="email_templates" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Templates</label>
+                <field id="sender_name" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sender Name</label>
+                </field>
+                <field id="sender_email" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sender Email</label>
+                </field>
+
+                <field id="emails_to_newsletter_subscribers_only" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send to Newsletter Subscribers Only</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="bcc" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sends copy of emails to</label>
+                </field>
+                <field id="reply_name" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Reply To Name</label>
+                </field>
+                <field id="reply_email" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Reply To Email</label>
+                </field>
+            </group>
+            <group id="testing" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Testing</label>
+                <field id="safe_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Safe Mode</label>
+                    <comment><![CDATA[When safe mode is activated, the extension sends emails only to the test email, nothing <b>will be sent to customers</b>]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="recipient_email" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Recipient Email</label>
+                </field>
+            </group>
+            <group id="blacklist" translate="label" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Blacklist</label>
+
+                <field id="import" translate="label" type="file" sortOrder="200" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Import</label>
+
+                    <backend_model>Amasty\Acart\Model\Source\Import</backend_model>
+                </field>
+            </group>
+
+            <group id="debug" translate="label" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Debug (For Developers Only)</label>
+
+                <field id="debug_enable" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Debug Mode</label>
+                    <comment><![CDATA[If the option is enabled module will be working without delay and only selected emails.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="debug_emails" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Permitted Email Domains</label>
+                    <comment><![CDATA[Comma separated email domains without @ symbol.]]></comment>
+                </field>
+            </group>
+        </section>
+
+    </system>
+</config>

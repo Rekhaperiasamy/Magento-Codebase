@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_ZopimChat
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="seo_config" translate="label" type="text" sortOrder="900" showInDefault="1"
+                 showInWebsite="1"
+                 showInStore="1">
+            <label>SEO</label>
+            <tab>dilmah</tab>
+            <resource>Dilmah_Seo::config</resource>
+            <group id="seo_section" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>SEO Configuration</label>
+                <field id="activate_remarketer" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Activate Remarketer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Activate / Deactivate Dynx Tags</comment>
+                    <config_path>seo_config/seo_section/activate_remarketer</config_path>
+                </field>
+                <field id="activate_enhanced_seo" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Activate Enhanced Seo</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Activate / Deactivate Tag Enhance</comment>
+                    <config_path>seo_config/seo_section/activate_enhanced_seo</config_path>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

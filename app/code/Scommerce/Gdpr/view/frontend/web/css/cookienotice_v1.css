@@ -1,0 +1,14 @@
+/* Alert block */
+.scommerce-gdpr-cookienotice{padding: 5px 0; font: 12px/18px Arial, Helvetica, sans-serif; text-align: center}
+.scommerce-gdpr-cookienotice .message{max-width: 960px; margin: 0 auto;}
+.scommerce-gdpr-cookienotice .message span.cookie-title{display: block; font-size: 16px; font-weight: bold; margin: 0.4em 0 0;}
+.scommerce-gdpr-cookienotice .message a{color: #f90; text-decoration: underline;}
+.scommerce-gdpr-cookienotice .message a:hover{text-decoration: underline;}
+.scommerce-gdpr-cookienotice .message .close a{font-size: 16px; text-decoration: none; font-weight: bold;}
+.scommerce-gdpr-cookienotice .message .close a:hover{text-decoration: underline;}
+.scommerce-gdpr-disabled {pointer-events: none;opacity: 0.4;}
+.scommerce-gdpr-bottom-position {position: fixed;width: 100%;z-index: 1000;bottom: 0;left: 0;}
+.scommerce-gdpr-top-position {width: 100%; z-index: 1000;}
+#newsletter-validate-detail .scommerce_gdpr_privacy_consent_newsletter label {position:relative;}
+/* Delete account attention block */
+.scommerce-gdpr-attention-message {color: red;}

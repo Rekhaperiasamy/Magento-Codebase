@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <container name="content.wrapper">
+                <container name="featured.product.container" label="Home Featured Products Container"/>
+                <container name="home.content.container" after="featured.product.container">
+                    <container name="home.spotlight.wrapper" htmlClass="spot-light-wrapper" htmlTag="div"/>
+                </container>
+                <container name="testimonial.container" label="Home Testimonial Container" after="home.content.container"/>
+                <container name="news.event.container" label="News and Events Container" after="testimonial.container"/>
+                <container name="seo.text.content.wrapper" htmlClass="seo-content-wrapper" htmlTag="div" after="news.event.container"/>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

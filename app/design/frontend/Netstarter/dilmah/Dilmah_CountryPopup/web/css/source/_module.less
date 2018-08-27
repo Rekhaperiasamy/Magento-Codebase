@@ -1,0 +1,130 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+  .country-check-modal{
+    .modal-inner-wrap{
+      .lib-vendor-prefix-display();
+      .lib-vendor-prefix-flex-direction(column);
+      .lib-css(align-items, center, 1);
+    }
+
+    .modal-footer{
+      .lib-vendor-prefix-display();
+      .lib-vendor-prefix-flex-direction(column);
+      .lib-vendor-prefix-flex-wrap(wrap);
+      .lib-css(align-items, center, 1);
+
+      button{
+        .lib-button-as-link();
+
+        &:before{
+          content: '';
+          display: block;
+          width: 160px;
+          height: 160px;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+
+        &.GLOBAL{
+          &:before{
+            .lib-url('images/country-flags/global.png');
+            background-image:url("@{url}");
+          }
+        }
+
+        &.AU{
+          &:before{
+            .lib-url('images/country-flags/au.png');
+            background-image:url("@{url}");
+          }
+        }
+
+        &.FR{
+          &:before{
+            .lib-url('images/country-flags/fr.png');
+            background-image:url("@{url}");
+          }
+        }
+
+        &.GB{
+          &:before{
+            .lib-url('images/country-flags/uk.png');
+            background-image:url("@{url}");
+          }
+        }
+
+        &.US{
+          &:before{
+            .lib-url('images/country-flags/us.png');
+            background-image:url("@{url}");
+          }
+        }
+
+        &.NL{
+          &:before{
+            .lib-url('images/country-flags/nl.png');
+            background-image:url("@{url}");
+          }
+        }
+      }
+    }
+  }
+
+  .dilmah-location-container{
+    text-align: center;
+
+    .desc{
+    }
+  }
+
+
+
+
+}
+
+
+//
+//  Desktop @screen__l
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .country-check-modal {
+    .modal-inner-wrap {
+    }
+
+    .modal-footer {
+      .lib-vendor-prefix-display();
+      .lib-vendor-prefix-flex-direction(row);
+      .lib-vendor-prefix-flex-wrap(wrap);
+      .lib-css(align-items, center, 1);
+      .lib-css(justify-content, flex-start, 1);
+
+      button {
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+}
+
+
+
+
+//
+//  Mobile @screen__m
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  body{
+    &._has-modal{
+      position: fixed;
+    }
+  }
+
+}

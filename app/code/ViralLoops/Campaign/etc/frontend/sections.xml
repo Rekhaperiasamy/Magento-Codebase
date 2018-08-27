@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="customer/account/logout">
+        <section name="viralloops_campaign"/>
+    </action>
+    <action name="customer/account/loginPost">
+        <section name="viralloops_campaign"/>
+    </action>
+    <action name="customer/account/createPost">
+        <section name="viralloops_campaign"/>
+    </action>
+    <action name="customer/account/editPost">
+        <section name="viralloops_campaign"/>
+    </action>
+    <action name="customer/ajax/login">
+        <section name="viralloops_campaign"/>
+    </action>
+</config>

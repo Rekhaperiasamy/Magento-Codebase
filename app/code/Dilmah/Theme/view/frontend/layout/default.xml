@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Theme
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="catalog.topnav" remove="true"/>
+        <move element="category.description" destination="content" after="page.main.title" />
+        <referenceContainer name="header.content.nav.row">
+            <block class="Dilmah\Theme\Block\Html\Topmenu" name="catalog.mainnav" template="html/topmenu.phtml" />
+        </referenceContainer>
+        <!--<referenceContainer name="content.top">-->
+            <!--<container name="category.dec.container" htmlTag="div" htmlClass="category-desc-wrapper">-->
+                <!--<block name="category.desc" class="Dilmah\Theme\Block\Html\Title" after="page.main.title" template="html/categorydesc.phtml" />-->
+            <!--</container>-->
+        <!--</referenceContainer>-->
+    </body>
+</page>

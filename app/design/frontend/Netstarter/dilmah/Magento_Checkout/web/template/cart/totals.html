@@ -1,0 +1,21 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko if: isFreeShippingThresholdActive && getFreeShippingThresholdMessage() -->
+<div class="cart-sidebar-freeshipping-threshold">
+    <span data-bind="text: getFreeShippingThresholdMessage()"></span>
+</div>
+<!-- /ko -->
+<div class="table-wrapper" data-bind="blockLoader: isLoading">
+    <table class="data table totals">
+        <caption class="table-caption" data-bind="text: $t('Total')"></caption>
+        <tbody>
+        <!-- ko foreach: elems() -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+        </tbody>
+    </table>
+</div>

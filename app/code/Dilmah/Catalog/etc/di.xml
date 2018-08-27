@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!---
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Catalog
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Config">
+        <plugin name="catalog_model_config" type="Dilmah\Catalog\Plugin\Model\Config" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Helper\Product\ProductList">
+        <plugin name="catalog_helper_productlist" type="Dilmah\Catalog\Plugin\Helper\Product\ProductList" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="catalog_block_productlist_toolbar" type="Dilmah\Catalog\Plugin\Block\Product\ProductList\Toolbar" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Model\Config\Source\ListSort">
+        <plugin name="catalog_default_sort_by_list" type="Dilmah\Catalog\Plugin\Model\Config\Source\ListSort" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="catalog_product_status_message" type="Dilmah\Catalog\Plugin\Block\Product\AbstractProduct" />
+    </type>
+    <type name="Magento\Catalog\Model\Product\Type\AbstractType">
+        <plugin name="catalog_product_type_bundle_abstract" type="Dilmah\Catalog\Plugin\Model\Product\Type\AbstractType" />
+    </type>
+    <preference for="Magento\Catalog\Block\Product\View\Options\Type\Select" type="Dilmah\Catalog\Block\Product\View\Options\Type\Select" />
+</config>

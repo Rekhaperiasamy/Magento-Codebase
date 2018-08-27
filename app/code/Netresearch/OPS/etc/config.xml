@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment_services>
+            <ops>
+                <model>ops/payment_abstract</model>
+                <title>Ingenico ePayments</title>
+                <!--<secret_key backend_model="adminhtml/system_config_backend_encrypted"/>Magento\Config\Model\Config\Backend\Encrypted-->
+                <secret_key_type>sha1</secret_key_type>
+                <payment_action>authorize</payment_action>
+                <send_invoice>0</send_invoice>
+                <template>ops</template>
+                <mode>custom</mode>
+                <url>
+                    <base_test>https://secure.ogone.com/ncol/test</base_test>
+                    <base_prod>https://secure.ogone.com/ncol/prod</base_prod>
+                    <ops_gateway>/orderstandard_utf8.asp</ops_gateway>
+                    <ops_alias_gateway>/Tokenization/HostedPage</ops_alias_gateway>
+                    <frontend_gateway>/orderstandard_utf8.asp</frontend_gateway>
+                    <directlink_gateway>/maintenancedirect.asp</directlink_gateway>
+                    <directlink_gateway_order>/orderdirect.asp</directlink_gateway_order>
+                    <directlink_maintenance_api>/querydirect.asp</directlink_maintenance_api>
+                </url>
+                <ops_gateway>https://secure.ogone.com/ncol/test/orderstandard_utf8.asp</ops_gateway>
+                <ops_alias_gateway>https://secure.ogone.com/ncol/test/Tokenization/HostedPage</ops_alias_gateway>
+                <frontend_gateway>https://secure.ogone.com/ncol/test/orderstandard_utf8.asp</frontend_gateway>
+                <directlink_gateway>https://secure.ogone.com/ncol/test/maintenancedirect.asp</directlink_gateway>
+                <directlink_gateway_order>https://secure.ogone.com/ncol/test/orderdirect.asp</directlink_gateway_order>
+                <directlink_maintenance_api>https://secure.ogone.com/ncol/test/querydirect.asp</directlink_maintenance_api>
+                <ops_alias_gateway_test>https://ogone.test.v-psp.com/Tokenization/HostedPage</ops_alias_gateway_test>
+                <showcatalogbutton>1</showcatalogbutton>
+                <showhomebutton>1</showhomebutton>
+                <support_mail>support@ecom.ingenico.com</support_mail>
+                <doc_link_de/>
+                <doc_link_en>http://payment-services.ingenico.com/en/ogone/support/guides/integration%20guides/magento-extension</doc_link_en>
+                <faq_link_de>http://ingenico.support.netresearch.de</faq_link_de>
+                <faq_link_en>http://ingenico.support.netresearch.de</faq_link_en>
+                <showQuoteIdInOrderGrid>1</showQuoteIdInOrderGrid>
+                <enableTrackingCode>0</enableTrackingCode>
+                <devprefix/>
+                <submitExtraParameters>1</submitExtraParameters>
+                <paramLength>
+                    <ECOM_SHIPTO_POSTAL_NAME_FIRST>50</ECOM_SHIPTO_POSTAL_NAME_FIRST>
+                    <ECOM_SHIPTO_POSTAL_NAME_LAST>50</ECOM_SHIPTO_POSTAL_NAME_LAST>
+                    <ECOM_SHIPTO_POSTAL_STREET_LINE1>35</ECOM_SHIPTO_POSTAL_STREET_LINE1>
+                    <ECOM_SHIPTO_POSTAL_STREET_LINE2>35</ECOM_SHIPTO_POSTAL_STREET_LINE2>
+                    <ECOM_SHIPTO_POSTAL_STREET_LINE3>35</ECOM_SHIPTO_POSTAL_STREET_LINE3>
+                    <ECOM_SHIPTO_POSTAL_COUNTRYCODE>2</ECOM_SHIPTO_POSTAL_COUNTRYCODE>
+                    <ECOM_SHIPTO_POSTAL_COUNTY>25</ECOM_SHIPTO_POSTAL_COUNTY>
+                    <ECOM_SHIPTO_POSTAL_POSTALCODE>10</ECOM_SHIPTO_POSTAL_POSTALCODE>
+                    <ECOM_SHIPTO_POSTAL_CITY>25</ECOM_SHIPTO_POSTAL_CITY>
+                    <ECOM_SHIPTO_POSTAL_STREET_NUMBER>10</ECOM_SHIPTO_POSTAL_STREET_NUMBER>
+                    <CN>35</CN>
+                    <OWNERZIP>10</OWNERZIP>
+                    <OWNERCTY>2</OWNERCTY>
+                    <OWNERTOWN>40</OWNERTOWN>
+                    <OWNERTELNO>30</OWNERTELNO>
+                    <OWNERADDRESS>35</OWNERADDRESS>
+                    <ECOM_BILLTO_POSTAL_POSTALCODE>10</ECOM_BILLTO_POSTAL_POSTALCODE>
+                </paramLength>
+                <frontendFieldMapping>
+                    <CN>
+                        <firstname>billing:firstname</firstname>
+                        <lastname>billing:lastname</lastname>
+                    </CN>
+                    <OWNERZIP>billing:postcode</OWNERZIP>
+                    <OWNERCTY>billing:region_id</OWNERCTY>
+                    <OWNERTOWN>billing:city</OWNERTOWN>
+                    <OWNERTELNO>OWNERTELNO</OWNERTELNO>
+                    <OWNERADDRESS>billing:street1</OWNERADDRESS>
+                    <ECOM_BILLTO_POSTAL_POSTALCODE>billing:postcode</ECOM_BILLTO_POSTAL_POSTALCODE>
+                    <ECOM_SHIPTO_POSTAL_NAME_FIRST>shipping:firstname</ECOM_SHIPTO_POSTAL_NAME_FIRST>
+                    <ECOM_SHIPTO_POSTAL_NAME_LAST>shipping:lastname</ECOM_SHIPTO_POSTAL_NAME_LAST>
+                    <ECOM_SHIPTO_POSTAL_STREET1>shipping:street1</ECOM_SHIPTO_POSTAL_STREET1>
+                    <ECOM_SHIPTO_POSTAL_STREET2>shipping:street2</ECOM_SHIPTO_POSTAL_STREET2>
+                    <ECOM_SHIPTO_POSTAL_STREET3>shipping:street3</ECOM_SHIPTO_POSTAL_STREET3>
+                    <ECOM_SHIPTO_POSTAL_COUNTRYCODE>shipping:country_id</ECOM_SHIPTO_POSTAL_COUNTRYCODE>
+                    <ECOM_SHIPTO_POSTAL_COUNTY>shipping:region_id</ECOM_SHIPTO_POSTAL_COUNTY>
+                    <ECOM_SHIPTO_POSTAL_POSTALCODE>shipping:postcode</ECOM_SHIPTO_POSTAL_POSTALCODE>
+                    <ECOM_SHIPTO_POSTAL_CITY>shipping:city</ECOM_SHIPTO_POSTAL_CITY>
+                    <ECOM_SHIPTO_POSTAL_STREET_NUMBER>shipping:street</ECOM_SHIPTO_POSTAL_STREET_NUMBER>
+                    <ECOM_SHIPTO_POSTAL_POSTAL_STATE>shipping:region_id</ECOM_SHIPTO_POSTAL_POSTAL_STATE>
+                </frontendFieldMapping>
+                <resendPaymentInfo_identity>sales</resendPaymentInfo_identity>
+                <resendPaymentInfo_template>payment_services_ops_payPerMail_template</resendPaymentInfo_template>
+                <payPerMail_template>payment_services_ops_payPerMail_template</payPerMail_template>
+                <billing_day_month>15</billing_day_month>
+                <billing_day_week>0</billing_day_week>
+                <device_fingerprinting>0</device_fingerprinting>
+                <ops_rtimeout>45</ops_rtimeout>
+                <creditdebit_split>0</creditdebit_split>
+                <additional_params_required>
+                    <capture>
+                        <OpenInvoiceNl>Netresearch_OPS_Model_Payment_OpenInvoiceNl</OpenInvoiceNl>
+                    </capture>
+                    <refund>
+                        <OpenInvoiceNl>Netresearch_OPS_Model_Payment_OpenInvoiceNl</OpenInvoiceNl>
+                    </refund>
+                </additional_params_required>
+            </ops>
+        </payment_services>
+        <payment>
+            <ops_directDebit>
+                <title>Ingenico ePayments DirectDebit</title>
+                <model>Netresearch\OPS\Model\Payment\DirectDebit</model>
+            </ops_directDebit>
+            <ops_postFinanceEFinance>
+                <title>Ingenico ePayments PostFinanceEFinance</title>
+                <model>Netresearch\OPS\Model\Payment\PostFinanceEFinance</model>
+            </ops_postFinanceEFinance>
+            <ops_eDankort>
+                <title>Ingenico ePayments EDankort</title>
+                <model>Netresearch\OPS\Model\Payment\EDankort</model>
+            </ops_eDankort>
+            <ops_kbcOnline>
+                <title>Ingenico ePayments KbcOnline</title>
+                <model>Netresearch\OPS\Model\Payment\KbcOnline</model>
+            </ops_kbcOnline>
+            <ops_iDeal>
+                <title>Ingenico ePayments IDeal</title>
+                <model>Netresearch\OPS\Model\Payment\IDeal</model>
+                <issuer>
+                    <ABNANL2A>ABN AMRO</ABNANL2A>
+                    <RABONL2U>Rabobank</RABONL2U>
+                    <INGBNL2A>ING</INGBNL2A>
+                    <SNSBNL2A>SNS Bank</SNSBNL2A>
+                    <RBRBNL21>Regio Bank</RBRBNL21>
+                    <ASNBNL21>ASN Bank</ASNBNL21>
+                    <BUNQNL2A>Bunq</BUNQNL2A>
+                    <TRIONL2U>Triodos Bank</TRIONL2U>
+                    <FVLBNL22>Van Lanschot Bankiers</FVLBNL22>
+                    <KNABNL2H>Knab Bank</KNABNL2H>
+                </issuer>
+            </ops_iDeal>
+            <ops_belfiusDirectNet>
+                <title>Ingenico ePayments Belfius Direct Net</title>
+                <model>Netresearch\OPS\Model\Payment\BelfiusDirectNet</model>
+            </ops_belfiusDirectNet>
+            <ops_bankTransfer>
+                <title>Ingenico ePayments BankTransfer</title>
+                <model>Netresearch\OPS\Model\Payment\BankTransfer</model>
+            </ops_bankTransfer>
+            <ops_openInvoiceDe>
+                <title>Rechnung</title>
+                <model>Netresearch\OPS\Model\Payment\OpenInvoiceDe</model>
+                <allow_discounted_carts>0</allow_discounted_carts>
+                <allowspecific>1</allowspecific>
+                <specificcountry>DE</specificcountry>
+            </ops_openInvoiceDe>
+            <ops_openInvoiceNl>
+                <title>Rechnung (Niederlande)</title>
+                <model>Netresearch\OPS\Model\Payment\OpenInvoiceNl</model>
+                <allowspecific>1</allowspecific>
+                <specificcountry>NL</specificcountry>
+            </ops_openInvoiceNl>
+            <ops_openInvoiceAt>
+                <title>Rechnung (Österreich)</title>
+                <model>Netresearch\OPS\Model\Payment\OpenInvoiceAt</model>
+                <allow_discounted_carts>0</allow_discounted_carts>
+                <allowspecific>1</allowspecific>
+                <specificcountry>AT</specificcountry>
+            </ops_openInvoiceAt>
+            <ops_cbcOnline>
+                <title>Ingenico ePayments CbcOnline</title>
+                <model>Netresearch\OPS\Model\Payment\CbcOnline</model>
+            </ops_cbcOnline>
+            <ops_giroPay>
+                <title>Ingenico ePayments GiroPay</title>
+                <model>Netresearch\OPS\Model\Payment\GiroPay</model>
+            </ops_giroPay>
+            <ops_Masterpass>
+                <title>Ingenico ePayments Masterpass</title>
+                <model>Netresearch\OPS\Model\Payment\Masterpass</model>
+            </ops_Masterpass>
+            <ops_interSolve>
+                <title>Ingenico ePayments InterSolve</title>
+                <model>Netresearch\OPS\Model\Payment\InterSolve</model>
+            </ops_interSolve>
+            <ops_cashU>
+                <title>Ingenico ePayments CashU</title>
+                <model>Netresearch\OPS\Model\Payment\CashU</model>
+            </ops_cashU>
+            <ops_paypal>
+                <title>Ingenico ePayments Paypal</title>
+                <model>Netresearch\OPS\Model\Payment\Paypal</model>
+            </ops_paypal>
+            <ops_eps>
+                <title>Ingenico ePayments Eps</title>
+                <model>Netresearch\OPS\Model\Payment\Eps</model>
+            </ops_eps>
+            <ops_pingPing>
+                <title>Ingenico ePayments PingPing</title>
+                <model>Netresearch\OPS\Model\Payment\PingPing</model>
+            </ops_pingPing>
+            <ops_fortisPayButton>
+                <title>Ingenico ePayments FortisPayButton</title>
+                <model>Netresearch\OPS\Model\Payment\FortisPayButton</model>
+            </ops_fortisPayButton>
+            <ops_directEbanking>
+                <title>Ingenico ePayments DirectEbanking</title>
+                <model>Netresearch\OPS\Model\Payment\DirectEbanking</model>
+            </ops_directEbanking>
+            <ops_cc>
+                <title>Ingenico ePayments Cc</title>
+                <model>Netresearch\OPS\Model\Payment\Cc</model>
+                <enabled_3dsecure>0</enabled_3dsecure>
+                <redirect_all>0</redirect_all>
+                <inline_types>American Express,Diners Club,Maestro,MaestroUK,MasterCard,VISA,JCB</inline_types>
+                <availableTypes>AIRPLUS,American Express,Aurore,CB,Cofinoga,Dankort,Diners Club,JCB,Maestro,MaestroUK,MasterCard,PRIVILEGE,PostFinance card,UATP,UNEUROCOM,VISA</availableTypes>
+                <show_alias_manager_info_for_guests>0</show_alias_manager_info_for_guests>
+                <alias_usage_for_new_alias>Create new Alias</alias_usage_for_new_alias>
+                <alias_usage_for_existing_alias>Use existing Alias</alias_usage_for_existing_alias>
+            </ops_cc>
+            <ops_dc>
+                <title>Ingenico ePayments DebitCard</title>
+                <model>Netresearch\OPS\Model\Payment\Debitcard</model>
+                <enabled_3dsecure>0</enabled_3dsecure>
+                <redirect_all>0</redirect_all>
+                <inline_types>Maestro,MaestroUK,MasterCard,VISA</inline_types>
+                <availableTypes>Maestro,MaestroUK,MasterCard,VISA</availableTypes>
+                <show_alias_manager_info_for_guests>0</show_alias_manager_info_for_guests>
+                <alias_usage_for_new_alias>Create new Alias</alias_usage_for_new_alias>
+                <alias_usage_for_existing_alias>Use existing Alias</alias_usage_for_existing_alias>
+            </ops_dc>
+            <ops_ingHomePay>
+                <title>Ingenico ePayments IngHomePay</title>
+                <model>Netresearch\OPS\Model\Payment\IngHomePay</model>
+            </ops_ingHomePay>
+            <ops_paysafecard>
+                <title>Ingenico ePayments Paysafecard</title>
+                <model>Netresearch\OPS\Model\Payment\Paysafecard</model>
+            </ops_paysafecard>
+            <ops_kwixoCredit>
+                <title>Ingenico ePayments Kwixo Credit</title>
+                <model>Netresearch\OPS\Model\Payment\KwixoCredit</model>
+            </ops_kwixoCredit>
+            <ops_kwixoApresReception>
+                <title>Ingenico ePayments Kwixo Apres Reception</title>
+                <model>Netresearch\OPS\Model\Payment\KwixoApresReception</model>
+            </ops_kwixoApresReception>
+            <ops_kwixoComptant>
+                <title>Ingenico ePayments Kwixo Comptant</title>
+                <model>Netresearch\OPS\Model\Payment\KwixoComptant</model>
+            </ops_kwixoComptant>
+            <ops_flex>
+                <title>Additional Ingenico ePayments payment methods</title>
+                <model>Netresearch\OPS\Model\Payment\Flex</model>
+            </ops_flex>
+            <ops_opsid>
+                <title>Existing Ingenico ePayments Transaction</title>
+                <model>Netresearch\OPS\Model\Payment\Backend\OpsId</model>
+            </ops_opsid>
+            <ops_chinaUnionPay>
+                <title>Ingenico ePayments ChinaUnionPay</title>
+                <model>Netresearch\OPS\Model\Payment\ChinaUnionPay</model>
+            </ops_chinaUnionPay>
+            <ops_BCMC>
+                <title><![CDATA[Ingenico ePayments Bancontact/MisterCash]]></title>
+                <model>Netresearch\OPS\Model\Payment\Bancontact</model>
+            </ops_BCMC>
+            <ops_payPerMail>
+                <title><![CDATA[Ingenico ePayments PayPerMail]]></title>
+                <model>Netresearch\OPS\Model\Payment\PayPerMail</model>
+                <backend_enabled>true</backend_enabled>
+            </ops_payPerMail>
+        </payment>
+    </default>
+</config>

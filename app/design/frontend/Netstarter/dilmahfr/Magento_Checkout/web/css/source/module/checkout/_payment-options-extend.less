@@ -1,0 +1,148 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+& when (@media-common = true) {
+    .opc-payment {
+        .payment-methods {
+            .payment-method {
+                &.monetico {
+                    .payment-method-title {
+                        label {
+                            .lib-vendor-prefix-display(flex);
+                            justify-content: center;
+
+                            .allowed-payment-icon {
+                                order: 2;
+                                float: none;
+                                margin-top: -10px;
+                            }
+                            span {
+                                order: 1;
+                                width: auto;
+                                position: relative;
+                                line-height: 12px;
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .opc-payment {
+        .payment-methods {
+            .payment-method {
+                &.monetico {
+                    .payment-method-title {
+                        label {
+                            .allowed-payment-icon {
+                                .payment_method_monetico_visa,
+                                .payment_method_monetico_master {
+                                    display: inline-block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .opc-payment {
+        .payment-methods {
+            .payment-method {
+                &.monetico {
+                    .payment-method-title {
+                        label {
+                            .allowed-payment-icon {
+                                .payment_method_monetico_visa,
+                                .payment_method_monetico_master {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .checkout-payment-method {
+        .block {
+            &.discount,
+            &.giftcard {
+                .payment-option-content {
+                    .actions-toolbar {
+                        .primary {
+                            button {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    .opc-payment {
+        .payment-methods {
+            .payment-method {
+                &.monetico {
+                    .payment-method-title {
+                        label {
+                            .allowed-payment-icon {
+                                margin-top: 0;
+
+                                .payment_method_monetico_visa,
+                                .payment_method_monetico_master {
+                                    display: none;
+                                }
+                            }
+                            span {
+                                line-height: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .checkout-payment-method {
+        .payments {
+            .block {
+                &.discount,
+                &.giftcard {
+                    .payment-option-content {
+                        .actions-toolbar {
+                            .primary {
+                                button {
+                                    font-size: 16px;
+                                    padding: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

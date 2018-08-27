@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Netstarter Pty Ltd.
+*
+* @category    Netstarter
+* @package     Dilmah_Theme
+* @author      Netstarter Team <contact@netstarter.com>
+* @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="header.panel">
+            <container name="special.orders.container" htmlTag="ul" htmlClass="special-orders-wrapper" before="header.links">
+                <block class="Dilmah\Theme\Block\SpecialLink" name="special-link" ifconfig="special_orders/email/active">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Submit Special Order</argument>
+                        <argument name="class" xsi:type="string" translate="true">special-order</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="free.shipping.worldwide" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">header_shipping_text</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+
+</page>

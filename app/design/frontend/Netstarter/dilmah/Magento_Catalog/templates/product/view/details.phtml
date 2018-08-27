@@ -1,0 +1,234 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$product = $block->getProduct();
+$imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+$productName = $block->stripTags($product->getName());
+$imageId = 'product_sticky_thumbnail';
+
+$brewingAvailable = !empty($product->getBrewingWater()) || !empty($product->getBrewingTemp()) || !empty($product->getBrewingTea()) || !empty($product->getBrewingVol()) || !empty($product->getBrewingDuration()) || !empty($product->getBrewingInfo());
+$recipesAvailable = !empty($product->getRecipes());
+$videosAvailable = !empty($product->getVideos());
+$reviewAvailable = false;
+$descriptionAvailable = false;
+
+$recipesTitle = '';
+$recipesClass = '';
+if ($recipesAvailable && $videosAvailable):
+    $recipesTitle = __('Recipes and Videos');
+    $recipesClass = 'full';
+elseif ($recipesAvailable && !$videosAvailable):
+    $recipesTitle = __('Recipes');
+elseif ($videosAvailable && !$recipesAvailable):
+    $recipesTitle = __('Videos');
+endif;
+
+$detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml');
+$layout = $block->getLayout();
+foreach ($detailedInfoGroup as $name):
+    $html = $layout->renderElement($name);
+    if (!trim($html)) {
+        continue;
+    }
+    if($name == 'product.info.description'):
+        $detailHtml = $html;
+        $descriptionAvailable = true;
+    elseif($name == 'reviews.tab'):
+        $reviewHtml = $html;
+        $alias = $layout->getElementAlias($name);
+        $reviewTitle = $block->getChildData($alias, 'title');
+        $reviewAvailable = true;
+    endif;
+endforeach;
+
+$recentHtml = $block->getLayout()->createBlock('Magento\Reports\Block\Product\Widget\Viewed')->setTemplate('widget/viewed/content/viewed_grid.phtml')->toHtml();
+$upsellHtml = $block->getChildHtml('product.info.upsell');
+?>
+<div class="sticky-container">
+    <div class="product-info">
+        <div class="produt-image">
+            <img src="<?php echo $imageHelper->init($product, $imageId)->getUrl(); ?>" alt="<?php echo $productName; ?>"/>
+        </div>
+        <div class="product-name">
+            <?php echo $productName; ?>
+        </div>
+        <div class="social-sharing">
+            <div class="social-share">
+                <?php echo $block->getChildHtml('social.sharer') ?>
+            </div>
+        </div>
+    </div>
+    <div class="section-navigator">
+        <ul>
+            <?php if ($descriptionAvailable):?>
+                <li><a class="action description" href="#description"><?php echo __('Description') ?></a></li>
+            <?php endif; ?>
+            <?php if ($brewingAvailable): ?>
+                <li><a class="action brewing" href="#brewing"><?php echo __('Brewing Information') ?></a></li>
+            <?php endif; ?>
+            <?php if ($reviewAvailable): ?>
+                <li><a class="action reviews" href="#reviews"><?php echo __('Reviews') ?></a></li>
+            <?php endif; ?>
+            <?php if (!empty(trim($recentHtml)) || !empty(trim($upsellHtml))): ?>
+                <li><a class="action updsell" href="#updsell"><?php echo __('You might also like') ?></a></li>
+            <?php endif; ?>
+            <?php if ($recipesAvailable || $videosAvailable): ?>
+                <li><a class="action recipe <?php echo $recipesClass ?>" href="#recipe"><?php echo $recipesTitle ?></a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</div>
+<div class="product info detailed">
+    <?php  ?>
+    <div class="product data items details-tabs" data-mage-init='{"productDetails":{"openedState":"active"}}'>
+        <?php if ($descriptionAvailable):?>
+            <div class="data item title"
+                 aria-labeledby="tab-label-description-title"
+                 data-role="collapsible" id="tab-label-description">
+                <a class="data switch"
+                   tabindex="-1"
+                   data-toggle="switch"
+                   href="#description"
+                   id="tab-label-description-title">
+                    <span class="show-for-desktop"><?php /* @escapeNotVerified */ echo __('About the Product'); ?></span><span class="show-for-mobile"><?php /* @escapeNotVerified */ echo __('Description') ?></span>
+                </a>
+            </div>
+            <div class="data item content" id="description" data-role="content">
+                <div class="block-title title show-for-mobile">
+                    <strong id="block-upsell-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('About the Product'); ?></strong>
+                </div>
+                <?php /* @escapeNotVerified */ echo $detailHtml; ?>
+                <?php if ($product->getCaffeineLevel()): ?>
+                    <div class="product caffeine-level"><label><?php echo __('Caffeine Level') ?>: </label><?php echo $product->getAttributeText('caffeine_level') ?></div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($brewingAvailable): ?>
+            <div class="data item title"
+                 aria-labeledby="tab-label-brewing-title"
+                 data-role="collapsible" id="tab-label-brewing">
+                <a class="data switch"
+                   tabindex="-1"
+                   data-toggle="switch"
+                   href="#brewing"
+                   id="tab-label-brewing-title">
+                    <?php /* @escapeNotVerified */ echo __('Brewing Information'); ?>
+                </a>
+            </div>
+            <div class="data item content" id="brewing" data-role="content">
+                <div class="block-title title show-for-mobile">
+                    <strong id="block-upsell-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('Brewing Information'); ?></strong>
+                </div>
+                <ul class="brewing-steps">
+                    <?php if($product->getBrewingWater()): ?>
+                        <li class="step-1"><span></span><div><?php echo $product->getBrewingWater() ?></div></li>
+                    <?php endif; ?>
+                    <?php if($product->getBrewingTemp()): ?>
+                        <li class="step-2"><span></span><div><?php echo $product->getBrewingTemp() ?></div></li>
+                    <?php endif; ?>
+                    <?php if($product->getBrewingTea()): ?>
+                        <li class="step-3"><span></span><div><?php echo $product->getBrewingTea() ?></div></li>
+                    <?php endif; ?>
+                    <?php if($product->getBrewingVol()): ?>
+                        <li class="step-4"><span></span><div><?php echo $product->getBrewingVol() ?></div></li>
+                    <?php endif; ?>
+                    <?php if($product->getBrewingDuration()): ?>
+                        <li class="step-5"><span></span><div><?php echo $product->getBrewingDuration() ?></div></li>
+                    <?php endif; ?>
+                </ul>
+                <?php if($product->getBrewingInfo()): ?>
+                    <div class="brewing-info">
+                        <?php echo nl2br($product->getBrewingInfo()) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($reviewAvailable): ?>
+            <div class="data item title"
+                 aria-labeledby="tab-label-reviews-title"
+                 data-role="collapsible" id="tab-label-reviews">
+                <a class="data switch"
+                   tabindex="-1"
+                   data-toggle="switch"
+                   href="#reviews"
+                   id="tab-label-reviews-title">
+                    <?php /* @escapeNotVerified */ echo $reviewTitle; ?>
+                </a>
+            </div>
+            <div class="data item content" id="reviews" data-role="content" >
+                <div class="block-title title show-for-mobile">
+                    <strong id="block-upsell-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo $reviewTitle; ?></strong>
+                </div>
+                <?php /* @escapeNotVerified */ echo $reviewHtml; ?>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty(trim($upsellHtml))): ?>
+            <div class="data item title"
+                 aria-labeledby="tab-label-updsell-title"
+                 data-role="collapsible" id="tab-label-updsell">
+                <a class="data switch"
+                   tabindex="-1"
+                   data-toggle="switch"
+                   href="#updsell"
+                   id="tab-label-updsell-title">
+                    <?php /* @escapeNotVerified */ echo __('You might also like'); ?>
+                </a>
+            </div>
+
+            <div class="data item content product-slider-carousel product-items widget-new-grid" id="updsell" data-role="content" >
+                <?php /* @escapeNotVerified */ echo $upsellHtml ?>
+            </div>
+
+        <?php endif; ?>
+        <?php if (!empty(trim($recentHtml))): ?>
+            <div class="data item title"
+                 aria-labeledby="tab-label-updsell-title"
+                 data-role="collapsible" id="tab-label-updsell">
+                <a class="data switch"
+                   tabindex="-1"
+                   data-toggle="switch"
+                   href="#updsell"
+                   id="tab-label-updsell-title">
+                    <?php /* @escapeNotVerified */ echo __('Recently Viewed'); ?> <span class="show-for-desktop"><?php /* @escapeNotVerified */ echo __('Products'); ?></span>
+                </a>
+            </div>
+
+            <div class="data item content product-slider-carousel product-items widget-new-grid" id="updsell" data-role="content">
+                <?php /* @escapeNotVerified */ echo $recentHtml ?>
+                </div>
+
+        <?php endif; ?>
+        <?php if ($recipesAvailable || $videosAvailable): ?>
+            <div class="data item title"
+                 aria-labeledby="tab-label-recipe-title"
+                 data-role="collapsible" id="tab-label-recipe">
+                <a class="data switch"
+                   tabindex="-1"
+                   data-toggle="switch"
+                   href="#recipe"
+                   id="tab-label-recipe-title">
+                    <?php /* @escapeNotVerified */ echo $recipesTitle; ?>
+                </a>
+            </div>
+            <div class="data item content" id="recipe" data-role="content">
+                <div class="block-title title show-for-mobile">
+                    <strong id="block-upsell-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo $recipesTitle; ?></strong>
+                </div>
+                <?php if($recipesAvailable): ?>
+                    <div class="recipe-section">
+                        <?php echo $this->helper('Magento\Catalog\Helper\Output')->productAttribute($product, $product->getRecipes(), 'recipes') ?>
+                    </div>
+                <?php endif;?>
+                <?php if($videosAvailable): ?>
+                    <div class="video-section">
+                        <?php echo $product->getVideos() ?>
+                    </div>
+                <?php endif;?>
+            </div>
+        <?php endif;?>
+    </div>
+</div>

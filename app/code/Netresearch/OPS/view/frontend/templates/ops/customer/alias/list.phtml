@@ -1,0 +1,58 @@
+<?php
+/**
+ * @category   OPS
+ * @package    Netresearch_OPS
+ * @author     Thomas Birke <thomas.birke@netresearch.de>
+ * @author     Michael Lühr <michael.luehr@netresearch.de>
+ * @copyright  Copyright (c) 2012 Netresearch GmbH & Co. KG
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * @var $this \Netresearch\OPS\Block\Alias\AliasList
+ */
+?>
+<?php $aliases = $this->getAliases(); ?>
+<?php echo $this->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+<?php echo $this->getChildHtml('pager'); ?>
+<?php if(count($aliases)): ?>
+    <table class="data-table" id="ops-payment-information-table">
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo __('Payment method') ?></th>
+                <th><?php echo __('Credit Card Type') ?></th>
+                <th><?php echo __('Card Number/Account Number') ?></th>
+                <th><?php echo __('Expiration Date') ?></th>
+                <th><?php echo __('Card Holder') ?></th>
+                <th><?php echo __('State') ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $_odd = ''; ?>
+            <?php foreach ($aliases as $alias): ?>
+                <?php $deleteUrl = $this->getAliasDeleteUrl($alias->getId()); ?>
+                <tr>
+                    <td><?php echo $this->getMethodName($alias->getPaymentMethod()); ?></td>
+                    <td><?php echo $this->escapeHtml($alias->getBrand()); ?></td>
+                    <td><?php echo $this->escapeHtml($alias->getPseudoAccountOrCcNo()); ?></td>
+                    <td><?php echo $this->escapeHtml($alias->getExpirationDate()); ?></td>
+                    <td><?php echo $this->escapeHtml($alias->getCardHolder()); ?></td>
+                    <td><?php echo $this->escapeHtml(__($alias->getState())); ?></td>
+                    <td><a href="<?php echo $deleteUrl ?>"><?php echo __('Delete') ?></a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p><?php echo __('You did not save any payment information, yet.'); ?></p>
+<?php endif; ?>
+<?php echo $this->getChildHtml('pager'); ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo __('Back') ?></a></p>
+</div>
+

@@ -1,0 +1,72 @@
+<?php
+/**
+ * Netresearch_OPS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to
+ * newer versions in the future.
+ *
+ * @copyright Copyright (c) 2015 Netresearch GmbH & Co. KG (http://www.netresearch.de/)
+ * @license   Open Software License (OSL 3.0)
+ * @link      http://opensource.org/licenses/osl-3.0.php
+ */
+
+/**
+ * @category Payment provider
+ * @package  Netresearch_OPS
+ * @author   Paul Siedler <paul.siedler@netresearch.de>
+ */
+
+/** @var $this \Netresearch\OPS\Block\Form\Cc */
+?>
+
+<style>
+    .ops_tokenization_frame {
+        height: 475px;
+        width: 100%;
+        border: none;
+    }
+</style>
+
+<?php $_code = $this->getMethodCode(); ?>
+<?php $_session = $this->getBackendSessionQuote(); ?>
+<?php $storeId = $_session->getQuote()->getStoreId(); ?>
+
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?php /* @noEscape */
+echo $_code; ?>"
+          style="display:none">
+    <div class="admin__field">
+        <span>
+            <p><?php echo __('Please use this method for the following brands only:') . '<br>'; ?></p>
+            <p><?php echo implode(', ', $this->getAliasBrands()), '.' ?></p>
+        </span>
+        <span>
+            <p><?php echo __('Payment using 3D secure is not supported.'); ?></p>
+        </span>
+        <div class="admin__field-control">
+            <input style="display:none;" name="payment[<?php echo $_code; ?>][alias]" value=""
+                   id="<?php echo $_code ?>_alias_input">
+            <iframe id="ops_iframe_<?php echo $_code ?>" class="ops_tokenization_frame" style="display: none;"
+                    src="about:blank"></iframe>
+            <div id="<?php echo $_code ?>_loader" style="display: none; font-weight: bold;"></div>
+        </div>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    require([
+        'Netresearch_OPS/js/view/payment/method/<?php echo $_code; ?>'
+    ], function (method) {
+//<![CDATA[
+        var payment = new method();
+//]]>
+    });
+</script>

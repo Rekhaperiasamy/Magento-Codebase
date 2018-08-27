@@ -1,0 +1,24 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Customer
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var \Dilmah\Customer\Block\Dashboard $block */
+$block->prepareTemplateData();
+?>
+<div class="dashboard-info">
+    <ul>
+        <li class="name">
+            <div class="icon"></div>
+            <div class="account-details"><?php /* @escapeNotVerified */ echo $block->getCustomerFirstName() ?><span><?php echo $block->getCustomerEmail() ?></span></div>
+        </li>
+    </ul>
+</div>

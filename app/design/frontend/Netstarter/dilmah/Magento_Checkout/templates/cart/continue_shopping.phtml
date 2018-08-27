@@ -1,0 +1,14 @@
+<?php
+// @codingStandardsIgnoreFile
+/**  @var $block \Magento\Checkout\Block\Cart */
+?>
+<?php if ($block->getContinueShoppingUrl()): ?>
+   <div class="continue-shopping-wrap">
+       <a class="action continue"
+          href="<?php echo $block->escapeUrl($block->getContinueShoppingUrl()) ?>"
+          title="<?php echo $block->escapeHtml(__('Continue Shopping')); ?>">
+           <span><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></span>
+       </a>
+   </div>
+
+<?php endif; ?>

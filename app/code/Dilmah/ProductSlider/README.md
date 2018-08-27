@@ -1,0 +1,1 @@
+Ns_ProductSlider module provides ability to add product sliders based on category in Magento 2 stores.

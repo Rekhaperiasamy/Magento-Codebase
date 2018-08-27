@@ -1,0 +1,43 @@
+<?php
+/**
+ * Blackbird Monetico Module
+ *
+ * NOTICE OF LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@bird.eu so we can send you a copy immediately.
+ *
+ * @category    Blackbird
+ * @package     Blackbird_Monetico
+ * @copyright   Copyright (c) 2018 Blackbird (https://black.bird.eu)
+ * @author      Blackbird Team
+ * @license     https://store.bird.eu/license/
+ * @support     help@bird.eu
+ */
+?>
+<?php
+/**
+ * @see \Magento\Backend\Block\Template
+ */
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+/** @var \Magento\Store\Model\StoreManager $storeManager */
+$storeManager = $objectManager->get('Magento\Store\Model\StoreManager');
+
+$params = [
+    'date' => $block->getVar('global/install/date'),
+    'time' => time(),
+    'serverip' => $_SERVER['SERVER_ADDR'],
+    'module_name' => 'monetico 2',
+];
+
+/** @var \Magento\Store\Model\Store $store */
+foreach ($storeManager->getStores() as $store) {
+    $params['store_' . $store->getCode()] = $store->getBaseUrl();
+}
+
+$query = http_build_query($params);
+
+?>
+<div id="blackbird-tracker">
+    <img src="//black.bird.eu/images/distant/blackbird-tracker.gif?<?= $query ?>" alt="blackbird-tracker"/>
+</div>

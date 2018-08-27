@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <ntb>
+                <active>0</active>
+                <model>Dilmah\Payments\Model\Ntb</model>
+                <order_status>paid</order_status>
+                <title>American Express</title>
+                <allowspecific>0</allowspecific>
+                <instructions>You will be redirected to a Hosted Payment page to complete your order</instructions>
+                <sort_order>2</sort_order>
+                <group>dilmah_payments</group>
+            </ntb>
+            <global_pay>
+                <active>0</active>
+                <model>Dilmah\Payments\Model\GlobalPay</model>
+                <order_status>paid</order_status>
+                <title>Visa/Master</title>
+                <allowspecific>0</allowspecific>
+                <instructions>You will be redirected to a Hosted Payment page to complete your order</instructions>
+                <terms_block_id>global_pay_terms</terms_block_id>
+                <sort_order>3</sort_order>
+                <group>dilmah_payments</group>
+                <secure_secret backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </global_pay>
+            <paypal_express>
+                <sort_order>1</sort_order>
+            </paypal_express>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="header.content.nav.row" remove="true"/>
+        <referenceContainer name="header.content.wrapper" remove="true"/>
+        <referenceContainer name="header-wrapper">
+            <container name="checkout.header.content.wrapper" htmlTag="div" htmlClass="chcekout-header-content-wrapper" after="logo">
+                <container name="chcekout.header.content.row" htmlTag="div" htmlClass="checkout-header-row-wrapper">
+                    <block class="Magento\Cms\Block\Block" name="checkout.header.links" >
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">checkout_top_links</argument>
+                        </arguments>
+                    </block>
+                </container>
+                <container name="header.content.nav.row" htmlTag="div" htmlClass="header-navigation-wrapper" after="header.content.category.row"/>
+            </container>
+        </referenceContainer>
+        <move element="logo" destination="header-wrapper"/>
+        <referenceBlock name="NLDelivery" remove="true"/>
+        <!--<referenceBlock name="catalog.topnav" remove="true"/>-->
+        <!--<referenceBlock name="top.search" remove="true"/>-->
+        <referenceContainer name="header.content.nav.row" remove="true"/>
+        <referenceContainer name="header.panel.wrapper" remove="true"/>
+        <referenceBlock name="catalog.mainnav" remove="true"/>
+        <referenceBlock name="minicart" remove="true"/>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Checkout</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Checkout</item>
+                    <item name="label" xsi:type="string" translate="true">Checkout</item>
+                    <item name="link" xsi:type="string">/checkout</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+           <block class="Magento\Framework\View\Element\Template" name="static_block" template="Magento_Theme::block/summary.phtml" cacheable="false" />
+        </referenceContainer>
+        <referenceBlock name="top.search" remove="true"/>
+        <referenceBlock name="footer.wrapper" remove="true"/>
+        <!--<referenceBlock name="breadcrumbs" remove="true"/>-->
+        <container name="footer-container-checkout" as="footer-checkout" label="Page Footer Container" htmlTag="footer" htmlClass="footer">
+            <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="content">
+                <block class="Magento\Theme\Block\Html\Footer" name="copyright.txt" template="Dilmah_Theme::html/copyright.phtml">
+                    <block class="Magento\Cms\Block\Block" name="bottom.links.block" >
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">bottom_links_section</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </container>
+        </container>
+
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <!--<item name="component" xsi:type="string">uiComponent</item>-->
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="afterMethods" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="promo-giftcard-title" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Dilmah_Checkout/js/view/promogiftcard/title</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-address-fieldset" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="telephone" xsi:type="array">
+                                                                    <item name="validation" xsi:type="array">
+                                                                        <item name="validate-phone-number" xsi:type="string">true</item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="country_id" xsi:type="array">
+                                                                    <item name="validation" xsi:type="array">
+                                                                        <item name="validate-country-section-1" xsi:type="string">true</item>
+                                                                        <item name="validate-country-section-2" xsi:type="string">true</item>
+                                                                        <item name="validate-country-section-3" xsi:type="string">true</item>
+                                                                        <item name="validate-country-section-4" xsi:type="string">true</item>
+                                                                        <item name="validate-country-section-5" xsi:type="string">true</item>
+																		<item name="validate-country-section-6" xsi:type="string">true</item>
+																		<item name="validate-country-section-7" xsi:type="string">true</item>
+								                                </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <!--<item name="sidebar" xsi:type="array">-->
+                                    <!--<item name="children" xsi:type="array">-->
+                                        <!--<item name="summary" xsi:type="array">-->
+                                            <!--<item name="children" xsi:type="array">-->
+                                                <!--<item name="totals" xsi:type="array">-->
+                                                    <!--<item name="children" xsi:type="array">-->
+                                                        <!--<item name="grand-total" xsi:type="array">-->
+                                                            <!--<item name="tax" xsi:type="array">-->
+                                                                <!--<item name="component"  xsi:type="string">Magento_Tax/js/view/checkout/summary/totals/grand-totals/tax</item>-->
+                                                                <!--&lt;!&ndash;<item name="config" xsi:type="array">&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;<item name="title" xsi:type="string" translate="true">Tax</item>&ndash;&gt;-->
+                                                                <!--&lt;!&ndash;</item>&ndash;&gt;-->
+                                                            <!--</item>-->
+                                                        <!--</item>-->
+                                                    <!--</item>-->
+                                                <!--</item>-->
+                                            <!--</item>-->
+                                        <!--</item>-->
+                                    <!--</item>-->
+                                <!--</item>-->
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

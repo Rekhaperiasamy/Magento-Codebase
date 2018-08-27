@@ -1,0 +1,1255 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables
+//  _____________________________________________
+
+@checkout-payment-option-title__border: @checkout-payment-method-title__border;
+@checkout-payment-option-title__color: @link__color;
+@checkout-payment-option-title__padding: @checkout-payment-method-title__padding;
+@checkout-payment-option-title-mobile__padding: @checkout-payment-method-title-mobile__padding;
+
+@checkout-payment-option-title-icon__font-size: 32px;
+@checkout-payment-option-title-icon__line-height: 16px;
+@checkout-payment-option-title-icon__margin: 0;
+@checkout-payment-option-title-icon__color: @minicart-icons-color;
+@checkout-payment-option-title-icon__hover__color: @primary__color;
+
+@checkout-payment-option-content__padding__xl: @checkout-payment-method-content__padding__xl;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .checkout-payment-method {
+        .discount-title-wrap {
+            width: 100%;
+            margin-bottom: 25px;
+            //margin-top: 30px;
+            //border-top: solid 1px @color-gray-light0;
+            padding-top: 30px;
+
+            /*.discount-title {
+                &:before {
+                    margin: -7px 10px 0px 0px;
+                }
+            }*/
+        }
+
+        .block {
+            background: @color-grey-border;
+            &.discount {
+                width: 100%;
+                float: left;
+                padding: 20px;
+                margin: 0px;
+                .payment-option-title {
+                    padding: 0px;
+                    border: none;
+                    width: 100%;
+                    .action-toggle {
+                        .lib-css(color, @color-gray-darken1);
+                        .lib-font-size(16px);
+                        &:after {
+                            content: '';
+                        }
+                    }
+                }
+                .payment-option-content {
+                    padding:0px;
+                    width: 100%;
+
+                    .payment-option-inner {
+                        display: inline-block;
+                        vertical-align: top;
+                        width: 65%;
+                        margin: 0px 2% 0px 0px;
+                        padding-left: 0px;
+                    }
+
+                    .messages {
+                        width: 100%;
+                    }
+
+                    .actions-toolbar {
+                        display: inline-block;
+                        width: 32%;
+                        float: right;
+                        .primary {
+                            button {
+                                .lib-button-primary();
+                                max-width: 200px;
+                                font-size: 18px;
+                                font-family: @font-name__signika_semibold;
+                                width:100%;
+                            }
+                        }
+                    }
+
+                }
+            }
+            &.giftcard {
+                width: 100%;
+                float: right;
+                padding: 20px;
+                margin: 0px;
+                .payment-option-title {
+                    padding: 0px;
+                    width: 95%;
+                    float: left;
+                    border: none;
+                    .action-toggle {
+                        .lib-css(color, @color-gray-darken1);
+                        .lib-font-size(16px);
+                        padding-bottom: 0px;
+                        &:after {
+                            content: '';
+                        }
+                    }
+                }
+				
+                .payment-option-content {
+                    padding:0px;
+                    width: 100%;
+                    float: right;
+                    .payment-option-inner {
+                        display: inline-block;
+                        vertical-align: top;
+                        width: 65%;
+                        margin: 0px 2% 0px 0px;
+                        .field {
+                            margin: 0px;
+                        }
+                    }
+
+                    .actions-toolbar {
+                        display: inline-block;
+                        width: 32%;
+                        float: right;
+                        .primary {
+                            button {
+                                .lib-button-primary();
+                                max-width: 200px;
+                                font-size: 18px;
+                                font-family: @font-name__signika_semibold;
+                                margin: 0px;
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        
+		 .shippinginfo strong {
+				   display:block;
+				}
+
+        .payment-option {
+            &.opc-payment-additional {
+                .payment-option-content {
+                    .payment-option-inner {
+                        padding-left: 40px;
+                    }
+                }
+            }
+            &._active {
+                .payment-option-title {
+                    .action-toggle {
+                        &:after {
+                            content: @icon-up;
+                        }
+                    }
+                }
+            }
+            &._collapsible {
+                .payment-option-title {
+                    cursor: pointer;
+                }
+                .payment-option-content {
+                    display: none;
+                }
+            }
+        }
+
+        .payment-option-title {
+
+
+            .action-toggle {
+                .lib-css(color, @checkout-payment-option-title__color);
+                .lib-icon-font(
+                @icon-down,
+                @_icon-font-size: @checkout-payment-option-title-icon__font-size,
+                @_icon-font-line-height: @checkout-payment-option-title-icon__line-height,
+                @_icon-font-color: @checkout-payment-option-title-icon__color,
+                @_icon-font-color-hover: @checkout-payment-option-title-icon__hover__color,
+                @_icon-font-color-active: @checkout-payment-option-title-icon__color,
+                @_icon-font-margin: @checkout-payment-option-title-icon__margin,
+                @_icon-font-position: after
+                );
+            }
+        }
+
+        .payment-option-content {
+            .lib-css(padding, 0);
+        }
+
+        .payment-option-inner {
+            margin: 0 0 20px;
+            line-height: 30px;
+        }
+
+        .credit-card-types {
+            padding: 0;
+            .item {
+                display: inline-block;
+                list-style: none;
+                margin: 0 @indent__xs 0 0;
+                vertical-align: top;
+                &._active {
+                    font-weight: @font-weight__bold;
+                    img {
+                        -webkit-filter: grayscale(0%);
+                        filter: grayscale(0%);
+                        filter: none;
+                    }
+                }
+                &._inactive {
+                    opacity: 0.4;
+                    filter: alpha(opacity=40);
+                }
+                span {
+                    display: inline-block;
+                    padding-top: 6px;
+                    vertical-align: top;
+                }
+            }
+            img {
+                -webkit-filter: grayscale(100%); // For Webkit browsers
+                -webkit-transition: all .6s ease; // Fade to color for Chrome and Safari
+                filter: grayscale(100%);
+                filter: gray; // For IE 6 - 9
+            }
+        }
+
+        .ccard {
+            .legend {
+                &:extend(.abs-visually-hidden all);
+            }
+            .fields {
+                > .year {
+                    padding-left: @indent__xs;
+                }
+                .select {
+                    padding-left: @indent__xs;
+                    padding-right: @indent__xs;
+                }
+            }
+            .month {
+                .select {
+                    width: 140px;
+                }
+            }
+            .year {
+                .select {
+                    width: 80px;
+                }
+            }
+            .number {
+                .input-text {
+                    width: 225px;
+                }
+            }
+
+            > .field.cvv {
+                > .control {
+                    display: inline-block;
+                    padding-right: @indent__base;
+                }
+            }
+            .cvv {
+                .label {
+                    display: block;
+                }
+                .input-text {
+                    width: 65px;
+
+                }
+            }
+
+            &.fieldset {
+                > .field {
+                    .fields.group.group-2 {
+                        .field {
+                            width: auto !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .opc-payment {
+        width: 100%;
+        float: left;
+        margin-top: 100px;
+
+
+        .payment-method-title {
+            .lib-font-size(20px);
+            .lib-css(font-family, @font-name__signika_semibold);
+            .lib-icon-font(
+                @_icon-font-position: before,
+                @_icon-font-color: @color-blue1,
+                @_icon-font-content:@icon-Checkout_payment,
+                @_icon-font-size: 17px
+            );
+            width: 100%;
+
+            &:before {
+                margin-right: 10px;
+            }
+        }
+
+
+
+        .payment-methods {
+            .payment-method {
+                width: 100%;
+                background: @color-gray-light4;
+                float: left;
+                .payment-method-title {
+                    border-top: solid 1px @color-white;
+                    text-align: center;
+                    height: 50px;
+                    float: left;
+                    width: 100%;
+                    cursor: pointer;
+
+                    .lib-icon-font(
+                        @_icon-font-position: after,
+                        @_icon-font-color: @color-gray-darken3,
+                        @_icon-font-content:@icon-payment-expand,
+                        @_icon-font-size: 15px
+                    );
+
+                    &:after {
+                        position: absolute;
+                        top: 10px;
+                        right: 20px;
+                        font-weight: 600;
+                    }
+
+                    &:before {
+                        content: normal;
+                    }
+
+                    label {
+                        span {
+                            width: 100%;
+                            height: auto;
+                            background: none;
+                            line-height: 50px;
+                            margin: 0px;
+                            .lib-font-size(16px);
+                            .lib-css(font-family, @font-name__signika_semibold);
+
+
+                        }
+                    }
+                }
+
+                .payment-method-content {
+                    background: @color-white;
+                    padding:10px 0 30px 0;
+                    float: left;
+                    width: 100%;
+
+                    .actions-toolbar {
+                        .primary {
+                            button {
+                                padding-left: 40px;
+                                padding-right: 40px;
+                            }
+                        }
+                    }
+
+                    .terms-conditions {
+                        width: 100%;
+                        float: left;
+                        border: solid 1px @color-gray-light6;
+                        margin: 20px 0 0;
+                        padding: 20px;
+                        height: 150px;
+                        overflow-y: scroll;
+
+                        h4 {
+                            width: 100%;
+                            float: left;
+                            margin-top: 0px;
+                        }
+                        p,
+                        strong{
+                            .lib-css(color, @color-gray-darken3);
+                        }
+
+                        p {
+                            padding-bottom: 20px;
+                        }
+
+                        ul {
+                            li {
+                                list-style: disc;
+                            }
+                        }
+
+                    }
+
+                    .terms-option {
+                        &.choice {
+                            width: 100%;
+                            float: left;
+                            margin-top: 20px;
+                            
+                            .label {
+                                top:inherit; 
+                                left:inherit;
+                                float: left;
+                                display: block;
+                                width: 115px;
+                                height: 30px;
+                                span {
+                                    width: auto;
+                                }
+                            }
+
+                            a {
+                                float: left;
+                                margin-top: 3px; 
+                            }
+
+                            .validate-error {
+                                float: left;
+                                width: 100%;
+                                margin-top: 20px !important;
+
+                                .lib-message-icon-inner(error);
+                            }
+                        }
+                    }
+                }
+
+                &._active {
+                    .payment-method-title {
+                        .lib-css(color, @color-white);
+                        background: url('../images/leaf-bg-repeater.png') 0px 0px repeat @color-yellow3;
+
+                        .lib-icon-font(
+                            @_icon-font-position: after,
+                            @_icon-font-color: @color-white,
+                            @_icon-font-content:@icon-payment-minimize,
+                            @_icon-font-size: 15px
+                        );
+
+                        &:after {
+                            position: absolute;
+                            top: 10px;
+                            right: 20px;
+                            font-weight: 600;
+                        }
+                    }
+
+
+                    .payment-method-content {
+                        .payment-method-billing-address {
+                            .choice {
+                                input[type="checkbox"] {
+                                    + label {
+                                        span {
+                                            width: 100%; line-height: 30px;
+                                            padding-left: 40px;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .billing-address-details {
+                                padding:50px 0px 0px 0px;
+                                width: 100%;
+                                float: left;
+                            }
+
+                            .billing-address-form {
+                                .fieldset {
+                                    > .field {
+                                        max-width: 385px;
+                                        width: 100%;
+                                        float: left;
+                                        clear: both;
+
+                                        &.choice {
+                                            float: left;
+                                            width: 100%;
+                                            margin-bottom: 20px;
+                                            height: 30px;
+                                        }
+
+                                        &.street {
+                                            .control {
+                                                .additional {
+                                                    .control {
+                                                        padding-top: 10px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .actions-toolbar {
+                                margin: 30px 0;
+                                float: left;
+                                .primary {
+                                    .action {
+                                        &.action-update {
+                                            .lib-button-primary();
+                                            max-width: 140px;
+                                            font-size: 18px;
+                                            font-family: @font-name__signika_semibold;
+                                        }
+
+                                        &.action-cancel {
+                                            .lib-button-primary();
+                                            .lib-button-revert-secondary-color();
+                                            max-width: 140px;
+                                            font-size: 18px;
+                                            font-family: @font-name__signika_semibold;
+                                            margin: 0;
+                                            padding: 6px 15px;
+                                            margin-right: 10px;
+                                            text-decoration: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                &.paypal {
+                    .payment-method-title {
+                        label {
+                            span {
+                                &:after {
+                                    background: url('../images/logo-paypal.png') left bottom no-repeat;
+                                    content: '';
+                                    width: 60px;
+                                    height: 26px;
+                                    margin-left: 5px;
+                                    display: inline-block;
+                                    top: 6px;
+                                    right: 0px;
+                                    line-height: 50px;
+                                    position: relative;
+                                }
+                            }
+
+                            .payment-icon {
+                                display: none;
+                            }
+
+                        }
+                    }
+
+                    .payment-method-content {
+                        .fieldset {
+                            .payment-icon {
+                                display: none;
+                            }
+                            .payment-method-note {
+                                .lib-icon-font(
+                                    @_icon-font-position: before,
+                                    @_icon-font-color: @color-gray-light2,
+                                    @_icon-font-content:@icon-cc-paypal,
+                                    @_icon-font-size: 25px
+                                );
+
+                                span {
+                                    padding-left: 10px;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                &.amex {
+                    .payment-method-title {
+                        label {
+                            span {
+                                margin-top: -5px;
+                                &:after {
+                                    background: url('../images/logo-amex.png') left bottom no-repeat;
+                                    content: '';
+                                    width: 35px;
+                                    height: 35px;
+                                    margin-left: 9px;
+                                    display: inline-block;
+                                    top: 12px;
+                                    right: 0;
+                                    position: relative;
+                                }
+                            }
+                        }
+                    }
+
+                    .payment-method-content {
+                        .payment-method-billing-address {
+                            .choice {
+                                input[type="checkbox"] {
+                                + label {
+                                    span {
+                                        width: 100%; line-height: 30px;
+                                        padding-left: 40px;
+                                    }
+                                }
+                                }
+                            }
+
+                            .billing-address-details {
+                                padding:50px 0px 0px 0px;
+                            }
+
+                            .billing-address-form {
+                                .fieldset {
+                                    > .field {
+                                        max-width: 385px;
+                                        width: 100%;
+                                        float: left;
+                                        clear: both;
+
+                                        &.choice {
+                                            float: left;
+                                            width: 100%;
+                                            margin-bottom: 20px;
+                                            height: 30px;
+                                        }
+
+                                        &.street {
+                                           .control {
+                                               .additional {
+                                                   .control {
+                                                       padding-top: 10px;
+                                                   }
+                                               }
+                                           }
+                                        }
+                                    }
+                                }
+                            }
+                            .actions-toolbar {
+                                margin: 30px 0;
+                                .primary {
+                                    .action {
+                                        &.action-update {
+                                                .lib-button-primary();
+                                                max-width: 140px;
+                                                font-size: 18px;
+                                                font-family: @font-name__signika_semibold;
+                                        }
+
+                                        &.action-cancel {
+                                            .lib-button-primary();
+                                            .lib-button-revert-secondary-color();
+                                            max-width: 140px;
+                                            font-size: 18px;
+                                            font-family: @font-name__signika_semibold;
+                                            margin: 0;
+                                            padding: 6px 15px;
+                                            margin-right: 10px;
+                                            text-decoration: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        p {
+                            &.redirect {
+                                line-height: 30px;
+                                .lib-icon-font(
+                                    @_icon-font-position: before,
+                                    @_icon-font-color: @color-gray-light2,
+                                    @_icon-font-content:@icon-cc-amex,
+                                    @_icon-font-size: 25px
+                                );
+
+                                &:before {
+                                    padding-right: 10px;
+                                }
+                            }
+                        }
+
+                        .lock {
+                            padding-top: 30px;
+                            float: left;
+
+                            .lib-icon-font(
+                                @_icon-font-position: before,
+                                @_icon-font-color: @color-gray-light2,
+                                @_icon-font-content:@icon-private,
+                                @_icon-font-size: 20px
+                            );
+
+                            &:before {
+                                padding-right: 10px;
+                                margin-top: -5px;
+                            }
+
+                            span {
+                                margin-top: 7px;
+                                line-height:30px;
+                            }
+                            a {
+                                display: inline-block;
+                                line-height:30px;
+                                padding-left: 5px;
+                                .lib-css(color, @color-blue2);
+                                &:hover {
+                                    text-decoration: none;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                &.creditcard {
+                    .payment-method-title {
+                        label {
+                            span {
+                                margin-top: -5px;
+                                &:after {
+                                    background: url('../images/logo-visa-mc.png') left bottom no-repeat;
+                                    content: '';
+                                    width: 100px;
+                                    height: 35px;
+                                    margin-left: 9px;
+                                    display: inline-block;
+                                    top: 12px;
+                                    right: 0;
+                                    position: relative;
+                                }
+                            }
+                        }
+                    }
+
+                    .payment-method-content {
+                        .payment-method-billing-address {
+                            .choice {
+                                input[type="checkbox"] {
+                                    + label {
+                                        span {
+                                            width: 100%; line-height: 30px;
+                                            padding-left: 40px;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .billing-address-details {
+                                padding:50px 0px 0px 0px;
+                            }
+
+                            .billing-address-form {
+                                .fieldset {
+                                    > .field {
+                                        max-width: 385px;
+                                        width: 100%;
+                                        float: left;
+                                        clear: both;
+
+                                        &.choice {
+                                            float: left;
+                                            width: 100%;
+                                            margin-bottom: 20px;
+                                            height: 30px;
+                                        }
+
+                                        &.street {
+                                            .control {
+                                                .additional {
+                                                    .control {
+                                                        padding-top: 10px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .actions-toolbar {
+                                margin: 30px 0;
+                                .primary {
+                                    .action {
+                                        &.action-update {
+                                            .lib-button-primary();
+                                            max-width: 140px;
+                                            font-size: 18px;
+                                            font-family: @font-name__signika_semibold;
+                                        }
+
+                                        &.action-cancel {
+                                            .lib-button-primary();
+                                            .lib-button-revert-secondary-color();
+                                            max-width: 140px;
+                                            font-size: 18px;
+                                            font-family: @font-name__signika_semibold;
+                                            margin: 0;
+                                            padding: 6px 15px;
+                                            margin-right: 10px;
+                                            text-decoration: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        p {
+                            &.redirect {
+                                line-height: 30px;
+                                &:before {
+                                    padding-right: 10px;
+                                    background: url('../images/cc-visa-master.png') left bottom no-repeat;
+                                    content: '';
+                                    width: 85px;
+                                    height: 30px;
+                                    display: inline-block;
+                                    line-height: 25px;
+                                    position: relative;
+                                    top: 5px;
+                                }
+                            }
+                        }
+
+                        .lock {
+                            padding-top: 30px;
+                            float: left;
+
+                            .lib-icon-font(
+                                @_icon-font-position: before,
+                                @_icon-font-color: @color-gray-light2,
+                                @_icon-font-content:@icon-private,
+                                @_icon-font-size: 20px
+                            );
+
+                            &:before {
+                                padding-right: 10px;
+                                margin-top: -5px;
+                            }
+
+                            span {
+                                margin-top: 7px;
+                                line-height:30px;
+                            }
+                            a {
+                                display: inline-block;
+                                line-height:30px;
+                                padding-left: 5px;
+                                .lib-css(color, @color-blue2);
+
+                                &:hover {
+                                    text-decoration: none;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                &.ops {
+                    .payment-method-title {
+                        .label {
+                            span,
+                            img {
+                                position: inherit;
+                                height: auto;
+                                display: inline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Tablet / Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .checkout-payment-method {
+        .block {
+            &.discount {
+                .payment-option-title {
+                    width: 100%;
+                }
+                .payment-option-content {
+                    .actions-toolbar {
+                        .primary {
+                            button {
+                                width: 140px;
+                            }
+                        }
+                    }
+                }
+            }
+            &.giftcard {
+                .payment-option-title {
+                    width: 95%;
+                }
+                .payment-option-content {
+                    .actions-toolbar {
+                        .primary {
+                            button {
+                                width: 140px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+		.shippinginfo strong{
+		 display:block;
+		}
+    }
+
+    .checkout-container {
+        .messages {
+            width: 55%;
+            .message {
+                width: 100%;
+            }
+        }
+    }
+}
+
+//
+//  Large Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__xl) {
+    .checkout-payment-method {
+        .block {
+            &.discount {
+                width: 50%;
+                float: left;
+                /*padding: 35px 0px 30px 30px;*/
+                padding: 30px 0px 20px 20px;
+                margin: 0px;
+                min-height: 220px;
+                .payment-option-title {
+                    .action-toggle {
+                        padding-bottom: 10px;
+                    }
+                }
+                .payment-option-content {
+                    padding:0px;
+                    width: 100%;
+                    overflow: hidden;
+                    .messages {
+                        margin-top: 0px;
+                    }
+                    width: 95%;
+                    .payment-option-inner {
+                        width: 58%;
+                        margin: 0px 3% 0px 0px;
+                    }
+
+                    .actions-toolbar {
+                        width: 39%;
+                        .primary {
+                            button {
+                                .lib-button-primary();
+                                max-width: 200px;
+                                width: 145px;
+                                font-size: 18px;
+                                font-family: @font-name__signika_semibold;
+                            }
+                        }
+                    }
+
+                }
+
+                .loader {
+                    img {
+                        width: 40px;
+                        height:40px;
+                    }
+                }
+
+                .messages {
+                    width: 100%;
+                }
+
+            }
+            &.giftcard {
+                width: 50%;
+                float: right;
+                padding: 30px 20px 20px 0px;
+                margin: 0px;
+                min-height: 220px;
+                .payment-option-title {
+                    float: right;
+                    .action-toggle {
+                        padding-bottom: 10px;
+                    }
+                }
+                .payment-option-content {
+                    padding:0px;
+                    width: 95%;
+                    float: right;
+                    overflow: hidden;
+                    .messages {
+                        margin-top: 0px;
+                    }
+                    .payment-option-inner {
+                        display: inline-block;
+                        vertical-align: top;
+                        width: 58%;
+                        margin: 0px 3% 0px 0px;
+                        .field {
+                            margin: 0px;
+                        }
+                    }
+
+                    .actions-toolbar {
+                        display: inline-block;
+                        width: 39%;
+                        .primary {
+                            button {
+                                .lib-button-primary();
+                                max-width: 200px;
+                                width: 145px;
+                                font-size: 18px;
+                                font-family: @font-name__signika_semibold;
+                                margin: 0px;
+                            }
+                        }
+                    }
+
+                }
+                .loader {
+                    img {
+                        width: 40px;
+                        height:40px;
+                    }
+                }
+
+                .messages {
+                    width: 100%;
+                }
+            }
+        }
+		.shippinginfo strong{
+		  display:block;
+		}
+    }
+
+    .checkout-container {
+        .messages {
+            width: 64%;
+            .message {
+                width: 100%;
+            }
+        }
+    }
+
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .checkout-payment-method {
+
+        .discount-title-wrap {
+            text-align: left;
+        }
+
+        .payment-option {
+            /*.lib-css(margin, 0 -(@checkout-payment-option-title-mobile__padding));*/
+
+            .payment-option-title {
+                /*.lib-css(padding, @checkout-payment-option-title-mobile__padding)*/
+                line-height: 30px;
+                float: left;
+                padding-left: 40px;
+                padding-right: 5px;
+            }
+
+            /*.payment-option-content {
+                .lib-css(padding, 0 @checkout-payment-option-title-mobile__padding @indent__base);
+            }*/
+        }
+
+        .block{
+            &.discount {
+                padding: 20px 10px;
+                .form-discount {
+                    max-width: 100%;
+                }
+                .payment-option-content {
+                    .actions-toolbar {
+                        .primary {
+                            button {
+                                padding: 0 15px;
+                                line-height: 48px;
+                                float: right;
+                            }
+                        }
+                    }
+                }
+            }
+            &.giftcard {
+                padding: 20px 10px;
+                padding-top: 0px;
+                .form-giftcard-account {
+                    max-width: 100%;
+                }
+                .payment-option-content {
+                    .actions-toolbar {
+                        .primary {
+                            button {
+                                padding: 0 15px;
+                                line-height: 48px;
+                                float: right;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+		.shippinginfo strong{
+		 display:block;
+		}
+
+        .opc-wrapper {
+            .form-discount,
+            .form-giftcard-account {
+                max-width: 100%;
+            }
+        }
+
+        .opc-payment {
+            margin-top: 40px;
+            .payment-methods {
+                .payment-method {
+                    .payment-method-content {
+                        padding: 10px 10px 30px;
+
+                        .payment-method-billing-address {
+                            .actions-toolbar {
+                                .primary {
+                                    .action {
+                                        &.action-update {
+                                            margin-bottom: 0px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .actions-toolbar {
+                            .primary {
+                                button {
+                                    line-height: 50px;
+                                }
+                            }
+                        }
+                    }
+
+
+                    &._active {
+                        .payment-method-content {
+                            .payment-method-billing-address {
+                                .billing-address-details {
+                                    padding: 70px 0px 0px 0px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+    }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .checkout-payment-method {
+        .payment-option-title {
+            .lib-css(padding-left, 40px);
+            line-height: 30px;
+            padding-right: 5px;
+            float: left;
+        }
+        .payment-option-content {
+            .payment-option-inner {
+                + .actions-toolbar {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .block {
+            &.discount,
+            &.giftcard {
+                    .payment-option-content {
+                        .actions-toolbar {
+                            .primary {
+                                button {
+                                    width: 100px;
+                                }
+                            }
+                        }
+                    }
+            }
+
+            &.discount {
+                padding-bottom: 0px;
+            }
+        }
+		.shippinginfo strong{
+		  display:block;
+		}
+    }
+
+    .checkout-container {
+        .messages {
+            width: 55%;
+            .message {
+                display: inline-block;
+            }
+        }
+    }
+}

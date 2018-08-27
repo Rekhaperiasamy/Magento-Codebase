@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Afeature
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dilmah_Afeature::dilmah_afeature" title="Afeature" module="Dilmah_Afeature" sortOrder="10" parent="Dilmah_Theme::dilmah" action="dilmah_afeature/item"  resource="Dilmah_Afeature::dilmah_afeature"/>
+        <add id="Dilmah_Afeature::dilmah_afeature_item" title="Banners" module="Dilmah_Afeature" sortOrder="20" parent="Dilmah_Afeature::dilmah_afeature" action="dilmah_afeature/item/index" resource="Dilmah_Afeature::dilmah_afeature"/>
+    </menu>
+</config>

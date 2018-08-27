@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template
+            id="payment_services_ops_resendPaymentInfo_template"
+            label="Ingenico ePayments resend payment information"
+            file="ops_email_resend_payment_info.html"
+            type="html"
+            module="Netresearch_OPS"
+            area="frontend"
+    />
+    <template
+            id="payment_services_ops_payPerMail_template"
+            label="PayPerMail Email Template"
+            file="ops_pay_per_mail_info.html"
+            type="html"
+            module="Netresearch_OPS"
+            area="frontend"
+    />
+</config>

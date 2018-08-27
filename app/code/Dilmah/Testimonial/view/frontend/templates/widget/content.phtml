@@ -1,0 +1,65 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Testimonial
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Dilmah\Testimonial\Block\Widget\Content
+ */
+?>
+
+
+<?php
+/** @var \Dilmah\Testimonial\Model\ResourceModel\Item\Collection $items */
+$items = $block->getItems();
+$title = __($block->getData('captions'));
+?>
+
+<?php if ($items->count()) : ?>
+    <div class="testimonial-wrapper">
+        <h2 class="page-title"><?php echo $title ?></h2>
+        <div class="testimonial-content">
+            <script type="text/x-magento-init">
+                {
+                    "#testimonial-carousel": {
+                        "testimonial": {
+                            "autoplay":true,
+                            "autoplaySpeed": 6000,
+                             "dots": true,
+                             "variableWidth": false,
+                             "draggable": true
+                        }
+                    }
+                }
+            </script>
+            <div id="testimonial-carousel">
+                <?php foreach($items as $item): ?>
+                    <div class="testimonial-items">
+                        <div class="content-wrap">
+                            <p class="content">
+                                <?php echo $this->helper('Dilmah\Theme\Helper\Data')->truncate($item->getMessage(),300) ?>
+                            </p>
+                        </div>
+
+
+                        <span class="author">
+                            <span class="bold">
+                                <?php echo $item->getName() ?><?php echo !empty($item->getLocation()) ? ', ' . $item->getLocation() : '' ?>
+                            </span> - <?php echo date('dS M Y', strtotime($item->getDate())) ?>
+                        </span>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+
+

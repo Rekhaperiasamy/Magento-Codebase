@@ -1,0 +1,69 @@
+<?php
+/** @var $this \Netresearch\OPS\Block\Form\DirectDebit */
+$this->getParams();
+?>
+<script type="text/javascript">
+    Translator.add(
+        'Account number must contain numbers only.',
+        '<?php echo __('Account number must contain numbers only.') ?>'
+    );
+    Translator.add(
+        'Bank code must contain numbers only.',
+        '<?php echo __('Bank code must contain numbers only.') ?>'
+    );
+    Translator.add(
+        'Payment failed. Please select another payment method.',
+        '<?php echo __('Payment failed. Please select another payment method.') ?>'
+    );
+    Translator.add(
+        'This is a required field.',
+        '<?php echo __('This is a required field.') ?>'
+    );
+</script>
+
+<ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none">
+    <li>
+        <label class="required" for="ops_directdebit_country_id"><?php echo __('Country'); ?></label><br/>
+        <select title="ops_directdebit_country_id" class="required-entry" name="ops_directdebit_country_id"
+                id="ops_directdebit_country_id" onchange="payment.toggleOpsDirectDebitInputs(this.value)">
+            <option value=""><?php echo __('--Please Select--') ?></option>
+            <?php foreach ($this->getDirectDebitCountryIds() as $countryId) : ?>
+                <option value="<?php echo $countryId; ?>">
+                    <?php echo $this->getCountryNameByCode($countryId); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </li>
+    <li>
+        <label class="required" for="ops_directdebit_CN"><?php echo __('Account holder'); ?></label><br/>
+        <input title="CN" class="input-text required-entry" autocomplete="off" type="text" name="CN"
+               id="ops_directdebit_CN" length="50"
+               value="<?php echo $this->getQuote()->getBillingAddress()->getFirstname() . ' ' . $this->getQuote()
+                       ->getBillingAddress()->getLastname() ?>"/>
+    </li>
+    <li>
+        <label class="required" for="ops_directdebit_iban"><?php echo __('IBAN'); ?></label><br/>
+        <input title="IBAN" class="input-text required-entry" autocomplete="off" type="text" name="iban"
+               id="ops_directdebit_iban" onblur="payment.setRequiredDirectDebitFields(this);"/>
+    </li>
+    <li style="display:none">
+        <label class="" for="ops_directdebit_bic"><?php echo __('BIC'); ?></label><br/>
+        <input class="input-text" title="BIC" type="text" name="bic" id="ops_directdebit_bic"
+               onblur="payment.setRequiredDirectDebitFields(this);"/>
+    </li>
+    <li>
+        <label class="required" for="ops_directdebit_account_no"><?php echo __('Account number'); ?></label><br/>
+        <input title="account_no" class="input-text required-entry validate-number validate-length maximum-length-11"
+               onblur="payment.setRequiredDirectDebitFields(this);" autocomplete="off" type="text" name="account_no"
+               id="ops_directdebit_account_no" maxlength="11"/>
+    </li>
+    <li style="display:none">
+        <label class="required" for="ops_directdebit_bank_code"><?php echo __('Bank code'); ?></label><br/>
+        <input class="input-text required-entry" type="text" name="bank_code"
+               onblur="payment.setRequiredDirectDebitFields(this);" id="ops_directdebit_bank_code" maxlength="8"/>
+    </li>
+
+    <script type="text/javascript">
+        opsDirectDebitUrl = '<?php echo $this->getRegisterDirectDebitPaymentUrl() ?>';
+    </script>
+</ul>

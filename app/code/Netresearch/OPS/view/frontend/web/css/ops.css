@@ -1,0 +1,78 @@
+.fieldset{width:100%;}
+.fieldset .payment{width:100%;}
+#ops_placeform_iframe {
+    width: 100%;
+    min-height: 650px;
+    border: none;
+}
+
+fieldset.ops-form-list.ops-card input[type=radio] + label.alias_label {
+    display: block;
+    cursor: pointer;
+    border: 1px solid #636363;
+    padding: 5px 5px 27px;
+    margin: 5px;
+    background-color: #ffffff;
+    vertical-align: top;
+    width: auto;
+    float: none;
+}
+
+fieldset.ops-form-list.ops-card input[type=radio]:checked + label {
+    background-color: #f4f4f4;
+}
+
+fieldset.ops-form-list.ops-card input[type=radio] + label.new_alias_label {
+    display: block;
+    cursor: pointer;
+    border: 1px solid #636363;
+    padding: 5px 5px 27px;
+    margin: 5px;
+    background-color: #ffffff;
+}
+
+fieldset.ops-form-list.ops-card input[type=radio]:checked + label.new_alias_label {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 5px;
+    background: #f4f4f4;
+}
+
+fieldset.ops-form-list.ops-card input[type=radio] + label.new_alias_label span.required {
+    padding-left: 40px;
+}
+
+fieldset.ops-form-list.ops-card .ops-new-card-entry {
+    cursor: pointer;
+    border: 1px solid #636363;
+    padding: 5px 5px 27px;
+    margin: 0 5px 5px;
+    background-color: #f4f4f4;
+    border-top: none;
+}
+
+fieldset.ops-form-list.ops-card .ops-new-card-entry > label,
+fieldset.ops-form-list.ops-card .ops-new-card-entry > select {
+    padding-left: 40px;
+}
+
+fieldset.ops-form-list.ops-card li img {
+    height: 20px;
+    float: none;
+    display: inline;
+    vertical-align: middle;
+}
+
+img.ops-payment-logo-hidden {
+    display: none;
+}
+
+img.ops-payment-logo-left {
+    height: 20px;
+    padding-right: 10px;
+}
+
+img.ops-payment-logo-right {
+    height: 20px;
+    float: right;
+}

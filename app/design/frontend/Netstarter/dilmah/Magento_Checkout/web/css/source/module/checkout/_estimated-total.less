@@ -1,0 +1,76 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    //
+    //  Checkout Estimated Total
+    //  ---------------------------------------------
+
+    .opc-estimated-wrapper {
+        &:extend(.abs-no-display-desktop all);
+        &:extend(.abs-add-clearfix all);
+        .lib-css(background, @color-blue2);
+        .lib-css(margin, -21px -(@checkout-step-content-mobile__margin-s) @checkout-step-content-mobile__margin-s);
+        padding: 15px;
+
+        .estimated-block {
+            .lib-css(font-size, 14px);
+            float: left;
+            font-weight: @font-weight__regular;
+            .lib-css(color, @color-white);
+            .lib-css(font-family, @font-name__signika_light);
+
+            .estimated-label {
+                display: block;
+                margin: 0;
+            }
+
+            .estimated-price {
+                .lib-css(font-family, @font-name__signika_regular);
+                .lib-css(font-size, 25px);
+            }
+        }
+
+        .minicart-wrapper {
+            margin-right: 10px;
+            margin-top: 15px;
+            button {
+                // todo ui: Change .action.showcart to .action-showcart
+                &.action.showcart {
+                    .lib-button-reset();
+                    &:before {
+                        .lib-css(color, @color-white);
+                        font-size: 26px;
+                    }
+                    .counter.qty {
+                        height: 20px;
+                        line-height: 20px;
+                        border-radius: 18px;
+                        min-width: 20px;
+                        padding: 0px;
+                        .lib-css(background, @color-white);
+                        top: -2px;
+                        right: -8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .opc-estimated-wrapper {
+        display: none;
+    }
+}

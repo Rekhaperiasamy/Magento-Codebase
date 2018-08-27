@@ -1,0 +1,162 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+<?php else: ?>
+    <div data-mage-init='{"toolBarCustom":""}' class="toolbar-wrapper"><?php echo $block->getToolbarHtml() ?>
+    </div>
+    <?php echo $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php $iterator = 1; ?>
+        <ol class="products list items product-items">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info">
+                    <?php $seo_data = [];?>
+                    <?php
+                    $productImage = $block->getImage($_product, $image);
+                    if ($pos != null) {
+                        $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                            . 'top:' . $productImage->getHeight() . 'px;"';
+                    }
+                    ?>
+                    <?php // Product Image ?>
+                    <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+                        <?php echo $productImage->toHtml(); ?>
+                    </a>
+                    <div class="product details product-item-details">
+                        <ul class="tags">
+                            <?php if ($_product->getData(\Dilmah\Catalog\Helper\Data::LABEL_MANAGER_SALE_ATTRIBUTE)): ?>
+                                <li class="sale"><?php echo __('Sale')?></li>
+                                <?php $seo_data['is_sale'] = 'true';?>
+                            <?php endif; ?>
+                            <?php if ($_product->getData(\Dilmah\Catalog\Helper\Data::LABEL_MANAGER_NEW_ATTRIBUTE)): ?>
+                                <li class="new"><?php echo __('New')?></li>
+                                <?php $seo_data['is_new'] = 'true';?>
+                            <?php endif; ?>
+                            <?php if ($_product->getData(\Dilmah\Catalog\Helper\Data::LABEL_MANAGER_PROMO_ATTRIBUTE)): ?>
+                                <li class="promo"><?php echo __('Promo')?></li>
+                                <?php $seo_data['promo'] = 'true';?>
+                            <?php endif; ?>
+                        </ul>
+                        <?php
+                            $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+                        ?>
+                        <h2>
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+                                    <?php /* @escapeNotVerified */ $productName = $_helper->productAttribute($_product, $_product->getName(), 'name'); echo $productName ; $seo_data['name'] = $productName?>
+                                </a>
+                            </strong>
+                        </h2>
+                        <ul class="pack-desc">
+                            <?php if ($_product->getData(\Dilmah\Catalog\Helper\Data::IS_PACK_PRODUCT_ATTRIBUTE) == 1): // if pack product ?>
+                                <?php if ($packSize = $_product->getData(\Dilmah\Catalog\Helper\Data::PACK_SIZE_ATTRIBUTE)): ?>
+                                    <li class="packs"><?php echo sprintf(__('Pack of %s'), $packSize) ?></li>
+                                    <?php if ($bags = $_product->getData(\Dilmah\Catalog\Helper\Data::TEA_BAG_QTY_ATTRIBUTE)): ?>
+                                        <li class="bags"><?php $bag_info = sprintf(__('%s Tea bags'), $packSize * $bags); echo $bag_info ; $seo_data['variant'] = $bag_info?></li>
+                                    <?php elseif ($grammage = $_product->getData(\Dilmah\Catalog\Helper\Data::GRAMMAGE_ATTRIBUTE)): ?>
+                                        <li class="grammage"><?php $grammage_info = sprintf(__('%s Grams'), $packSize * $grammage); echo $grammage_info ; $seo_data['variant'] = $grammage_info ?></li>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </ul>
+                        <?php echo $block->getReviewsSummaryHtml($_product, $templateType, true); ?>
+                        <div class="<?php echo ($_product->getMixAndMatchPromotion() ? 'mix-and-match-product' : '')?>">
+                            <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product)?>
+                        </div>
+                        <?php /* @escapeNotVerified */ $seo_data['brand'] = \Dilmah\Catalog\Helper\Data::BRAND_LABEL; ?>
+                        <?php /* @escapeNotVerified */ $_product->getCategory()? $seo_data['catagory'] = $_product->getCategory()->getName():''; ?>
+                        <?php /* @escapeNotVerified */ $seo_data['id'] = $_product->getId(); ?>
+                        <?php /* @escapeNotVerified */ $seo_data['price'] = $_product->getPrice(); ?>
+                        <?php /* @escapeNotVerified */ $seo_data['currency'] = $_product->getStore()->getCurrentCurrency()->getCode() ?>
+
+                        <?php echo $block->getProductDetailsHtml($_product); ?>
+
+                        <div class="product-item-inner">
+                            <div class="product actions product-item-actions"<?php echo strpos($pos, $viewMode . '-actions') ? $position : ''; ?>>
+                                <div class="actions-primary"<?php echo strpos($pos, $viewMode . '-primary') ? $position : ''; ?>>
+                                    <?php if ($_product->isSaleable()): ?>
+                                        <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                        <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post" data-seo="<?php printf("%s",htmlspecialchars(json_encode($seo_data), ENT_QUOTES, 'UTF-8'));?>">
+                                            <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+                                            <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+                                            <?php echo $block->getBlockHtml('formkey')?>
+                                            <button type="submit"
+                                                    title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                                    class="action tocart primary">
+                                                <span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <?php if ($_product->getIsSalable()): ?>
+                                            <div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+                                        <?php else: ?>
+                                            <div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php if ($showDescription):?>
+                                <div class="product description product-item-description">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                    <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>"
+                                       class="action more"><?php /* @escapeNotVerified */ echo __('Learn More') ?></a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo($iterator == count($_productCollection)+1) ? '</li>' : '' ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+    <div class="toolbar-bottom"><?php echo $block->getToolbarHtml() ?></div>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

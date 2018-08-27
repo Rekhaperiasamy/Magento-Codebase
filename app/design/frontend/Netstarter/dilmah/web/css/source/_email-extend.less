@@ -1,0 +1,243 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Email extend styles
+//  _____________________________________________
+//
+//  This file should be used for theme-specific styles for emails that extend or modify the styles in _email.less
+//  This will allow you to edit email styles without copying and editing the _email.less file
+
+//  Importing fonts from an external CSS file, rather than embedding @font-face declarations inside the <style> tag,
+//  as the latter will cause font rendering issues if the web fonts are inaccessible.
+@import url("@{baseUrl}css/email-fonts.css");
+
+.header {
+    background-color: @color-blue3;
+    padding: @email-body__padding;
+    text-align: right;
+    img {
+        float: right;
+    }
+}
+.main-content {
+    h1,
+    h2,
+    h3,
+    h4 {
+       font-family: @font-family__base;
+        &:after {
+            display: none;
+        }
+    }
+    h2 {
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .h1 {
+        font-family: @font-family__base;
+        font-size: 30px;
+        font-weight: 700;
+        color: @color-blue3;
+    }
+
+    tfoot {
+        tr {
+            td {
+                text-align: right;
+            }
+        }
+    }
+
+    .email-items {
+        thead {
+            th {
+                color: @color-blue3;
+                font-family: @font-family__base;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                font-size: 18px;
+                font-weight: 300;
+                padding: 0px;
+
+                &.item-subtotal {
+                    text-align: right;
+                }
+            }
+        }
+        tbody {
+            tr {
+                td {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+
+}
+
+.ethical-logo {
+    vertical-align:top;
+    .logo {
+        border-top:1px solid #ccc;
+        padding-top: 15px;
+        img {
+            padding-right: 15px;
+            padding-bottom: 15px;
+            width: 60px;
+        }
+    }
+    .content {
+        font-size: 12px;
+        border-top:1px solid #ccc;
+        padding-top: 15px;
+    }
+}
+
+.footer {
+    background-color: @color-gray-darken1;
+    padding: @email-body__padding;
+    h3{
+        font-size: 18px;
+        color: @color-blue2;
+        border-bottom: 1px solid @color-gray-light1;
+        padding-bottom:@indent__s;
+        margin-bottom: @indent__base;
+        width: 95%;
+        padding-left: 5%;
+        &:after{
+            display: none;
+        }
+    }
+    .short-desc-footer {
+        color: @color-white;
+        padding: 0 10px 4px 10px;
+        display: block;
+    }
+    .connect-with-us {
+        width: 48%;
+        float: left;
+        .social-media-icon{
+            padding-left: @indent__s;
+            padding-top: @indent__base;
+            position: relative;
+            span{
+                padding-left: 0px;
+                padding-right: 6px;
+                &.icon {
+                    width: 26px;
+                    height: 26px;
+                    float: left;
+                }
+            }
+        }
+    }
+
+    .secure-shop {
+        width: 48%;
+        float: right;
+        .payment-media-icon{
+            padding-left: @indent__s;
+            padding-top: 6px;
+            span{
+                padding-left: 0px;
+                padding-right: 13px;
+                float: left;
+            }
+        }
+    }
+    .about-us-links {
+        width: 100%;
+        float: left;
+        h3 {
+            padding-left: 3%;
+            width: 97%;
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+            li {
+                float: left;
+                padding-top:4px;
+                padding-bottom:4px;
+                padding-left:@indent__s;
+                padding-right: @indent__s;
+                margin: 0;
+                a {
+                    color: @color-white;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    .footer-copyright-wrapper {
+        width: 100%;
+        float: left;
+        margin-top: 45px;
+        padding-top: 20px;
+        border-top: 1px solid @color-gray-light1;
+        .bottom-left-links {
+            width: 53%;
+            /*float: left;*/
+            ul {
+                padding: 0px;
+                margin: 0px;
+                list-style: none;
+                li{
+                    float: left;
+                    border-right: 1px solid @color-blue2;
+                    font-size: 11px;
+                    line-height: 11px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    margin: 0;
+                    a {
+                        color: @color-blue1;
+                    }
+                    &.last {
+                        border: 0;
+                    }
+                }
+            }
+        }
+        .copyright {
+            width: 47%;
+            /*float: right;*/
+            text-align: right;
+            font-size: 11px;
+            line-height: 11px;
+            span {
+                font-size: 11px;
+                line-height: 11px;
+                color: @color-gray-darken2;
+                padding-left: 8px;
+                padding-right: 8px;
+                &.copyrighttext {
+                    border-right: 1px solid @color-gray-darken2;
+                }
+                a {
+                    color: @color-blue1;
+                }
+            }
+        }
+    }
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    .header,
+    .main-content,
+    .footer {
+        padding: @email-body__padding @indent__s !important;
+    }
+
+    .footer {
+        td {
+            display: block;
+            width: auto !important;
+        }
+    }
+}

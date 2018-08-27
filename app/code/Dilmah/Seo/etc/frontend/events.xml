@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Seo
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_postdispatch_catalog_category_view">
+        <observer name="dilmah_seo_canonical_category" instance="Dilmah\Seo\Model\Frontend\CategoryObserver" />
+    </event>
+    <event name="controller_action_postdispatch_cms_page_view">
+        <observer name="dilmah_seo_canonical_cms" instance="Dilmah\Seo\Model\Frontend\CmsObserver" />
+    </event>
+    <event name="controller_action_postdispatch_cms_index_index">
+        <observer name="dilmah_seo_canonical_cms_home" instance="Dilmah\Seo\Model\Frontend\CmsHomeObserver" />
+    </event>
+    <event name="controller_action_postdispatch_catalog_product_view">
+        <observer name="dilmah_seo_canonical_product" instance="Dilmah\Seo\Model\Frontend\ProductObserver" />
+    </event>
+</config>

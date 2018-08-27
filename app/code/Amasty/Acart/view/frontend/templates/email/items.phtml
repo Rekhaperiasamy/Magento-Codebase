@@ -1,0 +1,19 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Acart
+ */
+?>
+<?php
+
+$mode = $block->getData('mode');
+switch ($mode){
+    case "list":
+    case "table":
+        print $block->getChildHtml($mode);
+        break;
+    default:
+        print "unhandled template";
+        break;
+}

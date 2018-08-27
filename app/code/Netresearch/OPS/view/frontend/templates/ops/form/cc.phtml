@@ -1,0 +1,137 @@
+<?php
+/**
+ * @var \Netresearch\OPS\Block\Form\Cc $this
+ */
+$code = $this->getMethodCode();
+?>
+
+<ul class="form-list ops-form-list ops_card" id="payment_form_<?php echo $code ?>" style="display:none;">
+    <?php
+    $display = 'none';
+    $storedAliases = $this->getStoredAliasForCustomer();
+    $newAlias = $this->getAliasHelper()->getAlias($this->getQuote(), true);
+    ?>
+
+    <fieldset>
+        <?php foreach ($storedAliases as $key => $alias): ?>
+            <?php $brandName = $this->getStoredAliasBrand($alias->getId()) ?>
+            <input type="radio" id="<?php echo $alias->getId() ?>" name="payment[<?php echo $code ?>][alias]"
+                   value="<?php echo $alias->getAlias() ?>"
+                   data-brand="<?php echo $brandName ?>"
+                   data-cn="<?php echo $this->getCardHolderName($alias->getId()) ?>"
+                   required/>
+            <label for="<?php echo $alias->getId() ?>">
+                <ul>
+                    <li><?php echo __('Name on Card') . ': ' . $this->getCardHolderName($alias->getId()) ?></li>
+                    <li><?php echo __('Credit Card Number') . ': ' . $this->getAliasCardNumber() ?></li>
+                    <li>
+                        <?php echo __('Credit Card Type:') ?>
+                        <img src="<?php echo $this->getImageForBrand($brandName) ?>" alt="<?php echo $brandName ?>">
+                    </li>
+                    <li><?php echo __('Expiration Date') . ': ' . $this->getExpirationDatePart($alias->getId(),
+                                                                                               'complete') ?></li>
+
+                    <li class="cvc" style="display: none;">
+                        <label class="required"
+                               for="<?php echo strtoupper($code) ?>_CVC_<?php echo $alias->getId() ?>"><?php echo __('Card Verification Number'); ?>
+                            <em>*</em></label>
+                        <input title="<?php echo __('Card Verification Number'); ?>"
+                               class="input-text required-entry"
+                               type="text" name="payment[<?php echo $code ?>][cvc]"
+                               id="<?php echo strtoupper($code) ?>_CVC_<?php echo $alias->getId() ?>" length="6"/>
+
+                    </li>
+                </ul>
+            </label>
+        <?php endforeach; ?>
+        <input type="select" id="<?php echo $code; ?>_stored_alias_brand" name="payment[<?php echo $code; ?>][CC_BRAND]"
+               class="hidden"/>
+        <?php foreach ($this->getAliasBrands() as $brand) : ?>
+            <option value="<?php echo $brand; ?>" class="hidden">
+                <?php echo __($brand); ?>
+            </option>
+        <?php endforeach; ?>
+        </input>
+        <input type="radio" id="new_alias_<?php echo $code ?>" name="payment[<?php echo $code ?>][alias]"
+               class="validate-one-required" value="" <?php echo empty($storedAliases)
+            ? 'checked' : ''; ?> required>
+        <label for="new_alias_<?php echo $code ?>" class="new_alias_label"> <?php echo __(
+                'Enter new credit card data...'
+            ) ?> </label>
+        <li id="insert_payment_details_<?php echo $code ?>" class="insert_payment_details" style="">
+            <label class="required" for="<?php echo strtoupper($code) ?>_BRAND"
+                   id="<?php echo strtoupper($code) ?>_BRAND_LABEL"><?php echo __(
+                    'Credit Card Type'
+                ); ?></label><br/>
+            <select title="<?php echo strtoupper($code) ?>_BRAND" class="required-entry" autocomplete="off"
+                    name="payment[<?php echo $code; ?>][CC_BRAND]" id="<?php echo strtoupper($code) ?>_BRAND">
+                <option value=""><?php echo __('--Please select--') ?></option>
+                <?php foreach ($this->getCCBrands() as $brand) : ?>
+                    <option value="<?php echo $brand; ?>">
+                        <?php echo __($brand); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <div id="<?php echo $code ?>_loader" class="ops_htp_loader" style="display: none;"></div>
+            <iframe id="ops_iframe_<?php echo $code ?>" class="ops_htp_iframe" style="display: none;"
+                    src="about:blank"></iframe>
+            <p id="<?php echo $code ?>_redirect_note" class="ops_htp_redirect"
+               style="display: none;"><?php echo __(
+                    'You will be redirected to Ingenico ePayments website when you place an order.'
+                ) ?></p>
+        </li>
+
+        <script type="text/javascript">
+            opsHashUrl = '<?php echo $this->getGenerateHashUrl(); ?>';
+            opsOrderId = '<?php echo $this->getQuote()->getId(); ?>';
+            opsPspid = '<?php echo $this->getPSPID(); ?>';
+            opsAcceptUrl = '<?php echo $this->getAliasAcceptUrl(); ?>';
+            opsExceptionUrl = '<?php echo $this->getAliasExceptionUrl(); ?>';
+            opsUrl = '<?php echo $this->getAliasGatewayUrl(); ?>';
+            opsAlias = '';
+
+            paramplus = 'RESPONSEFORMAT=JSON';
+
+            <?php echo $code ?> = {
+                'code': '<?php echo $code ?>',
+                'loader': $('<?php echo $code ?>_loader'),
+                'tokenizationFrame': $('ops_iframe_<?php echo $code ?>'),
+                'redirectNote': $('<?php echo $code ?>_redirect_note'),
+                'brandsForAliasInterface': '<?php echo json_encode(
+                    $this->getMethod()->getBrandsForAliasInterface()
+                ) ?>'.evalJSON(),
+                'aliasManager': '<?php echo $this->getConfig()->isAliasManagerEnabled($this->getMethodCode()) ? 'Y'
+                    : 'N' ?>'
+            };
+            locale = '<?php echo $this->getLocaleCode(); ?>';
+            transmitPaymentMethod = false;
+
+            Event.observe('<?php echo strtoupper($code); ?>_BRAND', 'change', function () {
+                payment.handleBrandChange();
+            });
+
+            Event.observe(<?php echo $code ?>.tokenizationFrame, 'load', function () {
+                payment.onOpsIframeLoad();
+            }
+            )
+            ;
+
+            Event.observe(document, 'alias:success', function (event) {
+                payment.fillOpsLoader('SUCCESS_TOKEN');
+                payment.toggleContinue(true);
+                payment.opsAliasSuccess = true;
+                $('new_alias_' + payment.currentMethod).value = event.memo;
+                payment.save();
+            });
+
+            Event.observe(document, 'alias:failure', function (event) {
+                payment.opsAliasSuccess = false;
+                payment.currentMethodObject.tokenizationFrame.src = 'about:blank';
+                payment.fillOpsLoader('FAILURE_TOKEN');
+                payment.toggleContinue(false);
+            });
+
+        </script>
+    </fieldset>
+</ul>

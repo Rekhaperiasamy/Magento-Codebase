@@ -1,0 +1,27 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Dilmah_TeaFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+/**
+ * FAQ template - sidebar
+ *
+ * @var $block \Dilmah\TeaFaq\Block\Faq
+ */
+?>
+<div class="faq-link-wrapper">
+    <div class="faq-mobile-links-header" style="display: none;">FAQs</div>
+    <div class="faq-link-set">
+        <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('dt_faq_sidebar_links_block')->toHtml();?>
+    </div>
+    <div class="faq-desktop_need_help">
+        <div class="faq-sidebar-content-block">
+            <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('dt_faq_sidebar_content_block')->toHtml();?>
+        </div>
+    </div>
+</div>

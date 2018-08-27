@@ -1,0 +1,52 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php
+    $_helper    = $this->helper('Magento\Catalog\Helper\Output');
+    $_helperDilmah    = $this->helper('Dilmah\Catalog\Helper\Category');
+    $_category  = $block->getCurrentCategory();
+    $_bannerLink = $_category->getCategoryBannerLink();
+    $_imgHtml   = '';
+    $_imgMobileHtml = '';
+    if ($_imgUrl = $_category->getImageUrl()) {
+        $_imgHtml = '<div class="category-image">';
+        if (!empty($_bannerLink)) {
+            $_imgHtml .= '<a href="'.$_bannerLink.'" class="category-banner-link">';
+        }
+        $_imgHtml .= '<img src="' . $_imgUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="' . $block->escapeHtml($_category->getName()) . '" class="image" />';
+        if (!empty($_bannerLink)) {
+            $_imgHtml .= '</a>';
+        }
+        $_imgHtml .= '</div>';
+        $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+        /* @escapeNotVerified */ echo $_imgHtml;
+    }
+    $_imgMobileHtml = '<div class="category-image-mobile">';
+    if ($_imgMobileUrl = $_helperDilmah->getMobileImageUrl($_category)) {
+        if (!empty($_bannerLink)) {
+            $_imgMobileHtml .= '<a href="'.$_bannerLink.'" class="category-banner-link">';
+        }
+        $_imgMobileHtml .= '<img src="' . $_imgMobileUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="' . $block->escapeHtml($_category->getName()) . '" class="image" />';
+        if (!empty($_bannerLink)) {
+            $_imgMobileHtml .= '</a>';
+        }
+    }
+    $_imgMobileHtml .= '</div>';
+    //        $_imgMobileHtml = '<div class="category-image-mobile"><img src="' . $_imgMobileUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="' . $block->escapeHtml($_category->getName()) . '" class="image" /></div>';
+    $_imgMobileHtml = $_helper->categoryAttribute($_category, $_imgMobileHtml, 'image');
+    /* @escapeNotVerified */ echo $_imgMobileHtml;
+
+?>

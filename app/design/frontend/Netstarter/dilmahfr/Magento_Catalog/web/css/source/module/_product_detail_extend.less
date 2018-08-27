@@ -1,0 +1,31 @@
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+    .product {
+        &.info {
+            &.detailed {
+                .description {
+                    .value h2 {
+                        .lib-typography(
+                            @_font-size: 18,
+                            @_color: @color-yellow3,
+                            @_font-family: @font-name__signika_regular,
+                            @_line-height: 1.1
+                        );
+                        margin-bottom: 10px;
+                        margin-top: 0px;
+                        display: block;
+
+                        &:after {
+                            display: none;
+                            margin: 0;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

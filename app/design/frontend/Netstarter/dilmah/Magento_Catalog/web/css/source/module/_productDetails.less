@@ -1,0 +1,936 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common = true) {
+  .product.info.detailed {
+    clear: both;
+    margin-bottom: 30px;
+    .description{
+      .lib-css(color,@color-gray-darken3);
+      h4{
+        .lib-css(color,@color-yellow3);
+        .lib-css(font-size,18px);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+        &:after{
+          display: none;
+        }
+      }
+      h5{
+        .lib-css(color,@color-gray-darken1);
+        .lib-css(font-size,14px);
+        .lib-css(font-family,@font-name__signika_semibold);
+        .lib-css(font-weight,normal);
+         margin-bottom: 10px;
+         margin-top: 0px;
+         display: block;
+
+        &:after{
+          display: none;
+
+        }
+      }
+      p{
+        margin: 15px 0px 20px 0px;
+      }
+      padding-bottom: 40px;
+    }
+    .caffeine-level{
+      .lib-css(color,@color-gray-darken1);
+      .lib-css(font-family,@font-name__signika_semibold);
+      .lib-css(font-size,16px);
+      label{
+        color: @color-gray-light2;
+      }
+    }
+    .data{
+      &.items{
+        .content{
+          ul{
+            list-style: none;
+            &.brewing-steps{
+              margin: 0px;
+              padding: 0px;
+              li{
+                list-style: none;
+                display: inline-block;
+                width: 16%;
+                float: left;
+                margin-right: 3%;
+                &.step-1{
+                  span{
+                    .lib-icon-font(
+                    @_icon-font-content:@icon-water-drop,
+                    @_icon-font-size: 39px,
+                    @_icon-font-line-height: 39px,
+                    @_icon-font-color: @color-yellow3,
+                    @_icon-font-color-hover: @color-yellow3,
+                    @_icon-font-color-active: @color-yellow3,
+                    @_icon-font-margin: @icon-font__margin,
+                    @_icon-font-vertical-align: @icon-font__vertical-align,
+                    @_icon-font-position: before
+                    );
+                    //display: table-cell;
+                }
+                }
+                &.step-2{
+                  span{
+                    .lib-icon-font(
+                    @_icon-font-content:@icon-c,
+                    @_icon-font-size: 48px,
+                    @_icon-font-line-height: 48px,
+                    @_icon-font-color: @color-yellow3,
+                    @_icon-font-color-hover: @color-yellow3,
+                    @_icon-font-color-active: @color-yellow3,
+                    @_icon-font-margin: @icon-font__margin,
+                    @_icon-font-vertical-align: @icon-font__vertical-align,
+                    @_icon-font-position: before
+                    );
+                    &:before{
+                      margin-top: 23%;
+                    }//display: table-cell;
+                  }
+                }
+                &.step-3{
+                  span{
+                    .lib-icon-font(
+                    @_icon-font-content:@icon-bagpercup,
+                    @_icon-font-size: 39px,
+                    @_icon-font-line-height: 39px,
+                    @_icon-font-color: @color-yellow3,
+                    @_icon-font-color-hover: @color-yellow3,
+                    @_icon-font-color-active: @color-yellow3,
+                    @_icon-font-margin: @icon-font__margin,
+                    @_icon-font-vertical-align: @icon-font__vertical-align,
+                    @_icon-font-position: before
+                    );
+
+                  }
+
+                }
+                &.step-4{
+                  span{
+                    .lib-icon-font(
+                    @_icon-font-content:@icon-ml2,
+                    @_icon-font-size: 44px,
+                    @_icon-font-line-height: 44px,
+                    @_icon-font-color: @color-yellow3,
+                    @_icon-font-color-hover: @color-yellow3,
+                    @_icon-font-color-active: @color-yellow3,
+                    @_icon-font-margin: @icon-font__margin,
+                    @_icon-font-vertical-align: @icon-font__vertical-align,
+                    @_icon-font-position: before
+                    );
+                    &:before{
+                      margin-top: 24%;
+                    }
+                  }
+                }
+
+                &.step-5{
+                  span{
+                    .lib-icon-font(
+                    @_icon-font-content:@icon-timer,
+                    @_icon-font-size: 42px,
+                    @_icon-font-line-height: 42px,
+                    @_icon-font-color: @color-yellow3,
+                    @_icon-font-color-hover: @color-yellow3,
+                    @_icon-font-color-active: @color-yellow3,
+                    @_icon-font-margin: @icon-font__margin,
+                    @_icon-font-vertical-align: @icon-font__vertical-align,
+                    @_icon-font-position: before
+                    );
+                    //display: table-cell;
+
+                  }
+                }
+                span{
+                  //display: table-cell;
+                  width: 104px;
+                  height: 104px;
+                  border-radius: 50%;
+                  border: 7px solid @color-gray-light4;
+                  background-color: @color-white;
+                  vertical-align: middle;
+                  text-align: center;
+                  &:before{
+                    margin-top: 27%;
+                  }
+                }
+                div{
+                  .lib-css(font-family,@font-name__signika_semibold);
+                  .lib-css(font-size,16px);
+                  .lib-css(color,@color-gray-light2);
+                  //width: 68%;
+                  text-align: center;
+                  margin-top: 20px;
+                }
+                text-align: center;
+              }
+            }
+
+          }
+          .brewing-info{
+            clear: both;
+            .lib-css(font-size,16px);
+            .lib-css(color,@color-yellow3);
+            padding: @indent__base;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+//
+//    Mobile @screen__m
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .product.info.detailed {
+
+    .description{
+      .lib-css(color,@color-gray-darken3);
+      h4{
+        .lib-css(color,@color-yellow3);
+        .lib-css(font-size,18px);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+        &:after{
+          display: none;
+        }
+      }
+      h5{
+        .lib-css(color,@color-gray-darken1);
+        .lib-css(font-size,14px);
+        .lib-css(font-family,@font-name__signika_semibold);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+
+        &:after{
+          display: none;
+        }
+      }
+      p{
+        margin: 15px 0px 20px 0px;
+      }
+      padding-bottom: 40px;
+    }
+    .caffeine-level{
+      .lib-css(color,@color-gray-darken1);
+      .lib-css(font-family,@font-name__signika_semibold);
+      .lib-css(font-size,16px);
+      label{
+        color: @color-gray-light2;
+      }
+    }
+    .data{
+      &.items{
+        .content{
+          ul{
+            list-style: none;
+            &.brewing-steps{
+              margin: 0px;
+              padding: 0px 0px 0px 10px;
+              float: left;
+              border-bottom: 1px solid @color-gray-light0;
+              li{
+                list-style: none;
+                display: inline-block;
+                width: 100%;
+                float: left;
+                margin-right: 0%;
+                &.step-1{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-water-drop,
+                      @_icon-font-size: 26px,
+                      @_icon-font-line-height: 26px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+                    //display: table-cell;
+                  }
+                }
+                &.step-2{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-c,
+                      @_icon-font-size: 32px,
+                      @_icon-font-line-height: 32px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+                    &:before{
+                      margin-top: 23%;
+                    }//display: table-cell;
+                  }
+                }
+                &.step-3{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-bagpercup,
+                      @_icon-font-size: 26px,
+                      @_icon-font-line-height: 26px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+
+                  }
+
+                }
+                &.step-4{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-ml2,
+                      @_icon-font-size: 23px,
+                      @_icon-font-line-height: 23px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+                    &:before{
+                      margin-top: 31%;
+                    }
+                  }
+                }
+
+                &.step-5{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-timer,
+                      @_icon-font-size: 24px,
+                      @_icon-font-line-height: 24px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    //display: table-cell;
+
+                  }
+                }
+                span{
+                  //display: table-cell;
+                  width: 62px;
+                  height: 62px;
+                  border-radius: 50%;
+                  border: 5px solid @color-gray-light4;
+                  background-color: @color-white;
+                  vertical-align: middle;
+                  text-align: center;
+                  float: left;
+                  &:before{
+                    margin-top: 27%;
+                  }
+                }
+                div{
+                  .lib-css(font-family,@font-name__signika_semibold);
+                  .lib-css(font-size,16px);
+                  .lib-css(color,@color-gray-light2);
+                  //width: 68%;
+                  text-align: left;
+                  margin-top: 20px;
+                  float: left;
+                  margin-left: 20px;
+                  width: 65%;
+                }
+                text-align: center;
+              }
+            }
+
+          }
+          .brewing-info{
+            clear: both;
+            .lib-css(font-size,14px);
+
+
+            padding: @indent__base @indent__s @indent__base;
+          }
+        }
+      }
+    }
+
+  }
+}
+//
+//    Mobile @screen__s
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+
+}
+
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .product.info.detailed {
+    width: @desk-top-col-width;
+    .description{
+
+    }
+    .caffeine-level{
+
+      label{
+
+      }
+    }
+    .data{
+      &.items{
+        .content{
+          ul{
+            list-style: none;
+            &.brewing-steps{
+              margin: 0px;
+              padding: 0px 0px 0px 10px;
+              float: left;
+              border-bottom: 1px solid @color-gray-light0;
+              li{
+                list-style: none;
+                display: inline-block;
+                width: 100%;
+                float: left;
+                margin-right: 0%;
+                &.step-1{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-water-drop,
+                      @_icon-font-size: 26px,
+                      @_icon-font-line-height: 26px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+                    //display: table-cell;
+                  }
+                }
+                &.step-2{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-c,
+                      @_icon-font-size: 32px,
+                      @_icon-font-line-height: 32px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+                    &:before{
+                      margin-top: 23%;
+                    }//display: table-cell;
+                  }
+                }
+                &.step-3{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-bagpercup,
+                      @_icon-font-size: 26px,
+                      @_icon-font-line-height: 26px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+
+                  }
+
+                }
+                &.step-4{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-ml2,
+                      @_icon-font-size: 23px,
+                      @_icon-font-line-height: 23px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+
+                    );
+                    &:before{
+                      margin-top: 31%;
+                    }
+                  }
+                }
+
+                &.step-5{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-timer,
+                      @_icon-font-size: 24px,
+                      @_icon-font-line-height: 24px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    //display: table-cell;
+
+                  }
+                }
+                span{
+                  //display: table-cell;
+                  width: 62px;
+                  height: 62px;
+                  border-radius: 50%;
+                  border: 5px solid @color-gray-light4;
+                  background-color: @color-white;
+                  vertical-align: middle;
+                  text-align: center;
+                  float: left;
+                  &:before{
+                    margin-top: 27%;
+                  }
+                }
+                div{
+                  .lib-css(font-family,@font-name__signika_semibold);
+                  .lib-css(font-size,16px);
+                  .lib-css(color,@color-gray-light2);
+                  //width: 68%;
+                  text-align: left;
+                  margin-top: 20px;
+                  float: left;
+                  margin-left: 20px;
+                  width: 65%;
+                }
+                text-align: center;
+              }
+            }
+
+          }
+          .brewing-info{
+            clear: both;
+
+          }
+        }
+      }
+    }
+
+  }
+
+
+}
+
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+  .product.info.detailed {
+    clear: both;
+    margin-bottom: 30px;
+    .description{
+      .lib-css(color,@color-gray-darken3);
+      h4{
+        .lib-css(color,@color-yellow3);
+        .lib-css(font-size,18px);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+        &:after{
+          display: none;
+        }
+      }
+      h5{
+        .lib-css(color,@color-gray-darken1);
+        .lib-css(font-size,14px);
+        .lib-css(font-family,@font-name__signika_semibold);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+
+        &:after{
+          display: none;
+        }
+      }
+      p{
+        margin: 15px 0px 20px 0px;
+      }
+      padding-bottom: 40px;
+    }
+    .caffeine-level{
+      .lib-css(color,@color-gray-darken1);
+      .lib-css(font-family,@font-name__signika_semibold);
+      .lib-css(font-size,16px);
+      label{
+        color: @color-gray-light2;
+      }
+    }
+    .data{
+      &.items{
+        .content{
+          ul{
+            list-style: none;
+            &.brewing-steps{
+              margin: 0px;
+              padding: 0px 0px 30px 0px;
+              li{
+                list-style: none;
+                display: inline-block;
+                width: 16%;
+                float: left;
+                margin-right: 3%;
+                &.step-1{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-water-drop,
+                      @_icon-font-size: 39px,
+                      @_icon-font-line-height: 39px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    //display: table-cell;
+                  }
+                }
+                &.step-2{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-c,
+                      @_icon-font-size: 48px,
+                      @_icon-font-line-height: 48px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    &:before{
+                      margin-top: 23%;
+                    }//display: table-cell;
+                  }
+                }
+                &.step-3{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-bagpercup,
+                      @_icon-font-size: 39px,
+                      @_icon-font-line-height: 39px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+
+                  }
+
+                }
+                &.step-4{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-ml2,
+                      @_icon-font-size: 44px,
+                      @_icon-font-line-height: 44px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    &:before{
+                      margin-top: 24%;
+                    }
+                  }
+                }
+
+                &.step-5{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-timer,
+                      @_icon-font-size: 42px,
+                      @_icon-font-line-height: 42px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    //display: table-cell;
+
+                  }
+                }
+                span{
+                  //display: table-cell;
+                  width: 104px;
+                  height: 104px;
+                  border-radius: 50%;
+                  border: 7px solid @color-gray-light4;
+                  background-color: @color-white;
+                  vertical-align: middle;
+                  text-align: center;
+                  &:before{
+                    margin-top: 27%;
+                  }
+                }
+                div{
+                  .lib-css(font-family,@font-name__signika_semibold);
+                  .lib-css(font-size,16px);
+                  .lib-css(color,@color-gray-light2);
+                  width: 100%;
+                  text-align: center;
+                  margin-top: 20px;
+                  float: inherit;
+                  margin-left: 0px;
+
+
+
+                }
+                text-align: center;
+              }
+            }
+
+          }
+          .brewing-info{
+            clear: both;
+            .lib-css(font-size,16px);
+            .lib-css(color,@color-yellow3);
+            padding: @indent__base;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+//
+//    Desktop large
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__xl) {
+  .product.info.detailed {
+    clear: both;
+    margin-bottom: 30px;
+    .description{
+      .lib-css(color,@color-gray-darken3);
+      h4{
+        .lib-css(color,@color-yellow3);
+        .lib-css(font-size,18px);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+        &:after{
+          display: none;
+        }
+      }
+      h5{
+        .lib-css(color,@color-gray-darken1);
+        .lib-css(font-size,14px);
+        .lib-css(font-family,@font-name__signika_semibold);
+        .lib-css(font-weight,normal);
+        margin-bottom: 10px;
+        margin-top: 0px;
+        display: block;
+
+        &:after{
+          display: none;
+        }
+      }
+      p{
+        margin: 15px 0px 20px 0px;
+      }
+      padding-bottom: 40px;
+    }
+    .caffeine-level{
+      .lib-css(color,@color-gray-darken1);
+      .lib-css(font-family,@font-name__signika_semibold);
+      .lib-css(font-size,16px);
+      label{
+        color: @color-gray-light2;
+      }
+    }
+    .data{
+      &.items{
+        .content{
+          ul{
+            list-style: none;
+            &.brewing-steps{
+              margin: 0px;
+              padding: 0px 0px 30px 0px;
+              width: 100%;
+              li{
+                list-style: none;
+                display: inline-block;
+                width: 16%;
+                float: left;
+                margin-right: 3%;
+                &.step-1{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-water-drop,
+                      @_icon-font-size: 39px,
+                      @_icon-font-line-height: 39px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    //display: table-cell;
+                  }
+                }
+                &.step-2{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-c,
+                      @_icon-font-size: 48px,
+                      @_icon-font-line-height: 48px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    &:before{
+                      margin-top: 23%;
+                    }//display: table-cell;
+                  }
+                }
+                &.step-3{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-bagpercup,
+                      @_icon-font-size: 39px,
+                      @_icon-font-line-height: 39px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+
+                  }
+
+                }
+                &.step-4{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-ml2,
+                      @_icon-font-size: 44px,
+                      @_icon-font-line-height: 44px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    &:before{
+                      margin-top: 24%;
+                    }
+                  }
+                }
+
+                &.step-5{
+                  span{
+                    .lib-icon-font(
+                      @_icon-font-content:@icon-timer,
+                      @_icon-font-size: 42px,
+                      @_icon-font-line-height: 42px,
+                      @_icon-font-color: @color-yellow3,
+                      @_icon-font-color-hover: @color-yellow3,
+                      @_icon-font-color-active: @color-yellow3,
+                      @_icon-font-margin: @icon-font__margin,
+                      @_icon-font-vertical-align: @icon-font__vertical-align,
+                      @_icon-font-position: before
+                    );
+                    //display: table-cell;
+
+                  }
+                }
+                span{
+                  //display: table-cell;
+                  width: 104px;
+                  height: 104px;
+                  border-radius: 50%;
+                  border: 7px solid @color-gray-light4;
+                  background-color: @color-white;
+                  vertical-align: middle;
+                  text-align: center;
+                  &:before{
+                    margin-top: 27%;
+                  }
+                }
+                div{
+                  .lib-css(font-family,@font-name__signika_semibold);
+                  .lib-css(font-size,16px);
+                  .lib-css(color,@color-gray-light2);
+                  width: 100%;
+                  text-align: center;
+                  margin-top: 20px;
+                  float: inherit;
+                  margin-left: 0px;
+                }
+                text-align: center;
+              }
+            }
+
+          }
+          .brewing-info{
+            clear: both;
+            .lib-css(font-size,16px);
+            .lib-css(color,@color-yellow3);
+            padding: @indent__base;
+          }
+        }
+      }
+    }
+
+  }
+}

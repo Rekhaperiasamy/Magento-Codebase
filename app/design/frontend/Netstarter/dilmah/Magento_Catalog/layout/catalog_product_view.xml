@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.sku" remove="true"/>
+        <move element="page.main.title" destination="product.title.container" after="social.sharer.main"/>
+        <move element="product.info.review" destination="product.title.container" after="page.main.title"/>
+        <move element="product.info.upsell" destination="product.info.details" before="social.sharer" />
+        <referenceContainer name="product.info.main">
+            <container name="product.title.container" htmlTag="div" htmlClass="product-title-container" before="-">
+                <block class="Magento\Catalog\Block\Product\View" name="social.sharer.main" template="product/view/sharer.phtml" before="-" />
+            </container>
+        </referenceContainer>
+
+        <referenceBlock name="product.info.details">
+            <block class="Magento\Catalog\Block\Product\View" name="social.sharer" template="product/view/sharer.phtml" />
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\View" name="sticky.add.to.cart" template="product/view/mobile_sticky.phtml" after="-">
+                <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart.mobile" as="addtocart.mobile" template="product/view/addtocart_sticky.phtml"/>
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="continue.checkout.popup" template="Magento_Catalog::product/view/checkout_popup.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

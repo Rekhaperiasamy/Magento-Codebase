@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <!--<head>-->
+        <!--<js class="Netresearch_OPS::extjs/ext-tree.js"/>-->
+        <!--<js class="Netresearch_OPS::extjs/ext-tree-checkbox.js"/>-->
+        <!--<action method="addItem">-->
+            <!--<argument name="type" xsi:type="string">js</argument>-->
+            <!--<argument name="name" xsi:type="string">extjs/ext-tree.js</argument>-->
+        <!--</action>-->
+        <!--<action method="addItem">-->
+            <!--<argument name="type" xsi:type="string">js</argument>-->
+            <!--<argument name="name" xsi:type="string">extjs/ext-tree-checkbox.js</argument>-->
+        <!--</action>-->
+        <!--<action method="addItem">-->
+            <!--<argument name="type" xsi:type="string">js_css</argument>-->
+            <!--<argument name="name" xsi:type="string">extjs/resources/css/ext-all.css</argument>-->
+        <!--</action>-->
+        <!--<action method="addItem">-->
+            <!--<argument name="type" xsi:type="string">js_css</argument>-->
+            <!--<argument name="name" xsi:type="string">extjs/resources/css/ytheme-magento.css</argument>-->
+        <!--</action>-->
+    <!--</head>-->
+    <body>
+        <referenceContainer name="left" htmlClass="admin__scope-old" htmlTag="div" />
+        <referenceContainer name="page.main.actions">
+            <block class="Magento\Backend\Block\Store\Switcher" name="category.store.switcher" template="Magento_Backend::store/switcher.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Netresearch\OPS\Block\Adminhtml\Kwixocategory\CategoryTree" name="tree"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block template="Netresearch_OPS::ops/form/kwixo/category.phtml" class="Netresearch\OPS\Block\Adminhtml\Kwixocategory\Edit" name="catproduct"/>
+        </referenceContainer>
+    </body>
+</page>

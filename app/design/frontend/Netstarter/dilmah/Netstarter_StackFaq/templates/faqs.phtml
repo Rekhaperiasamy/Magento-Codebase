@@ -1,0 +1,35 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Netstarter
+ * @package     Netstarter_StackFaq
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2016 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+// @codingStandardsIgnoreFile
+?>
+
+<?php
+$items = $block->getItems();
+$helper = $this->helper('Netstarter\StackFaq\Helper\Data');
+?>
+
+<!--Category #1-->
+<div class="faq-category" id="<?php echo $helper->cleanCategoryTitle($block->getCategory()->getTitle()) ?>">
+    <a name="<?php echo $helper->cleanCategoryTitle($block->getCategory()->getTitle()) ?>"></a> <!--Need for anchor link-->
+    <div class="faq-cat-title-wrapper accordion-link">
+        <span class="catTitle"><?php echo $block->getCategory()->getTitle() ?></span><span class="scroll-to-top">Top of page</span>
+    </div>
+    <div class="faq-content accordion-content">
+        <?php foreach ($items as $item): ?>
+            <!--Question #1-->
+            <div class="faq-question faq-question-<?php echo $item->getItemId() ?>">
+                <span class="question"><?php echo $item->getTitle() ?> </span>
+            </div>
+            <div class="faq-answer faq-answer-<?php echo $item->getItemId() ?>">
+                <?php echo $item->getContent() ?>
+            </div>
+        <?php endforeach ?>
+    </div>
+</div>

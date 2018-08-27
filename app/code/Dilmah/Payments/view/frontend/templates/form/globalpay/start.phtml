@@ -1,0 +1,35 @@
+<?php
+/**
+ * Netstarter Pty Ltd.
+ *
+ * @category    Dilmah
+ * @package     Dilmah_Payments
+ * @author      Netstarter Team <contact@netstarter.com>
+ * @copyright   Copyright (c) 2015 Netstarter Pty Ltd. (http://www.netstarter.com.au)
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Dilmah\Payments\Block\Form\GlobalPay
+ */
+
+$formData = $block->getFormData();
+$block->savePaymentHistory($formData);
+?>
+<form class="ss" name="migs" id="migs_review_form" action="<?php echo $block->getGatewayUrl() ?>" method="post"
+      accept-charset="UTF-8">
+    <?php if (is_array($formData)): ?>
+        <?php foreach ($formData as $name => $value): ?>
+            <input type="hidden" name="<?php echo($name); ?>" value="<?php echo($value); ?>"/>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</form>
+
+<script>
+    require([
+        'jquery',
+    ], function ($) {
+        $('#migs_review_form').submit();
+    });
+</script>
